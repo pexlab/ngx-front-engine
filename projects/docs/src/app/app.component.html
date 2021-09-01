@@ -1,0 +1,48 @@
+<nav>
+
+    <svg-icon name="logo" [svgStyle]="{ 'width.px': (80 * 2.5) - 20 - 20 }"></svg-icon>
+
+    <div class="items">
+
+        <a [routerLink]="['/introduction']" routerLinkActive="active">
+            <span>Introduction</span>
+        </a>
+
+        <a [routerLink]="['/getting-started']" routerLinkActive="active">
+            <span>Getting started</span>
+        </a>
+
+        <a [routerLink]="['/foundations']" routerLinkActive="active">
+            <span>Foundations</span>
+        </a>
+
+        <a [routerLink]="['/components']" routerLinkActive="active">
+            <span>Components</span>
+        </a>
+
+        <a [routerLink]="['/theming']" routerLinkActive="active">
+            <span>Theming</span>
+        </a>
+
+        <a [routerLink]="['/typography']" routerLinkActive="active">
+            <span>Typography</span>
+        </a>
+
+        <a [routerLink]="['/color-palette']" routerLinkActive="active">
+            <span>Color Palette</span>
+        </a>
+
+        <a [routerLink]="['/api-reference']" routerLinkActive="active">
+            <span>API Reference</span>
+        </a>
+
+    </div>
+</nav>
+
+<nav>
+    <router-outlet name="sidebar"></router-outlet>
+</nav>
+
+<div class="page">
+    <router-outlet></router-outlet>
+</div>

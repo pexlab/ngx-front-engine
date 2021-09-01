@@ -1,0 +1,55 @@
+/* You can add global styles to this file, and also import other style files */
+
+@use '~dist/front-engine/assets/styles/theme';
+
+
+body {
+  
+  margin : 40px;
+  
+  & * {
+	box-sizing : border-box;
+  }
+  
+  & a, & a:hover, & a:focus, & a:active {
+	text-decoration : none;
+	color           : inherit;
+  }
+  
+  & nav {
+	
+	color       : #6A6A6A;
+	user-select : none;
+	@include theme.commonFont('decorative');
+	
+	& > .items {
+	  
+	  width          : fit-content;
+	  display        : grid;
+	  grid-auto-flow : column;
+	  grid-gap       : 50px;
+	  
+	  & > * {
+		cursor : pointer;
+	  }
+	  
+	  & > a {
+		
+		padding       : 10px 15px;
+		border-radius : 5px;
+		
+		&.active {
+		  background : #DDDDDD;
+		}
+	  }
+	}
+  }
+  
+  .container {
+	width          : 500px;
+	max-width      : 100%;
+	display        : grid;
+	grid-auto-flow : row;
+	grid-gap       : 20px;
+  }
+}

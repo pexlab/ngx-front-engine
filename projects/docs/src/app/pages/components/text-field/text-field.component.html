@@ -1,0 +1,25 @@
+<div class="container">
+
+    <fe-text-field fePlaceholder="Moving placeholder">
+        <ng-template>
+            <svg-icon name="text"></svg-icon>
+        </ng-template>
+    </fe-text-field>
+
+    <fe-text-field fePlaceholder="Disappearing placeholder" feStatic>
+        <ng-template>
+            <svg-icon name="text"></svg-icon>
+        </ng-template>
+    </fe-text-field>
+
+    <fe-text-field
+            fePlaceholder="This is a more spacious text-area. You can write something fairly elaborate here!"
+            feStatic
+            feType="multi"
+            [style.height]="'150px'">
+        <ng-template>
+            <svg-icon name="text"></svg-icon>
+        </ng-template>
+    </fe-text-field>
+
+</div>

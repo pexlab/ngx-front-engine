@@ -1,0 +1,43 @@
+$scope : 'global' !default;
+
+@function hex($name) {
+  @return var(--fe-local-color-#{$scope}-#{$name}-hex, var(--fe-global-color-#{$scope}-#{$name}-hex));
+}
+
+@function globalHex($name) {
+  @return var(--fe-local-color-#{$name}-hex, var(--fe-global-color-#{$name}-hex));
+}
+
+@function fadeHex($name, $opacity) {
+  @return rgba(var(--fe-local-color-#{$scope}-#{$name}-rgb, var(--fe-global-color-#{$scope}-#{$name}-rgb)), $opacity)
+}
+
+@function contrast($name) {
+  @return var(--fe-local-color-#{$scope}-#{$name}-contrast, var(--fe-global-color-#{$scope}-#{$name}-contrast));
+}
+
+@mixin commonFont($name) {
+  font-family: var(--fe-local-font-#{$name}-family, var(--fe-global-font-#{$name}-family)), sans-serif;
+  font-size: var(--fe-local-font-#{$name}-size, var(--fe-global-font-#{$name}-size));
+  font-weight: var(--fe-local-font-#{$name}-weight, var(--fe-global-font-#{$name}-weight));
+}
+
+@mixin inlineDeepIcon($size) {
+  
+  ::ng-deep {
+    
+    & > svg-icon {
+      
+      display     : grid;
+      place-items : center;
+      
+      width       : $size;
+      height      : $size;
+      
+      & > svg {
+        width  : $size;
+        height : $size;
+      }
+    }
+  }
+}

@@ -1,0 +1,66 @@
+@use '../../../../assets/styles/theme' as config with ($scope: 'button');
+
+:host {
+  
+  display : block;
+  
+  width   : fit-content;
+  height  : fit-content;
+  
+  & > button {
+	
+	position         : relative;
+	
+	cursor           : pointer;
+	
+	display          : block;
+	
+	padding          : 15px 35px;
+	
+	text-decoration  : none;
+	
+	border           : none;
+	border-radius    : 22px 7px 22px 7px;
+	
+	overflow         : hidden;
+	
+	border-bottom    : 3px solid config.hex('border-bottom');
+	
+	color            : config.hex('text');
+	background-color : config.hex('background');
+	
+	& > .content {
+	  
+	  position       : relative;
+	  z-index        : 1;
+	  
+	  display        : grid;
+	  grid-auto-flow : column;
+	  grid-gap       : 10px;
+	  align-items    : center;
+	  
+	  text-align     : left;
+	  
+	  @include config.commonFont('body');
+	  @include config.inlineDeepIcon(15px);
+	}
+	
+	& > .gradient {
+	  opacity    : 0;
+	  z-index    : 0;
+	  content    : '';
+	  display    : block;
+	  position   : absolute;
+	  left       : 0;
+	  top        : 0;
+	  bottom     : 0;
+	  right      : 0;
+	  background : linear-gradient(to bottom, rgba(white, .2), rgba(white, 0));
+	  transition : opacity .15s ease;
+	}
+	
+	&:hover > .gradient {
+	  opacity : 1;
+	}
+  }
+}
