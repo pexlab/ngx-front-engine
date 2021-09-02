@@ -71,7 +71,7 @@
             ],
             "styles": [
               "projects/docs/src/styles.scss",
-              "./dist/front-engine/assets/styles/root.scss"
+              "./dist/front-engine/assets/fe-styles/root.scss"
             ],
             "scripts": []
           },
@@ -145,7 +145,7 @@
             ],
             "styles": [
               "projects/docs/src/styles.scss",
-              "./dist/front-engine/assets/styles/root.scss"
+              "./dist/front-engine/assets/fe-styles/root.scss"
             ],
             "scripts": []
           }
