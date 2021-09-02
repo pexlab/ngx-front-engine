@@ -8,8 +8,6 @@ export * from './lib/interfaces/theme.interface';
 export * from './lib/utils/case.utils';
 export * from './lib/utils/type.utils';
 
-export * from './lib/fe.module';
-
 export * from './lib/components/text-field/text-field.module';
 export * from './lib/components/text-field/text-field.component';
 
@@ -18,3 +16,5 @@ export * from './lib/components/button/button.module';
 
 export * from './lib/directives/tactile/tactile.directive';
 export * from './lib/directives/tactile/tactile.module';
+
+export * from './lib/fe.module';
