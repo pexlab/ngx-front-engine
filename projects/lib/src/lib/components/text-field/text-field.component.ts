@@ -107,6 +107,8 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
     private isFocused                  = false;
     private skipNextFocusBlurAnimation = false;
     
+    private disposeListeners: ( () => void )[] = [];
+    
     /* To simplify the attribute usage */
     private get isStatic() {
         
@@ -146,28 +148,30 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         /* Add listeners that are not supposed to trigger outside view checks */
         this.ngZone.runOutsideAngular( () => {
             
-            this.renderer.listen(
-                this.field.nativeElement,
-                'mousedown',
-                ( event: MouseEvent ) => this.focusField( event )
-            );
-            
-            this.renderer.listen(
-                this.input.first.nativeElement,
-                'input',
-                () => this.onInput( this.input.first.nativeElement.value )
-            );
-            
-            this.renderer.listen(
-                this.input.first.nativeElement,
-                'focusin',
-                () => this.onFocusIn()
-            );
-            
-            this.renderer.listen(
-                this.input.first.nativeElement,
-                'focusout',
-                () => this.onFocusOut()
+            this.disposeListeners.push(
+                this.renderer.listen(
+                    this.field.nativeElement,
+                    'mousedown',
+                    ( event: MouseEvent ) => this.focusField( event )
+                ),
+                
+                this.renderer.listen(
+                    this.input.first.nativeElement,
+                    'input',
+                    () => this.onInput( this.input.first.nativeElement.value )
+                ),
+                
+                this.renderer.listen(
+                    this.input.first.nativeElement,
+                    'focusin',
+                    () => this.onFocusIn()
+                ),
+                
+                this.renderer.listen(
+                    this.input.first.nativeElement,
+                    'focusout',
+                    () => this.onFocusOut()
+                )
             );
         } );
         
@@ -183,7 +187,12 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
     }
     
     public ngOnDestroy(): void {
+        
         this.resizeObserver.unobserve( this.hostElement.nativeElement );
+        
+        this.disposeListeners.forEach( dispose => {
+            dispose();
+        } );
     }
     
     /* Events */
