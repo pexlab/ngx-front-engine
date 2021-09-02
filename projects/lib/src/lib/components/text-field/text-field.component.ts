@@ -315,8 +315,8 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         
         if ( this.placeholder ) {
             
-            const paddingTop  = window.getComputedStyle( this.inputContainer.nativeElement, null ).getPropertyValue( 'padding-top' );
-            const paddingLeft = window.getComputedStyle( this.inputContainer.nativeElement, null ).getPropertyValue( 'padding-left' );
+            const paddingTop  = window.getComputedStyle( this.inputContainer.nativeElement, null ).paddingTop;
+            const paddingLeft = window.getComputedStyle( this.inputContainer.nativeElement, null ).paddingLeft;
             
             /* Leave some space (2px) for the text-caret. Otherwise the placeholder will be directly on top of the caret */
             this.placeholder.nativeElement.style.setProperty( '--placeholder-x', 'calc(' + paddingLeft + ' + 2px)' );
@@ -343,9 +343,19 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         const strokeWidth = 2;
         const m           = strokeWidth / 2;
         
-        const gapStart         = 20;
-        const placeholderWidth = this.placeholder ? this.placeholder.nativeElement.getBoundingClientRect().width : 0;
-        const gapEnd           = gapStart + placeholderWidth - m + (
+        let placeholderWidth = 0;
+        
+        if ( this.placeholder ) {
+            
+            placeholderWidth = this.placeholder.nativeElement.getBoundingClientRect().width;
+            
+            /* Subtract padding. Padding is only needed for correct line-breaking inside the input */
+            placeholderWidth -= parseFloat( window.getComputedStyle( this.placeholder.nativeElement, null ).paddingLeft );
+            placeholderWidth -= parseFloat( window.getComputedStyle( this.placeholder.nativeElement, null ).paddingRight );
+        }
+        
+        const gapStart = 20;
+        const gapEnd   = gapStart + placeholderWidth - m + (
             10 * 2
         );
         
