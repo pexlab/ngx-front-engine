@@ -1,13 +1,11 @@
 <h1 align="center">FrontEngine</h1>
 
-___
-
 <h3 align="center">An unmatched experience - for both developers & consumers.</h3>
 
 <br>
 
 <p align="center">
-    <img src="https://i.imgur.com/FpDejc7.png" alt="frontengine-logo" width="400px"/>
+    <img src="https://i.imgur.com/om2OqFI.png" alt="frontengine-logo" height="100px"/>
 </p>
 
 <br>
