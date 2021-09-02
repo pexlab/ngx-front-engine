@@ -22,6 +22,23 @@ $scope : 'global' !default;
   font-weight: var(--fe-local-font-#{$name}-weight, var(--fe-global-font-#{$name}-weight));
 }
 
+@mixin inlineIcon($size) {
+  
+  & > svg-icon {
+    
+    display     : grid;
+    place-items : center;
+    
+    width       : $size;
+    height      : $size;
+    
+    & > svg {
+      width  : $size;
+      height : $size;
+    }
+  }
+}
+
 @mixin inlineDeepIcon($size) {
   
   ::ng-deep {
