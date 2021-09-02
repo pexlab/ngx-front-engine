@@ -1,4 +1,5 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
+import { AngularSvgIconModule, SvgIconRegistryService } from 'angular-svg-icon';
 import { ThemeService } from './theme/theme.service';
 
 @NgModule(
@@ -28,7 +29,11 @@ export class FeModule {
         theme: ThemeService,
         iconReg: SvgIconRegistryService
     ) {
+        
         theme.applyCommonTheme();
         theme.applyComponentThemes();
+        
+        iconReg.loadSvg( 'assets/fe-icons/caret-down-solid.svg', 'fe-caret-down' );
+        iconReg.loadSvg( 'assets/fe-icons/delete.svg', 'fe-backspace' );
     }
 }

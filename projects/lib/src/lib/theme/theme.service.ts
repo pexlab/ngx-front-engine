@@ -292,6 +292,23 @@ export class ThemeService {
                 text        : FeColorPalette.Greyscale.White,
                 background  : FeColorPalette.Blue.Blue,
                 borderBottom: FeColorPalette.Blue.VividDarkBlue
+            },
+            
+            dropdown: {
+                
+                placeholderPanelText      : FeColorPalette.Greyscale.White,
+                placeholderPanelBackground: FeColorPalette.Blue.Blue,
+                
+                optionsStripe         : FeColorPalette.Blue.Blue,
+                optionsIdleText       : FeColorPalette.Greyscale.PitchBlack,
+                optionsIdleBackground : FeColorPalette.Greyscale.White,
+                optionsHoverText      : FeColorPalette.Greyscale.PitchBlack,
+                optionsHoverBackground: Color.fadeHex( FeColorPalette.Greyscale.PitchBlack, .05 ),
+                
+                clearButtonIdle           : FeColorPalette.Greyscale.PitchBlack,
+                clearButtonIdleBackground : FeColorPalette.Greyscale.Transparent,
+                clearButtonHover          : FeColorPalette.Red.Netflix,
+                clearButtonHoverBackground: Color.fadeHex( FeColorPalette.Red.Coral, .15 )
             }
         };
         

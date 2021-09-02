@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { ZButtonTheme } from '../components/button/button.component';
+import { ZDropdownTheme } from '../components/dropdown/dropdown.component';
 import { ZTextFieldTheme } from '../components/text-field/text-field.component';
 import { ZHEXColor } from './color.interface';
 import { ZFont } from './typography.interface';
@@ -60,7 +61,7 @@ export const ZCommonTheme = z.object(
 
 export const ZPartialCommonTheme = ZCommonTheme.deepPartial();
 
-export type ThemeableComponents = 'textField' | 'button';
+export type ThemeableComponents = 'textField' | 'button' | 'dropdown';
 
 /** Used to guarantee that each component is preset but also gets assigned its very own type */
 function createComponentThemes<c extends { [key in ThemeableComponents]: unknown }>( shape: c ): c {
@@ -71,7 +72,8 @@ export const ZComponentThemes = z.object(
     createComponentThemes(
         {
             textField: ZTextFieldTheme,
-            button   : ZButtonTheme
+            button   : ZButtonTheme,
+            dropdown : ZDropdownTheme
         }
     )
 );

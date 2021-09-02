@@ -1,0 +1,165 @@
+@use '../../../../assets/fe-styles/theme' as config with ($scope: 'dropdown');
+@forward '../../../../assets/fe-styles/theme';
+
+$DROPDOWN_PADDING_VERTICAL   : 15px;
+$DROPDOWN_PADDING_HORIZONTAL : 25px;
+$PLACEHOLDER_HEIGHT          : 40px;
+$OPTION_PADDING              : 10px;
+
+:host {
+  
+  position   : relative;
+  
+  display    : block;
+  
+  box-sizing : border-box;
+  
+  width      : fit-content;
+  height     : 40px;
+  
+  @include config.commonFont('body');
+  
+  &.inline {
+	margin-left  : $DROPDOWN_PADDING_HORIZONTAL;
+	margin-right : $DROPDOWN_PADDING_HORIZONTAL;
+  }
+  
+  & > * {
+	margin : 0;
+  }
+  
+  & > .placeholderPanel {
+	
+	z-index               : 2;
+	
+	position              : relative;
+	
+	user-select           : none;
+	cursor                : pointer;
+	
+	width                 : fit-content;
+	height                : $PLACEHOLDER_HEIGHT;
+	
+	padding-left          : 15px;
+	padding-right         : 15px;
+	box-sizing            : border-box;
+	
+	display               : grid;
+	grid-template-columns : 1fr auto;
+	grid-gap              : 10px;
+	place-items           : center;
+	
+	color                 : config.hex('placeholder-panel-text');
+	background            : config.hex('placeholder-panel-background');
+	
+	border-radius         : 99px;
+	
+	transition            : box-shadow .25s ease;
+	
+	@include config.inlineIcon(15px);
+	
+	&.shadow {
+	  box-shadow : 0 14px 28px rgba(0, 0, 0, 0.15), 0 10px 10px rgba(0, 0, 0, 0.12);
+	}
+	
+	& > ::ng-deep div {
+	  
+	  display        : grid;
+	  grid-auto-flow : column;
+	  grid-gap       : 10px;
+	  align-items    : center;
+	  
+	  width          : fit-content;
+	  height         : fit-content;
+	  
+	  @include config.inlineIcon(20px);
+	}
+  }
+  
+  & > .options {
+	
+	opacity        : 1;
+	
+	z-index        : 1;
+	
+	position       : absolute;
+	
+	top            : $PLACEHOLDER_HEIGHT / 2;
+	left           : -$DROPDOWN_PADDING_HORIZONTAL;
+	
+	display        : grid;
+	grid-auto-flow : row;
+	
+	min-width      : 200px;
+	width          : calc(100% + (#{$DROPDOWN_PADDING_HORIZONTAL} * 2) + (#{$OPTION_PADDING} * 2));
+	height         : fit-content;
+	
+	margin         : 0;
+	padding-top    : ($PLACEHOLDER_HEIGHT / 2) + $DROPDOWN_PADDING_VERTICAL + 3px + $OPTION_PADDING;
+	
+	overflow       : hidden;
+	
+	border-radius  : 5px;
+	
+	background     : config.hex('options-idle-background');
+	
+	box-shadow     : 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+	
+	transition     : transform .15s ease, opacity .15s ease, background .25s ease;
+	
+	&:before {
+	  
+	  content    : '';
+	  
+	  position   : absolute;
+	  
+	  top        : 0;
+	  left       : 0;
+	  
+	  width      : 100%;
+	  height     : 3px;
+	  
+	  background : config.hex('options-stripe');
+	}
+	
+	&.hidden {
+	  pointer-events : none;
+	  opacity        : 0;
+	  transform      : translateY(30px);
+	}
+	
+	& > .clear-value {
+	  
+	  $padding_top  : ($PLACEHOLDER_HEIGHT / 2) + $DROPDOWN_PADDING_VERTICAL;
+	  
+	  position      : absolute;
+	  
+	  top           : 3px + ($OPTION_PADDING / 2);
+	  right         : $OPTION_PADDING;
+	  
+	  display       : grid;
+	  place-items   : center;
+	  
+	  width         : $padding_top;
+	  height        : $padding_top;
+	  
+	  margin        : 0; /* Idk why but the margin from the parent is being applied to the children as well */
+	  
+	  border-radius : 99px;
+	  
+	  color         : config.hex('clear-button-idle');
+	  background    : config.hex('clear-button-idle-background');
+	  
+	  cursor        : pointer;
+	  
+	  transition    : background-color .25s ease, color .25s ease;
+	  
+	  @include config.inlineIcon(18px);
+	  
+	  &:hover {
+		color      : config.hex('clear-button-hover');
+		background : config.hex('clear-button-hover-background');
+	  }
+	}
+  }
+}

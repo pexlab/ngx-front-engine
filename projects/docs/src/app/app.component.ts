@@ -17,6 +17,8 @@ export class AppComponent implements OnInit, AfterViewChecked {
     constructor( private iconReg: SvgIconRegistryService, private theme: ThemeService ) {
         this.iconReg.loadSvg( 'assets/logo.svg', 'logo' );
         this.iconReg.loadSvg( 'assets/icons/type.svg', 'text' );
+        this.iconReg.loadSvg( 'assets/icons/sun-solid.svg', 'sun' );
+        this.iconReg.loadSvg( 'assets/icons/moon-solid.svg', 'moon' );
     }
     
     public ngOnInit(): void {

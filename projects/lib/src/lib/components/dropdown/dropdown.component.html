@@ -1,0 +1,27 @@
+<div class="placeholderPanel"
+     [class.shadow]="dropdownVisible"
+     [fe-tactile]
+     (tactileClick)="toggleMenu()">
+
+    <ng-container
+            *ngTemplateOutlet="activePlaceholderRef || defaultPlaceholderRef || emptyPlaceholderRef">
+    </ng-container>
+
+    <svg-icon name="fe-caret-down"></svg-icon>
+</div>
+
+<div class="options" [class.hidden]="!dropdownVisible">
+
+    <ng-content></ng-content>
+
+    <div class="clear-value"
+         *ngIf="feClearable"
+         [fe-tactile]
+         (tactileClick)="clearValue()">
+        <svg-icon name="fe-backspace"></svg-icon>
+    </div>
+</div>
+
+<ng-template #emptyPlaceholderRef>
+    <span>{{ feEmptyNotice }}</span>
+</ng-template>

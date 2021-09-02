@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ButtonComponent } from './pages/components/button/button.component';
+import { DropdownComponent } from './pages/components/dropdown/dropdown.component';
 import { ComponentsSidebarComponent } from './pages/components/sidebar/components-sidebar.component';
 import { TextFieldComponent } from './pages/components/text-field/text-field.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
@@ -26,6 +27,10 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
                             {
                                 path     : 'text-field',
                                 component: TextFieldComponent
+                            },
+                            {
+                                path     : 'dropdown',
+                                component: DropdownComponent
                             },
                             {
                                 path     : 'button',

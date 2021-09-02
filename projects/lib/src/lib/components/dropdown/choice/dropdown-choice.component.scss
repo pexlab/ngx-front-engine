@@ -1,0 +1,40 @@
+@use '../dropdown.component' as hostConfig;
+
+:host {
+  
+  width       : 100%;
+  height      : fit-content;
+  
+  display     : grid;
+  align-items : center;
+  
+  padding     : hostConfig.$DROPDOWN_PADDING_VERTICAL hostConfig.$DROPDOWN_PADDING_HORIZONTAL;
+  margin      : 0; /* Idk why but the margin from the parent is being applied to the children as well */
+  box-sizing  : border-box;
+  
+  cursor      : pointer;
+  
+  color       : hostConfig.hex('options-idle-text');
+  background  : transparent; /* Reveals the panel background */
+  
+  transition  : color .25s ease, background-color .25s ease;
+  
+  /* ng-deep usage because the div is spawned inside by ng-content */
+  & > ::ng-deep div {
+	
+	display        : grid;
+	grid-auto-flow : column;
+	grid-gap       : 10px;
+	align-items    : center;
+	
+	width          : fit-content;
+	height         : fit-content;
+	
+	@include hostConfig.inlineIcon(20px);
+  }
+  
+  &:hover {
+	color      : hostConfig.hex('options-hover-text');
+	background : hostConfig.hex('options-hover-background');
+  }
+}
