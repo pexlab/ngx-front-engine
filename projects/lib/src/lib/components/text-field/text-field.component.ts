@@ -358,9 +358,8 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
             
             placeholderWidth = this.placeholder.nativeElement.getBoundingClientRect().width;
             
-            /* Subtract padding. Padding is only needed for correct line-breaking inside the input */
-            placeholderWidth -= parseFloat( window.getComputedStyle( this.placeholder.nativeElement, null ).paddingLeft );
-            placeholderWidth -= parseFloat( window.getComputedStyle( this.placeholder.nativeElement, null ).paddingRight );
+            /* Subtract the padding needed for correct line-breaking when inside the input */
+            placeholderWidth -= 20;
         }
         
         const gapStart = 20;
