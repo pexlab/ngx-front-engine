@@ -6,7 +6,9 @@ import { ThemeService } from './theme/theme.service';
         
         declarations: [],
         
-        imports: [],
+        imports: [
+            AngularSvgIconModule.forRoot()
+        ],
         
         exports: [],
         
@@ -23,7 +25,8 @@ export class FeModule {
     }
     
     constructor(
-        theme: ThemeService
+        theme: ThemeService,
+        iconReg: SvgIconRegistryService
     ) {
         theme.applyCommonTheme();
         theme.applyComponentThemes();
