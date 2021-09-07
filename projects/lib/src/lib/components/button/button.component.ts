@@ -20,7 +20,7 @@ export class ButtonComponent {
     public feTheme!: ComponentTheme<PartialButtonTheme>;
     
     @Output()
-    public feButtonClick: EventEmitter<any> = new EventEmitter();
+    public feClick: EventEmitter<any> = new EventEmitter();
 }
 
 export const ZButtonTheme = z.object(
