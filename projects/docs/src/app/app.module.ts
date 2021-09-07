@@ -1,5 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FeButtonModule, FeDropdownModule, FeModule, FeTactileModule, FeTextFieldModule } from '@pexlab/front-engine';
@@ -11,6 +12,8 @@ import { ComponentsSidebarComponent } from './pages/components/sidebar/component
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ButtonComponent } from './pages/components/button/button.component';
 import { DropdownComponent } from './pages/components/dropdown/dropdown.component';
+import { FormComponent } from './pages/examples/form/form.component';
+import { FormSidebarComponent } from './pages/examples/sidebar/form-sidebar.component';
 
 @NgModule(
     {
@@ -21,9 +24,11 @@ import { DropdownComponent } from './pages/components/dropdown/dropdown.componen
             ComponentsSidebarComponent,
             NotFoundComponent,
             ButtonComponent,
-            DropdownComponent
+            DropdownComponent,
+            FormComponent,
+            FormSidebarComponent
         ],
-        
+    
         imports: [
             BrowserModule,
             BrowserAnimationsModule,
@@ -34,7 +39,8 @@ import { DropdownComponent } from './pages/components/dropdown/dropdown.componen
             FeTextFieldModule,
             FeDropdownModule,
             HttpClientModule,
-            AngularSvgIconModule.forRoot()
+            AngularSvgIconModule.forRoot(),
+            ReactiveFormsModule
         ],
         
         providers: [],

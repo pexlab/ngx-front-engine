@@ -4,6 +4,8 @@ import { ButtonComponent } from './pages/components/button/button.component';
 import { DropdownComponent } from './pages/components/dropdown/dropdown.component';
 import { ComponentsSidebarComponent } from './pages/components/sidebar/components-sidebar.component';
 import { TextFieldComponent } from './pages/components/text-field/text-field.component';
+import { FormComponent } from './pages/examples/form/form.component';
+import { FormSidebarComponent } from './pages/examples/sidebar/form-sidebar.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 @NgModule(
@@ -35,6 +37,25 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
                             {
                                 path     : 'button',
                                 component: ButtonComponent
+                            }
+                        ]
+                    },
+                    {
+                        path    : 'examples',
+                        children: [
+                            {
+                                path     : '',
+                                component: FormSidebarComponent,
+                                outlet   : 'sidebar'
+                            },
+                            {
+                                path      : '',
+                                redirectTo: '/examples/form',
+                                pathMatch : 'full'
+                            },
+                            {
+                                path     : 'form',
+                                component: FormComponent
                             }
                         ]
                     },
