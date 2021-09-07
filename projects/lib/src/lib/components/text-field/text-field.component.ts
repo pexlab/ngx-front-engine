@@ -5,15 +5,15 @@ import {
     Component,
     ContentChild,
     ElementRef,
-    EventEmitter,
+    forwardRef,
     Input, NgZone, OnDestroy, OnInit,
-    Output,
     QueryList,
     Renderer2,
     TemplateRef,
     ViewChild,
     ViewChildren
 } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { parsePath, roundCommands } from '@twixes/svg-round-corners';
 import { z } from 'zod';
 import { ComponentTheme, ZHEXColor } from '../../interfaces/color.interface';
@@ -25,11 +25,18 @@ import { AsynchronouslyInitialisedComponent, FeComponent } from '../../utils/com
         selector       : 'fe-text-field',
         templateUrl    : './text-field.component.html',
         styleUrls      : [ './text-field.component.scss' ],
-        changeDetection: ChangeDetectionStrategy.OnPush
+        changeDetection: ChangeDetectionStrategy.OnPush,
+        providers      : [
+            {
+                provide    : NG_VALUE_ACCESSOR,
+                useExisting: forwardRef( () => TextFieldComponent ),
+                multi      : true
+            }
+        ]
     }
 )
 
-export class TextFieldComponent extends AsynchronouslyInitialisedComponent implements OnInit, AfterViewInit, OnDestroy {
+export class TextFieldComponent extends AsynchronouslyInitialisedComponent implements OnInit, AfterViewInit, OnDestroy, ControlValueAccessor {
     
     constructor(
         public hostElement: ElementRef<HTMLElement>,
@@ -44,28 +51,74 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
     /* ViewChildren */
     
     @ViewChild( 'textField' )
-    private field!: ElementRef<HTMLElement>;
+    private fieldRef!: ElementRef<HTMLElement>;
     
     @ViewChild( 'label' )
-    private label!: ElementRef<HTMLElement>;
+    private labelRef!: ElementRef<HTMLElement>;
     
     @ViewChild( 'measurement' )
-    private measurement!: ElementRef<HTMLElement>;
+    private measurementRef!: ElementRef<HTMLElement>;
     
     @ViewChild( 'placeholder' )
-    private placeholder!: ElementRef<HTMLSpanElement>;
+    private placeholderRef!: ElementRef<HTMLSpanElement>;
     
     @ViewChild( 'normalBorder' )
-    private normalBorder!: ElementRef<HTMLElement>;
+    private normalBorderRef!: ElementRef<HTMLElement>;
     
     @ViewChild( 'focusBorder' )
-    private focusBorder!: ElementRef<HTMLElement>;
+    private focusBorderRef!: ElementRef<HTMLElement>;
     
     @ViewChild( 'inputContainer' )
-    private inputContainer!: ElementRef<HTMLElement>;
+    private inputContainerRef!: ElementRef<HTMLElement>;
     
     @ViewChildren( 'textInput', { read: ElementRef } )
-    private input!: QueryList<ElementRef<HTMLInputElement | HTMLTextAreaElement>>;
+    private set inputArrayRef( ref: QueryList<ElementRef<HTMLInputElement | HTMLTextAreaElement>> ) {
+        
+        this.inputRef = ref.first.nativeElement;
+        
+        if ( this.initialisationValue ) {
+            this.value = this.initialisationValue;
+        } else if ( this.fePrefill ) {
+            this.value = this.fePrefill;
+        }
+        
+        this.ngZone.runOutsideAngular( () => {
+            
+            /* Dispose of possible old listeners */
+            this.disposeListeners.forEach( dispose => {
+                dispose();
+            } );
+            
+            /* Add listeners that are not supposed to trigger outside view checks */
+            this.disposeListeners.push(
+                this.renderer.listen(
+                    this.fieldRef.nativeElement,
+                    'mousedown',
+                    ( event: MouseEvent ) => this.focusField( event )
+                ),
+                
+                this.renderer.listen(
+                    this.inputRef,
+                    'input',
+                    () => this.onInput( ref.first.nativeElement.value )
+                ),
+                
+                this.renderer.listen(
+                    ref.first.nativeElement,
+                    'focusin',
+                    () => this.onFocusIn()
+                ),
+                
+                this.renderer.listen(
+                    ref.first.nativeElement,
+                    'focusout',
+                    () => this.onFocusOut()
+                )
+            );
+        } );
+    }
+    
+    private inputRef?: HTMLInputElement | HTMLTextAreaElement;
     
     @ContentChild( TemplateRef )
     public template!: TemplateRef<ElementRef>;
@@ -93,9 +146,6 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
     @Input()
     public feSpellcheck = false;
     
-    @Output()
-    public feOnType = new EventEmitter<string>();
-    
     /* Used by the group directive */
     public set labelWidth( value: string ) {
         this.hostElement.nativeElement.style.setProperty( '--label-width', value );
@@ -104,10 +154,19 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
     public normalBorderPath!: string;
     public focusBorderPath!: string;
     
+    /* Used to populate the field on initialisation.
+     For example when the type changes from 'single' to 'multi' the value from before will be recovered.
+     Or when the value is set before the field has been fully initialised it will catch up through this variable. */
+    private initialisationValue = '';
+    
     private isFocused                  = false;
     private skipNextFocusBlurAnimation = false;
     
     private disposeListeners: ( () => void )[] = [];
+    
+    /* Form API */
+    private formInputEvent?: ( value: string ) => void;
+    private formBlurEvent?: () => void;
     
     /* To simplify the attribute usage */
     private get isStatic() {
@@ -134,54 +193,10 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
     
     public ngAfterViewInit(): void {
         
-        if ( this.fePrefill ) {
-            
-            if ( this.feType === 'date' ) {
-                (
-                    this.input.first.nativeElement as HTMLInputElement
-                ).valueAsDate = new Date( this.fePrefill );
-            } else {
-                this.input.first.nativeElement.value = this.fePrefill;
-            }
-        }
-        
-        /* Add listeners that are not supposed to trigger outside view checks */
-        this.ngZone.runOutsideAngular( () => {
-            
-            this.disposeListeners.push(
-                this.renderer.listen(
-                    this.field.nativeElement,
-                    'mousedown',
-                    ( event: MouseEvent ) => this.focusField( event )
-                ),
-                
-                this.renderer.listen(
-                    this.input.first.nativeElement,
-                    'input',
-                    () => this.onInput( this.input.first.nativeElement.value )
-                ),
-                
-                this.renderer.listen(
-                    this.input.first.nativeElement,
-                    'focusin',
-                    () => this.onFocusIn()
-                ),
-                
-                this.renderer.listen(
-                    this.input.first.nativeElement,
-                    'focusout',
-                    () => this.onFocusOut()
-                )
-            );
-        } );
-        
-        this.resizeObserver.observe( this.field.nativeElement );
+        this.resizeObserver.observe( this.fieldRef.nativeElement );
         
         /* Initialise style */
         this.unpinPlaceholder(); /* CSS assumes initial unpinned position as well! */
-        
-        /* Enable manual change detection to increase performance */
-        this.cdr.detach();
         
         this.componentLoaded();
     }
@@ -205,8 +220,8 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         
         this.isFocused = true;
         
-        this.renderer.removeClass( this.field.nativeElement, 'unfocused' );
-        this.renderer.addClass( this.field.nativeElement, 'focused' );
+        this.renderer.removeClass( this.fieldRef.nativeElement, 'unfocused' );
+        this.renderer.addClass( this.fieldRef.nativeElement, 'focused' );
         
         this.pinPlaceholder();
         this.considerBorderPath();
@@ -223,8 +238,8 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         
         this.isFocused = false;
         
-        this.renderer.removeClass( this.field.nativeElement, 'focused' );
-        this.renderer.addClass( this.field.nativeElement, 'unfocused' );
+        this.renderer.removeClass( this.fieldRef.nativeElement, 'focused' );
+        this.renderer.addClass( this.fieldRef.nativeElement, 'unfocused' );
         
         if ( this.value.length > 0 ) {
             this.pinPlaceholder();
@@ -234,32 +249,32 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         
         this.considerBorderPath();
         
-        this.validate();
-        
         this.cdr.detectChanges();
+        
+        this.ngZone.run( () => {
+            if ( this.formBlurEvent ) {
+                this.formBlurEvent(); /* Update the form model on blur */
+            }
+        } );
     }
     
     private onInput( value: string ): void {
         
-        if ( this.placeholder ) {
+        if ( this.placeholderRef ) {
             if ( value.length > 0 && this.isStatic ) {
-                this.renderer.addClass( this.placeholder.nativeElement, 'hidden' );
+                this.renderer.addClass( this.placeholderRef.nativeElement, 'hidden' );
             } else {
-                this.renderer.removeClass( this.placeholder.nativeElement, 'hidden' );
+                this.renderer.removeClass( this.placeholderRef.nativeElement, 'hidden' );
             }
         }
         
-        /* Only run in angular zone for view checking if event is actually being subscribed to */
-        /* TODO: wait for PR https://github.com/ReactiveX/rxjs/issues/5967 */
-        if ( this.feOnType.observers.length > 0 ) {
-            
-            this.ngZone.run( () => {
-                this.feOnType.emit( value );
-            } );
-            
-        } else {
-            this.feOnType.emit( value ); /* For better conscience I guess */
-        }
+        this.initialisationValue = value;
+        
+        this.ngZone.run( () => {
+            if ( this.formInputEvent ) {
+                this.formInputEvent( value ); /* Update the form model on input */
+            }
+        } );
     }
     
     /* Action functions */
@@ -289,7 +304,9 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         
         /* Without the timeout the browser loses the focus again */
         setTimeout( () => {
-            this.input.first.nativeElement.focus();
+            if ( this.inputRef ) {
+                this.inputRef.focus();
+            }
         } );
     }
     
@@ -297,45 +314,45 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         
         if ( !this.isStatic ) {
             
-            this.renderer.removeClass( this.field.nativeElement, 'unpinned' );
-            this.renderer.addClass( this.field.nativeElement, 'pinned' );
+            this.renderer.removeClass( this.fieldRef.nativeElement, 'unpinned' );
+            this.renderer.addClass( this.fieldRef.nativeElement, 'pinned' );
             
-            if ( this.placeholder ) {
+            if ( this.placeholderRef ) {
                 
-                const offsetX = this.inputContainer.nativeElement.offsetLeft - 20 - 10;
+                const offsetX = this.inputContainerRef.nativeElement.offsetLeft - 20 - 10;
                 const offsetY = (
-                    this.placeholder.nativeElement.getBoundingClientRect().height / 2
+                    this.placeholderRef.nativeElement.getBoundingClientRect().height / 2
                 ) + 1;
                 
-                this.placeholder.nativeElement.style.setProperty( '--placeholder-x', '-' + offsetX + 'px' );
-                this.placeholder.nativeElement.style.setProperty( '--placeholder-y', '-' + offsetY + 'px' );
+                this.placeholderRef.nativeElement.style.setProperty( '--placeholder-x', '-' + offsetX + 'px' );
+                this.placeholderRef.nativeElement.style.setProperty( '--placeholder-y', '-' + offsetY + 'px' );
             }
             
         } else {
-            this.renderer.removeClass( this.field.nativeElement, 'pinned' );
-            this.renderer.addClass( this.field.nativeElement, 'unpinned' );
+            this.renderer.removeClass( this.fieldRef.nativeElement, 'pinned' );
+            this.renderer.addClass( this.fieldRef.nativeElement, 'unpinned' );
         }
     }
     
     private unpinPlaceholder(): void {
         
-        this.renderer.removeClass( this.field.nativeElement, 'pinned' );
-        this.renderer.addClass( this.field.nativeElement, 'unpinned' );
+        this.renderer.removeClass( this.fieldRef.nativeElement, 'pinned' );
+        this.renderer.addClass( this.fieldRef.nativeElement, 'unpinned' );
         
-        if ( this.placeholder ) {
+        if ( this.placeholderRef ) {
             
-            const paddingTop  = window.getComputedStyle( this.inputContainer.nativeElement, null ).paddingTop;
-            const paddingLeft = window.getComputedStyle( this.inputContainer.nativeElement, null ).paddingLeft;
+            const paddingTop  = window.getComputedStyle( this.inputContainerRef.nativeElement, null ).paddingTop;
+            const paddingLeft = window.getComputedStyle( this.inputContainerRef.nativeElement, null ).paddingLeft;
             
             /* Leave some space (2px) for the text-caret. Otherwise the placeholder will be directly on top of the caret */
-            this.placeholder.nativeElement.style.setProperty( '--placeholder-x', 'calc(' + paddingLeft + ' + 2px)' );
-            this.placeholder.nativeElement.style.setProperty( '--placeholder-y', paddingTop );
+            this.placeholderRef.nativeElement.style.setProperty( '--placeholder-x', 'calc(' + paddingLeft + ' + 2px)' );
+            this.placeholderRef.nativeElement.style.setProperty( '--placeholder-y', paddingTop );
         }
     }
     
     private considerBorderPath(): void {
         
-        if ( !this.isStatic && this.placeholder ) {
+        if ( !this.isStatic && this.placeholderRef ) {
             
             this.normalBorderPath = this.generateBorderPath( this.value.length === 0 );
             this.focusBorderPath  = this.generateBorderPath( false );
@@ -354,9 +371,9 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         
         let placeholderWidth = 0;
         
-        if ( this.placeholder ) {
+        if ( this.placeholderRef ) {
             
-            placeholderWidth = this.placeholder.nativeElement.getBoundingClientRect().width;
+            placeholderWidth = this.placeholderRef.nativeElement.getBoundingClientRect().width;
             
             /* Subtract the padding needed for correct line-breaking when inside the input */
             placeholderWidth -= 20;
@@ -378,22 +395,44 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
     /* Public exported functions */
     
     public get value(): string {
-        return this.input?.first?.nativeElement?.value || '';
+        return this.inputRef?.value || '';
     }
     
     public set value( value: string ) {
-        this.input.first.nativeElement.value = value;
+        
+        this.initialisationValue = value;
+        
+        if ( this.inputRef ) {
+            
+            if ( this.feType === 'date' ) {
+                
+                const dateInputRef       = this.inputRef as HTMLInputElement;
+                dateInputRef.valueAsDate = new Date( value );
+                
+            } else {
+                
+                this.inputRef.value = value;
+            }
+        }
     }
     
     /* TODO: additional method: get multi-line width of label */
     public getSingleLineWidthOfLabel(): number {
-        return this.measurement.nativeElement.clientWidth;
+        return this.measurementRef.nativeElement.clientWidth;
     }
     
-    public validate(): boolean {
-        // TODO: implement zod
-        this.renderer.removeClass( this.field.nativeElement, 'error' );
-        return true;
+    /* Reactive forms functions */
+    
+    public writeValue( input: string ): void {
+        this.value = input;
+    }
+    
+    public registerOnChange( fn: any ): void {
+        this.formInputEvent = fn;
+    }
+    
+    public registerOnTouched( fn: any ): void {
+        this.formBlurEvent = fn;
     }
 }
 
