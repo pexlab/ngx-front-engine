@@ -1,0 +1,21 @@
+<form [formGroup]="exampleForm">
+
+    <div class="container">
+
+        <fe-text-field formControlName="firstName">
+            <ng-template>
+                <span>First name</span>
+            </ng-template>
+        </fe-text-field>
+
+        <fe-text-field formControlName="lastName">
+            <ng-template>
+                <span>Last name</span>
+            </ng-template>
+        </fe-text-field>
+
+    </div>
+
+</form>
+
+<p>Value: {{ exampleForm.value | json }}</p>
