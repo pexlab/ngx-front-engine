@@ -1,26 +1,23 @@
 import {
-    AfterViewInit,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
-    ContentChild,
     ContentChildren,
     ElementRef,
-    EventEmitter,
+    forwardRef,
     HostBinding,
     Input,
     OnDestroy,
-    Output,
     QueryList,
     TemplateRef,
     ViewChild
 } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Subscription, zip } from 'rxjs';
 import { z } from 'zod';
 import { ComponentTheme, ZHEXColor } from '../../interfaces/color.interface';
 import { FeComponent } from '../../utils/component.utils';
 import { DropdownChoiceComponent } from './choice/dropdown-choice.component';
-import { DropdownDefaultInputDirective } from './dropdown-default.directive';
 
 @FeComponent( 'dropdown' )
 @Component(
@@ -28,10 +25,17 @@ import { DropdownDefaultInputDirective } from './dropdown-default.directive';
         selector       : 'fe-dropdown',
         templateUrl    : './dropdown.component.html',
         styleUrls      : [ './dropdown.component.scss' ],
-        changeDetection: ChangeDetectionStrategy.OnPush
+        changeDetection: ChangeDetectionStrategy.OnPush,
+        providers      : [
+            {
+                provide    : NG_VALUE_ACCESSOR,
+                useExisting: forwardRef( () => DropdownComponent ),
+                multi      : true
+            }
+        ]
     }
 )
-export class DropdownComponent implements AfterViewInit, OnDestroy {
+export class DropdownComponent implements OnDestroy, ControlValueAccessor {
     
     constructor(
         private cdr: ChangeDetectorRef,
@@ -39,37 +43,28 @@ export class DropdownComponent implements AfterViewInit, OnDestroy {
     ) { }
     
     @ContentChildren( DropdownChoiceComponent )
-    private set choiceComponents( value: QueryList<DropdownChoiceComponent> ) {
-        
-        this.choices = value;
+    private set choiceComponents( choices: QueryList<DropdownChoiceComponent> ) {
         
         /* Dispose of possible old subscriptions */
         this.disposeSubscriptions.forEach( subscription => subscription.unsubscribe() );
         
-        /* Subscribe to each select event of the choices */
-        for ( const choiceComponent of this.choices ) {
-            this.disposeSubscriptions.push(
-                choiceComponent.feOnSelect.subscribe( () => {
-                    this.setChoice( choiceComponent );
-                } )
-            );
-        }
-        
-        /* If no other choice have been made until now, set the default choice if available */
-        if ( this.defaultChoice && this.currentChoice === undefined ) {
+        /* Wait for every choice to initialise */
+        zip( ...choices.map( choice => choice.loadedState ) ).subscribe( () => {
             
-            this.currentChoice         = this.defaultChoice.host.feValue;
-            this.defaultPlaceholderRef = this.defaultChoice.host.placeholderRef;
+            this.choices = choices;
             
-            this.feOnSelect.emit( this.defaultChoice.host.feValue );
+            this.setValue( this.currentChoice === undefined ? null : this.currentChoice );
             
-        } else {
-            this.setValue( this.currentChoice || null );
-        }
+            /* Subscribe to each select event of the choices */
+            for ( const choiceComponent of choices ) {
+                this.disposeSubscriptions.push(
+                    choiceComponent.feOnSelect.subscribe( () => {
+                        this.setChoiceComponent( choiceComponent );
+                    } )
+                );
+            }
+        } );
     }
-    
-    @ContentChild( DropdownDefaultInputDirective )
-    public defaultChoice?: DropdownDefaultInputDirective;
     
     @ViewChild( 'placeholderPanel' )
     public placeholderPanelRef!: ElementRef<HTMLElement>;
@@ -89,9 +84,6 @@ export class DropdownComponent implements AfterViewInit, OnDestroy {
     @Input()
     public feTheme!: ComponentTheme<PartialDropdownTheme>;
     
-    @Output()
-    public feOnSelect = new EventEmitter<string | null>();
-    
     public activePlaceholderRef?: TemplateRef<any>;
     public defaultPlaceholderRef?: TemplateRef<any>;
     public dropdownVisible = false;
@@ -99,6 +91,11 @@ export class DropdownComponent implements AfterViewInit, OnDestroy {
     private choices!: QueryList<DropdownChoiceComponent>;
     private currentChoice: string | null | undefined = undefined;
     private disposeSubscriptions: Subscription[]     = [];
+    
+    /* Form API */
+    private formInputEvent?: ( value: string | null ) => void;
+    private formBlurEvent?: () => void;
+    private isInitialValueWrite = true;
     
     /** Will return undefined until initialisation of the component */
     public get value(): string | null | undefined {
@@ -108,18 +105,15 @@ export class DropdownComponent implements AfterViewInit, OnDestroy {
     @Input()
     public set value( value: string | null | undefined ) {
         
-        if ( value === undefined ) {
-            this.setValue( null );
-            return;
-        }
-        
-        /* Called before init, setValue method will be called after the choices have been initialized */
         if ( !this.choices ) {
+            
+            /* Called before init, setValue method will be called after the choices have been initialized */
+            
             this.currentChoice = value;
-            return;
+            
+        } else {
+            this.setValue( value === undefined ? null : value );
         }
-        
-        this.setValue( value );
     }
     
     @HostBinding( 'style.zIndex' )
@@ -142,42 +136,51 @@ export class DropdownComponent implements AfterViewInit, OnDestroy {
         return this.feInline;
     }
     
-    public ngAfterViewInit(): void {
-        /* Enable manual change detection to increase performance */
-        this.cdr.detach();
-    }
-    
     public ngOnDestroy(): void {
         this.disposeSubscriptions.forEach( subscription => subscription.unsubscribe() );
     }
     
     public toggleMenu(): void {
+        
         this.dropdownVisible = !this.dropdownVisible;
+        
+        if ( this.formBlurEvent && !this.dropdownVisible ) {
+            this.formBlurEvent();
+        }
+        
         this.cdr.detectChanges();
     }
     
     private setValue( value: string | null ): void {
         
         if ( value === null ) {
-            this.clearValue();
+            this.clearChoiceComponent();
             return;
         }
         
         for ( const choice of this.choices ) {
             if ( choice.feValue === value ) {
-                this.setChoice( choice );
+                this.setChoiceComponent( choice );
                 return;
             }
         }
         
-        /* No choice with the given name have been found, clear the dropdown */
-        this.clearValue();
+        /* No choice with the given value has been found */
+        
+        this.isInitialValueWrite = false; /* Turn off to correct the set initial value from the forms-api */
+        this.clearChoiceComponent(); /* Fallback to no choice at all */
     }
     
-    private setChoice( choiceComponent: DropdownChoiceComponent ): void {
+    private setChoiceComponent( choiceComponent: DropdownChoiceComponent ): void {
         
         this.currentChoice = choiceComponent.feValue;
-        this.feOnSelect.emit( choiceComponent.feValue );
+        
+        /* Prevents marking the field as dirty although it was the initial value write event from the forms-api */
+        if ( this.isInitialValueWrite ) {
+            this.isInitialValueWrite = false;
+        } else if ( this.formInputEvent ) {
+            this.formInputEvent( choiceComponent.feValue );
+        }
         
         this.activePlaceholderRef = choiceComponent.placeholderRef;
         this.dropdownVisible      = false;
@@ -185,21 +188,40 @@ export class DropdownComponent implements AfterViewInit, OnDestroy {
         this.cdr.detectChanges();
     }
     
-    public clearValue(): void {
-        
-        if ( this.defaultChoice ) {
-            this.setChoice( this.defaultChoice.host );
-            return;
-        }
-        
-        this.feOnSelect.emit( null );
+    public clearChoiceComponent(): void {
         
         this.currentChoice = null;
+        
+        /* Prevents marking the field as dirty although it was the initial value write event from the forms-api */
+        if ( this.isInitialValueWrite ) {
+            this.isInitialValueWrite = false;
+        } else if ( this.formInputEvent ) {
+            this.formInputEvent( null );
+        }
         
         this.activePlaceholderRef = undefined;
         this.dropdownVisible      = false;
         
         this.cdr.detectChanges();
+    }
+    
+    /* Reactive forms functions */
+    
+    public writeValue( input: string | null ): void {
+        
+        if ( !this.formInputEvent ) {
+            this.isInitialValueWrite = true;
+        }
+        
+        this.value = input;
+    }
+    
+    public registerOnChange( fn: any ): void {
+        this.formInputEvent = fn;
+    }
+    
+    public registerOnTouched( fn: any ): void {
+        this.formBlurEvent = fn;
     }
 }
 

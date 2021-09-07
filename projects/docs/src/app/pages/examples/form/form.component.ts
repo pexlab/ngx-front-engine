@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component(
@@ -7,36 +7,29 @@ import { FormControl, FormGroup } from '@angular/forms';
         styleUrls  : [ './form.component.scss' ]
     }
 )
-export class FormComponent implements OnInit {
+export class FormComponent {
     
     constructor() { }
     
     public exampleForm = new FormGroup(
         {
-            firstName: new FormControl( '' ),
-            lastName : new FormControl( '' )
+            firstName: new FormControl(),
+            lastName : new FormControl(),
+            gender   : new FormControl()
         }
     );
     
-    public type: 'single' | 'multi' = 'single';
-    
-    ngOnInit(): void {
-    }
-    
-    public updateName(): void {
+    public populate(): void {
         this.exampleForm.setValue(
             {
-                firstName: 'Nancy',
-                lastName : 'Pelosi'
+                firstName: 'John',
+                lastName : 'Doe',
+                gender   : 'male'
             }
         );
     }
     
-    public changeType(): void {
-        if ( this.type === 'single' ) {
-            this.type = 'multi';
-        } else {
-            this.type = 'single';
-        }
+    public reset(): void {
+        this.exampleForm.reset();
     }
 }

@@ -14,8 +14,48 @@
             </ng-template>
         </fe-text-field>
 
+        <fe-dropdown formControlName="gender" feEmptyNotice="Select your gender">
+
+            <fe-dropdown-choice feValue="male">
+
+                <div fePlaceholder>
+                    <span>Male</span>
+                </div>
+
+                <div feContent>
+                    <span>Male</span>
+                </div>
+
+            </fe-dropdown-choice>
+
+            <fe-dropdown-choice feValue="female">
+
+                <div fePlaceholder>
+                    <span>Female</span>
+                </div>
+
+                <div feContent>
+                    <span>Female</span>
+                </div>
+
+            </fe-dropdown-choice>
+
+        </fe-dropdown>
+
     </div>
 
 </form>
 
-<p>Value: {{ exampleForm.value | json }}</p>
+<div class="container">
+
+    <p>Value: {{ exampleForm.value | json }}</p>
+
+    <fe-button (feButtonClick)="populate()">
+        <span>Populate form with sample data</span>
+    </fe-button>
+
+    <fe-button (feButtonClick)="reset()">
+        <span>Reset form</span>
+    </fe-button>
+
+</div>

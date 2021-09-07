@@ -16,7 +16,6 @@ export * from './lib/components/button/button.module';
 
 export * from './lib/components/dropdown/dropdown.component';
 export * from './lib/components/dropdown/choice/dropdown-choice.component';
-export * from './lib/components/dropdown/dropdown-default.directive';
 export * from './lib/components/dropdown/dropdown.module';
 
 export * from './lib/directives/tactile/tactile.directive';

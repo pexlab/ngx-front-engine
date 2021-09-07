@@ -7,6 +7,7 @@ import {
     ViewChild,
     EventEmitter
 } from '@angular/core';
+import { AsynchronouslyInitialisedComponent } from '../../../utils/component.utils';
 
 @Component(
     {
@@ -24,7 +25,7 @@ import {
         styleUrls: [ './dropdown-choice.component.scss' ]
     }
 )
-export class DropdownChoiceComponent implements OnInit {
+export class DropdownChoiceComponent extends AsynchronouslyInitialisedComponent implements OnInit {
     
     @Input()
     public feKey!: string;
@@ -35,8 +36,23 @@ export class DropdownChoiceComponent implements OnInit {
     @Output()
     public feOnSelect = new EventEmitter<void>();
     
+    private hasBeenInitialised = false;
+    private _placeholderRef!: TemplateRef<void>;
+    
     @ViewChild( 'placeholderTemplateRef' )
-    public placeholderRef!: TemplateRef<void>;
+    public set placeholderRef( value: TemplateRef<void> ) {
+        
+        this._placeholderRef = value;
+        
+        if ( !this.hasBeenInitialised ) {
+            this.componentLoaded();
+            this.hasBeenInitialised = true;
+        }
+    }
+    
+    public get placeholderRef(): TemplateRef<void> {
+        return this._placeholderRef;
+    }
     
     @HostListener( 'click' )
     public onSelect(): void {

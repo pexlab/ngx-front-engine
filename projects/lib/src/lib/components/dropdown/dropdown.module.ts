@@ -3,15 +3,13 @@ import { CommonModule } from '@angular/common';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { FeTactileModule } from '../../directives/tactile/tactile.module';
 import { DropdownChoiceComponent } from './choice/dropdown-choice.component';
-import { DropdownDefaultInputDirective } from './dropdown-default.directive';
 import { DropdownComponent } from './dropdown.component';
 
 @NgModule(
     {
         declarations: [
             DropdownComponent,
-            DropdownChoiceComponent,
-            DropdownDefaultInputDirective
+            DropdownChoiceComponent
         ],
         
         imports: [
@@ -22,8 +20,7 @@ import { DropdownComponent } from './dropdown.component';
         
         exports: [
             DropdownComponent,
-            DropdownChoiceComponent,
-            DropdownDefaultInputDirective
+            DropdownChoiceComponent
         ]
     }
 )
