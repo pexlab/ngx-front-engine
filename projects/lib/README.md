@@ -1,24 +1,24 @@
-# Core
+<h1 align="center">FrontEngine</h1>
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.0.
+<h3 align="center">An unmatched experience - for both developers & consumers.</h3>
 
-## Code scaffolding
+<br>
 
-Run `ng generate component component-name --project core` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project core`.
-> Note: Don't forget to add `--project core` or else it will be added to the default project in your `angular.json` file. 
+<p align="center">
+    <img src="https://i.imgur.com/om2OqFI.png" alt="frontengine-logo" height="100px"/>
+</p>
 
-## Build
+<br>
 
-Run `ng build core` to build the project. The build artifacts will be stored in the `dist/` directory.
+<p align="center">
+    <i>This Angular library features astonishing components, theming, a vast color palette, and aims to makes developing a whole lot more convenient.</i>
+</p>
 
-## Publishing
+___
 
-After building your library with `ng build core`, go to the dist folder `cd dist/core` and run `npm publish`.
+### ─( ⚠️ Caution: WIP ⚠️ )─
 
-## Running unit tests
+This project is a very early work in progress where changes will occur rapidly and unexpectedly.
+It is not recommended using it in production yet.
 
-Run `ng test core` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Further documentation will follow shortly.
