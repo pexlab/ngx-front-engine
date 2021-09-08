@@ -4,7 +4,7 @@ import { Typography } from '../interfaces/typography.interface';
 import { kebabCase } from '../utils/case.utils';
 import { mergeObj, Replace } from '../utils/type.utils';
 import { Color } from './color';
-import { ColorPalette, EvaluatedColor, EvaluatedColorPalette, HEXColor } from '../interfaces/color.interface';
+import { ColorPalette, EvaluatedColor, EvaluatedColorPalette, HEXColor, ZHEXColor } from '../interfaces/color.interface';
 import { FeColorPalette } from './featured-palette';
 
 @Injectable(

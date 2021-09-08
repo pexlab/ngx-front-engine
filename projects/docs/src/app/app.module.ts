@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FeButtonModule, FeDropdownModule, FeModule, FeTactileModule, FeTextFieldModule } from '@pexlab/front-engine';
+import { FeButtonModule, FeCheckboxModule, FeDropdownModule, FeModule, FeTactileModule, FeTextFieldModule } from '@pexlab/ngx-front-engine';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';

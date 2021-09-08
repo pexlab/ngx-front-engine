@@ -65,13 +65,13 @@
               "projects/docs/src/assets",
               {
                 "glob": "**/*",
-                "input": "./dist/front-engine/assets/",
+                "input": "./dist/ngx-front-engine/assets/",
                 "output": "/assets/"
               }
             ],
             "styles": [
               "projects/docs/src/styles.scss",
-              "./dist/front-engine/assets/fe-styles/root.scss"
+              "./dist/ngx-front-engine/assets/fe-styles/root.scss"
             ],
             "scripts": []
           },
@@ -139,13 +139,13 @@
               "projects/docs/src/assets",
               {
                 "glob": "**/*",
-                "input": "./dist/front-engine/assets/",
+                "input": "./dist/ngx-front-engine/assets/",
                 "output": "/assets/"
               }
             ],
             "styles": [
               "projects/docs/src/styles.scss",
-              "./dist/front-engine/assets/fe-styles/root.scss"
+              "./dist/ngx-front-engine/assets/fe-styles/root.scss"
             ],
             "scripts": []
           }
