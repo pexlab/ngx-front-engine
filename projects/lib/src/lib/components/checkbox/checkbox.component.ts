@@ -1,0 +1,127 @@
+import { Component, ElementRef, forwardRef, HostListener, Input, OnInit } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { parsePath, roundCommands } from '@twixes/svg-round-corners';
+import { z } from 'zod';
+import { ComponentTheme, ZHEXColor } from '../../interfaces/color.interface';
+import { FeComponent } from '../../utils/component.utils';
+
+@FeComponent( 'checkbox' )
+@Component(
+    {
+        selector   : 'fe-checkbox',
+        templateUrl: './checkbox.component.html',
+        styleUrls  : [ './checkbox.component.scss' ],
+        providers  : [
+            {
+                provide    : NG_VALUE_ACCESSOR,
+                useExisting: forwardRef( () => CheckboxComponent ),
+                multi      : true
+            }
+        ]
+    }
+)
+
+export class CheckboxComponent implements OnInit, ControlValueAccessor {
+    
+    constructor( public hostElement: ElementRef ) { }
+    
+    @Input()
+    public feTheme!: ComponentTheme<PartialCheckboxTheme>;
+    
+    @Input()
+    public feLabel!: string;
+    
+    public isChecked = false;
+    
+    public idleOutlinePath!: string;
+    public hoverOutlinePath!: string;
+    public checkedOutlinePath!: string;
+    
+    public checkmarkOutlinePath!: string;
+    
+    /* Form API */
+    private formInputEvent?: ( value: boolean ) => void;
+    private formBlurEvent?: () => void; // TODO
+    
+    public ngOnInit(): void {
+        
+        this.idleOutlinePath    = this.drawBox( 2 );
+        this.hoverOutlinePath   = this.drawBox( 2.5 );
+        this.checkedOutlinePath = this.drawBox( 1.5 );
+        
+        this.checkmarkOutlinePath = this.drawCheckmark();
+    }
+    
+    @HostListener( 'click' )
+    public onClick(): void {
+        
+        this.isChecked = !this.isChecked;
+        
+        if ( this.formInputEvent ) {
+            this.formInputEvent( this.isChecked );
+        }
+    }
+    
+    private drawBox( strokeWidth: number ): string {
+        
+        const m = strokeWidth / 2;
+        const w = 18 - m;
+        const h = 18 - m;
+        
+        return roundCommands(
+            parsePath( `M ${ w },${ h / 2 } L ${ w },${ h } L ${ m },${ h } L ${ m },${ m } L ${ w },${ m } Z` ),
+            3,
+            4
+        ).path;
+    }
+    
+    private drawCheckmark(): string {
+        
+        const strokeWidth = 2;
+        const m           = strokeWidth / 2;
+        
+        const w = 18 - m;
+        const h = 18 - m;
+        
+        const d = 4;
+        
+        return `M ${ w - d },${ d + 1 } L ${ ( w / 2 ) },${ h - d - 1 } L ${ d + 1 },${ h / 2 + 1 }`;
+    }
+    
+    public pathLength( element: any ) {
+        return element.getTotalLength();
+    }
+    
+    /* Reactive forms functions */
+    
+    public writeValue( input: any ): void {
+        this.isChecked = Boolean( input );
+    }
+    
+    public registerOnChange( fn: any ): void {
+        this.formInputEvent = fn;
+    }
+    
+    public registerOnTouched( fn: any ): void {
+        this.formBlurEvent = fn;
+    }
+}
+
+export const ZCheckboxTheme = z.object(
+    {
+        labelChecked   : ZHEXColor,
+        labelUnchecked : ZHEXColor,
+        checkmark      : ZHEXColor,
+        fillChecked    : ZHEXColor,
+        fillUnchecked  : ZHEXColor,
+        outlineIdle    : ZHEXColor,
+        outlineHover   : ZHEXColor,
+        outlineChecked : ZHEXColor,
+        hoverBackground: ZHEXColor
+    }
+);
+
+export const ZPartialCheckboxTheme = ZCheckboxTheme.partial();
+
+export type CheckboxTheme = z.infer<typeof ZCheckboxTheme>;
+export type PartialCheckboxTheme = z.infer<typeof ZPartialCheckboxTheme>;

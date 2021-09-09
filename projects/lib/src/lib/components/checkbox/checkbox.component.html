@@ -1,0 +1,22 @@
+<svg viewBox="0 0 18 18" width="18" height="18" [ngClass]="isChecked ? 'checked' : 'unchecked'">
+
+    <path class="outline idle"
+          [attr.d]="idleOutlinePath"></path>
+
+    <path class="outline hover"
+          [attr.d]="hoverOutlinePath"></path>
+
+    <path class="outline checked"
+          [ngClass]="isChecked ? 'visible' : 'hidden'"
+          [attr.d]="checkedOutlinePath"
+          #border
+          [style.--length]="pathLength(border) + 'px'"></path>
+
+    <path class="checkmark"
+          [ngClass]="isChecked ? 'visible' : 'hidden'"
+          [attr.d]="checkmarkOutlinePath"
+          #checkmark
+          [style.--length]="pathLength(checkmark) + 'px'"></path>
+</svg>
+
+<span *ngIf="feLabel !== undefined" [class.checked]="isChecked">{{ feLabel }}</span>

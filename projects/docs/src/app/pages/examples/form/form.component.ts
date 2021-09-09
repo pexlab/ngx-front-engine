@@ -13,18 +13,20 @@ export class FormComponent {
     
     public exampleForm = new FormGroup(
         {
-            firstName: new FormControl(),
-            lastName : new FormControl(),
-            gender   : new FormControl()
+            firstName : new FormControl(),
+            lastName  : new FormControl(),
+            gender    : new FormControl(),
+            newsletter: new FormControl()
         }
     );
     
     public populate(): void {
         this.exampleForm.setValue(
             {
-                firstName: 'John',
-                lastName : 'Doe',
-                gender   : 'male'
+                firstName : 'John',
+                lastName  : 'Doe',
+                gender    : 'male',
+                newsletter: true
             }
         );
     }

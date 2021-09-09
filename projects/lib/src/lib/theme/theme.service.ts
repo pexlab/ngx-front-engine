@@ -309,6 +309,18 @@ export class ThemeService {
                 clearButtonIdleBackground : FeColorPalette.Greyscale.Transparent,
                 clearButtonHover          : FeColorPalette.Red.Netflix,
                 clearButtonHoverBackground: Color.fadeHex( FeColorPalette.Red.Coral, .15 )
+            },
+            
+            checkbox: {
+                labelChecked   : this.commonTheme.palette.text.primary,
+                labelUnchecked : this.commonTheme.palette.text.secondary,
+                checkmark      : FeColorPalette.Greyscale.White,
+                fillChecked    : FeColorPalette.Blue.Blue,
+                fillUnchecked  : FeColorPalette.Greyscale.Transparent,
+                outlineIdle    : this.commonTheme.palette.text.tertiary,
+                outlineHover   : FeColorPalette.Blue.Blue,
+                outlineChecked : FeColorPalette.Blue.VividDarkBlue,
+                hoverBackground: Color.fadeHex( FeColorPalette.Blue.LightBlue, .15 )
             }
         };
         

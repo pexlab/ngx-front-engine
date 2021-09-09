@@ -18,6 +18,9 @@ export * from './lib/components/dropdown/dropdown.component';
 export * from './lib/components/dropdown/choice/dropdown-choice.component';
 export * from './lib/components/dropdown/dropdown.module';
 
+export * from './lib/components/checkbox/checkbox.component';
+export * from './lib/components/checkbox/checkbox.module';
+
 export * from './lib/directives/tactile/tactile.directive';
 export * from './lib/directives/tactile/tactile.module';
 

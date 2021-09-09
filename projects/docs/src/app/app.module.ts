@@ -38,6 +38,7 @@ import { FormSidebarComponent } from './pages/examples/sidebar/form-sidebar.comp
             FeTactileModule,
             FeTextFieldModule,
             FeDropdownModule,
+            FeCheckboxModule,
             HttpClientModule,
             AngularSvgIconModule.forRoot(),
             ReactiveFormsModule
