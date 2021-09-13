@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { ColorPaletteComponent } from './pages/color-palette/color-palette.component';
 import { ButtonComponent } from './pages/components/button/button.component';
 import { DropdownComponent } from './pages/components/dropdown/dropdown.component';
 import { ComponentsSidebarComponent } from './pages/components/sidebar/components-sidebar.component';
@@ -58,6 +59,10 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
                                 component: FormComponent
                             }
                         ]
+                    },
+                    {
+                        path     : 'color-palette',
+                        component: ColorPaletteComponent
                     },
                     {
                         path     : '404',

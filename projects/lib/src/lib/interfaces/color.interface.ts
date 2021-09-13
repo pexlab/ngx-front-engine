@@ -46,21 +46,6 @@ export type ComponentTheme<T extends HEXColorRegister = HEXColorRegister> = {
     palette: T
 }
 
-export type BaseColor =
-    | 'Green'
-    | 'Cyan'
-    | 'Blue'
-    | 'Yellow'
-    | 'Gold'
-    | 'Orange'
-    | 'Brown'
-    | 'Red'
-    | 'Pink'
-    | 'Violet'
-    | 'Purple'
-    | 'Greyscale'
-    | 'Ink';
-
 export type ColorPalette = { [ key: string ]: { [ key: string ]: HEXColor } };
 export type EvaluatedColorPalette = Replace<ColorPalette, HEXColor, Color>;
 

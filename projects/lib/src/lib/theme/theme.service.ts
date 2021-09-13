@@ -217,26 +217,26 @@ export class ThemeService {
             palette: {
                 
                 accent: {
-                    primary: FeColorPalette.Blue.Blue
+                    primary  : FeColorPalette.Blue.PureBlue,
+                    secondary: FeColorPalette.Blue.VividDarkBlue,
+                    failure  : FeColorPalette.Red.SpanishRed,
+                    success  : FeColorPalette.Green.Emerald,
+                    warning  : FeColorPalette.Yellow.VividPostIt,
+                    info     : FeColorPalette.Blue.Sky
                 },
                 
                 text: {
-                    primary  : FeColorPalette.Ink.DarkNavyBlue,
+                    primary  : FeColorPalette.Greyscale.Midnight,
                     secondary: FeColorPalette.Greyscale.LightCharcoal,
-                    tertiary : FeColorPalette.Greyscale.Smoke
-                },
-                
-                alert: {
-                    success: FeColorPalette.Green.Emerald,
-                    warning: FeColorPalette.Yellow.VividYellow,
-                    failure: FeColorPalette.Red.Netflix,
-                    info   : FeColorPalette.Blue.Sky
+                    tertiary : FeColorPalette.Greyscale.Smoke,
+                    accent   : FeColorPalette.Greyscale.SnowWhite,
+                    failure  : FeColorPalette.Red.Blood
                 },
                 
                 background: {
-                    primary  : FeColorPalette.Greyscale.White,
-                    secondary: FeColorPalette.Greyscale.SubtleGrey,
-                    tertiary : FeColorPalette.Greyscale.Smoke
+                    primary  : FeColorPalette.Greyscale.SnowWhite,
+                    secondary: FeColorPalette.Greyscale.BrightGrey,
+                    tertiary : FeColorPalette.Greyscale.Titanium
                 }
             }
         };
@@ -281,46 +281,46 @@ export class ThemeService {
                 placeholderUnpinnedFocused  : this.commonTheme.palette.text.tertiary,
                 placeholderUnpinnedUnfocused: this.commonTheme.palette.text.tertiary,
                 
-                errorText       : FeColorPalette.Red.NobleDarkRed,
-                errorPlaceholder: FeColorPalette.Red.NobleDarkRed,
-                errorBorder     : FeColorPalette.Red.Netflix,
-                errorDivider    : FeColorPalette.Red.Netflix,
-                errorBackground : Color.fadeHex( FeColorPalette.Red.Netflix, .1 )
+                errorText       : this.commonTheme.palette.text.failure,
+                errorPlaceholder: this.commonTheme.palette.text.failure,
+                errorBorder     : this.commonTheme.palette.accent.failure,
+                errorDivider    : this.commonTheme.palette.accent.failure,
+                errorBackground : Color.fadeHex( this.commonTheme.palette.accent.failure, .1 )
             },
             
             button: {
-                text        : FeColorPalette.Greyscale.White,
-                background  : FeColorPalette.Blue.Blue,
-                borderBottom: FeColorPalette.Blue.VividDarkBlue
+                text        : this.commonTheme.palette.text.accent,
+                background  : this.commonTheme.palette.accent.primary,
+                borderBottom: this.commonTheme.palette.accent.secondary
             },
             
             dropdown: {
                 
-                placeholderPanelText      : FeColorPalette.Greyscale.White,
-                placeholderPanelBackground: FeColorPalette.Blue.Blue,
+                placeholderPanelText      : this.commonTheme.palette.text.accent,
+                placeholderPanelBackground: this.commonTheme.palette.accent.primary,
                 
-                optionsStripe         : FeColorPalette.Blue.Blue,
-                optionsIdleText       : FeColorPalette.Greyscale.PitchBlack,
-                optionsIdleBackground : FeColorPalette.Greyscale.White,
-                optionsHoverText      : FeColorPalette.Greyscale.PitchBlack,
-                optionsHoverBackground: Color.fadeHex( FeColorPalette.Greyscale.PitchBlack, .05 ),
+                optionsStripe         : this.commonTheme.palette.accent.primary,
+                optionsIdleText       : this.commonTheme.palette.text.primary,
+                optionsIdleBackground : this.commonTheme.palette.background.primary,
+                optionsHoverText      : this.commonTheme.palette.text.primary,
+                optionsHoverBackground: this.commonTheme.palette.background.secondary,
                 
-                clearButtonIdle           : FeColorPalette.Greyscale.PitchBlack,
+                clearButtonIdle           : this.commonTheme.palette.text.primary,
                 clearButtonIdleBackground : FeColorPalette.Greyscale.Transparent,
-                clearButtonHover          : FeColorPalette.Red.Netflix,
-                clearButtonHoverBackground: Color.fadeHex( FeColorPalette.Red.Coral, .15 )
+                clearButtonHover          : this.commonTheme.palette.text.failure,
+                clearButtonHoverBackground: Color.fadeHex( this.commonTheme.palette.accent.failure, .2 )
             },
             
             checkbox: {
                 labelChecked   : this.commonTheme.palette.text.primary,
                 labelUnchecked : this.commonTheme.palette.text.secondary,
-                checkmark      : FeColorPalette.Greyscale.White,
-                fillChecked    : FeColorPalette.Blue.Blue,
+                checkmark      : this.commonTheme.palette.text.accent,
+                fillChecked    : this.commonTheme.palette.accent.primary,
                 fillUnchecked  : FeColorPalette.Greyscale.Transparent,
                 outlineIdle    : this.commonTheme.palette.text.tertiary,
-                outlineHover   : FeColorPalette.Blue.Blue,
-                outlineChecked : FeColorPalette.Blue.VividDarkBlue,
-                hoverBackground: Color.fadeHex( FeColorPalette.Blue.LightBlue, .15 )
+                outlineHover   : this.commonTheme.palette.accent.primary,
+                outlineChecked : this.commonTheme.palette.accent.secondary,
+                hoverBackground: Color.fadeHex( this.commonTheme.palette.accent.primary, .05 )
             }
         };
         

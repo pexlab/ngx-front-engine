@@ -14,6 +14,7 @@ import { ButtonComponent } from './pages/components/button/button.component';
 import { DropdownComponent } from './pages/components/dropdown/dropdown.component';
 import { FormComponent } from './pages/examples/form/form.component';
 import { FormSidebarComponent } from './pages/examples/sidebar/form-sidebar.component';
+import { ColorPaletteComponent } from './pages/color-palette/color-palette.component';
 
 @NgModule(
     {
@@ -26,7 +27,8 @@ import { FormSidebarComponent } from './pages/examples/sidebar/form-sidebar.comp
             ButtonComponent,
             DropdownComponent,
             FormComponent,
-            FormSidebarComponent
+            FormSidebarComponent,
+            ColorPaletteComponent
         ],
     
         imports: [

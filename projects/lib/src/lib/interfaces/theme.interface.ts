@@ -25,7 +25,12 @@ export const ZCommonTheme = z.object(
             {
                 accent: z.object(
                     {
-                        primary: ZHEXColor
+                        primary  : ZHEXColor,
+                        secondary: ZHEXColor,
+                        success  : ZHEXColor,
+                        failure  : ZHEXColor,
+                        warning  : ZHEXColor,
+                        info     : ZHEXColor
                     }
                 ),
                 
@@ -33,7 +38,9 @@ export const ZCommonTheme = z.object(
                     {
                         primary  : ZHEXColor,
                         secondary: ZHEXColor,
-                        tertiary : ZHEXColor
+                        tertiary : ZHEXColor,
+                        accent   : ZHEXColor,
+                        failure  : ZHEXColor
                     }
                 ),
                 
@@ -42,15 +49,6 @@ export const ZCommonTheme = z.object(
                         primary  : ZHEXColor,
                         secondary: ZHEXColor,
                         tertiary : ZHEXColor
-                    }
-                ),
-                
-                alert: z.object(
-                    {
-                        success: ZHEXColor,
-                        failure: ZHEXColor,
-                        warning: ZHEXColor,
-                        info   : ZHEXColor
                     }
                 ),
                 
