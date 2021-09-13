@@ -1,8 +1,13 @@
 {
   "name": "@pexlab/ngx-front-engine",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "A component library for angular which features astonishing components, theming and a vast color palette",
   "license": "MIT",
+  "homepage": "https://pexlab.net/projects/front-engine",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pexlab/ngx-front-engine.git"
+  },
   "peerDependencies": {
     "@angular/common": "^12.2.0",
     "@angular/core": "^12.2.0",
