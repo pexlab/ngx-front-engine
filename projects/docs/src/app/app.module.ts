@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
+    BannerCarouselModule,
     FeButtonModule,
     FeCheckboxModule,
     FeDropdownModule,
@@ -23,6 +24,7 @@ import { DropdownComponent } from './pages/components/dropdown/dropdown.componen
 import { FormComponent } from './pages/examples/form/form.component';
 import { FormSidebarComponent } from './pages/examples/sidebar/form-sidebar.component';
 import { ColorPaletteComponent } from './pages/color-palette/color-palette.component';
+import { BannerCarouselComponent } from './pages/components/banner-carousel/banner-carousel.component';
 
 @NgModule(
     {
@@ -36,9 +38,10 @@ import { ColorPaletteComponent } from './pages/color-palette/color-palette.compo
             DropdownComponent,
             FormComponent,
             FormSidebarComponent,
-            ColorPaletteComponent
+            ColorPaletteComponent,
+            BannerCarouselComponent
         ],
-        
+    
         imports: [
             BrowserModule,
             BrowserAnimationsModule,
@@ -52,7 +55,8 @@ import { ColorPaletteComponent } from './pages/color-palette/color-palette.compo
             HttpClientModule,
             AngularSvgIconModule.forRoot(),
             ReactiveFormsModule,
-            FeStepperModule
+            FeStepperModule,
+            BannerCarouselModule
         ],
         
         providers: [],

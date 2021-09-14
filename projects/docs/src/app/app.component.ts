@@ -19,6 +19,8 @@ export class AppComponent implements OnInit, AfterViewChecked {
         this.iconReg.loadSvg( 'assets/icons/type.svg', 'text' );
         this.iconReg.loadSvg( 'assets/icons/sun-solid.svg', 'sun' );
         this.iconReg.loadSvg( 'assets/icons/moon-solid.svg', 'moon' );
+        this.iconReg.loadSvg( 'assets/icons/shopping-cart-solid.svg', 'shop' );
+        this.iconReg.loadSvg( 'assets/icons/gem-solid.svg', 'gem' );
     }
     
     public ngOnInit(): void {

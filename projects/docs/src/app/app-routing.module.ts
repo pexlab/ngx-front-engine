@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ColorPaletteComponent } from './pages/color-palette/color-palette.component';
+import { BannerCarouselComponent } from './pages/components/banner-carousel/banner-carousel.component';
 import { ButtonComponent } from './pages/components/button/button.component';
 import { DropdownComponent } from './pages/components/dropdown/dropdown.component';
 import { ComponentsSidebarComponent } from './pages/components/sidebar/components-sidebar.component';
@@ -38,6 +39,10 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
                             {
                                 path     : 'button',
                                 component: ButtonComponent
+                            },
+                            {
+                                path     : 'banner-carousel',
+                                component: BannerCarouselComponent
                             }
                         ]
                     },
