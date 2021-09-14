@@ -25,6 +25,7 @@ import { FormComponent } from './pages/examples/form/form.component';
 import { FormSidebarComponent } from './pages/examples/sidebar/form-sidebar.component';
 import { ColorPaletteComponent } from './pages/color-palette/color-palette.component';
 import { BannerCarouselComponent } from './pages/components/banner-carousel/banner-carousel.component';
+import { StepperComponent } from './pages/components/stepper/stepper.component';
 
 @NgModule(
     {
@@ -39,7 +40,8 @@ import { BannerCarouselComponent } from './pages/components/banner-carousel/bann
             FormComponent,
             FormSidebarComponent,
             ColorPaletteComponent,
-            BannerCarouselComponent
+            BannerCarouselComponent,
+            StepperComponent
         ],
     
         imports: [
