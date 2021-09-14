@@ -8,14 +8,16 @@ $OPTION_PADDING              : 10px;
 
 :host {
   
-  position   : relative;
+  position    : relative;
   
-  display    : block;
+  display     : block;
   
-  box-sizing : border-box;
+  box-sizing  : border-box;
   
-  width      : fit-content;
-  height     : 40px;
+  width       : fit-content;
+  height      : 40px;
+  
+  user-select : none;
   
   @include config.commonFont('body');
   
