@@ -2,10 +2,12 @@
 
 :host {
   
-  display : block;
+  display     : block;
   
-  width   : fit-content;
-  height  : fit-content;
+  width       : fit-content;
+  height      : fit-content;
+  
+  user-select : none;
   
   & > button {
 	
