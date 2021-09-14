@@ -3,7 +3,15 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FeButtonModule, FeCheckboxModule, FeDropdownModule, FeModule, FeTactileModule, FeTextFieldModule } from '@pexlab/ngx-front-engine';
+import {
+    FeButtonModule,
+    FeCheckboxModule,
+    FeDropdownModule,
+    FeModule,
+    FeStepperModule,
+    FeTactileModule,
+    FeTextFieldModule
+} from '@pexlab/ngx-front-engine';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,7 +38,7 @@ import { ColorPaletteComponent } from './pages/color-palette/color-palette.compo
             FormSidebarComponent,
             ColorPaletteComponent
         ],
-    
+        
         imports: [
             BrowserModule,
             BrowserAnimationsModule,
@@ -43,7 +51,8 @@ import { ColorPaletteComponent } from './pages/color-palette/color-palette.compo
             FeCheckboxModule,
             HttpClientModule,
             AngularSvgIconModule.forRoot(),
-            ReactiveFormsModule
+            ReactiveFormsModule,
+            FeStepperModule
         ],
         
         providers: [],

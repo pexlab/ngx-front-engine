@@ -44,6 +44,17 @@
 
         <fe-checkbox formControlName="newsletter" feLabel="Sign up for the weekly newsletter"></fe-checkbox>
 
+        <div class="inline">
+
+            <span>Receive newsletter every</span>
+
+            <fe-stepper feInline
+                        formControlName="newsletter_interval"
+                        [feSuffix]="commonNumerals.englishSuffix"></fe-stepper>
+
+            <span>day</span>
+        </div>
+
     </div>
 
 </form>
