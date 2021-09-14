@@ -7,6 +7,7 @@ export * from './lib/interfaces/theme.interface';
 
 export * from './lib/utils/case.utils';
 export * from './lib/utils/type.utils';
+export * from './lib/utils/common.utils';
 
 export * from './lib/components/text-field/text-field.module';
 export * from './lib/components/text-field/text-field.component';
@@ -20,6 +21,9 @@ export * from './lib/components/dropdown/dropdown.module';
 
 export * from './lib/components/checkbox/checkbox.component';
 export * from './lib/components/checkbox/checkbox.module';
+
+export * from './lib/components/stepper/stepper.component';
+export * from './lib/components/stepper/stepper.module';
 
 export * from './lib/directives/tactile/tactile.directive';
 export * from './lib/directives/tactile/tactile.module';

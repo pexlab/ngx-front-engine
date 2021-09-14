@@ -321,6 +321,12 @@ export class ThemeService {
                 outlineHover   : this.commonTheme.palette.accent.primary,
                 outlineChecked : this.commonTheme.palette.accent.secondary,
                 hoverBackground: Color.fadeHex( this.commonTheme.palette.accent.primary, .05 )
+            },
+            
+            stepper: {
+                text            : this.commonTheme.palette.text.primary,
+                buttonIcon      : this.commonTheme.palette.text.accent,
+                buttonBackground: this.commonTheme.palette.accent.primary
             }
         };
         
