@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ZBannerCarouselTheme } from '../components/banner-carousel/banner-carousel.component';
 import { ZButtonTheme } from '../components/button/button.component';
 import { ZCheckboxTheme } from '../components/checkbox/checkbox.component';
 import { ZDropdownTheme } from '../components/dropdown/dropdown.component';
@@ -26,22 +27,25 @@ export const ZCommonTheme = z.object(
             {
                 accent: z.object(
                     {
-                        primary  : ZHEXColor,
-                        secondary: ZHEXColor,
-                        success  : ZHEXColor,
-                        failure  : ZHEXColor,
-                        warning  : ZHEXColor,
-                        info     : ZHEXColor
+                        primary         : ZHEXColor,
+                        primary_dimmed  : ZHEXColor,
+                        secondary       : ZHEXColor,
+                        secondary_dimmed: ZHEXColor,
+                        success         : ZHEXColor,
+                        failure         : ZHEXColor,
+                        warning         : ZHEXColor,
+                        info            : ZHEXColor
                     }
                 ),
                 
                 text: z.object(
                     {
-                        primary  : ZHEXColor,
-                        secondary: ZHEXColor,
-                        tertiary : ZHEXColor,
-                        accent   : ZHEXColor,
-                        failure  : ZHEXColor
+                        primary            : ZHEXColor,
+                        secondary          : ZHEXColor,
+                        tertiary           : ZHEXColor,
+                        failure            : ZHEXColor,
+                        on_primary_accent  : ZHEXColor,
+                        on_secondary_accent: ZHEXColor
                     }
                 ),
                 
@@ -61,7 +65,7 @@ export const ZCommonTheme = z.object(
 
 export const ZPartialCommonTheme = ZCommonTheme.deepPartial();
 
-export type ThemeableComponents = 'textField' | 'button' | 'dropdown' | 'checkbox' | 'stepper';
+export type ThemeableComponents = 'textField' | 'button' | 'dropdown' | 'checkbox' | 'stepper' | 'bannerCarousel';
 
 /** Used to guarantee that each component is preset but also gets assigned its very own type */
 function createComponentThemes<c extends { [key in ThemeableComponents]: unknown }>( shape: c ): c {
@@ -71,11 +75,12 @@ function createComponentThemes<c extends { [key in ThemeableComponents]: unknown
 export const ZComponentThemes = z.object(
     createComponentThemes(
         {
-            textField: ZTextFieldTheme,
-            button   : ZButtonTheme,
-            dropdown : ZDropdownTheme,
-            checkbox : ZCheckboxTheme,
-            stepper  : ZStepperTheme
+            textField     : ZTextFieldTheme,
+            button        : ZButtonTheme,
+            dropdown      : ZDropdownTheme,
+            checkbox      : ZCheckboxTheme,
+            stepper       : ZStepperTheme,
+            bannerCarousel: ZBannerCarouselTheme
         }
     )
 );

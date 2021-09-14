@@ -1,4 +1,4 @@
-import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
+import { Injectable, NgZone, Renderer2, RendererFactory2 } from '@angular/core';
 import { ComponentThemes, CommonTheme, PartialComponentThemes, PartialCommonTheme } from '../interfaces/theme.interface';
 import { Typography } from '../interfaces/typography.interface';
 import { kebabCase } from '../utils/case.utils';
@@ -173,7 +173,7 @@ export class ThemeService {
                 
                 display: {
                     name  : 'Roboto',
-                    size  : '20px',
+                    size  : '30px',
                     weight: 300
                 },
                 
@@ -217,20 +217,23 @@ export class ThemeService {
             palette: {
                 
                 accent: {
-                    primary  : FeColorPalette.Blue.PureBlue,
-                    secondary: FeColorPalette.Blue.VividDarkBlue,
-                    failure  : FeColorPalette.Red.SpanishRed,
-                    success  : FeColorPalette.Green.Emerald,
-                    warning  : FeColorPalette.Yellow.VividPostIt,
-                    info     : FeColorPalette.Blue.Sky
+                    primary         : FeColorPalette.Blue.PureBlue,
+                    primary_dimmed  : FeColorPalette.Blue.VividDarkBlue,
+                    secondary       : FeColorPalette.Greyscale.AlmostMidnight,
+                    secondary_dimmed: FeColorPalette.Greyscale.Midnight,
+                    failure         : FeColorPalette.Red.SpanishRed,
+                    success         : FeColorPalette.Green.Emerald,
+                    warning         : FeColorPalette.Yellow.VividPostIt,
+                    info            : FeColorPalette.Blue.Sky
                 },
                 
                 text: {
-                    primary  : FeColorPalette.Greyscale.Midnight,
-                    secondary: FeColorPalette.Greyscale.LightCharcoal,
-                    tertiary : FeColorPalette.Greyscale.Smoke,
-                    accent   : FeColorPalette.Greyscale.SnowWhite,
-                    failure  : FeColorPalette.Red.Blood
+                    primary            : FeColorPalette.Greyscale.Midnight,
+                    secondary          : FeColorPalette.Greyscale.LightCharcoal,
+                    tertiary           : FeColorPalette.Greyscale.Smoke,
+                    failure            : FeColorPalette.Red.Blood,
+                    on_primary_accent  : FeColorPalette.Greyscale.SnowWhite,
+                    on_secondary_accent: FeColorPalette.Greyscale.SnowWhite
                 },
                 
                 background: {
@@ -289,14 +292,14 @@ export class ThemeService {
             },
             
             button: {
-                text        : this.commonTheme.palette.text.accent,
+                text        : this.commonTheme.palette.text.on_primary_accent,
                 background  : this.commonTheme.palette.accent.primary,
                 borderBottom: this.commonTheme.palette.accent.secondary
             },
             
             dropdown: {
                 
-                placeholderPanelText      : this.commonTheme.palette.text.accent,
+                placeholderPanelText      : this.commonTheme.palette.text.on_primary_accent,
                 placeholderPanelBackground: this.commonTheme.palette.accent.primary,
                 
                 optionsStripe         : this.commonTheme.palette.accent.primary,
@@ -314,7 +317,7 @@ export class ThemeService {
             checkbox: {
                 labelChecked   : this.commonTheme.palette.text.primary,
                 labelUnchecked : this.commonTheme.palette.text.secondary,
-                checkmark      : this.commonTheme.palette.text.accent,
+                checkmark      : this.commonTheme.palette.text.on_primary_accent,
                 fillChecked    : this.commonTheme.palette.accent.primary,
                 fillUnchecked  : FeColorPalette.Greyscale.Transparent,
                 outlineIdle    : this.commonTheme.palette.text.tertiary,
@@ -325,8 +328,21 @@ export class ThemeService {
             
             stepper: {
                 text            : this.commonTheme.palette.text.primary,
-                buttonIcon      : this.commonTheme.palette.text.accent,
+                buttonIcon      : this.commonTheme.palette.text.on_primary_accent,
                 buttonBackground: this.commonTheme.palette.accent.primary
+            },
+            
+            bannerCarousel: {
+                
+                heading   : this.commonTheme.palette.text.on_primary_accent,
+                subheading: Color.fadeHex( this.commonTheme.palette.text.on_primary_accent, .75 ),
+                background: this.commonTheme.palette.accent.primary,
+                
+                buttonIdleText      : this.commonTheme.palette.text.on_primary_accent,
+                buttonIdleBackground: this.commonTheme.palette.accent.primary,
+                
+                buttonHoverText      : this.commonTheme.palette.text.on_secondary_accent,
+                buttonHoverBackground: this.commonTheme.palette.accent.secondary
             }
         };
         

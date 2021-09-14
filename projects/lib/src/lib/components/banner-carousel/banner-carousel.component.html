@@ -1,0 +1,40 @@
+<ng-container *ngIf="isInValidState">
+
+    <div class="banner">
+
+        <div class="text-wrapper">
+            <div class="text" [@carousel] *ngFor="let t of text">
+
+            <span class="heading" *ngIf="t.heading !== null">
+                {{t.heading}}
+            </span>
+
+                <span class="subheading" *ngIf="t.subheading !== null">
+                {{t.subheading}}
+            </span>
+
+            </div>
+        </div>
+
+        <div class="image"
+             *ngFor="let p of image"
+             [style.height]="(150 * (p.scale || 1)) + 'px'"
+             [style.right]="(p.marginRight || 0) + 'px'"
+             [style.marginTop]="(p.marginTop || 0 ) + 'px'"
+             [style.marginBottom]="(p.marginBottom || 0 ) + 'px'"
+             [ngClass]="p.alignment"
+        >
+            <img alt="" [@image] [src]="p.url" [style.height]="(150 * (p.scale || 1)) + 'px'"/>
+        </div>
+    </div>
+
+    <div *ngIf="buttons !== null" class="buttons" [@buttons]="buttons">
+        <div *ngFor="let btn of buttons" [fe-tactile] (tactileClick)="btn.onClick()" [routerLink]="btn.link">
+            <div class="content">
+                <svg-icon *ngIf="btn.icon" [name]="btn.icon"></svg-icon>
+                <span>{{btn.text}}</span>
+            </div>
+        </div>
+    </div>
+
+</ng-container>
