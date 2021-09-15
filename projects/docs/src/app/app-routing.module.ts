@@ -6,6 +6,7 @@ import { ButtonComponent } from './pages/components/button/button.component';
 import { DropdownComponent } from './pages/components/dropdown/dropdown.component';
 import { ComponentsSidebarComponent } from './pages/components/sidebar/components-sidebar.component';
 import { StepperComponent } from './pages/components/stepper/stepper.component';
+import { SwitchComponent } from './pages/components/switch/switch.component';
 import { TextFieldComponent } from './pages/components/text-field/text-field.component';
 import { FormComponent } from './pages/examples/form/form.component';
 import { FormSidebarComponent } from './pages/examples/sidebar/form-sidebar.component';
@@ -48,6 +49,10 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
                             {
                                 path     : 'stepper',
                                 component: StepperComponent
+                            },
+                            {
+                                path     : 'switch',
+                                component: SwitchComponent
                             }
                         ]
                     },

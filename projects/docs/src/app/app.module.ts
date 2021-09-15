@@ -9,7 +9,7 @@ import {
     FeCheckboxModule,
     FeDropdownModule,
     FeModule,
-    FeStepperModule,
+    FeStepperModule, FeSwitchModule,
     FeTactileModule,
     FeTextFieldModule
 } from '@pexlab/ngx-front-engine';
@@ -26,6 +26,7 @@ import { FormSidebarComponent } from './pages/examples/sidebar/form-sidebar.comp
 import { ColorPaletteComponent } from './pages/color-palette/color-palette.component';
 import { BannerCarouselComponent } from './pages/components/banner-carousel/banner-carousel.component';
 import { StepperComponent } from './pages/components/stepper/stepper.component';
+import { SwitchComponent } from './pages/components/switch/switch.component';
 
 @NgModule(
     {
@@ -41,7 +42,8 @@ import { StepperComponent } from './pages/components/stepper/stepper.component';
             FormSidebarComponent,
             ColorPaletteComponent,
             BannerCarouselComponent,
-            StepperComponent
+            StepperComponent,
+            SwitchComponent
         ],
     
         imports: [
@@ -58,7 +60,8 @@ import { StepperComponent } from './pages/components/stepper/stepper.component';
             AngularSvgIconModule.forRoot(),
             ReactiveFormsModule,
             FeStepperModule,
-            BannerCarouselModule
+            BannerCarouselModule,
+            FeSwitchModule
         ],
         
         providers: [],

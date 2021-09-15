@@ -55,6 +55,13 @@
             <span>day</span>
         </div>
 
+        <fe-switch formControlName="billing_rate"
+                   feLabelLeft="Fixed billing"
+                   feLabelRight="Hourly billing"
+                   feAppearance="traditional"
+                   [feValues]="['fixed', 'hourly']">
+        </fe-switch>
+
     </div>
 
 </form>

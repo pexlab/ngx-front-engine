@@ -16,11 +16,12 @@ export class FormComponent {
     
     public exampleForm = new FormGroup(
         {
-            firstName          : new FormControl(),
-            lastName           : new FormControl(),
-            gender             : new FormControl(),
-            newsletter         : new FormControl(),
-            newsletter_interval: new FormControl()
+            firstName          : new FormControl( '' ),
+            lastName           : new FormControl( '' ),
+            gender             : new FormControl( null ),
+            newsletter         : new FormControl( false ),
+            newsletter_interval: new FormControl( 1 ),
+            billing_rate       : new FormControl( 'fixed' )
         }
     );
     
@@ -31,12 +32,22 @@ export class FormComponent {
                 lastName           : 'Doe',
                 gender             : 'male',
                 newsletter         : true,
-                newsletter_interval: 5
+                newsletter_interval: 5,
+                billing_rate       : 'hourly'
             }
         );
     }
     
     public reset(): void {
-        this.exampleForm.reset();
+        this.exampleForm.reset(
+            {
+                firstName          : '',
+                lastName           : '',
+                gender             : null,
+                newsletter         : false,
+                newsletter_interval: 1,
+                billing_rate       : 'fixed'
+            }
+        );
     }
 }
