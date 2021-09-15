@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ColorPaletteComponent } from './pages/color-palette/color-palette.component';
-import { BannerCarouselComponent } from './pages/components/banner-carousel/banner-carousel.component';
-import { ButtonComponent } from './pages/components/button/button.component';
-import { DropdownComponent } from './pages/components/dropdown/dropdown.component';
-import { ComponentsSidebarComponent } from './pages/components/sidebar/components-sidebar.component';
-import { StepperComponent } from './pages/components/stepper/stepper.component';
-import { SwitchComponent } from './pages/components/switch/switch.component';
-import { TextFieldComponent } from './pages/components/text-field/text-field.component';
+import { BannerCarouselComponent } from './pages/showcase/banner-carousel/banner-carousel.component';
+import { ButtonComponent } from './pages/showcase/button/button.component';
+import { DropdownComponent } from './pages/showcase/dropdown/dropdown.component';
+import { ShowcaseSidebarComponent } from './pages/showcase/sidebar/showcase-sidebar.component';
+import { StepperComponent } from './pages/showcase/stepper/stepper.component';
+import { SwitchComponent } from './pages/showcase/switch/switch.component';
+import { TextFieldComponent } from './pages/showcase/text-field/text-field.component';
 import { FormComponent } from './pages/examples/form/form.component';
 import { FormSidebarComponent } from './pages/examples/sidebar/form-sidebar.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
@@ -18,16 +18,16 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
             RouterModule.forRoot(
                 [
                     {
-                        path    : 'components',
+                        path    : 'showcase',
                         children: [
                             {
                                 path     : '',
-                                component: ComponentsSidebarComponent,
+                                component: ShowcaseSidebarComponent,
                                 outlet   : 'sidebar'
                             },
                             {
                                 path      : '',
-                                redirectTo: '/components/text-field',
+                                redirectTo: '/showcase/text-field',
                                 pathMatch : 'full'
                             },
                             {
