@@ -1,0 +1,49 @@
+<ng-container [ngSwitch]="feAppearance">
+
+    <div *ngSwitchCase="'minimal'" class="minimal">
+
+        <ng-container *ngTemplateOutlet="labelLeft"></ng-container>
+
+        <div class="switch" [ngClass]="position" [fe-tactile] (tactileClick)="toggle()">
+            <span class="line"></span>
+            <span class="ball"></span>
+        </div>
+
+        <ng-container *ngTemplateOutlet="labelRight"></ng-container>
+    </div>
+
+    <div *ngSwitchCase="'traditional'" class="traditional">
+
+        <ng-container *ngTemplateOutlet="labelLeft"></ng-container>
+
+        <div class="switch" [ngClass]="position" [fe-tactile]="ball" (tactileClick)="toggle()">
+            <div class="ball" #ball>
+                <svg-icon *ngIf="feIconLeft && position === 'left'" [name]="feIconLeft"></svg-icon>
+                <svg-icon *ngIf="feIconRight && position === 'right'" [name]="feIconRight"></svg-icon>
+            </div>
+        </div>
+
+        <ng-container *ngTemplateOutlet="labelRight"></ng-container>
+    </div>
+
+</ng-container>
+
+<ng-template #labelLeft>
+    <div class="label"
+         *ngIf="feLabelLeft"
+         [ngClass]="position === 'left' ? 'active' : 'inactive'"
+         [fe-tactile]
+         (tactileClick)="toggle(0)">
+        {{ feLabelLeft }}
+    </div>
+</ng-template>
+
+<ng-template #labelRight>
+    <div class="label"
+         *ngIf="feLabelRight"
+         [ngClass]="position === 'right' ? 'active' : 'inactive'"
+         [fe-tactile]
+         (tactileClick)="toggle(1)">
+        {{ feLabelRight }}
+    </div>
+</ng-template>

@@ -29,6 +29,9 @@ export * from './lib/components/banner-carousel/banner-carousel.module';
 export * from './lib/components/banner-carousel/banner-carousel.component';
 export * from './lib/components/banner-carousel/banner-carousel.service';
 
+export * from './lib/components/switch/switch.module';
+export * from './lib/components/switch/switch.component';
+
 export * from './lib/directives/tactile/tactile.directive';
 export * from './lib/directives/tactile/tactile.module';
 

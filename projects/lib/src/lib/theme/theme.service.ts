@@ -343,6 +343,30 @@ export class ThemeService {
                 
                 buttonHoverText      : this.commonTheme.palette.text.on_secondary_accent,
                 buttonHoverBackground: this.commonTheme.palette.accent.secondary
+            },
+            
+            switch: {
+                
+                activeLabel  : this.commonTheme.palette.text.primary,
+                inactiveLabel: this.commonTheme.palette.text.secondary,
+                
+                minimalOuterBallLeft: this.commonTheme.palette.accent.secondary,
+                minimalInnerBallLeft: this.commonTheme.palette.text.on_secondary_accent,
+                minimalLineLeft     : this.commonTheme.palette.accent.secondary,
+                
+                minimalOuterBallRight: this.commonTheme.palette.accent.primary,
+                minimalInnerBallRight: this.commonTheme.palette.text.on_primary_accent,
+                minimalLineRight     : this.commonTheme.palette.accent.primary,
+                
+                traditionalBallLeft      : this.commonTheme.palette.accent.secondary,
+                traditionalBorderLeft    : this.commonTheme.palette.accent.secondary,
+                traditionalIconLeft      : this.commonTheme.palette.text.on_secondary_accent,
+                traditionalBackgroundLeft: FeColorPalette.Greyscale.Transparent,
+                
+                traditionalBallRight      : this.commonTheme.palette.text.on_primary_accent,
+                traditionalBorderRight    : this.commonTheme.palette.accent.primary,
+                traditionalIconRight      : this.commonTheme.palette.accent.primary,
+                traditionalBackgroundRight: this.commonTheme.palette.accent.primary
             }
         };
         
