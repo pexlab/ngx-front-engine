@@ -4,15 +4,14 @@ import {
     Component,
     ContentChildren,
     ElementRef,
-    forwardRef,
     HostBinding,
     Input,
-    OnDestroy,
-    QueryList,
+    OnDestroy, Optional,
+    QueryList, Self,
     TemplateRef,
     ViewChild
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { Subscription, zip } from 'rxjs';
 import { z } from 'zod';
 import { ComponentTheme, ZHEXColor } from '../../interfaces/color.interface';
@@ -25,22 +24,22 @@ import { DropdownChoiceComponent } from './choice/dropdown-choice.component';
         selector       : 'fe-dropdown',
         templateUrl    : './dropdown.component.html',
         styleUrls      : [ './dropdown.component.scss' ],
-        changeDetection: ChangeDetectionStrategy.OnPush,
-        providers      : [
-            {
-                provide    : NG_VALUE_ACCESSOR,
-                useExisting: forwardRef( () => DropdownComponent ),
-                multi      : true
-            }
-        ]
+        changeDetection: ChangeDetectionStrategy.OnPush
     }
 )
 export class DropdownComponent implements OnDestroy, ControlValueAccessor {
     
     constructor(
+        @Self()
+        @Optional()
+        private ngControl: NgControl,
         private cdr: ChangeDetectorRef,
         public hostElement: ElementRef
-    ) { }
+    ) {
+        if ( this.ngControl ) {
+            this.ngControl.valueAccessor = this;
+        }
+    }
     
     @ContentChildren( DropdownChoiceComponent )
     private set choiceComponents( choices: QueryList<DropdownChoiceComponent> ) {

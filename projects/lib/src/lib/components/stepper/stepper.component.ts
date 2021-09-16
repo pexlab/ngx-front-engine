@@ -1,5 +1,15 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, HostBinding, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    HostBinding,
+    Input,
+    OnInit,
+    Optional,
+    Self
+} from '@angular/core';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { z } from 'zod';
 import { ComponentTheme, ZHEXColor } from '../../interfaces/color.interface';
 import { FeComponent } from '../../utils/component.utils';
@@ -10,22 +20,22 @@ import { FeComponent } from '../../utils/component.utils';
         selector       : 'fe-stepper',
         templateUrl    : './stepper.component.html',
         styleUrls      : [ './stepper.component.scss' ],
-        changeDetection: ChangeDetectionStrategy.OnPush,
-        providers      : [
-            {
-                provide    : NG_VALUE_ACCESSOR,
-                useExisting: forwardRef( () => StepperComponent ),
-                multi      : true
-            }
-        ]
+        changeDetection: ChangeDetectionStrategy.OnPush
     }
 )
 export class StepperComponent implements OnInit, ControlValueAccessor {
     
     constructor(
+        @Self()
+        @Optional()
+        private ngControl: NgControl,
         private cdr: ChangeDetectorRef,
         public hostElement: ElementRef
-    ) { }
+    ) {
+        if ( this.ngControl ) {
+            this.ngControl.valueAccessor = this;
+        }
+    }
     
     public value!: number;
     

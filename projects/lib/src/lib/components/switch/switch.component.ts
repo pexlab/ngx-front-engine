@@ -1,5 +1,14 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    Input,
+    OnInit,
+    Optional,
+    Self
+} from '@angular/core';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { z } from 'zod';
 import { ComponentTheme, ZHEXColor } from '../../interfaces/color.interface';
 import { FeComponent } from '../../utils/component.utils';
@@ -10,19 +19,22 @@ import { FeComponent } from '../../utils/component.utils';
         selector       : 'fe-switch',
         templateUrl    : './switch.component.html',
         styleUrls      : [ './switch.component.scss' ],
-        changeDetection: ChangeDetectionStrategy.OnPush,
-        providers      : [
-            {
-                provide    : NG_VALUE_ACCESSOR,
-                useExisting: forwardRef( () => SwitchComponent ),
-                multi      : true
-            }
-        ]
+        changeDetection: ChangeDetectionStrategy.OnPush
     }
 )
 export class SwitchComponent implements OnInit, ControlValueAccessor {
     
-    constructor( public hostElement: ElementRef, private cdr: ChangeDetectorRef ) { }
+    constructor(
+        @Self()
+        @Optional()
+        private ngControl: NgControl,
+        public hostElement: ElementRef,
+        private cdr: ChangeDetectorRef
+    ) {
+        if ( this.ngControl ) {
+            this.ngControl.valueAccessor = this;
+        }
+    }
     
     @Input()
     public feTheme!: ComponentTheme<PartialSwitchTheme>;

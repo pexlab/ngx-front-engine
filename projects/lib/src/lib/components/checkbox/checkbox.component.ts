@@ -1,5 +1,5 @@
-import { Component, ElementRef, forwardRef, HostListener, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, ElementRef, HostListener, Input, OnInit, Optional, Self } from '@angular/core';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { parsePath, roundCommands } from '@twixes/svg-round-corners';
 import { z } from 'zod';
 import { ComponentTheme, ZHEXColor } from '../../interfaces/color.interface';
@@ -10,20 +10,22 @@ import { FeComponent } from '../../utils/component.utils';
     {
         selector   : 'fe-checkbox',
         templateUrl: './checkbox.component.html',
-        styleUrls  : [ './checkbox.component.scss' ],
-        providers  : [
-            {
-                provide    : NG_VALUE_ACCESSOR,
-                useExisting: forwardRef( () => CheckboxComponent ),
-                multi      : true
-            }
-        ]
+        styleUrls  : [ './checkbox.component.scss' ]
     }
 )
 
 export class CheckboxComponent implements OnInit, ControlValueAccessor {
     
-    constructor( public hostElement: ElementRef ) { }
+    constructor(
+        @Self()
+        @Optional()
+        private ngControl: NgControl,
+        public hostElement: ElementRef
+    ) {
+        if ( this.ngControl ) {
+            this.ngControl.valueAccessor = this;
+        }
+    }
     
     @Input()
     public feTheme!: ComponentTheme<PartialCheckboxTheme>;

@@ -5,15 +5,14 @@ import {
     Component,
     ContentChild,
     ElementRef,
-    forwardRef,
-    Input, NgZone, OnDestroy, OnInit,
+    Input, NgZone, OnDestroy, OnInit, Optional,
     QueryList,
-    Renderer2,
+    Renderer2, Self,
     TemplateRef,
     ViewChild,
     ViewChildren
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { parsePath, roundCommands } from '@twixes/svg-round-corners';
 import { z } from 'zod';
 import { ComponentTheme, ZHEXColor } from '../../interfaces/color.interface';
@@ -25,20 +24,16 @@ import { AsynchronouslyInitialisedComponent, FeComponent } from '../../utils/com
         selector       : 'fe-text-field',
         templateUrl    : './text-field.component.html',
         styleUrls      : [ './text-field.component.scss' ],
-        changeDetection: ChangeDetectionStrategy.OnPush,
-        providers      : [
-            {
-                provide    : NG_VALUE_ACCESSOR,
-                useExisting: forwardRef( () => TextFieldComponent ),
-                multi      : true
-            }
-        ]
+        changeDetection: ChangeDetectionStrategy.OnPush
     }
 )
 
 export class TextFieldComponent extends AsynchronouslyInitialisedComponent implements OnInit, AfterViewInit, OnDestroy, ControlValueAccessor {
     
     constructor(
+        @Self()
+        @Optional()
+        private ngControl: NgControl,
         public hostElement: ElementRef<HTMLElement>,
         private renderer: Renderer2,
         private cdr: ChangeDetectorRef,
@@ -46,6 +41,10 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
     ) {
         super();
         hostElement.nativeElement.style.setProperty( '--label-width', 'auto' );
+        
+        if ( this.ngControl ) {
+            this.ngControl.valueAccessor = this;
+        }
     }
     
     /* ViewChildren */
