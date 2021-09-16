@@ -1,0 +1,18 @@
+<div class="container">
+
+    <div class="title-bar">
+
+        <div class="icon" [class.hidden]="hideExitIcon" [fe-tactile] (tactileClick)="close()">
+            <svg-icon name="fe-close"></svg-icon>
+        </div>
+
+        <span>{{ title }}</span>
+
+    </div>
+
+    <div class="content-wrapper">
+        <div class="content">
+            <ng-template #content></ng-template>
+        </div>
+    </div>
+</div>

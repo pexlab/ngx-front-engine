@@ -1,0 +1,207 @@
+@use '../../../../assets/fe-styles/theme' with ($scope: 'popup');
+
+:host {
+  
+  position              : fixed;
+  
+  left                  : 0;
+  top                   : 0;
+  
+  width                 : 100vw;
+  height                : 100vh;
+  
+  display               : grid;
+  grid-template-columns : 1fr;
+  grid-template-rows    : 1fr;
+  place-items           : center;
+  
+  &.hidden {
+	
+	pointer-events : none;
+	
+	& .container {
+	  animation : containerOut .5s ease forwards;
+	}
+  }
+  
+  &.visible {
+	
+	& .container {
+	  animation : containerIn .5s ease forwards;
+	}
+  }
+}
+
+.container {
+  
+  grid-column      : 1;
+  grid-row         : 1;
+  
+  display          : grid;
+  place-items      : center;
+  
+  width            : fit-content;
+  height           : fit-content;
+  
+  max-width        : 90vw;
+  max-height       : 90vh;
+  
+  overflow         : hidden;
+  
+  border-radius    : 10px;
+  
+  border           : 2px solid theme.hex('outer-border');
+  background-color : theme.hex('background');
+  
+  opacity          : 0;
+  transform        : scale(0.7);
+}
+
+@keyframes containerIn {
+  
+  from {
+	opacity   : 0;
+	transform : scale(0.7);
+  }
+  
+  to {
+	opacity   : 1;
+	transform : scale(1);
+  }
+}
+
+@keyframes containerOut {
+  
+  from {
+	opacity   : 1;
+	transform : scale(1);
+  }
+  
+  to {
+	opacity   : 0;
+	transform : scale(1) translateY(350px);
+  }
+}
+
+.title-bar {
+  
+  position      : relative;
+  
+  width         : 100%;
+  
+  border-bottom : 1px solid theme.hex('divider');
+  
+  & > .icon {
+	
+	cursor   : pointer;
+	
+	position : relative;
+	
+	display  : block;
+	
+	width    : 40px;
+	height   : 40px;
+	
+	margin   : 10px 10px 10px auto;
+	
+	&.hidden {
+	  opacity        : 0;
+	  pointer-events : none;
+	}
+	
+	& svg-icon {
+	  
+	  display     : grid;
+	  place-items : center;
+	  
+	  position    : absolute;
+	  
+	  left        : 50%;
+	  top         : 50%;
+	  
+	  width       : 15px;
+	  height      : 15px;
+	  
+	  color       : theme.hex('exit');
+	  
+	  transform   : translateX(-50%) translateY(-50%);
+	  
+	  & svg {
+		width  : 15px;
+		height : 15px;
+	  }
+	}
+	
+	&:after {
+	  
+	  z-index          : -1;
+	  
+	  content          : '';
+	  
+	  position         : absolute;
+	  
+	  left             : 0;
+	  top              : 0;
+	  right            : 0;
+	  bottom           : 0;
+	  
+	  border-radius    : 40px;
+	  
+	  opacity          : 0;
+	  background-color : theme.fadeHex('exit', .2);
+	  border           : 1px solid theme.fadeHex('exit', .2);
+	  
+	  transform        : scale(.8);
+	  
+	  transition       : opacity .25s ease, transform .25s ease;
+	}
+	
+	&:hover:after {
+	  opacity   : 1;
+	  transform : scale(1);
+	}
+  }
+  
+  & > span {
+	
+	position  : absolute;
+	
+	left      : 50%;
+	top       : 50%;
+	
+	transform : translateY(-50%) translateX(-50%);
+	
+	color     : theme.hex('text');
+	
+	@include theme.commonFont('subheading');
+  }
+}
+
+.content-wrapper {
+  
+  box-sizing : border-box;
+  
+  padding    : 20px 20px 2px;
+  
+  // TODO: Keep the scrollbar out of the border-radius cutout
+  // margin-bottom : 10px;
+  
+  width      : fit-content;
+  max-width  : 90vw;
+  min-width  : 400px;
+  
+  height     : fit-content;
+  max-height : 50vh;
+  
+  overflow-y : auto;
+  overflow-x : hidden;
+  
+  & .content {
+	
+	margin-bottom : 20px;
+	
+	color         : theme.hex('text');
+	
+	@include theme.commonFont('body');
+  }
+}

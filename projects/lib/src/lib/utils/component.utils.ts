@@ -1,6 +1,6 @@
-import { ElementRef, SimpleChanges } from '@angular/core';
-import { Subject } from 'rxjs';
-import { ComponentTheme, HEXColor, HEXColorRegister } from '../interfaces/color.interface';
+import { ElementRef } from '@angular/core';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { ComponentTheme, HEXColor } from '../interfaces/color.interface';
 import { ThemeableComponents } from '../interfaces/theme.interface';
 import { ThemeService } from '../theme/theme.service';
 import { ClassWithProperties } from './type.utils';
@@ -8,38 +8,74 @@ import { isEqual } from 'lodash';
 
 export function FeComponent( name: ThemeableComponents ) {
     
-    return function <C extends ClassWithProperties<{ feTheme: ComponentTheme, hostElement: ElementRef<HTMLElement> }>>( target: C ): void {
+    return function <C extends ClassWithProperties<{ feTheme: ComponentTheme, hostElement: ElementRef<HTMLElement> }>>( target: C ) {
         
-        /* Cache to prevent re-applying the same palette */
-        let currentPalette: { [ k: string ]: HEXColor } = {};
-        
-        /* The original onChanges method */
-        const forwardMethod = target.prototype.ngOnChanges;
-        
-        /* Overwrite the onChanges method */
-        target.prototype.ngOnChanges = function( changes: SimpleChanges ) {
+        return class extends target {
             
-            const palette: HEXColorRegister = this.feTheme?.palette || {};
-            
-            /* Only apply the palette if it changed */
-            if ( !isEqual( currentPalette, palette ) ) {
+            constructor( ...args: any[] ) {
                 
-                currentPalette = palette;
+                super( ...args );
                 
-                ThemeService.singleton.applyPalette(
-                    ThemeService.singleton.evaluatePalette(
-                        {
-                            [ name ]: palette
+                Reflect.defineProperty( this, 'feTheme', {
+                    
+                    set: ( value: any ) => {
+                        
+                        const newPalette: { [ k: string ]: HEXColor } = value.palette || {};
+                        
+                        /* Only apply the palette if it has been changed */
+                        if ( !isEqual( newPalette, this._previousPalette ) ) {
+                            
+                            this._previousPalette = newPalette;
+                            
+                            ThemeService.singleton.applyPalette(
+                                ThemeService.singleton.evaluatePalette(
+                                    {
+                                        [ name ]: newPalette
+                                    }
+                                ),
+                                this.hostElement.nativeElement
+                            );
                         }
-                    ),
-                    this.hostElement.nativeElement
-                );
+                    }
+                } );
             }
             
-            /* Call the original onChanges method */
-            if ( forwardMethod ) {
-                forwardMethod.apply( this, [ changes ] );
+            public _previousPalette: { [ k: string ]: HEXColor } = {};
+        };
+    };
+}
+
+export function FePopup() {
+    
+    return function <C extends ClassWithProperties<{ close: () => void, transmitToHost: ( value: any ) => void }>>( target: C ) {
+        
+        return class extends target {
+            
+            constructor( ...args: any[] ) {
+                
+                super( ...args );
+                
+                Reflect.defineProperty( this, 'transmitToHost', {
+                    
+                    value: ( value: any ) => {
+                        
+                        if ( value === 'fe-open' || value === 'fe-close' ) {
+                            console.error( 'Cannot transmit value "' + value + '" on popup because it is a preserved keyword.' );
+                            return;
+                        }
+                        
+                        this.popupObserverTransmitter.next( value );
+                    }
+                } );
+                
+                Reflect.defineProperty( this, 'close', {
+                    value: () => {
+                        this.popupObserverTransmitter.next( 'fe-close' );
+                    }
+                } );
             }
+            
+            public popupObserverTransmitter: Subject<any> = new Subject<any>();
         };
     };
 }

@@ -32,7 +32,16 @@ export * from './lib/components/banner-carousel/banner-carousel.service';
 export * from './lib/components/switch/switch.module';
 export * from './lib/components/switch/switch.component';
 
+export * from './lib/components/popup/popup.module';
+export * from './lib/components/popup/popup.component';
+export * from './lib/components/popup/popup.service';
+
+export * from './lib/components/root/root.module';
+export * from './lib/components/root/root.component';
+
 export * from './lib/directives/tactile/tactile.directive';
 export * from './lib/directives/tactile/tactile.module';
+
+export * from './lib/utils/component.utils';
 
 export * from './lib/fe.module';

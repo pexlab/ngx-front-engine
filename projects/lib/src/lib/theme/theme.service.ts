@@ -367,6 +367,14 @@ export class ThemeService {
                 traditionalBorderRight    : this.commonTheme.palette.accent.primary,
                 traditionalIconRight      : this.commonTheme.palette.accent.primary,
                 traditionalBackgroundRight: this.commonTheme.palette.accent.primary
+            },
+            
+            popup: {
+                divider    : this.commonTheme.palette.text.tertiary,
+                background : this.commonTheme.palette.background.primary,
+                text       : this.commonTheme.palette.text.primary,
+                exit       : this.commonTheme.palette.text.failure,
+                outerBorder: FeColorPalette.Greyscale.Transparent
             }
         };
         

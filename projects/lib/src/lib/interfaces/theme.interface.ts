@@ -3,6 +3,7 @@ import { ZBannerCarouselTheme } from '../components/banner-carousel/banner-carou
 import { ZButtonTheme } from '../components/button/button.component';
 import { ZCheckboxTheme } from '../components/checkbox/checkbox.component';
 import { ZDropdownTheme } from '../components/dropdown/dropdown.component';
+import { ZPopupTheme } from '../components/popup/popup.component';
 import { ZStepperTheme } from '../components/stepper/stepper.component';
 import { ZSwitchTheme } from '../components/switch/switch.component';
 import { ZTextFieldTheme } from '../components/text-field/text-field.component';
@@ -66,7 +67,14 @@ export const ZCommonTheme = z.object(
 
 export const ZPartialCommonTheme = ZCommonTheme.deepPartial();
 
-export type ThemeableComponents = 'textField' | 'button' | 'dropdown' | 'checkbox' | 'stepper' | 'bannerCarousel' | 'switch';
+export type ThemeableComponents = 'textField'
+                                  | 'button'
+                                  | 'dropdown'
+                                  | 'checkbox'
+                                  | 'stepper'
+                                  | 'bannerCarousel'
+                                  | 'switch'
+                                  | 'popup';
 
 /** Used to guarantee that each component is preset but also gets assigned its very own type */
 function createComponentThemes<c extends { [key in ThemeableComponents]: unknown }>( shape: c ): c {
@@ -82,7 +90,8 @@ export const ZComponentThemes = z.object(
             checkbox      : ZCheckboxTheme,
             stepper       : ZStepperTheme,
             bannerCarousel: ZBannerCarouselTheme,
-            switch        : ZSwitchTheme
+            switch        : ZSwitchTheme,
+            popup         : ZPopupTheme
         }
     )
 );

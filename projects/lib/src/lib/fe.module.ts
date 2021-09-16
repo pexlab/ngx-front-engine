@@ -36,5 +36,6 @@ export class FeModule {
         iconReg.loadSvg( 'assets/fe-icons/caret-up-solid.svg', 'fe-caret-up' );
         iconReg.loadSvg( 'assets/fe-icons/caret-down-solid.svg', 'fe-caret-down' );
         iconReg.loadSvg( 'assets/fe-icons/delete.svg', 'fe-backspace' );
+        iconReg.loadSvg( 'assets/fe-icons/x.svg', 'fe-close' );
     }
 }
