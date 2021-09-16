@@ -18,9 +18,11 @@ export function FeComponent( name: ThemeableComponents ) {
                 
                 Reflect.defineProperty( this, 'feTheme', {
                     
-                    set: ( value: any ) => {
+                    set: ( theme: ComponentTheme | undefined ) => {
                         
-                        const newPalette: { [ k: string ]: HEXColor } = value.palette || {};
+                        /* TODO: when set undefined remove styling */
+                        
+                        const newPalette: { [ k: string ]: HEXColor } = theme?.palette || {};
                         
                         /* Only apply the palette if it has been changed */
                         if ( !isEqual( newPalette, this._previousPalette ) ) {
@@ -36,11 +38,18 @@ export function FeComponent( name: ThemeableComponents ) {
                                 this.hostElement.nativeElement
                             );
                         }
+                        
+                        this._feTheme = theme;
+                    },
+                    
+                    get: () => {
+                        return this._feTheme;
                     }
                 } );
             }
             
             public _previousPalette: { [ k: string ]: HEXColor } = {};
+            public _feTheme?: ComponentTheme;
         };
     };
 }
