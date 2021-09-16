@@ -81,8 +81,8 @@ export class BannerCarouselComponent implements OnInit, AfterViewInit {
     public get isInValidState(): boolean {
         
         return (
-            this.currentHeading !== undefined &&
-            this.currentSubheading !== undefined &&
+            this.currentHeading != undefined &&
+            this.currentSubheading != undefined &&
             this.buttons !== undefined &&
             this.feTheme !== undefined &&
             this.feTheme.complimentaryImage !== undefined
