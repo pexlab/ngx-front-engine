@@ -8,7 +8,7 @@ import {
     FeButtonModule,
     FeCheckboxModule,
     FeDropdownModule,
-    FeModule,
+    FeModule, FeRootModule,
     FeStepperModule, FeSwitchModule,
     FeTactileModule,
     FeTextFieldModule
@@ -27,6 +27,8 @@ import { ColorPaletteComponent } from './pages/color-palette/color-palette.compo
 import { BannerCarouselComponent } from './pages/showcase/banner-carousel/banner-carousel.component';
 import { StepperComponent } from './pages/showcase/stepper/stepper.component';
 import { SwitchComponent } from './pages/showcase/switch/switch.component';
+import { PopupComponent } from './pages/showcase/popup/popup.component';
+import { NutmegComponent } from './popups/nutmeg/nutmeg.component';
 
 @NgModule(
     {
@@ -43,14 +45,17 @@ import { SwitchComponent } from './pages/showcase/switch/switch.component';
             ColorPaletteComponent,
             BannerCarouselComponent,
             StepperComponent,
-            SwitchComponent
+            SwitchComponent,
+            PopupComponent,
+            NutmegComponent
         ],
-    
+        
         imports: [
             BrowserModule,
             BrowserAnimationsModule,
             AppRoutingModule,
             FeModule,
+            FeRootModule,
             FeButtonModule,
             FeTactileModule,
             FeTextFieldModule,

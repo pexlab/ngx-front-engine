@@ -4,6 +4,7 @@ import { ColorPaletteComponent } from './pages/color-palette/color-palette.compo
 import { BannerCarouselComponent } from './pages/showcase/banner-carousel/banner-carousel.component';
 import { ButtonComponent } from './pages/showcase/button/button.component';
 import { DropdownComponent } from './pages/showcase/dropdown/dropdown.component';
+import { PopupComponent } from './pages/showcase/popup/popup.component';
 import { ShowcaseSidebarComponent } from './pages/showcase/sidebar/showcase-sidebar.component';
 import { StepperComponent } from './pages/showcase/stepper/stepper.component';
 import { SwitchComponent } from './pages/showcase/switch/switch.component';
@@ -53,6 +54,10 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
                             {
                                 path     : 'switch',
                                 component: SwitchComponent
+                            },
+                            {
+                                path     : 'popup',
+                                component: PopupComponent
                             }
                         ]
                     },
