@@ -1,11 +1,15 @@
-import { Injectable, NgZone, Renderer2, RendererFactory2 } from '@angular/core';
+import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import { ComponentThemes, CommonTheme, PartialComponentThemes, PartialCommonTheme } from '../interfaces/theme.interface';
 import { Typography } from '../interfaces/typography.interface';
 import { kebabCase } from '../utils/case.utils';
-import { mergeObj, Replace } from '../utils/type.utils';
+import { mergeObj } from '../utils/type.utils';
 import { Color } from './color';
-import { ColorPalette, EvaluatedColor, EvaluatedColorPalette, HEXColor, ZHEXColor } from '../interfaces/color.interface';
+import { ColorRegister, EvaluatedColor, HEXColor, HEXColorRegister } from '../interfaces/color.interface';
 import { FeColorPalette } from './featured-palette';
+import * as lodash from 'lodash';
+import deepdash from 'deepdash-es';
+
+const _ = deepdash( lodash );
 
 @Injectable(
     {
@@ -61,45 +65,37 @@ export class ThemeService {
     }
     
     /** Instantiate a class for every color in the palette */
-    public evaluatePalette<P extends ColorPalette, R extends Replace<P, HEXColor, Color>>( palette: P ): R {
-        
-        let evaluatedCategory!: R;
-        
-        Object.entries( palette ).map( ( category ) => {
-            
-            let evaluatedColors!: { [k in keyof R]: Color };
-            
-            Object.entries( category[ 1 ] ).map( ( color ) => {
-                evaluatedColors = {
-                    ...evaluatedColors,
-                    ...{
-                        [ color[ 0 ] ]: new Color( color[ 0 ], color[ 1 ], this )
-                    }
-                };
-            } );
-            
-            evaluatedCategory = {
-                ...evaluatedCategory,
-                ...{
-                    [ category[ 0 ] ]: evaluatedColors
-                }
-            };
-        } );
-        
-        return evaluatedCategory;
+    public evaluatePalette( palette: HEXColorRegister ): ColorRegister {
+        return _.mapValuesDeep(
+            palette,
+            ( value, key ) => new Color( String( key ), value, this ),
+            { leavesOnly: true }
+        );
     }
     
     /* TODO: if element gets applied a different palette, store the the current one in memory to remove all those previous values */
-    public applyPalette( palette: EvaluatedColorPalette, element: HTMLElement, global = false ): void {
+    public applyPalette( palette: HEXColorRegister, element: HTMLElement, global = false ): void {
         
-        Object.entries( palette ).forEach( ( category ) => {
+        /* Extract every possible key/path from the palette */
+        const elements = _.keysDeep( palette, { leavesOnly: true } );
+        
+        /* Iterate through every key/path and get it's value. The key/path is needed to determine the name of the css property */
+        elements.forEach( ( pathKey ) => {
             
-            Object.values( category[ 1 ] ).forEach( ( color ) => {
+            const key = String( pathKey );
+            
+            let value: any = palette;
+            
+            /* Walk the path to get the value */
+            key.split( '.' ).forEach( ( keyPart ) => {
+                value = value[ keyPart ];
+            } );
+            
+            if ( value && typeof value === 'string' ) {
                 
-                const propertyName = '--fe-' + (
-                        global ? 'global' : 'local'
-                    ) + '-color-' +
-                    kebabCase( category[ 0 ] ) + '-' + kebabCase( color.name );
+                const color        = new Color( undefined, value, this );
+                const scope        = global ? 'global' : 'local';
+                const propertyName = '--fe-' + scope + '-color-' + kebabCase( key );
                 
                 this.renderer.setStyle(
                     element,
@@ -250,7 +246,7 @@ export class ThemeService {
         );
         
         this.applyPalette(
-            this.evaluatePalette( this.commonTheme.palette ),
+            this.commonTheme.palette,
             document.documentElement,
             true
         );
@@ -384,7 +380,7 @@ export class ThemeService {
         );
         
         this.applyPalette(
-            this.evaluatePalette( this.componentThemes ),
+            this.componentThemes,
             document.documentElement,
             true
         );

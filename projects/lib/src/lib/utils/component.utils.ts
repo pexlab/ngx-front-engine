@@ -1,6 +1,6 @@
 import { ElementRef } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { ComponentTheme, HEXColor } from '../interfaces/color.interface';
+import { Subject } from 'rxjs';
+import { ComponentTheme, HEXColorRegister } from '../interfaces/color.interface';
 import { ThemeableComponents } from '../interfaces/theme.interface';
 import { ThemeService } from '../theme/theme.service';
 import { ClassWithProperties } from './type.utils';
@@ -22,7 +22,7 @@ export function FeComponent( name: ThemeableComponents ) {
                         
                         /* TODO: when set undefined remove styling */
                         
-                        const newPalette: { [ k: string ]: HEXColor } = theme?.palette || {};
+                        const newPalette: HEXColorRegister = theme?.palette || {};
                         
                         /* Only apply the palette if it has been changed */
                         if ( !isEqual( newPalette, this._previousPalette ) ) {
@@ -30,11 +30,9 @@ export function FeComponent( name: ThemeableComponents ) {
                             this._previousPalette = newPalette;
                             
                             ThemeService.singleton.applyPalette(
-                                ThemeService.singleton.evaluatePalette(
-                                    {
-                                        [ name ]: newPalette
-                                    }
-                                ),
+                                {
+                                    [ name ]: newPalette
+                                },
                                 this.hostElement.nativeElement
                             );
                         }
@@ -48,7 +46,7 @@ export function FeComponent( name: ThemeableComponents ) {
                 } );
             }
             
-            public _previousPalette: { [ k: string ]: HEXColor } = {};
+            public _previousPalette: HEXColorRegister = {};
             public _feTheme?: ComponentTheme;
         };
     };

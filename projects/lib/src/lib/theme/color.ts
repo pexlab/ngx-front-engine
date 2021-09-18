@@ -4,7 +4,7 @@ import { EvaluatedColor, HEXColor, RGBColor, WCAGContrast, ZHEXColor } from '../
 
 export class Color implements EvaluatedColor {
     
-    constructor( name: string, hex: string, service?: ThemeService ) {
+    constructor( name: string = '', hex: string, service?: ThemeService ) {
         this.nameVal    = name;
         this.hexVal     = Color.ensureHexAlphaFormat( hex );
         this.serviceVal = service;

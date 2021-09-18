@@ -40,7 +40,8 @@ export type RGBColor = z.infer<typeof ZRGBColor>;
 export type EvaluatedColor = z.infer<typeof EvaluatedColor>;
 export type WCAGContrast = z.infer<typeof ZWCAGContrast>;
 
-export type HEXColorRegister = { [ key: string ]: HEXColor };
+export type HEXColorRegister = { [ key: string ]: HEXColor | HEXColorRegister };
+export type ColorRegister = { [ key: string ]: Color | ColorRegister };
 export type ComponentTheme<T extends HEXColorRegister = HEXColorRegister> = {
     [ key: string ]: unknown,
     palette: T
