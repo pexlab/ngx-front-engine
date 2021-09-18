@@ -124,7 +124,7 @@ export class ThemeService {
                     color.legible_contrast,
                     2
                 );
-            } );
+            }
         } );
     }
     
@@ -233,9 +233,10 @@ export class ThemeService {
                 },
                 
                 background: {
-                    primary  : FeColorPalette.Greyscale.SnowWhite,
-                    secondary: FeColorPalette.Greyscale.BrightGrey,
-                    tertiary : FeColorPalette.Greyscale.Titanium
+                    primary   : FeColorPalette.Greyscale.SnowWhite,
+                    secondary : FeColorPalette.Greyscale.BrightGrey,
+                    tertiary  : FeColorPalette.Greyscale.Titanium,
+                    quaternary: FeColorPalette.Greyscale.Smoke
                 }
             }
         };
@@ -371,6 +372,61 @@ export class ThemeService {
                 text       : this.commonTheme.palette.text.primary,
                 exit       : this.commonTheme.palette.text.failure,
                 outerBorder: FeColorPalette.Greyscale.Transparent
+            },
+            
+            alertPortal: {
+                
+                info: {
+                    
+                    title      : this.commonTheme.palette.text.primary,
+                    description: this.commonTheme.palette.text.primary,
+                    background : Color.fadeHex( this.commonTheme.palette.accent.info, .15 ),
+                    
+                    icon          : FeColorPalette.Greyscale.SnowWhite,
+                    iconBackground: this.commonTheme.palette.accent.info,
+                    
+                    codeBorder    : this.commonTheme.palette.background.quaternary,
+                    codeBackground: this.commonTheme.palette.background.tertiary
+                },
+                
+                success: {
+                    
+                    title      : this.commonTheme.palette.text.primary,
+                    description: this.commonTheme.palette.text.primary,
+                    background : Color.fadeHex( this.commonTheme.palette.accent.success, .15 ),
+                    
+                    icon          : FeColorPalette.Greyscale.SnowWhite,
+                    iconBackground: this.commonTheme.palette.accent.success,
+                    
+                    codeBorder    : this.commonTheme.palette.background.quaternary,
+                    codeBackground: this.commonTheme.palette.background.tertiary
+                },
+                
+                warning: {
+                    
+                    title      : this.commonTheme.palette.text.primary,
+                    description: this.commonTheme.palette.text.primary,
+                    background : Color.fadeHex( this.commonTheme.palette.accent.warning, .15 ),
+                    
+                    icon          : FeColorPalette.Greyscale.PitchBlack,
+                    iconBackground: this.commonTheme.palette.accent.warning,
+                    
+                    codeBorder    : this.commonTheme.palette.background.quaternary,
+                    codeBackground: this.commonTheme.palette.background.tertiary
+                },
+                
+                error: {
+                    
+                    title      : this.commonTheme.palette.text.primary,
+                    description: this.commonTheme.palette.text.primary,
+                    background : Color.fadeHex( this.commonTheme.palette.accent.failure, .15 ),
+                    
+                    icon          : FeColorPalette.Greyscale.SnowWhite,
+                    iconBackground: this.commonTheme.palette.accent.failure,
+                    
+                    codeBorder    : this.commonTheme.palette.background.quaternary,
+                    codeBackground: this.commonTheme.palette.background.tertiary
+                }
             }
         };
         

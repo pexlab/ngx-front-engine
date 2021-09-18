@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ZAlertPortalTheme } from '../components/alert-portal/alert-portal.component';
 import { ZBannerCarouselTheme } from '../components/banner-carousel/banner-carousel.component';
 import { ZButtonTheme } from '../components/button/button.component';
 import { ZCheckboxTheme } from '../components/checkbox/checkbox.component';
@@ -53,9 +54,10 @@ export const ZCommonTheme = z.object(
                 
                 background: z.object(
                     {
-                        primary  : ZHEXColor,
-                        secondary: ZHEXColor,
-                        tertiary : ZHEXColor
+                        primary   : ZHEXColor,
+                        secondary : ZHEXColor,
+                        tertiary  : ZHEXColor,
+                        quaternary: ZHEXColor
                     }
                 ),
                 
@@ -74,7 +76,8 @@ export type ThemeableComponents = 'textField'
                                   | 'stepper'
                                   | 'bannerCarousel'
                                   | 'switch'
-                                  | 'popup';
+                                  | 'popup'
+                                  | 'alertPortal';
 
 /** Used to guarantee that each component is preset but also gets assigned its very own type */
 function createComponentThemes<c extends { [key in ThemeableComponents]: unknown }>( shape: c ): c {
@@ -91,7 +94,8 @@ export const ZComponentThemes = z.object(
             stepper       : ZStepperTheme,
             bannerCarousel: ZBannerCarouselTheme,
             switch        : ZSwitchTheme,
-            popup         : ZPopupTheme
+            popup         : ZPopupTheme,
+            alertPortal   : ZAlertPortalTheme
         }
     )
 );

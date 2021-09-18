@@ -17,44 +17,44 @@ $scope : 'global' !default;
 }
 
 @mixin commonFont($name) {
-  font-family: var(--fe-local-font-#{$name}-family, var(--fe-global-font-#{$name}-family)), sans-serif;
-  font-size: var(--fe-local-font-#{$name}-size, var(--fe-global-font-#{$name}-size));
-  font-weight: var(--fe-local-font-#{$name}-weight, var(--fe-global-font-#{$name}-weight));
+  font-family : var(--fe-local-font-#{$name}-family, var(--fe-global-font-#{$name}-family)), sans-serif;
+  font-size   : var(--fe-local-font-#{$name}-size, var(--fe-global-font-#{$name}-size));
+  font-weight : var(--fe-local-font-#{$name}-weight, var(--fe-global-font-#{$name}-weight));
 }
 
 @mixin inlineIcon($size) {
   
   & > svg-icon {
-    
-    display     : grid;
-    place-items : center;
-    
-    width       : $size;
-    height      : $size;
-    
-    & > svg {
-      width  : $size;
-      height : $size;
-    }
+	
+	display     : grid;
+	place-items : center;
+	
+	width       : $size;
+	height      : $size;
+	
+	& > svg {
+	  width  : $size;
+	  height : $size;
+	}
   }
 }
 
 @mixin inlineDeepIcon($size) {
   
   ::ng-deep {
-    
-    & > svg-icon {
-      
-      display     : grid;
-      place-items : center;
-      
-      width       : $size;
-      height      : $size;
-      
-      & > svg {
-        width  : $size;
-        height : $size;
-      }
-    }
+	
+	& > svg-icon {
+	  
+	  display     : grid;
+	  place-items : center;
+	  
+	  width       : $size;
+	  height      : $size;
+	  
+	  & > svg {
+		width  : $size;
+		height : $size;
+	  }
+	}
   }
 }

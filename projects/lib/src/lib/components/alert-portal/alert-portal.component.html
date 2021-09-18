@@ -1,0 +1,16 @@
+<div *ngFor="let a of alerts; trackBy:identify" class="alert" [ngClass]="a.type" [@alert]>
+    <div class="wrapper">
+        <div class="content">
+
+            <div class="icon">
+                <svg-icon [name]="a.icon || 'fe-' + a.type"></svg-icon>
+            </div>
+
+            <div class="text">
+                <span class="title">{{ a.title }}</span>
+                <span class="description" *ngIf="a.description">{{ a.description }}</span>
+                <code class="code_embed" *ngIf="a.code" [highlight]="a.code"></code>
+            </div>
+        </div>
+    </div>
+</div>
