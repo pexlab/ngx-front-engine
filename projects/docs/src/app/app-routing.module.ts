@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ColorPaletteComponent } from './pages/color-palette/color-palette.component';
+import { AlertPortalComponent } from './pages/showcase/alert-portal/alert-portal.component';
 import { BannerCarouselComponent } from './pages/showcase/banner-carousel/banner-carousel.component';
 import { ButtonComponent } from './pages/showcase/button/button.component';
 import { DropdownComponent } from './pages/showcase/dropdown/dropdown.component';
@@ -58,6 +59,10 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
                             {
                                 path     : 'popup',
                                 component: PopupComponent
+                            },
+                            {
+                                path     : 'alert-portal',
+                                component: AlertPortalComponent
                             }
                         ]
                     },

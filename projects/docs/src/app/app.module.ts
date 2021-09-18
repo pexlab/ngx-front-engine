@@ -11,7 +11,8 @@ import {
     FeModule, FeRootModule,
     FeStepperModule, FeSwitchModule,
     FeTactileModule,
-    FeTextFieldModule
+    FeTextFieldModule,
+    FeAlertPortalModule
 } from '@pexlab/ngx-front-engine';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { AppRoutingModule } from './app-routing.module';
@@ -29,6 +30,7 @@ import { StepperComponent } from './pages/showcase/stepper/stepper.component';
 import { SwitchComponent } from './pages/showcase/switch/switch.component';
 import { PopupComponent } from './pages/showcase/popup/popup.component';
 import { NutmegComponent } from './popups/nutmeg/nutmeg.component';
+import { AlertPortalComponent } from './pages/showcase/alert-portal/alert-portal.component';
 
 @NgModule(
     {
@@ -47,7 +49,8 @@ import { NutmegComponent } from './popups/nutmeg/nutmeg.component';
             StepperComponent,
             SwitchComponent,
             PopupComponent,
-            NutmegComponent
+            NutmegComponent,
+            AlertPortalComponent
         ],
         
         imports: [
@@ -66,7 +69,8 @@ import { NutmegComponent } from './popups/nutmeg/nutmeg.component';
             ReactiveFormsModule,
             FeStepperModule,
             BannerCarouselModule,
-            FeSwitchModule
+            FeSwitchModule,
+            FeAlertPortalModule
         ],
         
         providers: [],
