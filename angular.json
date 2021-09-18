@@ -73,7 +73,10 @@
               "projects/docs/src/styles.scss",
               "./dist/ngx-front-engine/assets/fe-styles/root.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "highlight.js"
+            ]
           },
           "configurations": {
             "production": {
