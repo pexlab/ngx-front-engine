@@ -24,4 +24,4 @@ import { BannerCarouselComponent } from './banner-carousel.component';
     }
 )
 
-export class BannerCarouselModule {}
+export class FeBannerCarouselModule {}

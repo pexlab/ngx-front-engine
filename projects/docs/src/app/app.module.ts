@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-    BannerCarouselModule,
+    FeBannerCarouselModule,
     FeButtonModule,
     FeCheckboxModule,
     FeDropdownModule,
@@ -68,7 +68,7 @@ import { AlertPortalComponent } from './pages/showcase/alert-portal/alert-portal
             AngularSvgIconModule.forRoot(),
             ReactiveFormsModule,
             FeStepperModule,
-            BannerCarouselModule,
+            FeBannerCarouselModule,
             FeSwitchModule,
             FeAlertPortalModule
         ],
