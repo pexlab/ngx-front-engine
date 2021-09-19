@@ -34,10 +34,11 @@ export const ZCommonTheme = z.object(
                         primary_dimmed  : ZHEXColor,
                         secondary       : ZHEXColor,
                         secondary_dimmed: ZHEXColor,
+                        generic         : ZHEXColor,
+                        info            : ZHEXColor,
                         success         : ZHEXColor,
                         failure         : ZHEXColor,
-                        warning         : ZHEXColor,
-                        info            : ZHEXColor
+                        warning         : ZHEXColor
                     }
                 ),
                 

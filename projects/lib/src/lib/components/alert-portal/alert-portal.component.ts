@@ -73,7 +73,7 @@ export class AlertPortalComponent implements OnInit {
     }
 }
 
-export type AlertType = 'info' | 'success' | 'warning' | 'error';
+export type AlertType = 'generic' | 'info' | 'success' | 'warning' | 'error';
 
 export type Alert = {
     type: AlertType;
@@ -102,6 +102,7 @@ export const ZAlertTheme = z.object(
 
 export const ZAlertPortalTheme = z.object(
     {
+        generic: ZAlertTheme,
         info   : ZAlertTheme,
         success: ZAlertTheme,
         warning: ZAlertTheme,

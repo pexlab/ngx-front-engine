@@ -137,7 +137,7 @@
   display        : grid;
   grid-auto-flow : row;
   
-  @each $t in ('info', 'success', 'warning', 'error') {
+  @each $t in ('generic', 'info', 'success', 'warning', 'error') {
 	@include style($t);
   }
 }

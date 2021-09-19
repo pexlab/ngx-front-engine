@@ -217,10 +217,11 @@ export class ThemeService {
                     primary_dimmed  : FeColorPalette.Blue.VividDarkBlue,
                     secondary       : FeColorPalette.Greyscale.AlmostMidnight,
                     secondary_dimmed: FeColorPalette.Greyscale.Midnight,
+                    generic         : FeColorPalette.Greyscale.AlmostMidnight,
+                    info            : FeColorPalette.Blue.NaturalBlue,
                     failure         : FeColorPalette.Red.SpanishRed,
-                    success         : FeColorPalette.Green.Emerald,
-                    warning         : FeColorPalette.Yellow.VividPostIt,
-                    info            : FeColorPalette.Blue.Sky
+                    success         : FeColorPalette.Green.Malachite,
+                    warning         : FeColorPalette.Yellow.VividPostIt
                 },
                 
                 text: {
@@ -375,6 +376,19 @@ export class ThemeService {
             },
             
             alertPortal: {
+                
+                generic: {
+                    
+                    title      : this.commonTheme.palette.text.primary,
+                    description: this.commonTheme.palette.text.primary,
+                    background : Color.fadeHex( this.commonTheme.palette.accent.generic, .15 ),
+                    
+                    icon          : FeColorPalette.Greyscale.SnowWhite,
+                    iconBackground: this.commonTheme.palette.accent.generic,
+                    
+                    codeBorder    : this.commonTheme.palette.background.quaternary,
+                    codeBackground: this.commonTheme.palette.background.tertiary
+                },
                 
                 info: {
                     
