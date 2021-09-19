@@ -1,3 +1,13 @@
-<fe-button (feClick)="spawnAlerts()">Spawn alerts</fe-button>
+<div class="note">
+    <span>Note:</span>
+    <span>If you spawn some alerts, then switch pages and come back later, the alerts will persist. They only disappear if you remove them manually.</span>
+    <span>You can even have the same instance of alerts in multiple places at the same time.</span>
+</div>
 
-<fe-alert-portal feInstance="example"></fe-alert-portal>
+<div class="inline">
+    <fe-button (feClick)="spawn()">Spawn</fe-button>
+    <fe-button (feClick)="removeRandom()">Remove random</fe-button>
+    <fe-button (feClick)="clear()">Clear all</fe-button>
+</div>
+
+<fe-alert-portal feInstance="showcase"></fe-alert-portal>

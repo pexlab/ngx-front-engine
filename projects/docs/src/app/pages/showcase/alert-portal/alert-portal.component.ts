@@ -13,45 +13,59 @@ export class AlertPortalComponent implements OnInit {
     
     private sampleAlerts: Alert[] = [
         {
-            title      : 'Info',
-            description: 'Point out something to the user.',
+            title      : 'Not sure?',
+            description: 'When in doubt, use this generic alert type.',
+            type       : 'generic',
+            icon       : 'help'
+        },
+        {
+            title      : 'Did you know?',
+            description: 'Here is something might worth pointing out.',
             type       : 'info'
         },
         {
-            title      : 'Success',
-            description: 'Indicate a successful result.',
+            title      : 'All good',
+            description: 'Your request has gone through.',
             type       : 'success'
         },
         {
-            title      : 'Warning',
-            description: 'Issue a warning.',
+            title      : 'Caution',
+            description: 'A warning has been issued.',
             type       : 'warning'
         },
         {
-            title      : 'Error',
-            description: 'Alert if something has gone wrong.',
+            title      : 'Damn!',
+            description: 'Something has gone wrong.',
             type       : 'error'
         }
     ];
     
-    private removeOld: ( () => void )[] = [];
-    
     public ngOnInit(): void {
     }
     
-    public spawnAlerts() {
-        
-        this.removeOld.forEach( ( func ) => {
-            func();
-        } );
+    public spawn() {
         
         this.sampleAlerts.forEach( ( a, index ) => {
             
             setTimeout( () => {
                 
-                this.removeOld.push( this.alert.emit( 'example', a ) );
+                this.alert.emit( 'showcase', a );
                 
             }, index * 500 );
         } );
+    }
+    
+    public clear() {
+        this.alert.clear( 'showcase' );
+    }
+    
+    public removeRandom() {
+        
+        const activeAlerts = this.alert.getAll( 'showcase' );
+        
+        if ( activeAlerts.length > 0 ) {
+            const randomAlert = activeAlerts[ Math.floor( ( Math.random() * activeAlerts.length ) ) ];
+            randomAlert.remove();
+        }
     }
 }
