@@ -35,6 +35,11 @@
 		  place-items               : center;
 		  
 		  color                     : theme.hex($type + '-icon');
+		  
+		  @include theme.commonFont('decorative');
+		  
+		  user-select               : none;
+		  
 		  background-color          : theme.hex($type + '-icon-background');
 		  
 		  border-top-left-radius    : 10px;

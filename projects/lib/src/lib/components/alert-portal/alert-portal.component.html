@@ -3,7 +3,8 @@
         <div class="content">
 
             <div class="icon">
-                <svg-icon [name]="a.icon || 'fe-' + a.type"></svg-icon>
+                <svg-icon *ngIf="!isEmoji(getIcon(a))" [name]="getIcon(a)"></svg-icon>
+                <span *ngIf="isEmoji(getIcon(a))">{{ getIcon(a) }}</span>
             </div>
 
             <div class="text">

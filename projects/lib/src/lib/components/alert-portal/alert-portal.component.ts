@@ -63,6 +63,14 @@ export class AlertPortalComponent implements OnInit {
     public identify( index: number, alert: TaggedAlert ) {
         return alert.id;
     }
+    
+    public isEmoji( value: string ) {
+        return /\p{Emoji}/u.test( value );
+    }
+    
+    public getIcon( alert: Alert ): string {
+        return alert.icon || 'fe-' + alert.type;
+    }
 }
 
 export type AlertType = 'info' | 'success' | 'warning' | 'error';
