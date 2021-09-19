@@ -15,19 +15,23 @@ export class AlertPortalService {
         [ p: string ]: { [ key: string ]: Alert },
     } = {};
     
-    public transform( input: { [ key: string ]: Alert } | undefined ): TaggedAlert[] {
+    public transform( instanceName: string, input: { [ key: string ]: Alert } | undefined ): TaggedAlert[] {
         return Object.entries( input || {} ).map( ( value ) => {
             return {
                 ...value[ 1 ],
                 ...{
-                    id: value[ 0 ]
+                    id    : value[ 0 ],
+                    remove: () => {
+                        delete this.storage[ instanceName ][ value[ 0 ] ];
+                        this.emitNew( instanceName );
+                    }
                 }
             };
         } );
     }
     
     public getAll( instanceName: string ): TaggedAlert[] {
-        return this.transform( this.storage[ instanceName ] );
+        return this.transform( instanceName, this.storage[ instanceName ] );
     }
     
     public emit( instanceName: string, alert: Alert ): () => void {
@@ -59,6 +63,6 @@ export class AlertPortalService {
     }
     
     private emitNew( instanceName: string ): void {
-        this.channel.emit( { instanceName, alerts: this.transform( this.storage[ instanceName ] ) } );
+        this.channel.emit( { instanceName, alerts: this.transform( instanceName, this.storage[ instanceName ] ) } );
     }
 }

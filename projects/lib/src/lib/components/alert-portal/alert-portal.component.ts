@@ -83,7 +83,7 @@ export type Alert = {
     icon?: string;
 };
 
-export type TaggedAlert = Alert & { id: string };
+export type TaggedAlert = Alert & { id: string, remove: () => void };
 
 export const ZAlertTheme = z.object(
     {
