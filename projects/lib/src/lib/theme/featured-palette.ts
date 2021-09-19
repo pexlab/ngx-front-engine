@@ -14,9 +14,11 @@ export const FeColorPalette = composePalette(
             Olive       : '#9dad6f',
             Emerald     : '#2ecc71',
             Lime        : '#46E646',
+            Malachite   : '#0BDA51',
             Nature      : '#4FBF26',
-            BlueishPine : '#015249',
+            Salem       : '#0A7B3E',
             Forest      : '#004F2D',
+            BlueishPine : '#015249',
             DarkForest  : '#0C2F22',
             PhthaloGreen: '#14342B'
         },
