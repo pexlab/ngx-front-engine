@@ -9,19 +9,19 @@ import { ThemeService } from './theme/theme.service';
         declarations: [],
         
         imports: [
-            AngularSvgIconModule.forRoot(),
+            AngularSvgIconModule.forRoot()
         ],
         
         exports: [],
-    
+        
         providers: [
             {
-                provide: HIGHLIGHT_OPTIONS,
+                provide : HIGHLIGHT_OPTIONS,
                 useValue: {
-                    fullLibraryLoader: () => import('highlight.js'),
+                    fullLibraryLoader: () => import('highlight.js')
                 }
             }
-        ],
+        ]
     }
 )
 
