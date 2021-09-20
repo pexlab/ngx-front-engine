@@ -1,11 +1,7 @@
-$scope : 'global' !default;
+$scope : 'custom' !default;
 
 @function hex($name) {
   @return var(--fe-local-color-#{$scope}-#{$name}-hex, var(--fe-global-color-#{$scope}-#{$name}-hex));
-}
-
-@function globalHex($name) {
-  @return var(--fe-local-color-#{$name}-hex, var(--fe-global-color-#{$name}-hex));
 }
 
 @function fadeHex($name, $opacity) {
@@ -14,6 +10,20 @@ $scope : 'global' !default;
 
 @function contrast($name) {
   @return var(--fe-local-color-#{$scope}-#{$name}-contrast, var(--fe-global-color-#{$scope}-#{$name}-contrast));
+}
+
+/* No scope (mostly used for values from the common palette) */
+
+@function commonHex($name) {
+  @return var(--fe-local-color-#{$name}-hex, var(--fe-global-color-#{$name}-hex));
+}
+
+@function fadeCommonHex($name, $opacity) {
+  @return rgba(var(--fe-local-color-#{$name}-rgb, var(--fe-global-color-#{$name}-rgb)), $opacity)
+}
+
+@function commonContrast($name) {
+  @return var(--fe-local-color-#{$name}-contrast, var(--fe-global-color-#{$name}-contrast));
 }
 
 @mixin commonFont($name) {
