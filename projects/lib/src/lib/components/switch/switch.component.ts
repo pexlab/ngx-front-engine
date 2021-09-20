@@ -2,10 +2,10 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
-    ElementRef,
+    ElementRef, EventEmitter,
     Input,
     OnInit,
-    Optional,
+    Optional, Output,
     Self
 } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
@@ -57,6 +57,9 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
     @Input()
     public feIconRight?: string;
     
+    @Output()
+    public feChange = new EventEmitter();
+    
     /* Form API */
     private formInputEvent?: ( value: string | boolean ) => void;
     private formBlurEvent?: () => void;
@@ -84,6 +87,8 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
                 this.positionIndex = 0;
             }
         }
+        
+        this.feChange.next( this.feValues[ this.positionIndex ] );
         
         if ( this.formInputEvent ) {
             this.formInputEvent( this.feValues[ this.positionIndex ] );
@@ -118,6 +123,8 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
         } else {
             throw new Error( 'Invalid value "' + input + '" to write on switch component.' );
         }
+    
+        this.feChange.next( this.feValues[ this.positionIndex ] );
         
         this.cdr.markForCheck();
     }

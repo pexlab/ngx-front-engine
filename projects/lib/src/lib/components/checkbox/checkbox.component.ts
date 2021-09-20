@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, OnInit, Optional, Self } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Optional, Output, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { parsePath, roundCommands } from '@twixes/svg-round-corners';
 import { z } from 'zod';
@@ -33,6 +33,9 @@ export class CheckboxComponent implements OnInit, ControlValueAccessor {
     @Input()
     public feLabel!: string;
     
+    @Output()
+    public feChange = new EventEmitter();
+    
     public isChecked = false;
     
     public idleOutlinePath!: string;
@@ -58,6 +61,8 @@ export class CheckboxComponent implements OnInit, ControlValueAccessor {
     public onClick(): void {
         
         this.isChecked = !this.isChecked;
+        
+        this.feChange.next( this.isChecked );
         
         if ( this.formInputEvent ) {
             this.formInputEvent( this.isChecked );
@@ -98,6 +103,7 @@ export class CheckboxComponent implements OnInit, ControlValueAccessor {
     
     public writeValue( input: any ): void {
         this.isChecked = Boolean( input );
+        this.feChange.next( this.isChecked );
     }
     
     public registerOnChange( fn: any ): void {

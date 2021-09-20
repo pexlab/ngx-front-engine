@@ -4,8 +4,8 @@ import {
     ChangeDetectorRef,
     Component,
     ContentChild,
-    ElementRef,
-    Input, NgZone, OnDestroy, OnInit, Optional,
+    ElementRef, EventEmitter,
+    Input, NgZone, OnDestroy, OnInit, Optional, Output,
     QueryList,
     Renderer2, Self,
     TemplateRef,
@@ -145,6 +145,9 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
     @Input()
     public feSpellcheck = false;
     
+    @Output()
+    public feChange = new EventEmitter();
+    
     /* Used by the group directive */
     public set labelWidth( value: string ) {
         this.hostElement.nativeElement.style.setProperty( '--label-width', value );
@@ -270,6 +273,9 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         this.initialisationValue = value;
         
         this.ngZone.run( () => {
+            
+            this.feChange.next( value );
+            
             if ( this.formInputEvent ) {
                 this.formInputEvent( value ); /* Update the form model on input */
             }

@@ -2,11 +2,11 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
-    ElementRef,
+    ElementRef, EventEmitter,
     HostBinding,
     Input,
     OnInit,
-    Optional,
+    Optional, Output,
     Self
 } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
@@ -58,6 +58,9 @@ export class StepperComponent implements OnInit, ControlValueAccessor {
     @Input()
     public feSuffix!: ( input: number ) => string;
     
+    @Output()
+    public feChange = new EventEmitter();
+    
     /* To simplify the attribute usage */
     @HostBinding( 'class.stepper-inline' )
     private get isInline() {
@@ -92,7 +95,9 @@ export class StepperComponent implements OnInit, ControlValueAccessor {
         }
         
         this.value++;
-        
+    
+        this.feChange.next( this.value );
+    
         if ( this.formInputEvent ) {
             this.formInputEvent( this.value );
         }
@@ -107,7 +112,9 @@ export class StepperComponent implements OnInit, ControlValueAccessor {
         }
         
         this.value--;
-        
+    
+        this.feChange.next( this.value );
+    
         if ( this.formInputEvent ) {
             this.formInputEvent( this.value );
         }
@@ -168,6 +175,8 @@ export class StepperComponent implements OnInit, ControlValueAccessor {
                 this.value = parsed;
             }
         }
+        
+        this.feChange.next( this.value );
         
         this.cdr.markForCheck();
     }

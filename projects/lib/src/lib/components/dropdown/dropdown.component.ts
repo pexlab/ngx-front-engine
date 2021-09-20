@@ -3,10 +3,10 @@ import {
     ChangeDetectorRef,
     Component,
     ContentChildren,
-    ElementRef,
+    ElementRef, EventEmitter,
     HostBinding,
     Input,
-    OnDestroy, Optional,
+    OnDestroy, Optional, Output,
     QueryList, Self,
     TemplateRef,
     ViewChild
@@ -82,6 +82,9 @@ export class DropdownComponent implements OnDestroy, ControlValueAccessor {
     
     @Input()
     public feTheme!: ComponentTheme<PartialDropdownTheme>;
+    
+    @Output()
+    public feChange = new EventEmitter();
     
     public activePlaceholderRef?: TemplateRef<any>;
     public defaultPlaceholderRef?: TemplateRef<any>;
@@ -173,7 +176,9 @@ export class DropdownComponent implements OnDestroy, ControlValueAccessor {
     private setChoiceComponent( choiceComponent: DropdownChoiceComponent ): void {
         
         this.currentChoice = choiceComponent.feValue;
-        
+    
+        this.feChange.next( choiceComponent.feValue );
+    
         /* Prevents marking the field as dirty although it was the initial value write event from the forms-api */
         if ( this.isInitialValueWrite ) {
             this.isInitialValueWrite = false;
@@ -190,7 +195,9 @@ export class DropdownComponent implements OnDestroy, ControlValueAccessor {
     public clearChoiceComponent(): void {
         
         this.currentChoice = null;
-        
+    
+        this.feChange.next( null );
+    
         /* Prevents marking the field as dirty although it was the initial value write event from the forms-api */
         if ( this.isInitialValueWrite ) {
             this.isInitialValueWrite = false;
@@ -213,6 +220,7 @@ export class DropdownComponent implements OnDestroy, ControlValueAccessor {
         }
         
         this.value = input;
+        this.feChange.next( input );
     }
     
     public registerOnChange( fn: any ): void {
