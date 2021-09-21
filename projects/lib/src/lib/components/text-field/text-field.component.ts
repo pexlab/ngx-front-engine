@@ -1,4 +1,5 @@
 import {
+    AfterViewChecked,
     AfterViewInit,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -389,8 +390,8 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
             10 * 2
         );
         
-        const w = this.hostElement.nativeElement.getBoundingClientRect().width + m;
-        const h = this.hostElement.nativeElement.getBoundingClientRect().height + m;
+        const w = this.hostElement.nativeElement.clientWidth + m;
+        const h = this.hostElement.nativeElement.clientHeight + m;
         
         const path = `M${ gapEnd },${ m } L${ w },${ m } L${ w },${ h } L${ m },${ h } L${ m },${ m } L${ gapStart },${ m }`;
         
