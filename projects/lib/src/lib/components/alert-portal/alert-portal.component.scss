@@ -56,6 +56,8 @@
 		  grid-auto-flow             : row;
 		  grid-gap                   : 3px;
 		  
+		  box-sizing                 : border-box;
+		  
 		  padding                    : 10px;
 		  
 		  border-top                 : 2px solid theme.hex($type + '-icon-background');
