@@ -19,6 +19,9 @@ export class ButtonComponent {
     @Input()
     public feTheme!: ComponentTheme<PartialButtonTheme>;
     
+    @Input()
+    public feType: 'submit' | 'button' = 'button';
+    
     @Output()
     public feClick: EventEmitter<any> = new EventEmitter();
 }
