@@ -4,9 +4,11 @@ $PADDING : 20px;
 
 :host {
   
-  display : block;
+  position : relative;
   
-  width   : 100%;
+  display  : block;
+  
+  width    : 100%;
   
   @include config.commonFont('body');
   
@@ -36,6 +38,8 @@ $PADDING : 20px;
 	user-select    : none;
 	
 	white-space    : nowrap;
+	
+	max-width      : 50%;
   }
   
   & > .field {
@@ -141,7 +145,7 @@ $PADDING : 20px;
 		
 		left           : var(--placeholder-x);
 		top            : var(--placeholder-y);
-	 
+		
 		padding-right  : $PADDING;
 		
 		user-select    : none;

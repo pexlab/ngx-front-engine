@@ -15,9 +15,11 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { parsePath, roundCommands } from '@twixes/svg-round-corners';
+import { nanoid } from 'nanoid';
 import { z } from 'zod';
 import { ComponentTheme, ZHEXColor } from '../../interfaces/color.interface';
 import { AsynchronouslyInitialisedComponent, FeComponent } from '../../utils/component.utils';
+import { LabelAlignerService } from './label-aligner.service';
 
 @FeComponent( 'textField' )
 @Component(
@@ -38,7 +40,8 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         public hostElement: ElementRef<HTMLElement>,
         private renderer: Renderer2,
         private cdr: ChangeDetectorRef,
-        private ngZone: NgZone
+        private ngZone: NgZone,
+        private aligner: LabelAlignerService
     ) {
         super();
         hostElement.nativeElement.style.setProperty( '--label-width', 'auto' );
@@ -146,6 +149,30 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
     @Input()
     public feSpellcheck = false;
     
+    @Input()
+    public set feAlignGroup( value: string | undefined ) {
+        
+        if ( value ) {
+            
+            if ( this.alignInstance ) {
+                this.aligner.unregister( this.alignInstance, this.alignId );
+            }
+            
+            if ( this.viewInit ) {
+                this.aligner.register( value, this.alignId, this );
+            }
+            
+            this.alignInstance = value;
+            
+            return;
+        }
+        
+        if ( value === undefined && this.alignInstance ) {
+            this.aligner.unregister( this.alignInstance, this.alignId );
+            this.alignInstance = undefined;
+        }
+    }
+    
     @Output()
     public feChange = new EventEmitter();
     
@@ -157,10 +184,15 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
     public normalBorderPath!: string;
     public focusBorderPath!: string;
     
+    public alignInstance?: string;
+    public alignId = nanoid();
+    
     /* Used to populate the field on initialisation.
      For example when the type changes from 'single' to 'multi' the value from before will be recovered.
      Or when the value is set before the field has been fully initialised it will catch up through this variable. */
     private initialisationValue = '';
+    
+    private viewInit = false;
     
     private isFocused                  = false;
     private skipNextFocusBlurAnimation = false;
@@ -185,18 +217,33 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         return this.feStatic;
     }
     
-    private resizeObserver!: ResizeObserver;
+    private mainResizeObserver!: ResizeObserver;
+    private labelResizeObserver!: ResizeObserver;
     
     public ngOnInit(): void {
-        this.resizeObserver = new ResizeObserver( () => {
+        
+        this.mainResizeObserver = new ResizeObserver( () => {
             this.considerBorderPath();
             this.cdr.detectChanges();
+        } );
+        
+        this.labelResizeObserver = new ResizeObserver( () => {
+            if ( this.alignInstance ) {
+                this.aligner.updateWidth( this.alignInstance, this.alignId );
+            }
         } );
     }
     
     public ngAfterViewInit(): void {
         
-        this.resizeObserver.observe( this.fieldRef.nativeElement );
+        this.viewInit = true;
+        
+        if ( this.alignInstance ) {
+            this.aligner.register( this.alignInstance, this.alignId, this );
+        }
+        
+        this.mainResizeObserver.observe( this.fieldRef.nativeElement );
+        this.labelResizeObserver.observe( this.measurementRef.nativeElement );
         
         /* Initialise style */
         this.unpinPlaceholder(); /* CSS assumes initial unpinned position as well! */
@@ -206,7 +253,11 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
     
     public ngOnDestroy(): void {
         
-        this.resizeObserver.unobserve( this.hostElement.nativeElement );
+        if ( this.alignInstance ) {
+            this.aligner.unregister( this.alignInstance, this.alignId );
+        }
+        
+        this.mainResizeObserver.unobserve( this.hostElement.nativeElement );
         
         this.disposeListeners.forEach( dispose => {
             dispose();
@@ -424,7 +475,7 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
     
     /* TODO: additional method: get multi-line width of label */
     public getSingleLineWidthOfLabel(): number {
-        return this.measurementRef.nativeElement.clientWidth;
+        return Math.ceil( this.measurementRef.nativeElement.getBoundingClientRect().width );
     }
     
     /* Reactive forms functions */

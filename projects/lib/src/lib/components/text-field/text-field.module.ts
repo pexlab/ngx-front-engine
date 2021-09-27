@@ -7,10 +7,12 @@ import { TextFieldComponent } from './text-field.component';
         declarations: [
             TextFieldComponent
         ],
-        imports     : [
+        
+        imports: [
             CommonModule
         ],
-        exports     : [
+        
+        exports: [
             TextFieldComponent
         ]
     }
