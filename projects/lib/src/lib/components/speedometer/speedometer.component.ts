@@ -4,7 +4,6 @@ import { parsePath, roundCommands } from '@twixes/svg-round-corners';
 import { z } from 'zod';
 import { ComponentTheme, ZHEXColor } from '../../interfaces/color.interface';
 import { FeComponent } from '../../utils/component.utils';
-import { PartialCheckboxTheme } from '../checkbox/checkbox.component';
 
 @FeComponent( 'speedometer' )
 @Component(
@@ -24,7 +23,7 @@ export class SpeedometerComponent implements AfterViewInit {
     }
     
     @Input()
-    public feTheme!: ComponentTheme<PartialCheckboxTheme>;
+    public feTheme!: ComponentTheme<PartialSpeedometerTheme>;
     
     @Input()
     public feRange!: [ number, number ];
@@ -96,7 +95,9 @@ export class SpeedometerComponent implements AfterViewInit {
     private currentValue?: number;
     
     public ngAfterViewInit(): void {
-        this.feValue = Math.min( this.feRange[ 0 ], this.feRange[ 1 ] );
+        if ( this.currentValue === undefined ) {
+            this.feValue = Math.min( this.feRange[ 0 ], this.feRange[ 1 ] );
+        }
     }
     
     public updateValue(): void {
