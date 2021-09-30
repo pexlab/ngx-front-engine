@@ -200,7 +200,7 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
     private disposeListeners: ( () => void )[] = [];
     
     /* Form API */
-    private formInputEvent?: ( value: string ) => void;
+    private formInputEvent?: ( value: string | null ) => void;
     private formBlurEvent?: () => void;
     
     /* To simplify the attribute usage */
@@ -330,7 +330,7 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
             this.feChange.next( value );
             
             if ( this.formInputEvent ) {
-                this.formInputEvent( value ); /* Update the form model on input */
+                this.formInputEvent( value.length > 0 ? value : null ); /* Update the form model on input */
             }
         } );
     }
@@ -481,8 +481,8 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
     
     /* Reactive forms functions */
     
-    public writeValue( input: string ): void {
-        this.value = input;
+    public writeValue( input: string | null ): void {
+        this.value = input === null ? '' : input;
     }
     
     public registerOnChange( fn: any ): void {
