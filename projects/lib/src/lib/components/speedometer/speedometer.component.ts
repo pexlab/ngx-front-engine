@@ -36,6 +36,9 @@ export class SpeedometerComponent implements AfterViewInit {
     public feLabel!: string;
     
     @Input()
+    public feFractions = 0;
+    
+    @Input()
     public set feValue( value: number ) {
         
         this.currentValue = value;
@@ -133,7 +136,7 @@ export class SpeedometerComponent implements AfterViewInit {
                 
                 const progress = Math.min( ( timestamp - startTimestamp ) / duration, 1 );
                 
-                this.foregroundValueEl.nativeElement.innerText = Math.floor( progress * ( countTo - start ) + start ).toString();
+                this.foregroundValueEl.nativeElement.innerText = ( progress * ( countTo - start ) + start ).toFixed( this.feFractions );
                 
                 if ( progress < 1 ) {
                     window.requestAnimationFrame( step );
