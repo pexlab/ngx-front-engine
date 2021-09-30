@@ -441,6 +441,26 @@ export class ThemeService {
                     codeBorder    : this.commonTheme.palette.background.quaternary,
                     codeBackground: this.commonTheme.palette.background.tertiary
                 }
+            },
+            
+            speedometer: {
+                
+                hud: FeColorPalette.Greyscale.SnowWhite,
+                
+                border: {
+                    inner: FeColorPalette.Greyscale.SnowWhite,
+                    outer: FeColorPalette.Cyan.AgalAquamarine
+                },
+                
+                indicator: {
+                    gradientStart: FeColorPalette.Blue.VividCatalinaBlue,
+                    gradientEnd  : FeColorPalette.Cyan.AgalAquamarine
+                },
+                
+                background: {
+                    inner: FeColorPalette.Blue.PureBlue,
+                    outer: FeColorPalette.Blue.Eclipse
+                }
             }
         };
         

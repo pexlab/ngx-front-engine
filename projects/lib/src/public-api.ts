@@ -40,6 +40,9 @@ export * from './lib/components/alert-portal/alert-portal.module';
 export * from './lib/components/alert-portal/alert-portal.component';
 export * from './lib/components/alert-portal/alert-portal.service';
 
+export * from './lib/components/speedometer/speedometer.module';
+export * from './lib/components/speedometer/speedometer.component';
+
 export * from './lib/components/root/root.module';
 export * from './lib/components/root/root.component';
 

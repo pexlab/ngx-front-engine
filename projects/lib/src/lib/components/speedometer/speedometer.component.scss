@@ -1,0 +1,148 @@
+@use '../../../../assets/fe-styles/theme' with ($scope: 'speedometer');
+
+:host {
+  
+  position : relative;
+  
+  display  : block;
+  
+  width    : 450px;
+  height   : 450px;
+  
+  & > .center {
+	position  : absolute;
+	left      : 50%;
+	top       : 50%;
+	transform : translateX(-50%) translateY(-50%);
+  }
+  
+  & .foreground-text {
+	
+	z-index   : 1;
+	position  : relative;
+	
+	@include theme.commonFont('body');
+	font-size : 75px;
+	color     : white;
+  }
+  
+  & .background-text {
+	
+	position  : absolute;
+	left      : 50%;
+	top       : 50%;
+	
+	@include theme.commonFont('caption');
+	font-size : 75px;
+	color     : white;
+	
+	opacity   : .15;
+	
+	transform : translateY(-93%) translateX(-50%);
+  }
+  
+  & > .bottom {
+	
+	position    : absolute;
+	
+	display     : grid;
+	place-items : center;
+	
+	width       : 150px;
+	height      : 80px;
+	
+	bottom      : ((450px - 300px) / 2);
+	left        : 50%;
+	
+	padding     : 10px;
+	
+	transform   : translateX(-50%);
+	
+	& > .sub-foreground-text {
+	  
+	  z-index     : 1;
+	  position    : relative;
+	  color       : theme.hex('background-outer');
+	  
+	  @include theme.commonFont('body');
+	  font-size   : 30px;
+	  
+	  text-align  : center;
+	  white-space : normal;
+	}
+  }
+}
+
+svg.speedometer {
+  
+  & > circle.outer-frame {
+	fill   : transparent;
+	stroke : theme.hex('border-outer');
+  }
+  
+  & > circle.inner-circle {
+	fill : url(#inner-circle-gradient);
+  }
+  
+  & > circle.inner-frame {
+	fill   : transparent;
+	stroke : url(#inner-frame-gradient);
+  }
+  
+  & > circle.background {
+	fill : theme.hex('background-outer');
+  }
+  
+  & > circle.indicator {
+	
+	position         : relative;
+	
+	fill             : transparent;
+	stroke           : url(#indicator-gradient);
+	
+	
+	transform-origin : center;
+	transform        : rotate(180deg - 50deg);
+	
+	transition       : stroke-dashoffset .5s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  
+  & > path.hud {
+	stroke-width : 3px;
+	stroke       : theme.hex('hud');
+	fill         : transparent;
+  }
+  
+  & #indicator-gradient {
+	
+	& > stop:nth-child(1) {
+	  stop-color : theme.hex('indicator-gradient-end');
+	}
+	
+	& > stop:nth-child(2) {
+	  stop-color : theme.hex('indicator-gradient-start');
+	}
+  }
+  
+  & #inner-circle-gradient {
+	
+	& > stop {
+	  stop-color : theme.hex('background-inner');
+	}
+  }
+  
+  & #inner-frame-gradient {
+	
+	& > stop {
+	  stop-color : theme.hex('border-inner');
+	}
+  }
+  
+  & > .outer-indicator-frame {
+	stroke : theme.hex('background-outer');
+  }
+  
+  & > .inner-indicator-frame {
+	stroke : theme.hex('background-outer');
+  }
+}

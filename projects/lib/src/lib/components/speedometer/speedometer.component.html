@@ -1,0 +1,100 @@
+<svg class="speedometer" [attr.width]="canvasDiameter" [attr.height]="canvasDiameter"
+     [attr.style]="domSam.bypassSecurityTrustStyle(
+     '--offsetStart: ' + indicatorLength + 'px; --offsetEnd: ' + this.indicatorMaxLength + 'px; --gap: ' + indicatorGap + 'px')">
+
+    <circle class="background"
+            [attr.r]="canvasRadius"
+            [attr.cx]="canvasRadius"
+            [attr.cy]="canvasRadius">
+    </circle>
+
+    <circle class="outer-frame"
+            [attr.r]="canvasRadius - ( outerFrameWidth / 2)"
+            [attr.cx]="canvasRadius"
+            [attr.cy]="canvasRadius"
+            [attr.stroke-width]="outerFrameWidth">
+    </circle>
+
+    <circle class="inner-circle"
+            [attr.r]="circleRadius"
+            [attr.cx]="canvasRadius"
+            [attr.cy]="canvasRadius">
+    </circle>
+
+    <circle class="inner-frame"
+            [attr.r]="circleRadius - (innerFrameWidth / 2)"
+            [attr.cx]="canvasRadius"
+            [attr.cy]="canvasRadius"
+            [attr.stroke-width]="innerFrameWidth">
+    </circle>
+
+    <circle class="indicator"
+            #indicator
+            [attr.r]="indicatorRadius"
+            [attr.cx]="canvasRadius"
+            [attr.cy]="canvasRadius"
+            [attr.stroke-width]="indicatorWidth"
+            [attr.stroke-dasharray]="indicatorLength">
+    </circle>
+
+    <circle class="outer-indicator-frame"
+            [attr.r]="circleRadius - (indicatorGap / 2) + indicatorGap"
+            [attr.cx]="canvasRadius"
+            [attr.cy]="canvasRadius"
+            [attr.stroke-width]="indicatorGap"
+            [attr.fill]="'transparent'"
+            [style.opacity]="1">
+    </circle>
+
+    <circle class="inner-indicator-frame"
+            [attr.r]="circleRadius + indicatorGap + indicatorWidth + (indicatorGap / 2)"
+            [attr.cx]="canvasRadius"
+            [attr.cy]="canvasRadius"
+            [attr.stroke-width]="indicatorGap"
+            [attr.fill]="'transparent'"
+            [style.opacity]="1">
+    </circle>
+
+    <path class="hud" [attr.d]="path" clip-path="url(#circle)"></path>
+
+    <defs>
+
+        <linearGradient id="indicator-gradient">
+            <stop offset="0%"/>
+            <stop offset="100%"/>
+        </linearGradient>
+
+        <linearGradient id="inner-frame-gradient" gradientTransform="rotate(90)">
+            <stop offset="0%"/>
+            <stop offset="80%" stop-opacity="0"/>
+        </linearGradient>
+
+        <radialGradient id="inner-circle-gradient">
+            <stop offset="0%"/>
+            <stop offset="10%"/>
+            <stop offset="75%" stop-opacity="0.6"/>
+            <stop offset="100%" stop-opacity="0.2"/>
+        </radialGradient>
+
+        <clipPath id="circle">
+
+            <circle
+                    [attr.r]="canvasRadius - outerFrameWidth"
+                    [attr.cx]="canvasRadius"
+                    [attr.cy]="canvasRadius">
+            </circle>
+
+        </clipPath>
+
+    </defs>
+
+</svg>
+
+<div class="center">
+    <span class="background-text">{{ feUnit }}</span>
+    <span class="foreground-text" #foregroundText></span>
+</div>
+
+<div class="bottom">
+    <span class="sub-foreground-text">{{ feLabel }}</span>
+</div>
