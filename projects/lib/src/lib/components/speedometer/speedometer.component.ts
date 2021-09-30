@@ -98,7 +98,7 @@ export class SpeedometerComponent implements AfterViewInit {
     
     public updateValue(): void {
         
-        if ( !this.currentValue ) {
+        if ( this.currentValue === undefined ) {
             return;
         }
         
