@@ -26,6 +26,7 @@ export const FeColorPalette = composePalette(
         Cyan: {
             FrozenRiver   : '#B0F6EF',
             Aquamarine    : '#00FFFF',
+            AgalAquamarine: '#16F5E3',
             Shamrock      : '#28c3a6',
             MintIcepop    : '#3beeb7',
             CaribbeanGreen: '#00C4B1',
@@ -38,18 +39,21 @@ export const FeColorPalette = composePalette(
         },
         
         Blue: {
-            PastelBlue   : '#a1c4fd',
-            PaleSky      : '#7BDFF2',
-            Sky          : '#10d0f9',
-            SunnySky     : '#00B2FF',
-            NaturalBlue  : '#499DD0',
-            River        : '#3498db',
-            Azure        : '#0073ff',
-            PureBlue     : '#2552FE',
-            DarkBlue     : '#004E92',
-            VividDarkBlue: '#020887',
-            NavyBlue     : '#142954',
-            NightSky     : '#001738'
+            PastelBlue       : '#a1c4fd',
+            PaleSky          : '#7BDFF2',
+            Sky              : '#10d0f9',
+            SunnySky         : '#00B2FF',
+            NaturalBlue      : '#499DD0',
+            River            : '#3498db',
+            Azure            : '#0073ff',
+            PureBlue         : '#2552FE',
+            DarkBlue         : '#004E92',
+            CatalinaBlue     : '#23416A',
+            VividCatalinaBlue: '#0D257F',
+            VividDarkBlue    : '#020887',
+            NavyBlue         : '#142954',
+            Eclipse          : '#121E48',
+            NightSky         : '#001738'
         },
         
         Yellow: {
