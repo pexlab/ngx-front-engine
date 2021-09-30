@@ -12,7 +12,6 @@ export class LabelAlignerService {
     
     private references: { [ key: string ]: { [ key: string ]: TextFieldComponent } } = {};
     private labelWidth: { [ key: string ]: { [ key: string ]: number } }             = {};
-    private greatestLabelWidth: { [ key: string ]: number }                          = {};
     
     public register( instance: string, id: string, reference: TextFieldComponent ) {
         
@@ -26,36 +25,28 @@ export class LabelAlignerService {
         
         this.references[ instance ][ id ] = reference;
         
-        this.updateWidth( instance, id );
+        this.observeWidth( instance, id );
     }
     
-    public updateWidth( instance: string, id: string ) {
+    public observeWidth( instance: string, id: string ) {
         
-        const width = this.references[ instance ][ id ].getSingleLineWidthOfLabel();
+        const observedWidth = this.references[ instance ][ id ].getSingleLineWidthOfLabel();
+        const currentWidth  = this.labelWidth[ instance ][ id ];
         
-        this.labelWidth[ instance ][ id ] = width;
-        
-        if ( width !== this.greatestLabelWidth[ instance ] ) {
-            this.updateAll( instance );
+        if ( currentWidth !== observedWidth ) {
+            this.labelWidth[ instance ][ id ] = observedWidth;
+            this.adjustAll( instance );
         }
     }
     
-    public updateAll( instance: string ) {
-    
-        console.log('update');
+    public adjustAll( instance: string ) {
         
-        const currentGreatest = this.greatestLabelWidth[ instance ];
-        const trulyGreatest   = this.getGreatestLabelWidth( instance );
+        const greatest = this.getGreatestLabelWidth( instance );
         
-        if ( trulyGreatest !== currentGreatest ) {
-            
-            this.greatestLabelWidth[ instance ] = trulyGreatest;
-            
-            /* Apply label width to all labels in the group */
-            Object.values( this.references[ instance ] ).forEach( ( reference ) => {
-                reference.labelWidth = 'minmax(auto, ' + trulyGreatest + 'px)';
-            } );
-        }
+        /* Apply label width to all labels in the group */
+        Object.values( this.references[ instance ] ).forEach( ( reference ) => {
+            reference.labelWidth = 'minmax(auto, ' + greatest + 'px)';
+        } );
     }
     
     public unregister( instance: string, id: string ) {
@@ -63,7 +54,7 @@ export class LabelAlignerService {
         delete this.references[ instance ][ id ];
         delete this.labelWidth[ instance ][ id ];
         
-        this.updateAll( instance );
+        this.adjustAll( instance );
     }
     
     public getGreatestLabelWidth( instance: string ): number {

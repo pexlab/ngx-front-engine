@@ -229,7 +229,7 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         
         this.labelResizeObserver = new ResizeObserver( () => {
             if ( this.alignInstance ) {
-                this.aligner.updateWidth( this.alignInstance, this.alignId );
+                this.aligner.observeWidth( this.alignInstance, this.alignId );
             }
         } );
     }
@@ -253,11 +253,12 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
     
     public ngOnDestroy(): void {
         
+        this.mainResizeObserver.unobserve( this.hostElement.nativeElement );
+        this.labelResizeObserver.unobserve( this.measurementRef.nativeElement );
+        
         if ( this.alignInstance ) {
             this.aligner.unregister( this.alignInstance, this.alignId );
         }
-        
-        this.mainResizeObserver.unobserve( this.hostElement.nativeElement );
         
         this.disposeListeners.forEach( dispose => {
             dispose();
