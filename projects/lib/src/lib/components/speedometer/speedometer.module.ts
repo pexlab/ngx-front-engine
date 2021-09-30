@@ -18,4 +18,4 @@ import { SpeedometerComponent } from './speedometer.component';
         ]
     }
 )
-export class SpeedometerModule {}
+export class FeSpeedometerModule {}
