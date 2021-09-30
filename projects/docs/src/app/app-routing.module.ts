@@ -7,6 +7,7 @@ import { ButtonComponent } from './pages/showcase/button/button.component';
 import { DropdownComponent } from './pages/showcase/dropdown/dropdown.component';
 import { PopupComponent } from './pages/showcase/popup/popup.component';
 import { ShowcaseSidebarComponent } from './pages/showcase/sidebar/showcase-sidebar.component';
+import { SpeedometerComponent } from './pages/showcase/speedometer/speedometer.component';
 import { StepperComponent } from './pages/showcase/stepper/stepper.component';
 import { SwitchComponent } from './pages/showcase/switch/switch.component';
 import { TextFieldComponent } from './pages/showcase/text-field/text-field.component';
@@ -63,6 +64,10 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
                             {
                                 path     : 'alert-portal',
                                 component: AlertPortalComponent
+                            },
+                            {
+                                path     : 'speedometer',
+                                component: SpeedometerComponent
                             }
                         ]
                     },

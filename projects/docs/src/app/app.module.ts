@@ -12,7 +12,7 @@ import {
     FeStepperModule, FeSwitchModule,
     FeTactileModule,
     FeTextFieldModule,
-    FeAlertPortalModule
+    FeAlertPortalModule, SpeedometerModule
 } from '@pexlab/ngx-front-engine';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { AppRoutingModule } from './app-routing.module';
@@ -31,6 +31,7 @@ import { SwitchComponent } from './pages/showcase/switch/switch.component';
 import { PopupComponent } from './pages/showcase/popup/popup.component';
 import { NutmegComponent } from './popups/nutmeg/nutmeg.component';
 import { AlertPortalComponent } from './pages/showcase/alert-portal/alert-portal.component';
+import { SpeedometerComponent } from './pages/showcase/speedometer/speedometer.component';
 
 @NgModule(
     {
@@ -50,9 +51,10 @@ import { AlertPortalComponent } from './pages/showcase/alert-portal/alert-portal
             SwitchComponent,
             PopupComponent,
             NutmegComponent,
-            AlertPortalComponent
+            AlertPortalComponent,
+            SpeedometerComponent
         ],
-        
+    
         imports: [
             BrowserModule,
             BrowserAnimationsModule,
@@ -70,7 +72,8 @@ import { AlertPortalComponent } from './pages/showcase/alert-portal/alert-portal
             FeStepperModule,
             FeBannerCarouselModule,
             FeSwitchModule,
-            FeAlertPortalModule
+            FeAlertPortalModule,
+            SpeedometerModule
         ],
         
         providers: [],
