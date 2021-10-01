@@ -18,14 +18,16 @@
     <circle class="inner-circle"
             [attr.r]="circleRadius"
             [attr.cx]="canvasRadius"
-            [attr.cy]="canvasRadius">
+            [attr.cy]="canvasRadius"
+            [attr.fill]="'url(#' + innerCircleGradientId + ')'">
     </circle>
 
     <circle class="inner-frame"
             [attr.r]="circleRadius - (innerFrameWidth / 2)"
             [attr.cx]="canvasRadius"
             [attr.cy]="canvasRadius"
-            [attr.stroke-width]="innerFrameWidth">
+            [attr.stroke-width]="innerFrameWidth"
+            [attr.stroke]="'url(#' + innerFrameGradientId + ')'">
     </circle>
 
     <circle class="indicator"
@@ -34,7 +36,8 @@
             [attr.cx]="canvasRadius"
             [attr.cy]="canvasRadius"
             [attr.stroke-width]="indicatorWidth"
-            [attr.stroke-dasharray]="indicatorLength">
+            [attr.stroke-dasharray]="indicatorLength"
+            [attr.stroke]="'url(#' + indicatorGradientId + ')'">
     </circle>
 
     <circle class="outer-indicator-frame"
@@ -55,28 +58,28 @@
             [style.opacity]="1">
     </circle>
 
-    <path class="hud" [attr.d]="path" clip-path="url(#circle)"></path>
+    <path class="hud" [attr.d]="path" [attr.clip-path]="'url(#' + circleId + ')'"></path>
 
     <defs>
 
-        <linearGradient id="indicator-gradient">
+        <linearGradient [id]="indicatorGradientId" class="indicator-gradient">
             <stop offset="0%"/>
             <stop offset="100%"/>
         </linearGradient>
 
-        <linearGradient id="inner-frame-gradient" gradientTransform="rotate(90)">
+        <linearGradient [id]="innerFrameGradientId" class="inner-frame-gradient" gradientTransform="rotate(90)">
             <stop offset="0%"/>
             <stop offset="80%" stop-opacity="0"/>
         </linearGradient>
 
-        <radialGradient id="inner-circle-gradient">
+        <radialGradient [id]="innerCircleGradientId" class="inner-circle-gradient">
             <stop offset="0%"/>
             <stop offset="10%"/>
             <stop offset="75%" stop-opacity="0.6"/>
             <stop offset="100%" stop-opacity="0.2"/>
         </radialGradient>
 
-        <clipPath id="circle">
+        <clipPath [id]="circleId">
 
             <circle
                     [attr.r]="canvasRadius - outerFrameWidth"
@@ -96,5 +99,6 @@
 </div>
 
 <div class="bottom">
-    <span class="sub-foreground-text">{{ feLabel }}</span>
+    <span>{{ feLabelPrimary }}</span>
+    <span>{{ feLabelSecondary }}</span>
 </div>

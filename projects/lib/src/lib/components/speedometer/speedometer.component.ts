@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, NgZone, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { parsePath, roundCommands } from '@twixes/svg-round-corners';
+import { customAlphabet, nanoid } from 'nanoid';
 import { z } from 'zod';
 import { ComponentTheme, ZHEXColor } from '../../interfaces/color.interface';
 import { FeComponent } from '../../utils/component.utils';
@@ -32,7 +33,10 @@ export class SpeedometerComponent implements AfterViewInit {
     public feUnit!: string;
     
     @Input()
-    public feLabel!: string;
+    public feLabelPrimary?: string;
+    
+    @Input()
+    public feLabelSecondary?: string;
     
     @Input()
     public feFractions = 0;
@@ -52,6 +56,13 @@ export class SpeedometerComponent implements AfterViewInit {
     
     @ViewChild( 'indicator' )
     public indicatorEl!: ElementRef<SVGCircleElement>;
+    
+    /* SVG drawing ids (to encapsulate defs and not affect other instances of the speedometer) */
+    private generateId           = customAlphabet( 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 24 );
+    public indicatorGradientId   = this.generateId();
+    public innerFrameGradientId  = this.generateId();
+    public innerCircleGradientId = this.generateId();
+    public circleId              = this.generateId();
     
     /* SVG drawing calculations */
     
@@ -95,9 +106,12 @@ export class SpeedometerComponent implements AfterViewInit {
     private currentValue?: number;
     
     public ngAfterViewInit(): void {
-        if ( this.currentValue === undefined ) {
-            this.feValue = Math.min( this.feRange[ 0 ], this.feRange[ 1 ] );
-        }
+        
+        this.indicatorEl.nativeElement.style.strokeDashoffset = this.indicatorOffsetStart + 'px';
+        
+        setTimeout( () => {
+            this.feValue = this.currentValue === undefined ? Math.min( this.feRange[ 0 ], this.feRange[ 1 ] ) : this.currentValue;
+        } );
     }
     
     public updateValue(): void {

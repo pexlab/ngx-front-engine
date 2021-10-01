@@ -54,21 +54,46 @@
 	bottom      : ((450px - 300px) / 2);
 	left        : 50%;
 	
-	padding     : 10px;
-	
 	transform   : translateX(-50%);
 	
-	& > .sub-foreground-text {
+	& > span:nth-child(1) {
 	  
 	  z-index     : 1;
-	  position    : relative;
+	  
+	  position    : absolute;
+	  
+	  left        : 50%;
+	  top         : 10px;
+	  transform   : translateX(-50%);
+	  
 	  color       : theme.hex('background-outer');
 	  
 	  @include theme.commonFont('body');
-	  font-size   : 30px;
+	  font-size   : 28px;
 	  
 	  text-align  : center;
-	  white-space : normal;
+	  white-space : nowrap;
+	}
+	
+	& > span:nth-child(2) {
+	  
+	  z-index     : 1;
+	  
+	  position    : absolute;
+	  
+	  left        : 50%;
+	  bottom      : 10px;
+	  transform   : translateX(-50%);
+	  
+	  color       : white;
+	  
+	  opacity     : .15;
+	  
+	  @include theme.commonFont('body');
+	  font-size   : 21px;
+	  
+	  text-align  : center;
+	  white-space : nowrap;
 	}
   }
 }
@@ -76,21 +101,18 @@
 svg.speedometer {
   
   & > circle.outer-frame {
-	fill   : transparent;
-	stroke : theme.hex('border-outer');
-  }
-  
-  & > circle.inner-circle {
-	fill : url(#inner-circle-gradient);
+	fill       : transparent;
+	stroke     : theme.hex('border-outer');
+	transition : stroke .25s ease;
   }
   
   & > circle.inner-frame {
-	fill   : transparent;
-	stroke : url(#inner-frame-gradient);
+	fill : transparent;
   }
   
   & > circle.background {
-	fill : theme.hex('background-outer');
+	fill       : theme.hex('background-outer');
+	transition : fill .25s ease;
   }
   
   & > circle.indicator {
@@ -98,8 +120,6 @@ svg.speedometer {
 	position         : relative;
 	
 	fill             : transparent;
-	stroke           : url(#indicator-gradient);
-	
 	
 	transform-origin : center;
 	transform        : rotate(180deg - 50deg);
@@ -107,42 +127,52 @@ svg.speedometer {
 	transition       : stroke-dashoffset .5s cubic-bezier(0.65, 0, 0.35, 1);
   }
   
+  & > circle.outer-indicator-frame {
+	stroke     : theme.hex('background-outer');
+	transition : stroke .25s ease;
+  }
+  
+  & > circle.inner-indicator-frame {
+	stroke     : theme.hex('background-outer');
+	transition : stroke .25s ease;
+  }
+  
   & > path.hud {
 	stroke-width : 3px;
 	stroke       : theme.hex('hud');
 	fill         : transparent;
+	transition   : stroke .25s ease;
   }
   
-  & #indicator-gradient {
+  & > defs {
 	
-	& > stop:nth-child(1) {
-	  stop-color : theme.hex('indicator-gradient-end');
+	& > .indicator-gradient {
+	  
+	  & > stop:nth-child(1) {
+		stop-color : theme.hex('indicator-gradient-end');
+		transition : stop-color .25s ease;
+	  }
+	  
+	  & > stop:nth-child(2) {
+		stop-color : theme.hex('indicator-gradient-start');
+		transition : stop-color .25s ease;
+	  }
 	}
 	
-	& > stop:nth-child(2) {
-	  stop-color : theme.hex('indicator-gradient-start');
+	& > .inner-circle-gradient {
+	  
+	  & > stop {
+		stop-color : theme.hex('background-inner');
+		transition : stop-color .25s ease;
+	  }
 	}
-  }
-  
-  & #inner-circle-gradient {
 	
-	& > stop {
-	  stop-color : theme.hex('background-inner');
+	& > .inner-frame-gradient {
+	  
+	  & > stop {
+		stop-color : theme.hex('border-inner');
+		transition : stop-color .25s ease;
+	  }
 	}
-  }
-  
-  & #inner-frame-gradient {
-	
-	& > stop {
-	  stop-color : theme.hex('border-inner');
-	}
-  }
-  
-  & > .outer-indicator-frame {
-	stroke : theme.hex('background-outer');
-  }
-  
-  & > .inner-indicator-frame {
-	stroke : theme.hex('background-outer');
   }
 }
