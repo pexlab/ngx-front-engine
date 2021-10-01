@@ -12,7 +12,8 @@ import {
     FeStepperModule, FeSwitchModule,
     FeTactileModule,
     FeTextFieldModule,
-    FeAlertPortalModule, SpeedometerModule
+    FeAlertPortalModule,
+    FeSpeedometerModule
 } from '@pexlab/ngx-front-engine';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { AppRoutingModule } from './app-routing.module';
@@ -73,7 +74,7 @@ import { SpeedometerComponent } from './pages/showcase/speedometer/speedometer.c
             FeBannerCarouselModule,
             FeSwitchModule,
             FeAlertPortalModule,
-            SpeedometerModule
+            FeSpeedometerModule
         ],
         
         providers: [],
