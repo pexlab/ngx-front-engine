@@ -11,7 +11,7 @@
 <br>
 
 <p align="center">
-      Feel free to visit <a href="https://www.angular.io">www.pexlab.net/projects/front-engine</a> to learn more
+      Feel free to visit <a href="https://www.pexlab.net/projects/front-engine/introduction">www.pexlab.net/projects/front-engine</a> to learn more
 </p>
 
 <br>
@@ -45,9 +45,9 @@ ___
 
 ### » Quick links
 
-[Getting started](https://pexlab.net/projects/front-engine/getting-started)
-| [Demo and examples](https://pexlab.net/projects/front-engine/showcase)
-| [Color palettes](https://pexlab.net/projects/front-engine/color-palette)
+[Getting started](https://www.pexlab.net/projects/front-engine/getting-started)
+| [Demo and examples](https://www.pexlab.net/projects/front-engine/showcase)
+| [Color palettes](https://www.pexlab.net/projects/front-engine/color-palette)
 | [Submit an Issue](https://github.com/pexlab/ngx-front-engine/issues)
 
 ___
