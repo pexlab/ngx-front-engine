@@ -110,7 +110,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
                     },
                     {
                         path      : '**',
-                        redirectTo: '/404'
+                        redirectTo: '/introduction'
                     }
                 ]
             )
