@@ -1,5 +1,5 @@
-import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { NgModule, SecurityContext } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -16,6 +16,7 @@ import {
     FeSpeedometerModule
 } from '@pexlab/ngx-front-engine';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { MarkdownModule } from 'ngx-markdown';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TextFieldComponent } from './pages/showcase/text-field/text-field.component';
@@ -33,6 +34,8 @@ import { PopupComponent } from './pages/showcase/popup/popup.component';
 import { NutmegComponent } from './popups/nutmeg/nutmeg.component';
 import { AlertPortalComponent } from './pages/showcase/alert-portal/alert-portal.component';
 import { SpeedometerComponent } from './pages/showcase/speedometer/speedometer.component';
+import { IntroductionComponent } from './pages/introduction/introduction.component';
+import { GettingStartedComponent } from './pages/getting-started/getting-started.component';
 
 @NgModule(
     {
@@ -53,13 +56,26 @@ import { SpeedometerComponent } from './pages/showcase/speedometer/speedometer.c
             PopupComponent,
             NutmegComponent,
             AlertPortalComponent,
-            SpeedometerComponent
+            SpeedometerComponent,
+            IntroductionComponent,
+            GettingStartedComponent
         ],
-    
+        
         imports: [
+            
             BrowserModule,
             BrowserAnimationsModule,
-            AppRoutingModule,
+            
+            HttpClientModule,
+            AngularSvgIconModule.forRoot(),
+            MarkdownModule.forRoot(
+                {
+                    loader  : HttpClient,
+                    sanitize: SecurityContext.NONE
+                }
+            ),
+            ReactiveFormsModule,
+            
             FeModule,
             FeRootModule,
             FeButtonModule,
@@ -67,14 +83,13 @@ import { SpeedometerComponent } from './pages/showcase/speedometer/speedometer.c
             FeTextFieldModule,
             FeDropdownModule,
             FeCheckboxModule,
-            HttpClientModule,
-            AngularSvgIconModule.forRoot(),
-            ReactiveFormsModule,
             FeStepperModule,
             FeBannerCarouselModule,
             FeSwitchModule,
             FeAlertPortalModule,
-            FeSpeedometerModule
+            FeSpeedometerModule,
+            
+            AppRoutingModule
         ],
         
         providers: [],
