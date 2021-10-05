@@ -67,6 +67,11 @@
                 "glob": "**/*",
                 "input": "./dist/ngx-front-engine/assets/",
                 "output": "/assets/"
+              },
+              {
+                "glob": "_redirects",
+                "input": "src",
+                "output": "/"
               }
             ],
             "styles": [
