@@ -1,5 +1,5 @@
 import { AfterViewChecked, Component, OnInit } from '@angular/core';
-import { ThemeService } from '@pexlab/ngx-front-engine';
+import { FeColorPalette, FeComponent, ThemeService } from '@pexlab/ngx-front-engine';
 import { SvgIconRegistryService } from 'angular-svg-icon';
 
 @Component(
