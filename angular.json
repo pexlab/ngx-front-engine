@@ -61,7 +61,6 @@
             "tsConfig": "projects/docs/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "projects/docs/src/favicon.ico",
               "projects/docs/src/assets",
               {
                 "glob": "**/*",
@@ -146,7 +145,6 @@
             "karmaConfig": "projects/docs/karma.conf.js",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "projects/docs/src/favicon.ico",
               "projects/docs/src/assets",
               {
                 "glob": "**/*",
