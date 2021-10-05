@@ -4,9 +4,10 @@
   "homepage": "https://pexlab.net/projects/front-engine",
   "license": "MIT",
   "scripts": {
-    "start-all": "npx concurrently \"ng build lib --watch --configuration development\" \"ng serve --host 0.0.0.0\"",
-    "start": "ng serve --host 0.0.0.0",
-    "build": "ng build --watch --configuration production"
+    "serve_docs": "ng serve --host 0.0.0.0",
+    "build_docs": "ng build --configuration production --project docs",
+    "build_lib": "ng build --configuration production --project lib",
+    "build_lib_listen": "ng build --configuration production --project lib"
   },
   "private": true,
   "dependencies": {
