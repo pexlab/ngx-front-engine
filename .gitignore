@@ -19,6 +19,9 @@ chrome-profiler-events*.json
 /.idea/**/usage.statistics.xml
 /.idea/**/dictionaries
 /.idea/**/shelf
+/.idea/deployment.xml
+/.idea/sshConfigs.xml
+/.idea/webServers.xml
 .project
 .classpath
 .c9/
