@@ -1,5 +1,7 @@
 <fe-speedometer feUnit="km/h"
                 [feRange]="[0, 250]"
                 [feValue]="speedometerValue"
-                feLabel="Speed">
+                feLabelPrimary="Speed"
+                feLabelSecondary="Max. 250"
+                [feTheme]="determineTheme(speedometerValue)">
 </fe-speedometer>
