@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostBinding, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { z } from 'zod';
 import { ComponentTheme, ZHEXColor } from '../../interfaces/color.interface';

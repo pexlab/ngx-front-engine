@@ -10,7 +10,6 @@
     "lodash",
     "deepdash-es",
     "nanoid",
-    "ngx-highlightjs",
     "@fontsource/roboto",
     "@fontsource/jost",
     "@fontsource/anonymous-pro"

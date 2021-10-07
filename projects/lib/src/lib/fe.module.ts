@@ -1,6 +1,5 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { AngularSvgIconModule, SvgIconRegistryService } from 'angular-svg-icon';
-import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { ThemeService } from './theme/theme.service';
 
 @NgModule(
@@ -14,14 +13,7 @@ import { ThemeService } from './theme/theme.service';
         
         exports: [],
         
-        providers: [
-            {
-                provide : HIGHLIGHT_OPTIONS,
-                useValue: {
-                    fullLibraryLoader: () => import('highlight.js')
-                }
-            }
-        ]
+        providers: []
     }
 )
 

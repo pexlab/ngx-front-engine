@@ -80,9 +80,6 @@
               "node_modules/prismjs/components/prism-css.js",
               "node_modules/prismjs/components/prism-diff.js",
               "node_modules/prismjs/components/prism-bash.js"
-            ],
-            "allowedCommonJsDependencies": [
-              "highlight.js"
             ]
           },
           "configurations": {
