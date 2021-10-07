@@ -69,6 +69,7 @@
 		
 		position      : absolute;
 		top           : 0;
+		left          : 0;
 		
 		width         : $ballSize;
 		height        : $ballSize;
@@ -79,10 +80,7 @@
 		
 		box-shadow    : 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 		
-		transform     : translateX(-50%);
-		
-		will-change   : left;
-		transition    : left .25s ease, border .25s ease, background-color .25s ease;
+		transition    : transform .25s ease, border .25s ease, background-color .25s ease;
 	  }
 	  
 	  &.left {
@@ -92,7 +90,7 @@
 		}
 		
 		& > .ball {
-		  left             : 0;
+		  transform        : translateX(-50%);
 		  border           : 7px solid theme.hex('minimal-outer-ball-left');
 		  background-color : theme.hex('minimal-inner-ball-left');
 		}
@@ -105,7 +103,7 @@
 		}
 		
 		& > .ball {
-		  left             : 100%;
+		  transform        : translateX(calc((#{$ballSize} * 1.5) - 50%));
 		  border           : 7px solid theme.hex('minimal-outer-ball-right');
 		  background-color : theme.hex('minimal-inner-ball-right');
 		}
@@ -158,33 +156,44 @@
 		transition    : background-color .25s ease, border .25s ease;
 	  }
 	  
-	  & > .ball {
+	  & > .ball-wrapper {
 		
-		z-index       : 1;
+		position   : relative;
+		z-index    : 1;
 		
-		position      : relative;
+		width      : $ballSize;
+		height     : $ballSize;
 		
-		display       : grid;
-		place-items   : center;
+		transition : transform .35s cubic-bezier(0, 0.55, 0.45, 1);
 		
-		width         : $ballSize;
-		height        : $ballSize;
-		
-		border-radius : 99px;
-		
-		box-shadow    : 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-		
-		transition    : left .35s cubic-bezier(0, 0.55, 0.45, 1), background-color .25s ease, color .25s ease;
-		
-		@include theme.inlineIcon(13px);
+		& > .ball {
+		  
+		  display       : grid;
+		  place-items   : center;
+		  
+		  width         : 100%;
+		  height        : 100%;
+		  
+		  border-radius : 99px;
+		  
+		  box-shadow    : 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+		  
+		  transition    : background-color .25s ease, color .25s ease;
+		  
+		  @include theme.inlineIcon(13px);
+		}
 	  }
 	  
 	  &.right {
 		
-		& > .ball {
-		  left             : calc(100% - #{$ballSize});
-		  color            : theme.hex('traditional-icon-right');
-		  background-color : theme.hex('traditional-ball-right');
+		& > .ball-wrapper {
+		  
+		  transform : translateX($ballSize * 1.5);
+		  
+		  & > .ball {
+			color            : theme.hex('traditional-icon-right');
+			background-color : theme.hex('traditional-ball-right');
+		  }
 		}
 		
 		&:after {
@@ -195,10 +204,14 @@
 	  
 	  &.left {
 		
-		& > .ball {
-		  left             : 0;
-		  color            : theme.hex('traditional-icon-left');
-		  background-color : theme.hex('traditional-ball-left');
+		& > .ball-wrapper {
+		  
+		  transform : translateX(0);
+		  
+		  & > .ball {
+			color            : theme.hex('traditional-icon-left');
+			background-color : theme.hex('traditional-ball-left');
+		  }
 		}
 		
 		&:after {

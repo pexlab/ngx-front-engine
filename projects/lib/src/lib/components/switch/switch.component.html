@@ -17,9 +17,11 @@
         <ng-container *ngTemplateOutlet="labelLeft"></ng-container>
 
         <div class="switch" [ngClass]="position" [fe-tactile]="ball" (tactileClick)="toggle()">
-            <div class="ball" #ball>
-                <svg-icon *ngIf="feIconLeft && position === 'left'" [name]="feIconLeft"></svg-icon>
-                <svg-icon *ngIf="feIconRight && position === 'right'" [name]="feIconRight"></svg-icon>
+            <div class="ball-wrapper">
+                <div class="ball" #ball>
+                    <svg-icon *ngIf="feIconLeft && position === 'left'" [name]="feIconLeft"></svg-icon>
+                    <svg-icon *ngIf="feIconRight && position === 'right'" [name]="feIconRight"></svg-icon>
+                </div>
             </div>
         </div>
 
