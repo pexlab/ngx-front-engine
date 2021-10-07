@@ -1,5 +1,5 @@
 import { ElementRef } from '@angular/core';
-import { Subject } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
 import { ComponentTheme, HEXColorRegister } from '../interfaces/color.interface';
 import { ThemeableComponents } from '../interfaces/theme.interface';
 import { ThemeService } from '../theme/theme.service';
@@ -93,7 +93,7 @@ export function FePopup() {
 
 export class AsynchronouslyInitialisedComponent {
     
-    loadedState: Subject<boolean> = new Subject<boolean>();
+    loadedState: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
     
     protected componentLoaded(): void {
         this.loadedState.next( true );
