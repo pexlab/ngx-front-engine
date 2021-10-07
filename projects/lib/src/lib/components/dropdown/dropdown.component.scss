@@ -94,7 +94,6 @@ $OPTION_PADDING              : 10px;
 	
 	min-width      : 200px;
 	width          : calc(100% + (#{$DROPDOWN_PADDING_HORIZONTAL} * 2) + (#{$OPTION_PADDING} * 2));
-	height         : fit-content;
 	
 	margin         : 0;
 	padding-top    : ($PLACEHOLDER_HEIGHT / 2) + $DROPDOWN_PADDING_VERTICAL + 3px + $OPTION_PADDING;
