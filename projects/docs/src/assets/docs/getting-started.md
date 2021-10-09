@@ -91,6 +91,9 @@ constructor( private theme: ThemeService ){
             }
         }
     } );
+    
+    /* Re-apply the component theme because it's based on the common theme */
+    this.theme.applyComponentThemes();
 }
 ```
 
@@ -107,7 +110,7 @@ constructor( private theme: ThemeService ) {
 }
 ```
 
-This method will overwrite the common theme with your settings.
+This method will overwrite the common theme with your settings. You can also combine those two methods together. For example if you want to change the accent color for every component but also want to change the button component as a whole.
 
 <br>
 
