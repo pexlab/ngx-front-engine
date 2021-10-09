@@ -77,7 +77,9 @@ export class StepperComponent implements OnInit, ControlValueAccessor {
     }
     
     public ngOnInit(): void {
-        this.value = this.feMin;
+        if ( this.value === undefined || this.value === null || isNaN( this.value ) ) {
+            this.value = this.feMin;
+        }
     }
     
     public getSuffix(): string {
@@ -95,9 +97,9 @@ export class StepperComponent implements OnInit, ControlValueAccessor {
         }
         
         this.value++;
-    
+        
         this.feChange.next( this.value );
-    
+        
         if ( this.formInputEvent ) {
             this.formInputEvent( this.value );
         }
@@ -112,9 +114,9 @@ export class StepperComponent implements OnInit, ControlValueAccessor {
         }
         
         this.value--;
-    
+        
         this.feChange.next( this.value );
-    
+        
         if ( this.formInputEvent ) {
             this.formInputEvent( this.value );
         }
