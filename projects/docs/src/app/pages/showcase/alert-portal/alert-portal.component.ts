@@ -30,7 +30,8 @@ export class AlertPortalComponent implements OnInit {
         },
         {
             title      : 'Caution',
-            description: 'A warning has been issued.',
+            description: 'A warning has been issued. See the following:',
+            code       : 'DEPRECATION WARNING: Using / for division is deprecated and will be removed in Dart Sass 2.0.0.',
             type       : 'warning'
         },
         {
