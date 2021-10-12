@@ -476,7 +476,9 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
     
     /* TODO: additional method: get multi-line width of label */
     public getSingleLineWidthOfLabel(): number {
-        return Math.ceil( this.measurementRef.nativeElement.getBoundingClientRect().width );
+        /* Add 1 because clientWidth rounds the value.
+         If it rounds down then there is not sufficient space and line breaks on the label will occur */
+        return this.measurementRef.nativeElement.clientWidth + 1;
     }
     
     /* Reactive forms functions */
