@@ -1,4 +1,5 @@
 import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
+import { RootComponent } from '../components/root/root.component';
 import { ComponentThemes, CommonTheme, PartialComponentThemes, PartialCommonTheme } from '../interfaces/theme.interface';
 import { Typography } from '../interfaces/typography.interface';
 import { kebabCase } from '../utils/case.utils';
@@ -34,6 +35,8 @@ export class ThemeService {
     
     /** Instance of ThemeService to use outside of regular Angular components (e.g. decorator functions) */
     public static singleton: ThemeService;
+    
+    public root?: RootComponent;
     
     private renderer: Renderer2;
     private globalCache: EvaluatedColor[] = [];

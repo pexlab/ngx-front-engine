@@ -19,6 +19,11 @@
   & > .dimmer {
 	z-index : 0;
   }
+  
+  & > .scrollbar-measure {
+	visibility : hidden;
+	overflow   : scroll;
+  }
 }
 
 .dimmer {

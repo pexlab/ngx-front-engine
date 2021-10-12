@@ -38,6 +38,7 @@
   grid-row         : 1;
   
   display          : grid;
+  grid-gap         : 0;
   place-items      : center;
   
   width            : fit-content;
@@ -179,29 +180,35 @@
 
 .content-wrapper {
   
-  box-sizing : border-box;
+  $width: var(--popup-width);
+  $scrollBarWidth: var(--scrollbar-width);
+  $padding    : 30px;
   
-  padding    : 20px 20px 2px;
+  width       : calc(#{$width} + (#{$padding} * 2) + #{$scrollBarWidth});
+  max-width   : 90vw;
+  min-width   : 400px;
   
-  // TODO: Keep the scrollbar out of the border-radius cutout
-  // margin-bottom : 10px;
+  height      : fit-content;
+  max-height  : 50vh;
   
-  width      : fit-content;
-  max-width  : 90vw;
-  min-width  : 400px;
+  overflow-x  : hidden;
+  overflow-y  : auto;
   
-  height     : fit-content;
-  max-height : 50vh;
-  
-  overflow-y : auto;
-  overflow-x : hidden;
+  display     : grid;
+  place-items : center;
   
   & .content {
 	
-	margin-bottom : 20px;
+	width  : $width;
 	
-	color         : theme.hex('text');
+	margin : $padding 0;
+ 
+	color  : theme.hex('text');
 	
 	@include theme.commonFont('body');
+	
+	& > * {
+	  width : 100% !important;
+	}
   }
 }

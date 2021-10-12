@@ -21,7 +21,7 @@ export class PopupService {
     public createPopup( title: string, hideExitIcon?: boolean ): {
         onTransmit( observer: ( value: any ) => void ): void
         close(): void
-        open( component: Type<any>, reflect?: { name: string, value: any }[] ): void
+        open( component: Type<any>, reflect?: { name: string, value: any }[], width?: number ): void
     } {
         
         const subject = new Subject<any>();
@@ -89,7 +89,7 @@ export class PopupService {
                 ( await onOpen ).instance.popupObserver.next( 'fe-close' );
             },
             
-            open: async ( component, reflect ) => {
+            open: async ( component, reflect, width ) => {
                 
                 const parent = await onOpen;
                 
@@ -101,6 +101,10 @@ export class PopupService {
                     reflect.forEach( property => {
                         Reflect.set( created.instance, property.name, property.value );
                     } );
+                }
+                
+                if ( width !== undefined ) {
+                    parent.instance.width = width;
                 }
                 
                 /* Pass down / transmit events to the main (parent) popup popup-wrapper component */

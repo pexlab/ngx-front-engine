@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { z } from 'zod';
 import { ComponentTheme, ZHEXColor } from '../../interfaces/color.interface';
@@ -13,12 +13,28 @@ import { FeComponent } from '../../utils/component.utils';
 )
 export class PopupComponent implements OnInit, AfterViewInit {
     
-    constructor( public hostElement: ElementRef ) { }
+    constructor(
+        public hostElement: ElementRef,
+        private renderer: Renderer2
+    ) {
+    }
     
     public feTheme!: ComponentTheme<PartialPopupTheme>;
     
     public hideExitIcon!: boolean;
     public title!: string;
+    
+    public widthSet = false;
+    
+    public set width( value: number ) {
+        this.widthSet = true;
+        this.renderer.setStyle(
+            this.hostElement.nativeElement,
+            '--popup-width',
+            value + 'px',
+            2
+        );
+    }
     
     /* Any other values than 'fe-open' or 'fe-close' get redirected to onTransmit method when creating a popup through the service */
     public popupObserver: Subject<'fe-init' | 'fe-open' | 'fe-close' | any> = new Subject();
@@ -36,6 +52,10 @@ export class PopupComponent implements OnInit, AfterViewInit {
         
         if ( !this.title ) {
             throw new Error( 'Title hasn\'t been set for popup-component' );
+        }
+    
+        if ( !this.widthSet ) {
+            this.width = 400;
         }
         
         this.popupObserver.next( 'fe-init' );

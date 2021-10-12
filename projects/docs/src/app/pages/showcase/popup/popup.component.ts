@@ -22,6 +22,6 @@ export class PopupComponent {
             this.transmissions.push( String( value ) );
         } );
         
-        popup.open( NutmegComponent );
+        popup.open( NutmegComponent, undefined, 450 );
     }
 }
