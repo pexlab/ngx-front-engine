@@ -1,5 +1,5 @@
 import { Color } from './color';
-import { ColorPalette, composePalette } from '../interfaces/color.interface';
+import { composePalette } from '../interfaces/color.interface';
 
 /** An elegant theme palette shipped with FrontEngine out of the box */
 export const FeColorPalette = composePalette(
@@ -138,6 +138,7 @@ export const FeColorPalette = composePalette(
         Greyscale: {
             SnowWhite     : '#ffffff',
             BrightGrey    : '#EBECF0',
+            MistyMorning  : '#E6E6E6',
             Titanium      : '#dcdcdc',
             Smoke         : '#c9c9c9',
             CoolGrey      : '#B9BDC1',
