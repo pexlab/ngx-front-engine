@@ -1,5 +1,4 @@
 import {
-    AfterViewChecked,
     AfterViewInit,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -65,11 +64,11 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
     @ViewChild( 'placeholder' )
     private placeholderRef!: ElementRef<HTMLSpanElement>;
     
-    @ViewChild( 'normalBorder' )
-    private normalBorderRef!: ElementRef<HTMLElement>;
+    @ViewChild( 'idleBorder' )
+    private idleBorderRef!: ElementRef<HTMLElement>;
     
-    @ViewChild( 'focusBorder' )
-    private focusBorderRef!: ElementRef<HTMLElement>;
+    @ViewChild( 'focusedBorder' )
+    private focusedBorderRef!: ElementRef<HTMLElement>;
     
     @ViewChild( 'inputContainer' )
     private inputContainerRef!: ElementRef<HTMLElement>;
@@ -181,8 +180,8 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         this.hostElement.nativeElement.style.setProperty( '--label-width', value );
     }
     
-    public normalBorderPath!: string;
-    public focusBorderPath!: string;
+    public idleBorderPath!: string;
+    public focusedBorderPath!: string;
     
     public alignInstance?: string;
     public alignId = nanoid();
@@ -194,7 +193,10 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
     
     private viewInit = false;
     
-    private isFocused                  = false;
+    private isFocused           = false;
+    public isDisabled           = false;
+    private isPlaceholderPinned = false;
+    
     private skipNextFocusBlurAnimation = false;
     
     private disposeListeners: ( () => void )[] = [];
@@ -246,7 +248,9 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         this.labelResizeObserver.observe( this.measurementRef.nativeElement );
         
         /* Initialise style */
-        this.unpinPlaceholder(); /* CSS assumes initial unpinned position as well! */
+        this.unpinPlaceholder(); /* CSS assumes initial static position as well! */
+        
+        this.applyClasses( true );
         
         this.componentLoaded();
     }
@@ -265,6 +269,42 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         } );
     }
     
+    private applyClasses( initial: boolean ) {
+        
+        this.renderer.removeClass( this.fieldRef.nativeElement, 'initial' );
+        this.renderer.removeClass( this.fieldRef.nativeElement, 'static' );
+        this.renderer.removeClass( this.fieldRef.nativeElement, 'pinned' );
+        this.renderer.removeClass( this.fieldRef.nativeElement, 'idle' );
+        this.renderer.removeClass( this.fieldRef.nativeElement, 'disabled' );
+        this.renderer.removeClass( this.fieldRef.nativeElement, 'focused' );
+        this.renderer.removeClass( this.fieldRef.nativeElement, 'invalid' );
+        
+        if ( initial ) {
+            
+            this.renderer.addClass( this.fieldRef.nativeElement, 'initial' );
+            
+            setTimeout( () => {
+                this.renderer.addClass( this.fieldRef.nativeElement, 'activate_transitions' );
+            } );
+        }
+        
+        if ( this.isStatic ) {
+            this.renderer.addClass( this.fieldRef.nativeElement, 'static' );
+        } else {
+            this.renderer.addClass( this.fieldRef.nativeElement, this.isPlaceholderPinned ? 'pinned' : 'static' );
+        }
+        
+        if ( this.isFocused ) {
+            this.renderer.addClass( this.fieldRef.nativeElement, 'focused' );
+        } else {
+            this.renderer.addClass( this.fieldRef.nativeElement, 'idle' );
+        }
+        
+        if ( this.isDisabled ) {
+            this.renderer.addClass( this.fieldRef.nativeElement, 'disabled' );
+        }
+    }
+    
     /* Events */
     
     private onFocusIn(): void {
@@ -275,11 +315,9 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         
         this.isFocused = true;
         
-        this.renderer.removeClass( this.fieldRef.nativeElement, 'unfocused' );
-        this.renderer.addClass( this.fieldRef.nativeElement, 'focused' );
-        
         this.pinPlaceholder();
         this.considerBorderPath();
+        this.applyClasses( false );
         
         this.cdr.detectChanges();
     }
@@ -293,9 +331,6 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         
         this.isFocused = false;
         
-        this.renderer.removeClass( this.fieldRef.nativeElement, 'focused' );
-        this.renderer.addClass( this.fieldRef.nativeElement, 'unfocused' );
-        
         if ( this.value.length > 0 ) {
             this.pinPlaceholder();
         } else {
@@ -303,6 +338,8 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         }
         
         this.considerBorderPath();
+        
+        this.applyClasses( false );
         
         this.cdr.detectChanges();
         
@@ -314,6 +351,10 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
     }
     
     private onInput( value: string ): void {
+        
+        if ( this.isDisabled ) {
+            return;
+        }
         
         if ( this.placeholderRef ) {
             if ( value.length > 0 && this.isStatic ) {
@@ -370,10 +411,9 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
     
     private pinPlaceholder(): void {
         
+        this.isPlaceholderPinned = true;
+        
         if ( !this.isStatic ) {
-            
-            this.renderer.removeClass( this.fieldRef.nativeElement, 'unpinned' );
-            this.renderer.addClass( this.fieldRef.nativeElement, 'pinned' );
             
             if ( this.placeholderRef ) {
                 
@@ -385,17 +425,12 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
                 this.placeholderRef.nativeElement.style.setProperty( '--placeholder-x', '-' + offsetX + 'px' );
                 this.placeholderRef.nativeElement.style.setProperty( '--placeholder-y', '-' + offsetY + 'px' );
             }
-            
-        } else {
-            this.renderer.removeClass( this.fieldRef.nativeElement, 'pinned' );
-            this.renderer.addClass( this.fieldRef.nativeElement, 'unpinned' );
         }
     }
     
     private unpinPlaceholder(): void {
         
-        this.renderer.removeClass( this.fieldRef.nativeElement, 'pinned' );
-        this.renderer.addClass( this.fieldRef.nativeElement, 'unpinned' );
+        this.isPlaceholderPinned = false;
         
         if ( this.placeholderRef ) {
             
@@ -412,13 +447,13 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         
         if ( !this.isStatic && this.placeholderRef ) {
             
-            this.normalBorderPath = this.generateBorderPath( this.value.length === 0 );
-            this.focusBorderPath  = this.generateBorderPath( false );
+            this.idleBorderPath    = this.generateBorderPath( this.value.length === 0 );
+            this.focusedBorderPath = this.generateBorderPath( false );
             
         } else {
             
-            this.normalBorderPath = this.generateBorderPath( true );
-            this.focusBorderPath  = this.generateBorderPath( true );
+            this.idleBorderPath    = this.generateBorderPath( true );
+            this.focusedBorderPath = this.generateBorderPath( true );
         }
     }
     
@@ -494,33 +529,35 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
     public registerOnTouched( fn: any ): void {
         this.formBlurEvent = fn;
     }
+    
+    public setDisabledState( isDisabled: boolean ): void {
+        this.isDisabled = isDisabled;
+    }
 }
 
-export const ZTextFieldTheme = z.object(
+export const ZTextFieldStateTheme        = z.object(
     {
-        idleText      : ZHEXColor,
-        idleBorder    : ZHEXColor,
-        idleDivider   : ZHEXColor,
-        idleBackground: ZHEXColor,
-        
-        focusText      : ZHEXColor,
-        focusBorder    : ZHEXColor,
-        focusDivider   : ZHEXColor,
-        focusBackground: ZHEXColor,
-        
-        placeholderPinnedFocused    : ZHEXColor,
-        placeholderPinnedUnfocused  : ZHEXColor,
-        placeholderUnpinnedFocused  : ZHEXColor,
-        placeholderUnpinnedUnfocused: ZHEXColor,
-        
-        errorText       : ZHEXColor,
-        errorPlaceholder: ZHEXColor,
-        errorBorder     : ZHEXColor,
-        errorDivider    : ZHEXColor,
-        errorBackground : ZHEXColor
+        text             : ZHEXColor,
+        border           : ZHEXColor,
+        divider          : ZHEXColor,
+        background       : ZHEXColor,
+        staticPlaceholder: ZHEXColor,
+        pinnedPlaceholder: ZHEXColor
     }
 );
+export const ZPartialTextFieldStateTheme = ZTextFieldStateTheme.partial();
 
+export type TextFieldStateTheme = z.infer<typeof ZTextFieldStateTheme>;
+export type PartialTextFieldStateTheme = z.infer<typeof ZPartialTextFieldStateTheme>;
+
+export const ZTextFieldTheme        = z.object(
+    {
+        idle    : ZTextFieldStateTheme,
+        focused : ZTextFieldStateTheme,
+        disabled: ZTextFieldStateTheme,
+        invalid : ZTextFieldStateTheme
+    }
+);
 export const ZPartialTextFieldTheme = ZTextFieldTheme.partial();
 
 export type TextFieldTheme = z.infer<typeof ZTextFieldTheme>;

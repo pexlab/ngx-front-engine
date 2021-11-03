@@ -270,26 +270,41 @@ export class ThemeService {
             
             textField: {
                 
-                idleText      : this.commonTheme.palette.text.secondary,
-                idleBorder    : this.commonTheme.palette.text.tertiary,
-                idleDivider   : this.commonTheme.palette.text.tertiary,
-                idleBackground: FeColorPalette.Greyscale.Transparent,
+                idle: {
+                    text             : this.commonTheme.palette.text.secondary,
+                    border           : this.commonTheme.palette.text.tertiary,
+                    divider          : this.commonTheme.palette.text.tertiary,
+                    background       : FeColorPalette.Greyscale.Transparent,
+                    staticPlaceholder: this.commonTheme.palette.text.tertiary,
+                    pinnedPlaceholder: this.commonTheme.palette.text.secondary
+                },
                 
-                focusText      : this.commonTheme.palette.text.primary,
-                focusBorder    : this.commonTheme.palette.text.primary,
-                focusDivider   : this.commonTheme.palette.text.primary,
-                focusBackground: FeColorPalette.Greyscale.Transparent,
+                focused: {
+                    text             : this.commonTheme.palette.text.primary,
+                    border           : this.commonTheme.palette.text.primary,
+                    divider          : this.commonTheme.palette.text.primary,
+                    background       : FeColorPalette.Greyscale.Transparent,
+                    staticPlaceholder: this.commonTheme.palette.text.tertiary,
+                    pinnedPlaceholder: this.commonTheme.palette.text.primary
+                },
                 
-                placeholderPinnedFocused    : this.commonTheme.palette.text.primary,
-                placeholderPinnedUnfocused  : this.commonTheme.palette.text.secondary,
-                placeholderUnpinnedFocused  : this.commonTheme.palette.text.tertiary,
-                placeholderUnpinnedUnfocused: this.commonTheme.palette.text.tertiary,
+                disabled: {
+                    text             : this.commonTheme.palette.text.secondary,
+                    border           : this.commonTheme.palette.text.tertiary,
+                    divider          : this.commonTheme.palette.text.primary,
+                    background       : FeColorPalette.Greyscale.MistyMorning,
+                    staticPlaceholder: this.commonTheme.palette.text.tertiary,
+                    pinnedPlaceholder: this.commonTheme.palette.text.secondary
+                },
                 
-                errorText       : this.commonTheme.palette.text.failure,
-                errorPlaceholder: this.commonTheme.palette.text.failure,
-                errorBorder     : this.commonTheme.palette.accent.failure,
-                errorDivider    : this.commonTheme.palette.accent.failure,
-                errorBackground : Color.fadeHex( this.commonTheme.palette.accent.failure, .1 )
+                invalid: {
+                    text             : this.commonTheme.palette.text.failure,
+                    border           : this.commonTheme.palette.accent.failure,
+                    divider          : this.commonTheme.palette.accent.failure,
+                    background       : Color.fadeHex( this.commonTheme.palette.accent.failure, .1 ),
+                    staticPlaceholder: this.commonTheme.palette.text.failure,
+                    pinnedPlaceholder: this.commonTheme.palette.text.failure
+                }
             },
             
             button: {

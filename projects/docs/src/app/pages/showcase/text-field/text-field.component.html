@@ -1,26 +1,49 @@
-<div class="container">
+<form [formGroup]="formGroup">
+    <div class="container">
 
-    <fe-text-field fePlaceholder="Moving placeholder" feAlignGroup="text-field-showcase">
-        <ng-template>
-            <svg-icon name="text"></svg-icon>
-        </ng-template>
-    </fe-text-field>
+        <fe-text-field fePlaceholder="Moving placeholder"
+                       feAlignGroup="text-field-showcase"
+                       formControlName="moving_placeholder">
+            <ng-template>
+                <svg-icon name="text"></svg-icon>
+            </ng-template>
+        </fe-text-field>
 
-    <fe-text-field fePlaceholder="Disappearing placeholder" feStatic feAlignGroup="text-field-showcase">
-        <ng-template>
-            <svg-icon name="text"></svg-icon>
-        </ng-template>
-    </fe-text-field>
+        <fe-text-field fePlaceholder="Disappearing placeholder"
+                       feStatic
+                       feAlignGroup="text-field-showcase"
+                       formControlName="disappearing_placeholder">
+            <ng-template>
+                <svg-icon name="text"></svg-icon>
+            </ng-template>
+        </fe-text-field>
 
-    <fe-text-field
-            fePlaceholder="This is a more spacious text-area. You can write something fairly elaborate here!"
-            feStatic
-            feType="multi"
-            feAlignGroup="text-field-showcase"
-            [style.height]="'150px'">
-        <ng-template>
-            <svg-icon name="text"></svg-icon>
-        </ng-template>
-    </fe-text-field>
+        <fe-text-field
+                fePlaceholder="This is a more spacious text-area. You can write something fairly elaborate here!"
+                feStatic
+                feType="multi"
+                feAlignGroup="text-field-showcase"
+                formControlName="area"
+                [style.height]="'150px'">
+            <ng-template>
+                <svg-icon name="text"></svg-icon>
+            </ng-template>
+        </fe-text-field>
 
-</div>
+        <fe-text-field feAlignGroup="text-field-showcase"
+                       fePlaceholder="You can't type anything here"
+                       formControlName="disabled_with_placeholder">
+            <ng-template>
+                <svg-icon name="text"></svg-icon>
+            </ng-template>
+        </fe-text-field>
+
+        <fe-text-field feAlignGroup="text-field-showcase"
+                       formControlName="disabled_with_prefill">
+            <ng-template>
+                <svg-icon name="text"></svg-icon>
+            </ng-template>
+        </fe-text-field>
+
+    </div>
+</form>

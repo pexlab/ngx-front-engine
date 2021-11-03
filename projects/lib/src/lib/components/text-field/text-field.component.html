@@ -3,12 +3,12 @@
      [class.isArea]="feType === 'multi'"
 >
 
-    <svg class="border normal" #normalBorder>
-        <path [attr.d]="normalBorderPath"></path>
+    <svg class="border idle" #idleBorder>
+        <path [attr.d]="idleBorderPath"></path>
     </svg>
 
-    <svg class="border focus" #focusBorder>
-        <path [attr.d]="focusBorderPath"></path>
+    <svg class="border focused" #focusedBorder>
+        <path [attr.d]="focusedBorderPath"></path>
     </svg>
 
     <div class="label" #label>
@@ -26,12 +26,14 @@
                [name]="feKey"
                [type]="feType"
                [spellcheck]="feSpellcheck"
+               [readOnly]="isDisabled"
         />
 
         <textarea #textInput
                   *ngIf="feType === 'multi'"
                   [name]="feKey"
                   [spellcheck]="feSpellcheck"
+                  [readOnly]="isDisabled"
         ></textarea>
     </div>
 
