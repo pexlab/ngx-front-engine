@@ -1,13 +1,14 @@
 import {
+    AfterViewInit,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     ContentChildren,
     ElementRef, EventEmitter,
     HostBinding,
-    Input,
+    Input, NgZone,
     OnDestroy, Optional, Output,
-    QueryList, Self,
+    QueryList, Renderer2, Self,
     TemplateRef,
     ViewChild
 } from '@angular/core';
@@ -27,14 +28,16 @@ import { DropdownChoiceComponent } from './choice/dropdown-choice.component';
         changeDetection: ChangeDetectionStrategy.OnPush
     }
 )
-export class DropdownComponent implements OnDestroy, ControlValueAccessor {
+export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValueAccessor {
     
     constructor(
         @Self()
         @Optional()
         private ngControl: NgControl,
         private cdr: ChangeDetectorRef,
-        public hostElement: ElementRef
+        public hostElement: ElementRef,
+        private ngZone: NgZone,
+        private renderer: Renderer2
     ) {
         if ( this.ngControl ) {
             this.ngControl.valueAccessor = this;
@@ -92,7 +95,9 @@ export class DropdownComponent implements OnDestroy, ControlValueAccessor {
     
     private choices!: QueryList<DropdownChoiceComponent>;
     private currentChoice: string | null | undefined = undefined;
-    private disposeSubscriptions: Subscription[]     = [];
+    
+    private disposeSubscriptions: Subscription[] = [];
+    private disposeListeners: ( () => void )[]   = [];
     
     /* Form API */
     private formInputEvent?: ( value: string | null ) => void;
@@ -118,6 +123,35 @@ export class DropdownComponent implements OnDestroy, ControlValueAccessor {
         }
     }
     
+    private discardNextUp = false;
+    private localMouseUp  = false;
+    
+    public ngAfterViewInit(): void {
+        
+        this.ngZone.runOutsideAngular( () => {
+            
+            this.disposeListeners.push(
+                this.renderer.listen( this.hostElement.nativeElement, 'mousedown', () => {
+                    this.discardNextUp = true;
+                } ),
+                
+                this.renderer.listen( this.hostElement.nativeElement, 'mouseup', () => {
+                    this.localMouseUp = true;
+                } ),
+                
+                this.renderer.listen( document.documentElement, 'mouseup', () => {
+                    
+                    if ( !this.localMouseUp && !this.discardNextUp && this.dropdownVisible ) {
+                        this.ngZone.run( () => this.toggleMenu() );
+                    }
+                    
+                    this.discardNextUp = false;
+                    this.localMouseUp  = false;
+                } )
+            );
+        } );
+    }
+    
     @HostBinding( 'style.zIndex' )
     public get zIndex(): string {
         return this.dropdownVisible ? '2' : '0';
@@ -140,11 +174,16 @@ export class DropdownComponent implements OnDestroy, ControlValueAccessor {
     
     public ngOnDestroy(): void {
         this.disposeSubscriptions.forEach( subscription => subscription.unsubscribe() );
+        this.disposeListeners.forEach( ( listener ) => listener() );
     }
     
     public toggleMenu(): void {
         
         this.dropdownVisible = !this.dropdownVisible;
+        
+        if ( this.dropdownVisible && document.activeElement && ( document.activeElement as any ).blur ) {
+            ( document.activeElement as HTMLInputElement ).blur();
+        }
         
         if ( this.formBlurEvent && !this.dropdownVisible ) {
             this.formBlurEvent();
