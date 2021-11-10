@@ -291,7 +291,7 @@ export class ThemeService {
                 disabled: {
                     text             : this.commonTheme.palette.text.secondary,
                     border           : this.commonTheme.palette.text.tertiary,
-                    divider          : this.commonTheme.palette.text.primary,
+                    divider          : this.commonTheme.palette.text.tertiary,
                     background       : FeColorPalette.Greyscale.MistyMorning,
                     staticPlaceholder: this.commonTheme.palette.text.tertiary,
                     pinnedPlaceholder: this.commonTheme.palette.text.secondary
