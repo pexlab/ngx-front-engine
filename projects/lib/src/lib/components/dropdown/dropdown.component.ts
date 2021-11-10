@@ -1,3 +1,4 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
@@ -25,7 +26,41 @@ import { DropdownChoiceComponent } from './choice/dropdown-choice.component';
         selector       : 'fe-dropdown',
         templateUrl    : './dropdown.component.html',
         styleUrls      : [ './dropdown.component.scss' ],
-        changeDetection: ChangeDetectionStrategy.OnPush
+        changeDetection: ChangeDetectionStrategy.OnPush,
+        animations     : [
+            trigger( 'options', [
+                
+                state( 'hidden', style(
+                    {
+                        display      : 'none',
+                        pointerEvents: 'none',
+                        opacity      : '0',
+                        transform    : 'translateY(30px)'
+                    }
+                ) ),
+                
+                state( 'visible', style(
+                    {
+                        display      : 'block',
+                        pointerEvents: 'visible',
+                        opacity      : '1',
+                        transform    : 'translateY(0)'
+                    }
+                ) ),
+                
+                transition( 'visible <=> hidden', [
+                    
+                    style(
+                        {
+                            display      : 'block',
+                            pointerEvents: 'none'
+                        }
+                    ),
+                    
+                    animate( '.25s ease' )
+                ] )
+            ] )
+        ]
     }
 )
 export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValueAccessor {

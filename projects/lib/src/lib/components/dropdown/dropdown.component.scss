@@ -106,7 +106,7 @@ $OPTION_PADDING              : 10px;
 	
 	box-shadow     : 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 	
-	transition     : transform .15s ease, opacity .15s ease, background .25s ease;
+	transition     : background .25s ease;
 	
 	&:before {
 	  
@@ -121,12 +121,6 @@ $OPTION_PADDING              : 10px;
 	  height     : 3px;
 	  
 	  background : config.hex('options-stripe');
-	}
-	
-	&.hidden {
-	  pointer-events : none;
-	  opacity        : 0;
-	  transform      : translateY(30px);
 	}
 	
 	& > .clear-value {

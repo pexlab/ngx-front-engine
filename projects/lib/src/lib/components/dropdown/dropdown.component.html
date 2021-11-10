@@ -10,7 +10,7 @@
     <svg-icon name="fe-caret-down"></svg-icon>
 </div>
 
-<div class="options" [class.hidden]="!dropdownVisible">
+<div class="options" [@options]="dropdownVisible ? 'visible' : 'hidden'">
 
     <ng-content></ng-content>
 
