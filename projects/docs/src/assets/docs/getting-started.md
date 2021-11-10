@@ -25,7 +25,7 @@ yarn add @pexlab/ngx-front-engine
 
 #### 2. Making the assets available
 
-Go to the root of your project and open the ``angular.json`` file. In there go ahead and find the ``assets`` section and
+Go to the root of your project and open the ``angular.json`` file. In there go ahead and find the ``assets`` and ``styles`` section and
 append the following:
 
 ```diff
@@ -37,7 +37,11 @@ append the following:
 +   "input": "./node_modules/@pexlab/ngx-front-engine/assets/",
 +   "output": "/assets/"
 + }
-]
+],
+"styles": [
+    "src/styles.scss",
++   "./node_modules/@pexlab/ngx-front-engine/assets/fe-styles/root.scss"
+],
 ```
 
 <br>
