@@ -1,5 +1,5 @@
-import { Component, NgZone, OnInit } from '@angular/core';
-import { BannerCarouselService, BannerCarouselState } from '@pexlab/ngx-front-engine';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { BannerCarouselService, BannerCarouselState, FeColorPalette } from '@pexlab/ngx-front-engine';
 
 @Component(
     {
@@ -7,7 +7,7 @@ import { BannerCarouselService, BannerCarouselState } from '@pexlab/ngx-front-en
         styleUrls  : [ './banner-carousel.component.scss' ]
     }
 )
-export class BannerCarouselComponent implements OnInit {
+export class BannerCarouselComponent implements OnInit, OnDestroy {
     
     constructor( private bannerCarousel: BannerCarouselService, private ngZone: NgZone ) {
         this.initialBannerCarouselState();
@@ -16,6 +16,10 @@ export class BannerCarouselComponent implements OnInit {
     private bannerCarouselInterval?: number;
     
     public ngOnInit(): void {
+    }
+    
+    public ngOnDestroy(): void {
+        clearInterval( this.bannerCarouselInterval );
     }
     
     public initialBannerCarouselState(): void {
@@ -61,7 +65,11 @@ export class BannerCarouselComponent implements OnInit {
             heading   : 'Turkish snacks',
             subheading: 'Limited discount only until tomorrow!',
             theme     : {
-                palette           : {},
+                palette           : {
+                    background           : FeColorPalette.Red.Berry,
+                    buttonIdleBackground : FeColorPalette.Red.Berry,
+                    buttonHoverBackground: FeColorPalette.Red.DarkBlood
+                },
                 complimentaryImage: {
                     url      : 'assets/images/carousel1.png',
                     alignment: 'top',
@@ -85,7 +93,11 @@ export class BannerCarouselComponent implements OnInit {
             heading   : 'Grab some for your friends as well!',
             subheading: 'They\'ll surly love our vast variety of flavors',
             theme     : {
-                palette           : {},
+                palette           : {
+                    background           : FeColorPalette.Red.Berry,
+                    buttonIdleBackground : FeColorPalette.Red.Berry,
+                    buttonHoverBackground: FeColorPalette.Red.DarkBlood
+                },
                 complimentaryImage: {
                     url      : 'assets/images/carousel2.png',
                     alignment: 'top',
@@ -109,7 +121,11 @@ export class BannerCarouselComponent implements OnInit {
             heading   : 'Worldwide shipping',
             subheading: 'Enjoy free worldwide shipping starting with orders above 25€',
             theme     : {
-                palette           : {},
+                palette           : {
+                    background           : FeColorPalette.Red.Berry,
+                    buttonIdleBackground : FeColorPalette.Red.Berry,
+                    buttonHoverBackground: FeColorPalette.Red.DarkBlood
+                },
                 complimentaryImage: {
                     url      : 'assets/images/carousel3.png',
                     alignment: 'top',
