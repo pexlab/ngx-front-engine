@@ -79,6 +79,18 @@ export class ThemeService {
     /* TODO: if element gets applied a different palette, store the the current one in memory to remove all those previous values */
     public applyPalette( palette: HEXColorRegister, element: HTMLElement, global = false ): void {
         
+        /* Reset any previous local styling */
+        if ( !global ) {
+            element.getAttribute( 'style' )?.split( ';' ).forEach( ( str ) => {
+                
+                const styleKey = str.split( ':' )[ 0 ].replace( ' ', '' );
+                
+                if ( styleKey.startsWith( '--fe-local-color' ) ) {
+                    this.renderer.removeStyle( element, styleKey, 2 );
+                }
+            } );
+        }
+        
         /* Extract every possible key/path from the palette */
         const elements = _.keysDeep( palette, { leavesOnly: true } );
         
