@@ -180,29 +180,30 @@
 
 .content-wrapper {
   
-  $width: var(--popup-width);
-  $scrollBarWidth: var(--scrollbar-width);
-  $padding    : 30px;
+  $width          : var(--popup-width);
+  $padding        : 30px;
   
-  width       : calc(#{$width} + (#{$padding} * 2) + #{$scrollBarWidth});
-  max-width   : 90vw;
-  min-width   : 400px;
+  width           : calc(#{$width} + (#{$padding} * 2));
+  max-width       : 90vw;
+  min-width       : 400px;
   
-  height      : fit-content;
-  max-height  : 50vh;
+  height          : fit-content;
+  max-height      : 50vh;
   
-  overflow-x  : hidden;
-  overflow-y  : auto;
+  /* TODO: overlay a scrollbar on firefox as well */
+  overflow-x      : hidden;
+  overflow-y      : overlay; /* Overlay scrollbar on webkit */
+  scrollbar-width : none; /* Hide scrollbar on firefox */
   
-  display     : grid;
-  place-items : center;
+  display         : grid;
+  place-items     : center;
   
   & .content {
 	
 	width  : $width;
 	
 	margin : $padding 0;
- 
+	
 	color  : theme.hex('text');
 	
 	@include theme.commonFont('body');
