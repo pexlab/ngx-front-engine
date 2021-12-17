@@ -416,6 +416,7 @@ export class ThemeService {
                     icon          : FeColorPalette.Greyscale.SnowWhite,
                     iconBackground: this.commonTheme.palette.accent.generic,
                     
+                    code          : this.commonTheme.palette.text.primary,
                     codeBorder    : this.commonTheme.palette.background.quaternary,
                     codeBackground: this.commonTheme.palette.background.tertiary
                 },
@@ -429,6 +430,7 @@ export class ThemeService {
                     icon          : FeColorPalette.Greyscale.SnowWhite,
                     iconBackground: this.commonTheme.palette.accent.info,
                     
+                    code          : this.commonTheme.palette.text.primary,
                     codeBorder    : this.commonTheme.palette.background.quaternary,
                     codeBackground: this.commonTheme.palette.background.tertiary
                 },
@@ -442,6 +444,7 @@ export class ThemeService {
                     icon          : FeColorPalette.Greyscale.SnowWhite,
                     iconBackground: this.commonTheme.palette.accent.success,
                     
+                    code          : this.commonTheme.palette.text.primary,
                     codeBorder    : this.commonTheme.palette.background.quaternary,
                     codeBackground: this.commonTheme.palette.background.tertiary
                 },
@@ -455,6 +458,7 @@ export class ThemeService {
                     icon          : FeColorPalette.Greyscale.PitchBlack,
                     iconBackground: this.commonTheme.palette.accent.warning,
                     
+                    code          : this.commonTheme.palette.text.primary,
                     codeBorder    : this.commonTheme.palette.background.quaternary,
                     codeBackground: this.commonTheme.palette.background.tertiary
                 },
@@ -468,6 +472,7 @@ export class ThemeService {
                     icon          : FeColorPalette.Greyscale.SnowWhite,
                     iconBackground: this.commonTheme.palette.accent.failure,
                     
+                    code          : this.commonTheme.palette.text.primary,
                     codeBorder    : this.commonTheme.palette.background.quaternary,
                     codeBackground: this.commonTheme.palette.background.tertiary
                 }

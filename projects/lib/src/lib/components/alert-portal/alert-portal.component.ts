@@ -95,6 +95,7 @@ export const ZAlertTheme = z.object(
         icon          : ZHEXColor,
         iconBackground: ZHEXColor,
         
+        code          : ZHEXColor,
         codeBorder    : ZHEXColor,
         codeBackground: ZHEXColor
     }
