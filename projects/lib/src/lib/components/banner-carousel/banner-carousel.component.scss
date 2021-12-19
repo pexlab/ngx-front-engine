@@ -48,9 +48,20 @@
 		grid-auto-flow : column;
 		grid-gap       : 7px;
 		
-		color          : theme.commonHex('accent-primary');
+		padding        : 7px 10px;
+		border-radius  : 5px;
 		
 		cursor         : pointer;
+		
+		color          : theme.hex('reduced-appearance-button-idle-text');
+		background     : theme.hex('reduced-appearance-button-idle-background');
+		
+		transition     : .25s ease color, .25s ease background-color;
+		
+		&:hover {
+		  color      : theme.hex('reduced-appearance-button-hover-text');
+		  background : theme.hex('reduced-appearance-button-hover-background');
+		}
 		
 		& > svg-icon {
 		  

@@ -380,7 +380,7 @@ export class ThemeService {
                     heading   : this.commonTheme.palette.text.primary,
                     subheading: this.commonTheme.palette.text.secondary,
                     
-                    buttonIdleText      : this.commonTheme.palette.text.on_primary_accent,
+                    buttonIdleText      : this.commonTheme.palette.accent.primary,
                     buttonIdleBackground: FeColorPalette.Greyscale.Transparent,
                     
                     buttonHoverText      : this.commonTheme.palette.text.on_primary_accent,
