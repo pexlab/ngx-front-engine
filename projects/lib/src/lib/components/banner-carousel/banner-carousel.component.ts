@@ -103,6 +103,9 @@ export class BannerCarouselComponent implements OnInit, AfterViewInit {
         }
     }
     
+    @Input()
+    public feAppearance: 'rich' | 'reduced' = 'rich';
+    
     public ngOnInit(): void {
         
         this.hasBeenInitialised = true;
@@ -149,7 +152,7 @@ export class BannerCarouselComponent implements OnInit, AfterViewInit {
     }
 }
 
-export const ZBannerCarouselTheme = z.object(
+const ZBannerCarouselBase = z.object(
     {
         heading   : ZHEXColor,
         subheading: ZHEXColor,
@@ -163,7 +166,14 @@ export const ZBannerCarouselTheme = z.object(
     }
 );
 
-export const ZPartialBannerCarouselTheme = ZBannerCarouselTheme.partial();
+export const ZBannerCarouselTheme = z.object(
+    {
+        richAppearance   : ZBannerCarouselBase,
+        reducedAppearance: ZBannerCarouselBase.omit( { background: true } )
+    }
+);
+
+export const ZPartialBannerCarouselTheme = ZBannerCarouselTheme.deepPartial();
 
 export type BannerCarouselTheme = z.infer<typeof ZBannerCarouselTheme>;
 export type PartialBannerCarouselTheme = z.infer<typeof ZPartialBannerCarouselTheme>;

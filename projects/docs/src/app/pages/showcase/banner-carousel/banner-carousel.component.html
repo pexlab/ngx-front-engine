@@ -1,3 +1,18 @@
-<fe-banner-carousel feInstance="showcase"></fe-banner-carousel>
+<div>
 
-<fe-button (feClick)="toggleShowcase()">Toggle Showcase</fe-button>
+    <span>Rich Appearance</span>
+
+    <fe-banner-carousel feInstance="rich-showcase" feAppearance="rich"></fe-banner-carousel>
+
+    <fe-button (feClick)="toggleRichShowcase()">
+        <svg-icon [name]="bannerCarouselInterval ? 'stop' : 'start'"></svg-icon>
+        <span>{{ bannerCarouselInterval ? 'Stop' : 'Start' }} advertising example showcase</span>
+    </fe-button>
+</div>
+
+<div>
+
+    <span>Reduced Appearance</span>
+
+    <fe-banner-carousel feInstance="reduced-showcase" feAppearance="reduced"></fe-banner-carousel>
+</div>

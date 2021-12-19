@@ -13,7 +13,7 @@ export class BannerCarouselComponent implements OnInit, OnDestroy {
         this.initialBannerCarouselState();
     }
     
-    private bannerCarouselInterval?: number;
+    public bannerCarouselInterval?: number;
     
     public ngOnInit(): void {
     }
@@ -23,10 +23,31 @@ export class BannerCarouselComponent implements OnInit, OnDestroy {
     }
     
     public initialBannerCarouselState(): void {
-        this.bannerCarousel.rotate( 'showcase', {
-            heading   : 'An Animated Banner-Carousel',
-            subheading: 'Click the button below to showcase it\'s functions',
+        
+        this.bannerCarousel.rotate( 'rich-showcase', {
+            heading   : 'Rich Animated Banner-Carousel',
+            subheading: 'Great for advertising purposes',
             buttons   : null,
+            theme     : {
+                palette           : {},
+                complimentaryImage: null
+            }
+        } );
+        
+        this.bannerCarousel.rotate( 'reduced-showcase', {
+            heading   : 'Reduced Banner-Carousel',
+            subheading: 'Great for mobile usage like a title bar',
+            buttons   : [
+                {
+                    text   : 'Back',
+                    icon   : 'left',
+                    onClick: () => {}
+                },
+                {
+                    text   : 'Action',
+                    onClick: () => {}
+                }
+            ],
             theme     : {
                 palette           : {},
                 complimentaryImage: null
@@ -34,7 +55,7 @@ export class BannerCarouselComponent implements OnInit, OnDestroy {
         } );
     }
     
-    public toggleShowcase(): void {
+    public toggleRichShowcase(): void {
         
         if ( this.bannerCarouselInterval ) {
             clearInterval( this.bannerCarouselInterval );
@@ -47,11 +68,11 @@ export class BannerCarouselComponent implements OnInit, OnDestroy {
         
         const cycleStates = () => {
             
-            this.bannerCarousel.rotate( 'showcase', this.bannerCycles[ bannerCycleIndex ] );
+            this.bannerCarousel.rotate( 'rich-showcase', this.richBannerCycles[ bannerCycleIndex ] );
             
             bannerCycleIndex++;
             
-            if ( bannerCycleIndex > ( this.bannerCycles.length - 1 ) ) {
+            if ( bannerCycleIndex > ( this.richBannerCycles.length - 1 ) ) {
                 bannerCycleIndex = 0;
             }
         };
@@ -60,15 +81,17 @@ export class BannerCarouselComponent implements OnInit, OnDestroy {
         this.bannerCarouselInterval = setInterval( () => cycleStates(), 2500 * 2 );
     }
     
-    private bannerCycles: BannerCarouselState[] = [
+    private richBannerCycles: BannerCarouselState[] = [
         {
             heading   : 'Turkish snacks',
             subheading: 'Limited discount only until tomorrow!',
             theme     : {
                 palette           : {
-                    background           : FeColorPalette.Red.Berry,
-                    buttonIdleBackground : FeColorPalette.Red.Berry,
-                    buttonHoverBackground: FeColorPalette.Red.DarkBlood
+                    richAppearance: {
+                        background           : FeColorPalette.Red.Berry,
+                        buttonIdleBackground : FeColorPalette.Red.Berry,
+                        buttonHoverBackground: FeColorPalette.Red.DarkBlood
+                    }
                 },
                 complimentaryImage: {
                     url      : 'assets/images/carousel1.png',
@@ -94,9 +117,11 @@ export class BannerCarouselComponent implements OnInit, OnDestroy {
             subheading: 'They\'ll surly love our vast variety of flavors',
             theme     : {
                 palette           : {
-                    background           : FeColorPalette.Red.Berry,
-                    buttonIdleBackground : FeColorPalette.Red.Berry,
-                    buttonHoverBackground: FeColorPalette.Red.DarkBlood
+                    richAppearance: {
+                        background           : FeColorPalette.Red.Berry,
+                        buttonIdleBackground : FeColorPalette.Red.Berry,
+                        buttonHoverBackground: FeColorPalette.Red.DarkBlood
+                    }
                 },
                 complimentaryImage: {
                     url      : 'assets/images/carousel2.png',
@@ -122,9 +147,11 @@ export class BannerCarouselComponent implements OnInit, OnDestroy {
             subheading: 'Enjoy free worldwide shipping starting with orders above 25€',
             theme     : {
                 palette           : {
-                    background           : FeColorPalette.Red.Berry,
-                    buttonIdleBackground : FeColorPalette.Red.Berry,
-                    buttonHoverBackground: FeColorPalette.Red.DarkBlood
+                    richAppearance: {
+                        background           : FeColorPalette.Red.Berry,
+                        buttonIdleBackground : FeColorPalette.Red.Berry,
+                        buttonHoverBackground: FeColorPalette.Red.DarkBlood
+                    }
                 },
                 complimentaryImage: {
                     url      : 'assets/images/carousel3.png',

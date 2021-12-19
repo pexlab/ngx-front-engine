@@ -1,40 +1,71 @@
-<ng-container *ngIf="isInValidState">
+<ng-container *ngIf="isInValidState" [ngSwitch]="feAppearance">
 
-    <div class="banner">
+    <div *ngSwitchCase="'rich'" class="rich">
 
-        <div class="text-wrapper">
-            <div class="text" [@carousel] *ngFor="let t of text">
+        <div class="banner">
 
-            <span class="heading" *ngIf="t.heading !== null">
-                {{t.heading}}
-            </span>
+            <div class="text-wrapper">
 
-                <span class="subheading" *ngIf="t.subheading !== null">
-                {{t.subheading}}
-            </span>
+                <div class="text" [@carousel] *ngFor="let t of text">
 
+                    <span class="heading" *ngIf="t.heading !== null">
+                        {{t.heading}}
+                    </span>
+
+                    <span class="subheading" *ngIf="t.subheading !== null">
+                        {{t.subheading}}
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="image"
+                 *ngFor="let p of image"
+                 [style.height]="(150 * (p.scale || 1)) + 'px'"
+                 [style.right]="(p.marginRight || 0) + 'px'"
+                 [style.marginTop]="(p.marginTop || 0 ) + 'px'"
+                 [style.marginBottom]="(p.marginBottom || 0 ) + 'px'"
+                 [ngClass]="p.alignment"
+            >
+                <img alt="" [@image] [src]="p.url" [style.height]="(150 * (p.scale || 1)) + 'px'"/>
             </div>
         </div>
 
-        <div class="image"
-             *ngFor="let p of image"
-             [style.height]="(150 * (p.scale || 1)) + 'px'"
-             [style.right]="(p.marginRight || 0) + 'px'"
-             [style.marginTop]="(p.marginTop || 0 ) + 'px'"
-             [style.marginBottom]="(p.marginBottom || 0 ) + 'px'"
-             [ngClass]="p.alignment"
-        >
-            <img alt="" [@image] [src]="p.url" [style.height]="(150 * (p.scale || 1)) + 'px'"/>
+        <div *ngIf="buttons !== null" class="buttons" [@buttons]="buttons">
+            <div *ngFor="let btn of buttons" [fe-tactile] (tactileClick)="btn.onClick()" [routerLink]="btn.link">
+                <div class="content">
+                    <svg-icon *ngIf="btn.icon" [name]="btn.icon"></svg-icon>
+                    <span>{{btn.text}}</span>
+                </div>
+            </div>
         </div>
+
     </div>
 
-    <div *ngIf="buttons !== null" class="buttons" [@buttons]="buttons">
-        <div *ngFor="let btn of buttons" [fe-tactile] (tactileClick)="btn.onClick()" [routerLink]="btn.link">
-            <div class="content">
-                <svg-icon *ngIf="btn.icon" [name]="btn.icon"></svg-icon>
-                <span>{{btn.text}}</span>
+    <div *ngSwitchCase="'reduced'" class="reduced">
+
+        <div class="left">
+            <div class="button" *ngIf="buttons && buttons[0]" [fe-tactile] (tactileClick)="buttons[0].onClick()"
+                 [routerLink]="buttons[0].link">
+                <svg-icon *ngIf="buttons[0].icon" [name]="buttons[0].icon"></svg-icon>
+                <span>{{buttons[0].text}}</span>
             </div>
         </div>
+
+        <div class="text" *ngFor="let t of text">
+            <span class="heading" *ngIf="t.heading !== null">{{t.heading}}</span>
+            <span class="subheading" *ngIf="t.subheading !== null">{{t.subheading}}</span>
+        </div>
+
+        <div class="right">
+            <div class="button" *ngIf="buttons && buttons[1]" [fe-tactile] (tactileClick)="buttons[1].onClick()"
+                 [routerLink]="buttons[1].link">
+                <svg-icon *ngIf="buttons[1].icon" [name]="buttons[1].icon"></svg-icon>
+                <span>{{buttons[1].text}}</span>
+            </div>
+        </div>
+
     </div>
 
 </ng-container>

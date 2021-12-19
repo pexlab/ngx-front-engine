@@ -362,15 +362,30 @@ export class ThemeService {
             
             bannerCarousel: {
                 
-                heading   : this.commonTheme.palette.text.on_primary_accent,
-                subheading: Color.fadeHex( this.commonTheme.palette.text.on_primary_accent, .75 ),
-                background: this.commonTheme.palette.accent.primary,
+                richAppearance: {
+                    
+                    heading   : this.commonTheme.palette.text.on_primary_accent,
+                    subheading: Color.fadeHex( this.commonTheme.palette.text.on_primary_accent, .75 ),
+                    background: this.commonTheme.palette.accent.primary,
+                    
+                    buttonIdleText      : this.commonTheme.palette.text.on_primary_accent,
+                    buttonIdleBackground: this.commonTheme.palette.accent.primary,
+                    
+                    buttonHoverText      : this.commonTheme.palette.text.on_secondary_accent,
+                    buttonHoverBackground: this.commonTheme.palette.accent.secondary
+                },
                 
-                buttonIdleText      : this.commonTheme.palette.text.on_primary_accent,
-                buttonIdleBackground: this.commonTheme.palette.accent.primary,
-                
-                buttonHoverText      : this.commonTheme.palette.text.on_secondary_accent,
-                buttonHoverBackground: this.commonTheme.palette.accent.secondary
+                reducedAppearance: {
+                    
+                    heading   : this.commonTheme.palette.text.primary,
+                    subheading: this.commonTheme.palette.text.secondary,
+                    
+                    buttonIdleText      : this.commonTheme.palette.text.on_primary_accent,
+                    buttonIdleBackground: FeColorPalette.Greyscale.Transparent,
+                    
+                    buttonHoverText      : this.commonTheme.palette.text.on_primary_accent,
+                    buttonHoverBackground: this.commonTheme.palette.accent.primary
+                }
             },
             
             switch: {

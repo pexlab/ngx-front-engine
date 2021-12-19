@@ -14,12 +14,15 @@ export class AppComponent implements OnInit, AfterViewChecked {
     
     private viewCounter = 1;
     
-    constructor( private iconReg: SvgIconRegistryService, private theme: ThemeService ) {
+    constructor( private iconReg: SvgIconRegistryService ) {
         this.iconReg.loadSvg( 'assets/logo.svg', 'logo' );
+        this.iconReg.loadSvg( 'assets/icons/chevron-left.svg', 'left' );
         this.iconReg.loadSvg( 'assets/icons/type.svg', 'text' );
         this.iconReg.loadSvg( 'assets/icons/sun-solid.svg', 'sun' );
         this.iconReg.loadSvg( 'assets/icons/moon-solid.svg', 'moon' );
+        this.iconReg.loadSvg( 'assets/icons/play-circle.svg', 'start' );
         this.iconReg.loadSvg( 'assets/icons/shopping-cart-solid.svg', 'shop' );
+        this.iconReg.loadSvg( 'assets/icons/stop-circle.svg', 'stop' );
         this.iconReg.loadSvg( 'assets/icons/gem-solid.svg', 'gem' );
         this.iconReg.loadSvg( 'assets/icons/help-circle.svg', 'help' );
     }
