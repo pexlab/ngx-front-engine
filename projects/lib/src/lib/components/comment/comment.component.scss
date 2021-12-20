@@ -157,10 +157,14 @@
   }
   
   & .content {
+	
 	@include theme.commonFont('alternative');
 	color       : theme.hex('text');
 	line-height : 18px;
-	user-select : text;
+	
+	& span {
+	  user-select : text;
+	}
   }
   
   & .container {
