@@ -3,6 +3,7 @@ import { ZAlertPortalTheme } from '../components/alert-portal/alert-portal.compo
 import { ZBannerCarouselTheme } from '../components/banner-carousel/banner-carousel.component';
 import { ZButtonTheme } from '../components/button/button.component';
 import { ZCheckboxTheme } from '../components/checkbox/checkbox.component';
+import { ZCommentTheme } from '../components/comment/comment.component';
 import { ZDropdownTheme } from '../components/dropdown/dropdown.component';
 import { ZPopupTheme } from '../components/popup/popup.component';
 import { ZSpeedometerTheme } from '../components/speedometer/speedometer.component';
@@ -17,13 +18,14 @@ export const ZCommonTheme = z.object(
         
         typography: z.object(
             {
-                display   : ZFont,
-                heading   : ZFont,
-                subheading: ZFont,
-                body      : ZFont,
-                decorative: ZFont,
-                caption   : ZFont,
-                code      : ZFont
+                display    : ZFont,
+                heading    : ZFont,
+                subheading : ZFont,
+                body       : ZFont,
+                alternative: ZFont,
+                decorative : ZFont,
+                caption    : ZFont,
+                code       : ZFont
             }
         ),
         
@@ -80,6 +82,7 @@ export type ThemeableComponents = 'textField'
                                   | 'switch'
                                   | 'popup'
                                   | 'alertPortal'
+                                  | 'comment'
                                   | 'speedometer';
 
 /** Used to guarantee that each component is preset but also gets assigned its very own type */
@@ -99,6 +102,7 @@ export const ZComponentThemes = z.object(
             switch        : ZSwitchTheme,
             popup         : ZPopupTheme,
             alertPortal   : ZAlertPortalTheme,
+            comment       : ZCommentTheme,
             speedometer   : ZSpeedometerTheme
         }
     )

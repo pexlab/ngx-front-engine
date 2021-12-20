@@ -1,0 +1,53 @@
+<ng-template #avatar>
+    <img class="avatar" alt="" [src]="feAuthor.avatarUrl" (click)="feAuthor.onPreview()">
+</ng-template>
+
+<ng-template #header>
+    <div class="header">
+
+        <div class="nickname">
+            <span>{{ feAuthor.nickname }}</span>
+            <svg-icon *ngIf="feAuthor.verified" name="fe-verified-badge"></svg-icon>
+        </div>
+
+        <div class="divider"></div>
+
+        <span class="date">{{ readableDateString }}</span>
+    </div>
+</ng-template>
+
+<ng-template #message>
+    <div class="content">
+        <span>{{ feMessage.text }}</span>
+    </div>
+</ng-template>
+
+<ng-template #buttons>
+    <div class="buttons" *ngIf="feButtons && feButtons.length > 0">
+
+        <div class="button"
+             *ngFor="let btn of feButtons"
+             [style.--icon-idle-color]="btn.overwriteIdleIconColor ? btn.iconColor : undefined"
+             [style.--icon-hover-color]="btn.iconColor"
+             [style.--background-color]="btn.backgroundColor"
+             [fe-tactile]
+             (tactileClick)="btn.onClick()">
+
+            <div class="hitbox"></div>
+            <svg-icon [name]="btn.icon"></svg-icon>
+
+        </div>
+    </div>
+</ng-template>
+
+<div [ngClass]="feAppearance">
+
+    <ng-container *ngTemplateOutlet="avatar"></ng-container>
+
+    <div class="container"
+         [style.paddingBottom]="feAppearance === 'spacious' && feButtons && feButtons.length > 0 ? '10px' : undefined">
+        <ng-container *ngTemplateOutlet="header"></ng-container>
+        <ng-container *ngTemplateOutlet="message"></ng-container>
+        <ng-container *ngTemplateOutlet="buttons"></ng-container>
+    </div>
+</div>

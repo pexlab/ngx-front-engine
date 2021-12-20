@@ -6,6 +6,7 @@ import { IntroductionComponent } from './pages/introduction/introduction.compone
 import { AlertPortalComponent } from './pages/showcase/alert-portal/alert-portal.component';
 import { BannerCarouselComponent } from './pages/showcase/banner-carousel/banner-carousel.component';
 import { ButtonComponent } from './pages/showcase/button/button.component';
+import { CommentComponent } from './pages/showcase/comment/comment.component';
 import { DropdownComponent } from './pages/showcase/dropdown/dropdown.component';
 import { PopupComponent } from './pages/showcase/popup/popup.component';
 import { ShowcaseSidebarComponent } from './pages/showcase/sidebar/showcase-sidebar.component';
@@ -74,6 +75,10 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
                             {
                                 path     : 'alert-portal',
                                 component: AlertPortalComponent
+                            },
+                            {
+                                path     : 'comment',
+                                component: CommentComponent
                             },
                             {
                                 path     : 'speedometer',

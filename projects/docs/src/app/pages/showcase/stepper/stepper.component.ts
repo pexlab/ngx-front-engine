@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Numerals } from '@pexlab/ngx-front-engine';
+import { Component } from '@angular/core';
+import { FeBundledTranslations } from '@pexlab/ngx-front-engine';
 
 @Component(
     {
@@ -11,5 +11,5 @@ export class StepperComponent {
     
     constructor() { }
     
-    public commonNumerals = Numerals;
+    public numeralTranslations = FeBundledTranslations.Numerals;
 }

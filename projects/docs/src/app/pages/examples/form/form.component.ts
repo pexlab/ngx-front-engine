@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Numerals } from '@pexlab/ngx-front-engine';
+import { FeBundledTranslations } from '@pexlab/ngx-front-engine';
 
 @Component(
     {
@@ -12,7 +12,7 @@ export class FormComponent {
     
     constructor() { }
     
-    public commonNumerals = Numerals;
+    public numeralTranslations = FeBundledTranslations.Numerals;
     
     public exampleForm = new FormGroup(
         {

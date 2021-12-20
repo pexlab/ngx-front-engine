@@ -13,7 +13,7 @@ import {
     FeTactileModule,
     FeTextFieldModule,
     FeAlertPortalModule,
-    FeSpeedometerModule
+    FeSpeedometerModule, CommentModule
 } from '@pexlab/ngx-front-engine';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { MarkdownModule } from 'ngx-markdown';
@@ -36,6 +36,7 @@ import { AlertPortalComponent } from './pages/showcase/alert-portal/alert-portal
 import { SpeedometerComponent } from './pages/showcase/speedometer/speedometer.component';
 import { IntroductionComponent } from './pages/introduction/introduction.component';
 import { GettingStartedComponent } from './pages/getting-started/getting-started.component';
+import { CommentComponent } from './pages/showcase/comment/comment.component';
 
 @NgModule(
     {
@@ -58,14 +59,15 @@ import { GettingStartedComponent } from './pages/getting-started/getting-started
             AlertPortalComponent,
             SpeedometerComponent,
             IntroductionComponent,
-            GettingStartedComponent
+            GettingStartedComponent,
+            CommentComponent
         ],
-        
+    
         imports: [
-            
+        
             BrowserModule,
             BrowserAnimationsModule,
-            
+        
             HttpClientModule,
             AngularSvgIconModule.forRoot(),
             MarkdownModule.forRoot(
@@ -75,7 +77,7 @@ import { GettingStartedComponent } from './pages/getting-started/getting-started
                 }
             ),
             ReactiveFormsModule,
-            
+        
             FeModule,
             FeRootModule,
             FeButtonModule,
@@ -88,8 +90,9 @@ import { GettingStartedComponent } from './pages/getting-started/getting-started
             FeSwitchModule,
             FeAlertPortalModule,
             FeSpeedometerModule,
-            
-            AppRoutingModule
+        
+            AppRoutingModule,
+            CommentModule
         ],
         
         providers: [],

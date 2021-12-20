@@ -12,7 +12,8 @@
     "nanoid",
     "@fontsource/roboto",
     "@fontsource/jost",
-    "@fontsource/anonymous-pro"
+    "@fontsource/anonymous-pro",
+    "@fontsource/baloo-bhaina-2"
   ],
   "assets": [
     "./assets/**/*"

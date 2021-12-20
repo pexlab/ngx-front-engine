@@ -141,6 +141,7 @@ export const FeColorPalette = composePalette(
             MistyMorning  : '#E6E6E6',
             Titanium      : '#dcdcdc',
             Smoke         : '#c9c9c9',
+            SubtleGrey    : '#B1B1B1',
             CoolGrey      : '#B9BDC1',
             Dust          : '#9c9c9c',
             Asbestos      : '#7f8c8d',

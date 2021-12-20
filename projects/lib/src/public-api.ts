@@ -3,11 +3,13 @@ export * from './lib/theme/theme.service';
 export * from './lib/theme/featured-palette';
 
 export * from './lib/interfaces/color.interface';
+export * from './lib/interfaces/i18n.interface';
 export * from './lib/interfaces/theme.interface';
 
 export * from './lib/utils/case.utils';
 export * from './lib/utils/type.utils';
-export * from './lib/utils/common.utils';
+export * from './lib/utils/time.utils';
+export * from './lib/utils/translation.utils';
 
 export * from './lib/components/text-field/text-field.module';
 export * from './lib/components/text-field/text-field.component';
@@ -39,6 +41,9 @@ export * from './lib/components/popup/popup.service';
 export * from './lib/components/alert-portal/alert-portal.module';
 export * from './lib/components/alert-portal/alert-portal.component';
 export * from './lib/components/alert-portal/alert-portal.service';
+
+export * from './lib/components/comment/comment.module';
+export * from './lib/components/comment/comment.component';
 
 export * from './lib/components/speedometer/speedometer.module';
 export * from './lib/components/speedometer/speedometer.component';

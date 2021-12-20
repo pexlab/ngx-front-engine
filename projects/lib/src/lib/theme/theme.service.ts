@@ -155,7 +155,7 @@ export class ThemeService {
             this.renderer.setStyle(
                 element,
                 propertyName + '-family',
-                font[ 1 ].name,
+                '"' + font[ 1 ].name + '"',
                 2
             );
             
@@ -206,6 +206,12 @@ export class ThemeService {
                     weight: 500
                 },
                 
+                alternative: {
+                    name  : 'Baloo Bhaina 2',
+                    size  : '14px',
+                    weight: 400
+                },
+                
                 decorative: {
                     name  : 'Roboto',
                     size  : '14px',
@@ -242,7 +248,7 @@ export class ThemeService {
                 text: {
                     primary            : FeColorPalette.Greyscale.Midnight,
                     secondary          : FeColorPalette.Greyscale.LightCharcoal,
-                    tertiary           : FeColorPalette.Greyscale.Smoke,
+                    tertiary           : FeColorPalette.Greyscale.SubtleGrey,
                     failure            : FeColorPalette.Red.Blood,
                     on_primary_accent  : FeColorPalette.Greyscale.SnowWhite,
                     on_secondary_accent: FeColorPalette.Greyscale.SnowWhite
@@ -491,6 +497,15 @@ export class ThemeService {
                     codeBorder    : this.commonTheme.palette.background.quaternary,
                     codeBackground: this.commonTheme.palette.background.tertiary
                 }
+            },
+            
+            comment: {
+                text         : this.commonTheme.palette.text.primary,
+                date         : this.commonTheme.palette.text.tertiary,
+                iconIdle     : this.commonTheme.palette.text.tertiary,
+                verifiedBadge: FeColorPalette.Blue.Azure,
+                border       : this.commonTheme.palette.background.tertiary,
+                background   : this.commonTheme.palette.background.primary
             },
             
             speedometer: {

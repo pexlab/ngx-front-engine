@@ -1,0 +1,286 @@
+@use '../../../../assets/fe-styles/theme' with ($scope: 'comment');
+
+:host {
+  
+  /* General rules */
+  
+  & * {
+	user-select : none;
+  }
+  
+  & .header {
+	
+	width          : fit-content;
+	
+	display        : grid;
+	grid-auto-flow : column;
+	grid-gap       : 15px;
+	
+	align-items    : center;
+	
+	& > .nickname {
+	  
+	  width          : fit-content;
+	  
+	  display        : grid;
+	  grid-auto-flow : column;
+	  grid-gap       : 10px;
+	  align-items    : center;
+	  
+	  & > svg-icon {
+		
+		width  : 15px;
+		height : 15px;
+		
+		color  : theme.hex('verified-badge');
+	  }
+	  
+	  & > span {
+		
+		align-self  : center;
+		
+		cursor      : pointer;
+		
+		@include theme.commonFont('decorative');
+		font-size   : 19px;
+		color       : theme.hex('text');
+		user-select : text;
+	  }
+	}
+	
+	& > .divider {
+	  
+	  width      : 1px;
+	  height     : 10px;
+	  
+	  background : theme.hex('border');
+	}
+	
+	& > span.date {
+	  
+	  cursor    : pointer;
+	  
+	  @include theme.commonFont('alternative');
+	  font-size : 15px;
+	  color     : theme.hex('date');
+	}
+  }
+  
+  & .buttons {
+	
+	width          : fit-content;
+	
+	display        : grid;
+	grid-auto-flow : column;
+	grid-gap       : 30px;
+	
+	margin-top     : 5px;
+	margin-bottom  : 5px;
+	
+	& > .button {
+	  
+	  position : relative;
+	  
+	  &:hover {
+		
+		& > .hitbox {
+		  opacity   : 1;
+		  transform : translateY(-50%) translateX(-50%) scale(1);
+		}
+		
+		& > svg-icon {
+		  color : var(--icon-hover-color);
+		}
+	  }
+	  
+	  & > .hitbox {
+		
+		position         : absolute;
+		
+		left             : 50%;
+		top              : 50%;
+		
+		width            : 40px;
+		height           : 40px;
+		
+		cursor           : pointer;
+		
+		border-radius    : 40px;
+		
+		opacity          : 0;
+		transform        : translateY(-50%) translateX(-50%) scale(0.75);
+		
+		background-color : var(--background-color);
+		
+		transition       : opacity .25s ease, transform .25s ease;
+	  }
+	  
+	  & > svg-icon {
+		
+		position    : relative;
+		
+		width       : 15px;
+		height      : 15px;
+		
+		display     : grid;
+		place-items : center;
+		
+		color       : var(--icon-idle-color, theme.hex('icon-idle'));
+		
+		cursor      : pointer;
+		
+		transition  : color .25s ease;
+		
+		& > svg {
+		  width  : 15px;
+		  height : 15px;
+		}
+	  }
+	}
+  }
+  
+  & img.avatar {
+	
+	position      : relative;
+	
+	width         : 65px;
+	height        : 65px;
+	
+	object-fit    : cover;
+	
+	border-radius : 99px;
+	overflow      : hidden;
+	
+	align-self    : start;
+	
+	cursor        : pointer;
+  }
+  
+  & .content {
+	@include theme.commonFont('alternative');
+	color       : theme.hex('text');
+	line-height : 18px;
+	user-select : text;
+  }
+  
+  & .container {
+	
+	position       : relative;
+	
+	width          : 100%;
+	
+	display        : grid;
+	grid-auto-flow : row;
+	grid-gap       : 10px;
+	
+	box-sizing     : border-box;
+  }
+  
+  /* Appearance specific rules */
+  
+  & > .spacious {
+	
+	$avatarSize           : 65px;
+	
+	width                 : 100%;
+	
+	display               : grid;
+	grid-template-columns : $avatarSize 1fr;
+	grid-gap              : 25px;
+	grid-auto-flow        : column;
+	
+	& > .container {
+	  
+	  grid-gap         : 15px;
+	  
+	  padding          : 25px;
+	  
+	  border           : 1px solid theme.hex('border');
+	  border-radius    : 20px;
+	  
+	  background-color : theme.hex('background');
+	  
+	  box-shadow       : 0 0 20px rgba(black, 0.10);
+	}
+	
+	& .buttons {
+	  
+	  grid-gap : 5px;
+	  margin   : 0;
+	  
+	  & .button > svg-icon {
+		width  : 40px;
+		height : 40px;
+	  }
+	}
+  }
+  
+  & > .wrapped {
+	
+	width                 : 100%;
+	height                : fit-content;
+	
+	display               : grid;
+	grid-template-columns : (45px + 5px) 1fr;
+	grid-auto-flow        : row;
+	grid-column-gap       : 20px;
+	
+	padding               : 15px 20px 15px 15px;
+	box-sizing            : border-box;
+	
+	border                : 1px solid theme.hex('border');
+	border-radius         : 20px;
+	
+	background-color      : theme.hex('background');
+	
+	box-shadow            : 0 0 20px rgba(black, 0.10);
+	
+	& > img.avatar {
+	  
+	  grid-row    : 1;
+	  grid-column : 1;
+	  
+	  width       : 45px;
+	  height      : 45px;
+	  
+	  box-sizing  : content-box;
+	  border      : 4px solid theme.hex('background');
+	  box-shadow  : 0 0 0 1px theme.hex('border');
+	}
+	
+	& .container {
+	  
+	  margin-top  : 7px;
+	  
+	  grid-column : 2;
+	  
+	  & .header {
+		grid-row : 1;
+	  }
+	  
+	  & .content {
+		grid-row : 2;
+	  }
+	}
+  }
+  
+  & > .unwrapped {
+	
+	position        : relative;
+	
+	width           : fit-content;
+	
+	display         : grid;
+	grid-auto-flow  : column;
+	grid-column-gap : 15px;
+	
+	& > .avatar {
+	  width  : 55px;
+	  height : 55px;
+	}
+	
+	& > .container {
+	  min-height : 55px;
+	}
+  }
+}
