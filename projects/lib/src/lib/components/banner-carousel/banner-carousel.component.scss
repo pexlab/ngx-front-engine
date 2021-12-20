@@ -31,12 +31,12 @@
 	  
 	  & > span:nth-child(1) {
 		@include theme.commonFont('subheading');
-		color : theme.hex('recuded-appearance-heading')
+		color : theme.hex('reduced-appearance-heading')
 	  }
 	  
 	  & > span:nth-child(2) {
 		@include theme.commonFont('decorative');
-		color : theme.hex('recuded-appearance-subheading');
+		color : theme.hex('reduced-appearance-subheading');
 	  }
 	}
 	
