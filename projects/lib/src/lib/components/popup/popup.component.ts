@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { z } from 'zod';
 import { ComponentTheme, ZHEXColor } from '../../interfaces/color.interface';
 import { FeComponent } from '../../utils/component.utils';
@@ -53,7 +53,7 @@ export class PopupComponent implements OnInit, AfterViewInit {
         if ( !this.title ) {
             throw new Error( 'Title hasn\'t been set for popup-component' );
         }
-    
+        
         if ( !this.widthSet ) {
             this.width = 400;
         }
@@ -97,11 +97,12 @@ export class PopupComponent implements OnInit, AfterViewInit {
 
 export const ZPopupTheme = z.object(
     {
-        text       : ZHEXColor,
-        background : ZHEXColor,
-        divider    : ZHEXColor,
-        exit       : ZHEXColor,
-        outerBorder: ZHEXColor
+        text              : ZHEXColor,
+        background        : ZHEXColor,
+        titleBarBackground: ZHEXColor,
+        divider           : ZHEXColor,
+        exit              : ZHEXColor,
+        outerBorder       : ZHEXColor
     }
 );
 

@@ -1,4 +1,5 @@
 @use '../../../../assets/fe-styles/theme' with ($scope: 'popup');
+@use '../../../../assets/fe-styles/responsive' with ($breakpoint: 1000px);
 
 :host {
   
@@ -20,45 +21,207 @@
 	pointer-events : none;
 	
 	& .container {
-	  animation : containerOut .5s ease forwards;
+	  
+	  @include responsive.desktop {
+		animation : containerOutDesktop .5s ease forwards;
+	  }
+	  
+	  @include responsive.mobile {
+		animation : containerOutMobile .5s ease forwards;
+	  }
 	}
   }
   
   &.visible {
 	
 	& .container {
-	  animation : containerIn .5s ease forwards;
+	  
+	  @include responsive.desktop {
+		animation : containerInDesktop .5s ease forwards;
+	  }
+	  
+	  @include responsive.mobile {
+		animation : containerInMobile .5s ease forwards;
+	  }
+	}
+  }
+  
+  & > .container {
+	
+	grid-column      : 1;
+	grid-row         : 1;
+	
+	display          : grid;
+	grid-gap         : 0;
+	place-items      : center;
+	
+	overflow         : hidden;
+	
+	background-color : theme.hex('background');
+	
+	opacity          : 0;
+	transform        : scale(0.7);
+	
+	@include responsive.desktop {
+	  
+	  width         : fit-content;
+	  height        : fit-content;
+	  
+	  max-width     : 90vw;
+	  max-height    : 90vh;
+	  
+	  border-radius : 10px;
+	  
+	  border        : 1px solid theme.hex('outer-border');
+	}
+	
+	@include responsive.mobile {
+	  
+	  width                   : 100%;
+	  height                  : fit-content;
+	  
+	  max-height              : 90vh;
+	  
+	  align-self              : end;
+	  
+	  border-top-left-radius  : 25px;
+	  border-top-right-radius : 25px;
+	}
+	
+	& > .title-bar {
+	  
+	  position      : relative;
+	  
+	  width         : 100%;
+	  
+	  border-bottom : 1px solid theme.hex('divider');
+	  
+	  background    : theme.hex('title-bar-background');
+	  
+	  & > .icon {
+		
+		cursor   : pointer;
+		
+		position : relative;
+		
+		display  : block;
+		
+		@include responsive.desktop {
+		  width  : 40px;
+		  height : 40px;
+		  margin : 10px 10px 10px auto;
+		}
+		
+		@include responsive.mobile {
+		  width  : 30px;
+		  height : 30px;
+		  margin : 10px 20px 10px auto;
+		}
+		
+		&.hidden {
+		  opacity        : 0;
+		  pointer-events : none;
+		}
+		
+		& svg-icon {
+		  
+		  display     : grid;
+		  place-items : center;
+		  
+		  position    : absolute;
+		  
+		  left        : 50%;
+		  top         : 50%;
+		  
+		  width       : 15px;
+		  height      : 15px;
+		  
+		  color       : theme.hex('exit');
+		  
+		  transform   : translateX(-50%) translateY(-50%);
+		  
+		  & svg {
+			width  : 15px;
+			height : 15px;
+		  }
+		}
+		
+		&:after {
+		  
+		  z-index          : -1;
+		  
+		  content          : '';
+		  
+		  position         : absolute;
+		  
+		  left             : 0;
+		  top              : 0;
+		  right            : 0;
+		  bottom           : 0;
+		  
+		  border-radius    : 40px;
+		  
+		  opacity          : 0;
+		  background-color : theme.fadeHex('exit', .2);
+		  border           : 1px solid theme.fadeHex('exit', .2);
+		  
+		  transform        : scale(.8);
+		  
+		  transition       : opacity .25s ease, transform .25s ease;
+		}
+		
+		&:hover:after {
+		  opacity   : 1;
+		  transform : scale(1);
+		}
+	  }
+	  
+	  & > span {
+		
+		position  : absolute;
+		
+		left      : 50%;
+		top       : 50%;
+		
+		transform : translateY(-50%) translateX(-50%);
+		
+		color     : theme.hex('text');
+		
+		@include theme.commonFont('subheading');
+	  }
+	}
+	
+	& > .content-wrapper {
+	  
+	  max-width       : min(100%, var(--popup-width));
+	  
+	  @include responsive.desktop {
+		min-width : 400px;
+	  }
+	  
+	  height          : fit-content;
+	  
+	  /* TODO: overlay a scrollbar on firefox as well */
+	  overflow-x      : hidden;
+	  overflow-y      : overlay; /* Overlay scrollbar on webkit */
+	  scrollbar-width : none; /* Hide scrollbar on firefox */
+	  
+	  display         : grid;
+	  place-items     : center;
+	  
+	  & .content {
+		
+		margin : 30px 0;
+		
+		color  : theme.hex('text');
+		
+		@include theme.commonFont('body');
+	  }
 	}
   }
 }
 
-.container {
-  
-  grid-column      : 1;
-  grid-row         : 1;
-  
-  display          : grid;
-  grid-gap         : 0;
-  place-items      : center;
-  
-  width            : fit-content;
-  height           : fit-content;
-  
-  max-width        : 90vw;
-  max-height       : 90vh;
-  
-  overflow         : hidden;
-  
-  border-radius    : 10px;
-  
-  border           : 2px solid theme.hex('outer-border');
-  background-color : theme.hex('background');
-  
-  opacity          : 0;
-  transform        : scale(0.7);
-}
-
-@keyframes containerIn {
+@keyframes containerInDesktop {
   
   from {
 	opacity   : 0;
@@ -71,7 +234,7 @@
   }
 }
 
-@keyframes containerOut {
+@keyframes containerOutDesktop {
   
   from {
 	opacity   : 1;
@@ -84,132 +247,28 @@
   }
 }
 
-.title-bar {
+@keyframes containerInMobile {
   
-  position      : relative;
-  
-  width         : 100%;
-  
-  border-bottom : 1px solid theme.hex('divider');
-  
-  & > .icon {
-	
-	cursor   : pointer;
-	
-	position : relative;
-	
-	display  : block;
-	
-	width    : 40px;
-	height   : 40px;
-	
-	margin   : 10px 10px 10px auto;
-	
-	&.hidden {
-	  opacity        : 0;
-	  pointer-events : none;
-	}
-	
-	& svg-icon {
-	  
-	  display     : grid;
-	  place-items : center;
-	  
-	  position    : absolute;
-	  
-	  left        : 50%;
-	  top         : 50%;
-	  
-	  width       : 15px;
-	  height      : 15px;
-	  
-	  color       : theme.hex('exit');
-	  
-	  transform   : translateX(-50%) translateY(-50%);
-	  
-	  & svg {
-		width  : 15px;
-		height : 15px;
-	  }
-	}
-	
-	&:after {
-	  
-	  z-index          : -1;
-	  
-	  content          : '';
-	  
-	  position         : absolute;
-	  
-	  left             : 0;
-	  top              : 0;
-	  right            : 0;
-	  bottom           : 0;
-	  
-	  border-radius    : 40px;
-	  
-	  opacity          : 0;
-	  background-color : theme.fadeHex('exit', .2);
-	  border           : 1px solid theme.fadeHex('exit', .2);
-	  
-	  transform        : scale(.8);
-	  
-	  transition       : opacity .25s ease, transform .25s ease;
-	}
-	
-	&:hover:after {
-	  opacity   : 1;
-	  transform : scale(1);
-	}
+  from {
+	opacity   : 0;
+	transform : translateY(50%);
   }
   
-  & > span {
-	
-	position  : absolute;
-	
-	left      : 50%;
-	top       : 50%;
-	
-	transform : translateY(-50%) translateX(-50%);
-	
-	color     : theme.hex('text');
-	
-	@include theme.commonFont('subheading');
+  to {
+	opacity   : 1;
+	transform : translateY(0);
   }
 }
 
-.content-wrapper {
+@keyframes containerOutMobile {
   
-  $width          : var(--popup-width);
-  $padding        : 30px;
+  from {
+	opacity   : 1;
+	transform : translateY(0);
+  }
   
-  width           : calc(#{$width} + (#{$padding} * 2));
-  max-width       : 90vw;
-  min-width       : 400px;
-  
-  height          : fit-content;
-  max-height      : 50vh;
-  
-  /* TODO: overlay a scrollbar on firefox as well */
-  overflow-x      : hidden;
-  overflow-y      : overlay; /* Overlay scrollbar on webkit */
-  scrollbar-width : none; /* Hide scrollbar on firefox */
-  
-  display         : grid;
-  place-items     : center;
-  
-  & .content {
-	
-	width  : $width;
-	
-	margin : $padding 0;
-	
-	color  : theme.hex('text');
-	
-	@include theme.commonFont('body');
-	
-	& > * {
-	  width : 100% !important;
-	}
+  to {
+	opacity   : 0;
+	transform : translateY(50%);
   }
 }

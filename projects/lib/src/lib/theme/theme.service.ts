@@ -419,11 +419,12 @@ export class ThemeService {
             },
             
             popup: {
-                divider    : this.commonTheme.palette.text.tertiary,
-                background : this.commonTheme.palette.background.primary,
-                text       : this.commonTheme.palette.text.primary,
-                exit       : this.commonTheme.palette.text.failure,
-                outerBorder: FeColorPalette.Greyscale.Transparent
+                text              : this.commonTheme.palette.text.primary,
+                background        : this.commonTheme.palette.background.primary,
+                titleBarBackground: FeColorPalette.Greyscale.Transparent,
+                divider           : this.commonTheme.palette.background.tertiary,
+                exit              : this.commonTheme.palette.text.failure,
+                outerBorder       : FeColorPalette.Greyscale.Transparent
             },
             
             alertPortal: {
