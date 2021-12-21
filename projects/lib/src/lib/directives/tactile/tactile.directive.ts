@@ -23,7 +23,7 @@ export class TactileDirective implements OnInit, OnDestroy {
     }
     
     public ngOnInit(): void {
-        /* The directive does not change any property. It solely plays a animation.
+        /* The directive does not change any property. It solely plays an animation.
          It is because of that why view checking is not needed. */
         this.ngZone.runOutsideAngular( () => {
             
@@ -35,9 +35,27 @@ export class TactileDirective implements OnInit, OnDestroy {
                 ),
                 
                 this.renderer.listen(
+                    this.hostElement.nativeElement,
+                    'touchstart',
+                    event => this.onMouseDown( event )
+                ),
+                
+                this.renderer.listen(
                     document.documentElement,
                     'mouseup',
                     event => this.onMouseUp( event )
+                ),
+                
+                this.renderer.listen(
+                    document.documentElement,
+                    'touchend',
+                    event => this.onMouseUp( event, true )
+                ),
+                
+                this.renderer.listen(
+                    document.documentElement,
+                    'touchcancel',
+                    event => this.heldDown = false
                 ),
                 
                 this.renderer.listen(
@@ -119,7 +137,7 @@ export class TactileDirective implements OnInit, OnDestroy {
         player.play();
     }
     
-    private onMouseUp( event: MouseEvent ): void {
+    private onMouseUp( event: MouseEvent, ignoreBoundaries = false ): void {
         
         if ( !this.heldDown ) {
             return;
@@ -128,7 +146,7 @@ export class TactileDirective implements OnInit, OnDestroy {
         event.preventDefault();
         
         /* If the mouse is not on the component anymore, ignore the click. Most users behave this way, if they accidentally clicked. */
-        if ( this.mouseOnElement ) {
+        if ( this.mouseOnElement || ignoreBoundaries ) {
             this.hostElement.nativeElement.click();
         }
         
