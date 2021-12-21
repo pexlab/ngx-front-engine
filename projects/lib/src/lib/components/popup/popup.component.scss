@@ -64,7 +64,8 @@
 	
 	@include responsive.desktop {
 	  
-	  max-width     : min(90vw, var(--popup-width));
+	  width         : var(--popup-width);
+	  max-width     : 90vw;
 	  max-height    : 90vh;
 	  
 	  border-radius : 10px;
@@ -193,6 +194,7 @@
 	  height          : fit-content;
 	  
 	  @include responsive.desktop {
+		width      : 100%;
 		min-width  : 400px;
 		max-height : calc(90vh - 70px);
 	  }
@@ -210,9 +212,11 @@
 	  
 	  & .content {
 		
-		margin : 30px;
+		width   : 100%;
 		
-		color  : theme.hex('text');
+		padding : 30px;
+		
+		color   : theme.hex('text');
 		
 		@include theme.commonFont('body');
 	  }
