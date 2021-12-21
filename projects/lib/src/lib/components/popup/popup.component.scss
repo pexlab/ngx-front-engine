@@ -200,6 +200,7 @@
 	  }
 	  
 	  @include responsive.mobile {
+		width: 100%;
 		max-height : calc(90vh - 50px);
 	  }
 	  
