@@ -36,6 +36,7 @@
 	  
 	  & > span:nth-child(2) {
 		@include theme.commonFont('decorative');
+		white-space : pre-line;
 		color : theme.hex('reduced-appearance-subheading');
 	  }
 	}
@@ -145,17 +146,13 @@
 		  & > span.subheading {
 			
 			display     : block;
-			
-			position    : absolute;
-			
-			top         : 100%;
-			left        : 0;
+			width       : 100%;
 			
 			color       : theme.hex('rich-appearance-subheading');
+		 
+			white-space : pre-line;
 			
 			@include theme.commonFont('subheading');
-			
-			white-space : nowrap;
 		  }
 		}
 	  }
