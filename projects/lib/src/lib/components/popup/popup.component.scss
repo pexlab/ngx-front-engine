@@ -98,22 +98,26 @@
 	  
 	  & > .icon {
 		
-		cursor   : pointer;
-		
-		position : relative;
-		
-		display  : block;
+		cursor : pointer;
 		
 		@include responsive.desktop {
-		  width  : 40px;
-		  height : 40px;
-		  margin : 10px 10px 10px auto;
+		  
+		  width    : 40px;
+		  height   : 40px;
+		  
+		  position : absolute;
+		  top      : calc(50% - (40px / 2));
+		  right    : 10px;
 		}
 		
 		@include responsive.mobile {
-		  width  : 30px;
-		  height : 30px;
-		  margin : 10px 20px 10px auto;
+		  
+		  width    : 30px;
+		  height   : 30px;
+		  
+		  position : absolute;
+		  top      : calc(50% - (30px / 2));
+		  right    : 20px;
 		}
 		
 		&.hidden {
@@ -176,16 +180,24 @@
 	  
 	  & > span {
 		
-		position  : absolute;
+		display    : block;
 		
-		left      : 50%;
-		top       : 50%;
+		width      : 100%;
+		height     : fit-content;
 		
-		transform : translateY(-50%) translateX(-50%);
+		margin     : 15px 0;
 		
-		color     : theme.hex('text');
+		@include responsive.desktop {
+		  padding : 0 (40px + ( 10px * 2 ));
+		}
 		
+		@include responsive.mobile {
+		  padding : 0 (30px + ( 20px * 2 ));
+		}
+		
+		text-align : center;
 		@include theme.commonFont('subheading');
+		color      : theme.hex('text');
 	  }
 	}
 	
@@ -200,7 +212,7 @@
 	  }
 	  
 	  @include responsive.mobile {
-		width: 100%;
+		width      : 100%;
 		max-height : calc(90vh - 50px);
 	  }
 	  

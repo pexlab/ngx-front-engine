@@ -16,7 +16,7 @@ export class PopupComponent {
     
     public openPopup(): void {
         
-        const popup = this.popup.createPopup( 'Test' );
+        const popup = this.popup.createPopup( 'Sample Popup about Nutmegs' );
         
         popup.onTransmit( ( value ) => {
             this.transmissions.push( String( value ) );

@@ -76,7 +76,7 @@ export class PopupService {
             );
             
             this.activatePopup( popup );
-            subject.next( 'fe-open' );
+            subject.next( 'fe-opening' );
         } );
         
         return {
