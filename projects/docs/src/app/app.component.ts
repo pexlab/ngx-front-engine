@@ -1,5 +1,4 @@
 import { AfterViewChecked, Component, OnInit } from '@angular/core';
-import { FeColorPalette, FeComponent, ThemeService } from '@pexlab/ngx-front-engine';
 import { SvgIconRegistryService } from 'angular-svg-icon';
 
 @Component(
@@ -25,6 +24,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
         this.iconReg.loadSvg( 'assets/icons/help-circle.svg', 'help' );
         this.iconReg.loadSvg( 'assets/icons/moon-solid.svg', 'moon' );
         this.iconReg.loadSvg( 'assets/icons/play-circle.svg', 'start' );
+        this.iconReg.loadSvg( 'assets/icons/plus.svg', 'add' );
         this.iconReg.loadSvg( 'assets/icons/retweet-solid.svg', 'repost' );
         this.iconReg.loadSvg( 'assets/icons/shopping-cart-solid.svg', 'shop' );
         this.iconReg.loadSvg( 'assets/icons/stop-circle.svg', 'stop' );

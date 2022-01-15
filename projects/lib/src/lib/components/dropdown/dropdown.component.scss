@@ -51,16 +51,22 @@ $OPTION_PADDING              : 10px;
 	grid-gap              : 10px;
 	place-items           : center;
 	
-	color                 : config.hex('placeholder-panel-text');
-	background            : config.hex('placeholder-panel-background');
+	color                 : config.hex('placeholder-idle-panel-text');
+	border                : 2px solid config.hex('placeholder-idle-panel-border');
+	background            : config.hex('placeholder-idle-panel-background');
 	
 	border-radius         : 99px;
 	
-	transition            : box-shadow .25s ease;
+	transition            : border-color .25s ease, color .25s ease, background-color .25s ease, box-shadow .25s ease;
 	
 	@include config.inlineIcon(15px);
 	
-	&.shadow {
+	&.selected {
+	  
+	  color      : config.hex('placeholder-selected-panel-text');
+	  border     : 2px solid config.hex('placeholder-selected-panel-border');
+	  background : config.hex('placeholder-selected-panel-background');
+	  
 	  box-shadow : 0 14px 28px rgba(0, 0, 0, 0.15), 0 10px 10px rgba(0, 0, 0, 0.12);
 	}
 	

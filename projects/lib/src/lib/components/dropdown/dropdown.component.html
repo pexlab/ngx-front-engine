@@ -1,10 +1,10 @@
 <div class="placeholderPanel"
-     [class.shadow]="dropdownVisible"
+     [class.selected]="dropdownVisible"
      [fe-tactile]
      (tactileClick)="toggleMenu()">
 
     <ng-container
-            *ngTemplateOutlet="activePlaceholderRef || defaultPlaceholderRef || emptyPlaceholderRef">
+            *ngTemplateOutlet="activePlaceholderRef || defaultPlaceholderRef || (feEmptyTemplate ? emptyPlaceholderRef : emptyNoticePlaceholderRef)">
     </ng-container>
 
     <svg-icon name="fe-caret-down"></svg-icon>
@@ -17,11 +17,17 @@
     <div class="clear-value"
          *ngIf="feClearable"
          [fe-tactile]
-         (tactileClick)="clearChoiceComponent()">
+         (tactileClick)="manualClear()">
         <svg-icon name="fe-backspace"></svg-icon>
     </div>
 </div>
 
+<ng-template #emptyNoticePlaceholderRef>
+    <span>{{ feEmptyNotice ?? 'Choose' }}</span>
+</ng-template>
+
 <ng-template #emptyPlaceholderRef>
-    <span>{{ feEmptyNotice }}</span>
+    <div *ngIf="feEmptyTemplate">
+        <ng-container *ngTemplateOutlet="feEmptyTemplate"></ng-container>
+    </div>
 </ng-template>

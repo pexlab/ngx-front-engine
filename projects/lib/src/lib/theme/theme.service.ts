@@ -333,8 +333,13 @@ export class ThemeService {
             
             dropdown: {
                 
-                placeholderPanelText      : this.commonTheme.palette.text.on_primary_accent,
-                placeholderPanelBackground: this.commonTheme.palette.accent.primary,
+                placeholderIdlePanelText      : this.commonTheme.palette.text.on_primary_accent,
+                placeholderIdlePanelBorder    : FeColorPalette.Greyscale.Transparent,
+                placeholderIdlePanelBackground: this.commonTheme.palette.accent.primary,
+                
+                placeholderSelectedPanelText      : this.commonTheme.palette.text.on_primary_accent,
+                placeholderSelectedPanelBorder    : FeColorPalette.Greyscale.Transparent,
+                placeholderSelectedPanelBackground: this.commonTheme.palette.accent.primary,
                 
                 optionsStripe         : this.commonTheme.palette.accent.primary,
                 optionsIdleText       : this.commonTheme.palette.text.primary,

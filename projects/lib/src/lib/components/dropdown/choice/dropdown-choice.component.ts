@@ -5,7 +5,7 @@ import {
     OnInit, Output,
     TemplateRef,
     ViewChild,
-    EventEmitter
+    EventEmitter, ContentChild
 } from '@angular/core';
 import { AsynchronouslyInitialisedComponent } from '../../../utils/component.utils';
 
@@ -21,11 +21,14 @@ import { AsynchronouslyInitialisedComponent } from '../../../utils/component.uti
                 <ng-content select="[feContent]"></ng-content>
             </ng-template>
 
-            <ng-container *ngTemplateOutlet="contentTemplateRef"></ng-container>`,
+            <ng-container *ngTemplateOutlet="contentAndPlaceholderRef || contentTemplateRef"></ng-container>`,
         styleUrls: [ './dropdown-choice.component.scss' ]
     }
 )
 export class DropdownChoiceComponent extends AsynchronouslyInitialisedComponent implements OnInit {
+    
+    @ContentChild( TemplateRef )
+    public contentAndPlaceholderRef!: TemplateRef<void>;
     
     @Input()
     public feKey!: string;
@@ -38,6 +41,7 @@ export class DropdownChoiceComponent extends AsynchronouslyInitialisedComponent 
     
     private hasBeenInitialised = false;
     private _placeholderRef!: TemplateRef<void>;
+    private _contentRef!: TemplateRef<void>;
     
     @ViewChild( 'placeholderTemplateRef' )
     public set placeholderRef( value: TemplateRef<void> ) {
@@ -50,8 +54,23 @@ export class DropdownChoiceComponent extends AsynchronouslyInitialisedComponent 
         }
     }
     
+    @ViewChild( 'contentTemplateRef' )
+    public set contentRef( value: TemplateRef<void> ) {
+        
+        this._contentRef = value;
+        
+        if ( !this.hasBeenInitialised ) {
+            this.componentLoaded();
+            this.hasBeenInitialised = true;
+        }
+    }
+    
     public get placeholderRef(): TemplateRef<void> {
         return this._placeholderRef;
+    }
+    
+    public get contentRef(): TemplateRef<void> {
+        return this._contentRef;
     }
     
     @HostListener( 'click' )

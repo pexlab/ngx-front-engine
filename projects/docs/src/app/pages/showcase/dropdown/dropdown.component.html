@@ -1,29 +1,68 @@
-<fe-dropdown feEmptyNotice="Choose a time">
+<div>
 
-    <fe-dropdown-choice feValue="day">
+    <span>Basic example</span>
 
-        <div fePlaceholder>
-            <svg-icon name="sun"></svg-icon>
-        </div>
+    <fe-dropdown feEmptyNotice="Choose a time">
 
-        <div feContent>
-            <svg-icon name="sun"></svg-icon>
-            <span>Day</span>
-        </div>
+        <fe-dropdown-choice feValue="day">
 
-    </fe-dropdown-choice>
+            <div fePlaceholder>
+                <span>You've chosen</span>
+                <svg-icon name="sun"></svg-icon>
+            </div>
 
-    <fe-dropdown-choice feValue="night">
+            <div feContent>
+                <svg-icon name="sun"></svg-icon>
+                <span>Day</span>
+            </div>
 
-        <div fePlaceholder>
-            <svg-icon name="moon"></svg-icon>
-        </div>
+        </fe-dropdown-choice>
 
-        <div feContent>
-            <svg-icon name="moon"></svg-icon>
-            <span>Night</span>
-        </div>
+        <fe-dropdown-choice feValue="night">
 
-    </fe-dropdown-choice>
+            <div fePlaceholder>
+                <span>You've chosen</span>
+                <svg-icon name="moon"></svg-icon>
+            </div>
 
-</fe-dropdown>
+            <div feContent>
+                <svg-icon name="moon"></svg-icon>
+                <span>Night</span>
+            </div>
+
+        </fe-dropdown-choice>
+
+    </fe-dropdown>
+</div>
+
+<div>
+
+    <span>Advanced example</span>
+
+    <form [formGroup]="formGroup">
+
+        <fe-dropdown *ngFor="let control of properties.controls; let i = index"
+                     [formArrayName]="'properties'"
+                     [formControl]="$any(control)"
+                     [feEmptyTemplate]="emptyRef"
+                     [feTheme]="control.value === null ? outlineTheme : defaultTheme"
+                     (feManualClear)="removeProperty(i)">
+
+            <ng-template #emptyRef>
+                <svg-icon name="add"></svg-icon>
+                <span>{{ i > 0 ? 'Add additional property' : 'Add property' }}</span>
+            </ng-template>
+
+            <fe-dropdown-choice *ngFor="let value of ['A', 'B', 'C', 'D', 'E']" [feValue]="value">
+                <ng-template>
+                    <div>
+                        <svg-icon name="help"></svg-icon>
+                        <span>{{ value }}</span>
+                    </div>
+                </ng-template>
+            </fe-dropdown-choice>
+
+        </fe-dropdown>
+
+    </form>
+</div>

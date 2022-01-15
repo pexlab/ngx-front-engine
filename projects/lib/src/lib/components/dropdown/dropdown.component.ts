@@ -110,7 +110,10 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
     public optionsRef!: ElementRef<HTMLElement>;
     
     @Input()
-    public feEmptyNotice = 'Choose';
+    public feEmptyNotice?: string;
+    
+    @Input()
+    public feEmptyTemplate?: TemplateRef<any>;
     
     @Input()
     public feInline?: boolean | '' = undefined;
@@ -123,6 +126,9 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
     
     @Output()
     public feChange = new EventEmitter();
+    
+    @Output()
+    public feManualClear = new EventEmitter();
     
     public activePlaceholderRef?: TemplateRef<any>;
     public defaultPlaceholderRef?: TemplateRef<any>;
@@ -227,6 +233,11 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
         this.cdr.detectChanges();
     }
     
+    public manualClear(): void {
+        this.feManualClear.next();
+        this.clearChoiceComponent();
+    }
+    
     private setValue( value: string | null ): void {
         
         if ( value === null ) {
@@ -253,14 +264,14 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
         
         this.feChange.next( choiceComponent.feValue );
         
-        /* Prevents marking the field as dirty although it was the initial value write event from the forms-api */
+        /* Prevents marking the field as dirty, although it was the initial value write event from the forms-api */
         if ( this.isInitialValueWrite ) {
             this.isInitialValueWrite = false;
         } else if ( this.formInputEvent ) {
             this.formInputEvent( choiceComponent.feValue );
         }
         
-        this.activePlaceholderRef = choiceComponent.placeholderRef;
+        this.activePlaceholderRef = choiceComponent.contentAndPlaceholderRef ?? choiceComponent.placeholderRef;
         this.dropdownVisible      = false;
         
         this.cdr.detectChanges();
@@ -272,7 +283,7 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
         
         this.feChange.next( null );
         
-        /* Prevents marking the field as dirty although it was the initial value write event from the forms-api */
+        /* Prevents marking the field as dirty, although it was the initial value write event from the forms-api */
         if ( this.isInitialValueWrite ) {
             this.isInitialValueWrite = false;
         } else if ( this.formInputEvent ) {
@@ -308,8 +319,14 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
 
 export const ZDropdownTheme = z.object(
     {
-        placeholderPanelText      : ZHEXColor,
-        placeholderPanelBackground: ZHEXColor,
+        
+        placeholderIdlePanelText      : ZHEXColor,
+        placeholderIdlePanelBorder    : ZHEXColor,
+        placeholderIdlePanelBackground: ZHEXColor,
+        
+        placeholderSelectedPanelText      : ZHEXColor,
+        placeholderSelectedPanelBorder    : ZHEXColor,
+        placeholderSelectedPanelBackground: ZHEXColor,
         
         optionsStripe         : ZHEXColor,
         optionsIdleText       : ZHEXColor,
