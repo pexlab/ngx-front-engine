@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder } from '@angular/forms';
 import { ComponentTheme, FeColorPalette, PartialDropdownTheme, ThemeService } from '@pexlab/ngx-front-engine';
+import { Subscription } from 'rxjs';
 
 @Component(
     {
@@ -8,7 +9,7 @@ import { ComponentTheme, FeColorPalette, PartialDropdownTheme, ThemeService } fr
         styleUrls  : [ './dropdown.component.scss' ]
     }
 )
-export class DropdownComponent implements OnInit {
+export class DropdownComponent implements OnInit, OnDestroy {
     
     constructor( private fb: FormBuilder, private theme: ThemeService ) { }
     
@@ -38,15 +39,21 @@ export class DropdownComponent implements OnInit {
         }
     };
     
+    private formGroupSubscription!: Subscription;
+    
     public ngOnInit(): void {
-        this.formGroup.valueChanges.subscribe( ( value ) => {
+        this.formGroupSubscription = this.formGroup.valueChanges.subscribe( ( value ) => {
             if ( this.properties.getRawValue()[ this.properties.getRawValue().length - 1 ] !== null ) {
                 this.properties.push( this.fb.control( null ) );
             }
         } );
     }
     
-    removeProperty( index: number ) {
+    public ngOnDestroy(): void {
+        this.formGroupSubscription.unsubscribe();
+    }
+    
+    public removeProperty( index: number ) {
         if ( this.properties.length > 1 && this.properties.getRawValue()[ index ] !== null ) {
             this.properties.removeAt( index );
         }
