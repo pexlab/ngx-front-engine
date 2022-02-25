@@ -217,10 +217,13 @@
 		  
 		  display               : grid;
 		  grid-auto-flow        : column;
-		  grid-template-columns : auto 1fr;
 		  place-items           : center;
 		  
 		  text-align            : center;
+		  
+		  &.hasIcon {
+			grid-template-columns : auto 1fr;
+		  }
 		  
 		  & > svg-icon {
 			
