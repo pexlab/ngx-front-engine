@@ -484,8 +484,8 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
             10 * 2
         );
         
-        const w = this.hostElement.nativeElement.clientWidth + m;
-        const h = this.hostElement.nativeElement.clientHeight + m;
+        const w = this.hostElement.nativeElement.clientWidth - strokeWidth;
+        const h = this.hostElement.nativeElement.clientHeight - strokeWidth;
         
         const path = `M${ gapEnd },${ m } L${ w },${ m } L${ w },${ h } L${ m },${ h } L${ m },${ m } L${ gapStart },${ m }`;
         
