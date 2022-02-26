@@ -1,6 +1,6 @@
 {
   "name": "@pexlab/ngx-front-engine",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "description": "A component library for angular which features astonishing components, theming and a vast color palette",
   "license": "MIT",
   "homepage": "https://pexlab.net/projects/front-engine",
@@ -9,10 +9,10 @@
     "url": "https://github.com/pexlab/ngx-front-engine.git"
   },
   "peerDependencies": {
-    "@angular/common": "^12.2.8",
-    "@angular/core": "^12.2.8",
-    "angular-svg-icon": "^12.0.0",
-    "zod": "^3.9.8",
+    "@angular/common": "^13.2.4",
+    "@angular/core": "^13.2.4",
+    "angular-svg-icon": "^13.0.0",
+    "zod": "^3.12.0",
     "dayjs": "^1.10.7"
   },
   "dependencies": {
