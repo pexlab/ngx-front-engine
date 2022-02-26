@@ -1,6 +1,6 @@
 import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import deepdash from 'deepdash-es';
-import * as lodash from 'lodash';
+import lodash from 'lodash-es';
 import { RootComponent } from '../components/root/root.component';
 import { ColorRegister, EvaluatedColor, HEXColor, HEXColorRegister } from '../interfaces/color.interface';
 import { CommonTheme, ComponentThemes, PartialCommonTheme, PartialComponentThemes } from '../interfaces/theme.interface';

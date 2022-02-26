@@ -10,9 +10,11 @@
     "types": [],
     "lib": [
       "dom",
-      "es2018"
+      "es2018",
+      "esnext.bigint"
     ],
-    "strict": true
+    "strict": true,
+    "allowSyntheticDefaultImports": true
   },
   "exclude": [
     "**/*.spec.ts"

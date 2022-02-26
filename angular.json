@@ -74,7 +74,7 @@
               "node_modules/prismjs/themes/prism-tomorrow.css"
             ],
             "scripts": [
-              "node_modules/marked/lib/marked.js",
+              "node_modules/marked/marked.min.js",
               "node_modules/prismjs/prism.js",
               "node_modules/prismjs/components/prism-typescript.js",
               "node_modules/prismjs/components/prism-css.js",
@@ -155,7 +155,7 @@
               "node_modules/prismjs/themes/prism-tomorrow.css"
             ],
             "scripts": [
-              "node_modules/marked/lib/marked.js",
+              "node_modules/marked/marked.min.js",
               "node_modules/prismjs/prism.js",
               "node_modules/prismjs/components/prism-typescript.js",
               "node_modules/prismjs/components/prism-css.js",

@@ -1,4 +1,4 @@
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { FeTranslationTimeAgo } from '../interfaces/i18n.interface';
 
 export function FeTimeAgo( date: Date, translation: FeTranslationTimeAgo ): any {
