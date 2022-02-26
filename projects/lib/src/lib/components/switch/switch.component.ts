@@ -2,10 +2,12 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
-    ElementRef, EventEmitter,
+    ElementRef,
+    EventEmitter,
     Input,
     OnInit,
-    Optional, Output,
+    Optional,
+    Output,
     Self
 } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
@@ -123,7 +125,7 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
         } else {
             throw new Error( 'Invalid value "' + input + '" to write on switch component.' );
         }
-    
+        
         this.feChange.next( this.feValues[ this.positionIndex ] );
         
         this.cdr.markForCheck();

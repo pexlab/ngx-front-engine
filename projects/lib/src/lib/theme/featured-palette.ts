@@ -1,5 +1,5 @@
-import { Color } from './color';
 import { composePalette } from '../interfaces/color.interface';
+import { Color } from './color';
 
 /** An elegant theme palette shipped with FrontEngine out of the box */
 export const FeColorPalette = composePalette(

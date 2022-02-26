@@ -37,7 +37,7 @@
 	  & > span:nth-child(2) {
 		@include theme.commonFont('decorative');
 		white-space : pre-line;
-		color : theme.hex('reduced-appearance-subheading');
+		color       : theme.hex('reduced-appearance-subheading');
 	  }
 	}
 	
@@ -89,9 +89,9 @@
 	grid-template-columns : 1fr auto;
 	grid-gap              : 0;
 	align-items           : center;
- 
-	height           : 100%;
-	min-height       : 150px;
+	
+	height                : 100%;
+	min-height            : 150px;
 	
 	& > .banner {
 	  
@@ -151,7 +151,7 @@
 			width       : 100%;
 			
 			color       : theme.hex('rich-appearance-subheading');
-		 
+			
 			white-space : pre-line;
 			
 			@include theme.commonFont('subheading');
@@ -212,14 +212,14 @@
 		
 		& > .content {
 		  
-		  width                 : 100%;
-		  height                : fit-content;
+		  width          : 100%;
+		  height         : fit-content;
 		  
-		  display               : grid;
-		  grid-auto-flow        : column;
-		  place-items           : center;
+		  display        : grid;
+		  grid-auto-flow : column;
+		  place-items    : center;
 		  
-		  text-align            : center;
+		  text-align     : center;
 		  
 		  &.hasIcon {
 			grid-template-columns : auto 1fr;

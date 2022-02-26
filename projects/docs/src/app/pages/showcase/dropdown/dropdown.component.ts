@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder } from '@angular/forms';
-import { ComponentTheme, FeColorPalette, PartialDropdownTheme, ThemeService } from '@pexlab/ngx-front-engine';
+import { ComponentTheme, PartialDropdownTheme, ThemeService } from '@pexlab/ngx-front-engine';
 import { Subscription } from 'rxjs';
 
 @Component(

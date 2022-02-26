@@ -4,39 +4,42 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
+    CommentModule,
+    FeAlertPortalModule,
     FeBannerCarouselModule,
     FeButtonModule,
     FeCheckboxModule,
     FeDropdownModule,
-    FeModule, FeRootModule,
-    FeStepperModule, FeSwitchModule,
+    FeModule,
+    FeRootModule,
+    FeSpeedometerModule,
+    FeStepperModule,
+    FeSwitchModule,
     FeTactileModule,
-    FeTextFieldModule,
-    FeAlertPortalModule,
-    FeSpeedometerModule, CommentModule
+    FeTextFieldModule
 } from '@pexlab/ngx-front-engine';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { MarkdownModule } from 'ngx-markdown';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TextFieldComponent } from './pages/showcase/text-field/text-field.component';
-import { ShowcaseSidebarComponent } from './pages/showcase/sidebar/showcase-sidebar.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { ButtonComponent } from './pages/showcase/button/button.component';
-import { DropdownComponent } from './pages/showcase/dropdown/dropdown.component';
+import { ColorPaletteComponent } from './pages/color-palette/color-palette.component';
 import { FormComponent } from './pages/examples/form/form.component';
 import { FormSidebarComponent } from './pages/examples/sidebar/form-sidebar.component';
-import { ColorPaletteComponent } from './pages/color-palette/color-palette.component';
+import { GettingStartedComponent } from './pages/getting-started/getting-started.component';
+import { IntroductionComponent } from './pages/introduction/introduction.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { AlertPortalComponent } from './pages/showcase/alert-portal/alert-portal.component';
 import { BannerCarouselComponent } from './pages/showcase/banner-carousel/banner-carousel.component';
+import { ButtonComponent } from './pages/showcase/button/button.component';
+import { CommentComponent } from './pages/showcase/comment/comment.component';
+import { DropdownComponent } from './pages/showcase/dropdown/dropdown.component';
+import { PopupComponent } from './pages/showcase/popup/popup.component';
+import { ShowcaseSidebarComponent } from './pages/showcase/sidebar/showcase-sidebar.component';
+import { SpeedometerComponent } from './pages/showcase/speedometer/speedometer.component';
 import { StepperComponent } from './pages/showcase/stepper/stepper.component';
 import { SwitchComponent } from './pages/showcase/switch/switch.component';
-import { PopupComponent } from './pages/showcase/popup/popup.component';
+import { TextFieldComponent } from './pages/showcase/text-field/text-field.component';
 import { NutmegComponent } from './popups/nutmeg/nutmeg.component';
-import { AlertPortalComponent } from './pages/showcase/alert-portal/alert-portal.component';
-import { SpeedometerComponent } from './pages/showcase/speedometer/speedometer.component';
-import { IntroductionComponent } from './pages/introduction/introduction.component';
-import { GettingStartedComponent } from './pages/getting-started/getting-started.component';
-import { CommentComponent } from './pages/showcase/comment/comment.component';
 
 @NgModule(
     {
@@ -62,12 +65,12 @@ import { CommentComponent } from './pages/showcase/comment/comment.component';
             GettingStartedComponent,
             CommentComponent
         ],
-    
-        imports: [
         
+        imports: [
+            
             BrowserModule,
             BrowserAnimationsModule,
-        
+            
             HttpClientModule,
             AngularSvgIconModule.forRoot(),
             MarkdownModule.forRoot(
@@ -77,7 +80,7 @@ import { CommentComponent } from './pages/showcase/comment/comment.component';
                 }
             ),
             ReactiveFormsModule,
-        
+            
             FeModule,
             FeRootModule,
             FeButtonModule,
@@ -90,7 +93,7 @@ import { CommentComponent } from './pages/showcase/comment/comment.component';
             FeSwitchModule,
             FeAlertPortalModule,
             FeSpeedometerModule,
-        
+            
             AppRoutingModule,
             CommentModule
         ],

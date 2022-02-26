@@ -1,6 +1,6 @@
 import { rgb } from 'wcag-contrast';
-import { ThemeService } from './theme.service';
 import { EvaluatedColor, HEXColor, RGBColor, WCAGContrast, ZHEXColor } from '../interfaces/color.interface';
+import { ThemeService } from './theme.service';
 
 export class Color implements EvaluatedColor {
     

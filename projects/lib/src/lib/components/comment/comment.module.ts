@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { FeTactileModule } from '../../directives/tactile/tactile.module';
 import { CommentComponent } from './comment.component';
@@ -9,7 +9,7 @@ import { CommentComponent } from './comment.component';
         declarations: [
             CommentComponent
         ],
-    
+        
         imports: [
             CommonModule,
             AngularSvgIconModule,

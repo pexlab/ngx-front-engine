@@ -25,8 +25,8 @@ yarn add @pexlab/ngx-front-engine
 
 #### 2. Making the assets available
 
-Go to the root of your project and open the ``angular.json`` file. In there go ahead and find the ``assets`` and ``styles`` section and
-append the following:
+Go to the root of your project and open the ``angular.json`` file. In there go ahead and find the ``assets``
+and ``styles`` section and append the following:
 
 ```diff
 "assets": [
@@ -77,13 +77,16 @@ ___
 
 ### » Global configuration
 
-The following examples show how to customize the default appearance of the components. Please note that the examples can all be combined with each other and that it is not always necessary to specify all values.
+The following examples show how to customize the default appearance of the components. Please note that the examples can
+all be combined with each other and that it is not always necessary to specify all values.
 
 <br>
 
 #### 1. Colors
 
-If you want to change the colors used, you can do that in two ways. The first way is to only change the common theme which every component theme is based on by default. For example if you want to change the accent from the default blue to red for every component at once, you would write the following:
+If you want to change the colors used, you can do that in two ways. The first way is to only change the common theme
+which every component theme is based on by default. For example if you want to change the accent from the default blue
+to red for every component at once, you would write the following:
 
 ```typescript
 constructor( private theme: ThemeService ){
@@ -114,13 +117,16 @@ constructor( private theme: ThemeService ) {
 }
 ```
 
-This method will overwrite the common theme with your settings. You can also combine those two methods together. For example if you want to change the accent color for every component but also want to change the button component as a whole.
+This method will overwrite the common theme with your settings. You can also combine those two methods together. For
+example if you want to change the accent color for every component but also want to change the button component as a
+whole.
 
 <br>
 
 #### 2. Typography
 
-The fonts used in the components can be changed in a similar way. For example, the font for the body text can be changed as follows:
+The fonts used in the components can be changed in a similar way. For example, the font for the body text can be changed
+as follows:
 
 ```typescript
 constructor( private theme: ThemeService ) {
@@ -143,7 +149,8 @@ ___
 
 ### » Fundamentals
 
-When you are ready to incorporate certain components in your app, always keep in mind that each component requires its own module to work. For example, if you want to add a text-field you need to import its module like this:
+When you are ready to incorporate certain components in your app, always keep in mind that each component requires its
+own module to work. For example, if you want to add a text-field you need to import its module like this:
 
 ```diff
 imports: [
@@ -162,4 +169,5 @@ After this the text-field is made available, and you could use it in your templa
 </fe-text-field>
 ```
 
-You will probably have noticed that every module, HTML tag and directive has an `fe-` or `Fe` prefix. This is to make it easier to discern things related to FrontEngine. 
+You will probably have noticed that every module, HTML tag and directive has an `fe-` or `Fe` prefix. This is to make it
+easier to discern things related to FrontEngine. 

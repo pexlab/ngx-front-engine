@@ -1,12 +1,4 @@
-import {
-    Component,
-    HostListener,
-    Input,
-    OnInit, Output,
-    TemplateRef,
-    ViewChild,
-    EventEmitter, ContentChild
-} from '@angular/core';
+import { Component, ContentChild, EventEmitter, HostListener, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { AsynchronouslyInitialisedComponent } from '../../../utils/component.utils';
 
 @Component(

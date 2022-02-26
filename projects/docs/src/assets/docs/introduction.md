@@ -38,8 +38,8 @@ ___
 
 ### » ⚠️ Caution: WIP ⚠️
 
-This project currently is still an early work in progress and breaking changes will occur rapidly and unexpectedly. It is
-advised not to use it in production just yet.
+This project currently is still an early work in progress and breaking changes will occur rapidly and unexpectedly. It
+is advised not to use it in production just yet.
 
 ___
 
@@ -76,13 +76,12 @@ ___
 
 ### » Contributing
 
-Contribution guidelines will be published at a later date.
-In the meantime, you are still welcome to submit issues or to create pull requests.
+Contribution guidelines will be published at a later date. In the meantime, you are still welcome to submit issues or to
+create pull requests.
 
 ___
 
 ### » ❤️ Support
 
-Donations of any amount are hugely appreciated and very welcome.
-FrontEngine is currently maintained by a sole developer.
-If you want to fund this project and help it grow, please visit: https://www.buymeacoffee.com/slatedave
+Donations of any amount are hugely appreciated and very welcome. FrontEngine is currently maintained by a sole
+developer. If you want to fund this project and help it grow, please visit: https://www.buymeacoffee.com/slatedave

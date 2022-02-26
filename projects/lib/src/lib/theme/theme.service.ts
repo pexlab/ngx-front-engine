@@ -1,14 +1,14 @@
 import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
+import deepdash from 'deepdash-es';
+import * as lodash from 'lodash';
 import { RootComponent } from '../components/root/root.component';
-import { ComponentThemes, CommonTheme, PartialComponentThemes, PartialCommonTheme } from '../interfaces/theme.interface';
+import { ColorRegister, EvaluatedColor, HEXColor, HEXColorRegister } from '../interfaces/color.interface';
+import { CommonTheme, ComponentThemes, PartialCommonTheme, PartialComponentThemes } from '../interfaces/theme.interface';
 import { Typography } from '../interfaces/typography.interface';
 import { kebabCase } from '../utils/case.utils';
 import { mergeObj } from '../utils/type.utils';
 import { Color } from './color';
-import { ColorRegister, EvaluatedColor, HEXColor, HEXColorRegister } from '../interfaces/color.interface';
 import { FeColorPalette } from './featured-palette';
-import * as lodash from 'lodash';
-import deepdash from 'deepdash-es';
 
 const _ = deepdash( lodash );
 

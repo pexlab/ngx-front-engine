@@ -2,11 +2,13 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
-    ElementRef, EventEmitter,
+    ElementRef,
+    EventEmitter,
     HostBinding,
     Input,
     OnInit,
-    Optional, Output,
+    Optional,
+    Output,
     Self
 } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';

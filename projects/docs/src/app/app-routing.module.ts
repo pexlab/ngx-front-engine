@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ColorPaletteComponent } from './pages/color-palette/color-palette.component';
+import { FormComponent } from './pages/examples/form/form.component';
+import { FormSidebarComponent } from './pages/examples/sidebar/form-sidebar.component';
 import { GettingStartedComponent } from './pages/getting-started/getting-started.component';
 import { IntroductionComponent } from './pages/introduction/introduction.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { AlertPortalComponent } from './pages/showcase/alert-portal/alert-portal.component';
 import { BannerCarouselComponent } from './pages/showcase/banner-carousel/banner-carousel.component';
 import { ButtonComponent } from './pages/showcase/button/button.component';
@@ -14,9 +17,6 @@ import { SpeedometerComponent } from './pages/showcase/speedometer/speedometer.c
 import { StepperComponent } from './pages/showcase/stepper/stepper.component';
 import { SwitchComponent } from './pages/showcase/switch/switch.component';
 import { TextFieldComponent } from './pages/showcase/text-field/text-field.component';
-import { FormComponent } from './pages/examples/form/form.component';
-import { FormSidebarComponent } from './pages/examples/sidebar/form-sidebar.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 @NgModule(
     {

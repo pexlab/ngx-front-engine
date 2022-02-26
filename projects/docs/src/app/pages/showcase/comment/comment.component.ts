@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ICommentMessage, ICommentAuthor, ZCommentAuthor, FeColorPalette, Color } from '@pexlab/ngx-front-engine';
+import { Color, FeColorPalette, ICommentAuthor, ICommentMessage, ZCommentAuthor } from '@pexlab/ngx-front-engine';
 import * as dayjs from 'dayjs';
 
 @Component(
@@ -25,7 +25,7 @@ export class CommentComponent implements OnInit {
     
     public message: ICommentMessage = {
         text       : 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
-        publishDate: dayjs().subtract(2, 'week').toDate()
+        publishDate: dayjs().subtract( 2, 'week' ).toDate()
     };
     
     public buttons = [

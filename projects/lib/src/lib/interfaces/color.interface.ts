@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { Replace } from '../utils/type.utils';
 import { Color } from '../theme/color';
+import { Replace } from '../utils/type.utils';
 
 export const ZHEXColor = z.string().refine( ( s ) => {
     return s.startsWith( '#' ) &&

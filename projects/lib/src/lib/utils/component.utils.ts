@@ -1,10 +1,10 @@
 import { ElementRef } from '@angular/core';
+import { isEqual } from 'lodash';
 import { ReplaySubject, Subject } from 'rxjs';
 import { ComponentTheme, HEXColorRegister } from '../interfaces/color.interface';
 import { ThemeableComponents } from '../interfaces/theme.interface';
 import { ThemeService } from '../theme/theme.service';
 import { ClassWithProperties } from './type.utils';
-import { isEqual } from 'lodash';
 
 export function FeComponent( name: ThemeableComponents ) {
     
@@ -93,7 +93,7 @@ export function FePopup() {
 
 export class AsynchronouslyInitialisedComponent {
     
-    loadedState: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+    loadedState: ReplaySubject<boolean> = new ReplaySubject<boolean>( 1 );
     
     protected componentLoaded(): void {
         this.loadedState.next( true );
