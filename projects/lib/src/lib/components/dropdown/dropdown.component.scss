@@ -1,4 +1,6 @@
 @use '../../../../assets/fe-styles/theme' as config with ($scope: 'dropdown');
+@use 'sass:math';
+
 @forward '../../../../assets/fe-styles/theme';
 
 $DROPDOWN_PADDING_VERTICAL   : 15px;
@@ -92,7 +94,7 @@ $OPTION_PADDING              : 10px;
 	
 	position       : absolute;
 	
-	top            : $PLACEHOLDER_HEIGHT / 2;
+	top            : math.div($PLACEHOLDER_HEIGHT, 2);
 	left           : -$DROPDOWN_PADDING_HORIZONTAL;
 	
 	display        : grid;
@@ -102,7 +104,7 @@ $OPTION_PADDING              : 10px;
 	width          : calc(100% + (#{$DROPDOWN_PADDING_HORIZONTAL} * 2) + (#{$OPTION_PADDING} * 2));
 	
 	margin         : 0;
-	padding-top    : ($PLACEHOLDER_HEIGHT / 2) + $DROPDOWN_PADDING_VERTICAL + 3px + $OPTION_PADDING;
+	padding-top    : math.div($PLACEHOLDER_HEIGHT, 2) + $DROPDOWN_PADDING_VERTICAL + 3px + $OPTION_PADDING;
 	
 	overflow       : hidden;
 	
@@ -131,11 +133,11 @@ $OPTION_PADDING              : 10px;
 	
 	& > .clear-value {
 	  
-	  $padding_top  : ($PLACEHOLDER_HEIGHT / 2) + $DROPDOWN_PADDING_VERTICAL;
+	  $padding_top  : math.div($PLACEHOLDER_HEIGHT, 2) + $DROPDOWN_PADDING_VERTICAL;
 	  
 	  position      : absolute;
 	  
-	  top           : 3px + ($OPTION_PADDING / 2);
+	  top           : 3px + math.div($OPTION_PADDING, 2);
 	  right         : $OPTION_PADDING;
 	  
 	  display       : grid;

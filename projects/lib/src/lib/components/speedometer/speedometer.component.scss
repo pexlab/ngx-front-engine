@@ -1,4 +1,5 @@
 @use '../../../../assets/fe-styles/theme' with ($scope: 'speedometer');
+@use 'sass:math';
 
 :host {
   
@@ -51,7 +52,7 @@
 	width       : 150px;
 	height      : 80px;
 	
-	bottom      : ((450px - 300px) / 2);
+	bottom      : math.div(450px - 300px, 2);
 	left        : 50%;
 	
 	transform   : translateX(-50%);
