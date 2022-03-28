@@ -8,15 +8,21 @@ import { Alert, AlertPortalService } from '@pexlab/ngx-front-engine';
     }
 )
 export class AlertPortalComponent implements OnInit {
-    
+
     constructor( private alert: AlertPortalService ) { }
-    
+
     private sampleAlerts: Alert[] = [
         {
             title      : 'Not sure?',
             description: 'When in doubt, use this generic alert type.',
             type       : 'generic',
             icon       : 'help'
+        },
+        {
+            title      : 'Emojis!',
+            description: 'You can use them instead of an icons as well.',
+            type       : 'generic',
+            icon       : '✌️'
         },
         {
             title      : 'Did you know?',
@@ -40,30 +46,30 @@ export class AlertPortalComponent implements OnInit {
             type       : 'error'
         }
     ];
-    
+
     public ngOnInit(): void {
     }
-    
+
     public spawn() {
-        
+
         this.sampleAlerts.forEach( ( a, index ) => {
-            
+
             setTimeout( () => {
-                
+
                 this.alert.emit( 'showcase', a );
-                
+
             }, index * 500 );
         } );
     }
-    
+
     public clear() {
         this.alert.clear( 'showcase' );
     }
-    
+
     public removeRandom() {
-        
+
         const activeAlerts = this.alert.getAll( 'showcase' );
-        
+
         if ( activeAlerts.length > 0 ) {
             const randomAlert = activeAlerts[ Math.floor( ( Math.random() * activeAlerts.length ) ) ];
             randomAlert.remove();

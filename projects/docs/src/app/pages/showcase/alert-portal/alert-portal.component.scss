@@ -1,35 +1,40 @@
 @use '~dist/ngx-front-engine/assets/fe-styles/theme';
 
 :host {
-  
-  display        : grid;
-  grid-auto-flow : row;
-  grid-gap       : 20px;
-  
-  & > .note {
-	
-	@include theme.commonFont('code');
-	
-	& > span {
-	  display       : block;
-	  margin-bottom : 5px;
-	}
-	
-	& > span:nth-child(1) {
-	  text-decoration : underline;
-	}
-  }
-  
-  & > .inline {
-	
-	width          : fit-content;
-	
-	display        : grid;
-	grid-auto-flow : column;
-	grid-gap       : 20px;
-  }
-  
-  & > fe-alert-portal {
-	max-width : 500px;
-  }
+
+    display        : grid;
+    grid-auto-flow : row;
+    grid-gap       : 20px;
+
+    & > .note {
+
+        @include theme.commonFont('code');
+
+        & > span {
+            display       : block;
+            margin-bottom : 5px;
+        }
+
+        & > span:nth-child(1) {
+            text-decoration : underline;
+        }
+    }
+
+    & > .inline {
+
+        width          : fit-content;
+
+        display        : grid;
+        grid-auto-flow : column;
+        grid-gap       : 20px;
+    }
+
+    & > fe-alert-portal {
+        max-width : 500px;
+    }
+
+    & > .divider {
+        width  : 100%;
+        border : 1px solid theme.commonHex('text-tertiary');
+    }
 }

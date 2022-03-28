@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { z } from 'zod';
 import { ComponentTheme, ZHEXColor } from '../../interfaces/color.interface';
@@ -17,57 +17,60 @@ import { AlertPortalService } from './alert-portal.service';
     }
 )
 export class AlertPortalComponent implements OnInit {
-    
+
     constructor(
         public hostElement: ElementRef,
         private alert: AlertPortalService,
         private cdr: ChangeDetectorRef
     ) { }
-    
+
     @Input()
     public feTheme!: ComponentTheme<PartialAlertPortalTheme>;
-    
+
     /* TODO: make changeable on the fly */
     @Input()
     public feInstance!: string;
-    
+
+    @Input()
+    public feMargin?: [string, string];
+
     public alerts: TaggedAlert[] = [];
-    
+
     private channelSubscription!: Subscription;
-    
+
     public ngOnInit(): void {
-        
+
         if ( !this.feInstance ) {
             throw new Error( 'No instance name was set on alert-portal' );
         }
-        
+
         this.alerts = this.alert.getAll( this.feInstance );
-        
+
         this.channelSubscription = this.alert.channel.subscribe( ( event ) => {
-            
+
             if ( event.instanceName === this.feInstance ) {
                 this.alerts = event.alerts;
                 this.cdr.detectChanges();
             }
         } );
     }
-    
+
     public ngAfterViewInit(): void {
         this.cdr.detach();
     }
-    
+
     public ngOnDestroy(): void {
         this.channelSubscription.unsubscribe();
     }
-    
+
     public identify( index: number, alert: TaggedAlert ) {
         return alert.id;
     }
-    
+
     public isEmoji( value: string ) {
         return /\p{Emoji}/u.test( value );
     }
-    
+
     public getIcon( alert: Alert ): string {
         return alert.icon || 'fe-' + alert.type;
     }
@@ -87,14 +90,14 @@ export type TaggedAlert = Alert & { id: string, remove: () => void };
 
 export const ZAlertTheme = z.object(
     {
-        
+
         title      : ZHEXColor,
         description: ZHEXColor,
         background : ZHEXColor,
-        
+
         icon          : ZHEXColor,
         iconBackground: ZHEXColor,
-        
+
         code          : ZHEXColor,
         codeBorder    : ZHEXColor,
         codeBackground: ZHEXColor

@@ -1,16 +1,21 @@
-<div *ngFor="let a of alerts; trackBy:identify" class="alert" [ngClass]="a.type" [@alert]>
-    <div class="wrapper">
-        <div class="content">
+<div class="wrapper" [class.hasElements]="alerts.length > 0" [style.--fe-alert-margin]="feMargin ? feMargin[0] + ' 0 ' + feMargin[1] + ' 0' : '0'">
+    <div *ngFor="let a of alerts; index as i; trackBy:identify"
+         class="alert"
+         [ngClass]="[a.type, i === alerts.length - 1 ? 'last' : 'not-last']"
+         [@alert]>
+        <div class="wrapper">
+            <div class="content">
 
-            <div class="icon">
-                <svg-icon *ngIf="!isEmoji(getIcon(a))" [name]="getIcon(a)"></svg-icon>
-                <span *ngIf="isEmoji(getIcon(a))">{{ getIcon(a) }}</span>
-            </div>
+                <div class="icon">
+                    <svg-icon *ngIf="!isEmoji(getIcon(a))" [name]="getIcon(a)"></svg-icon>
+                    <span *ngIf="isEmoji(getIcon(a))">{{ getIcon(a) }}</span>
+                </div>
 
-            <div class="text">
-                <span class="title">{{ a.title }}</span>
-                <span class="description" *ngIf="a.description">{{ a.description }}</span>
-                <code class="code_embed" *ngIf="a.code">{{ a.code }}</code>
+                <div class="text">
+                    <span class="title">{{ a.title }}</span>
+                    <span class="description" *ngIf="a.description">{{ a.description }}</span>
+                    <code class="code_embed" *ngIf="a.code">{{ a.code }}</code>
+                </div>
             </div>
         </div>
     </div>
