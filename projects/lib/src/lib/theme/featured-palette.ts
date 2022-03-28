@@ -4,150 +4,153 @@ import { Color } from './color';
 /** An elegant theme palette shipped with FrontEngine out of the box */
 export const FeColorPalette = composePalette(
     {
-        
+
         Green: {
             PaleMint    : '#b8ebd0',
             Mint        : '#b2ff9e',
-            TeaGreen    : '#C6EBBE',
-            SeaGreen    : '#4EEE94',
+            TeaGreen    : '#c6ebbe',
+            SeaGreen    : '#4eee94',
             PaleGreen   : '#57bc90',
             Olive       : '#9dad6f',
             Emerald     : '#2ecc71',
-            Lime        : '#46E646',
-            Malachite   : '#0BDA51',
-            Nature      : '#4FBF26',
-            Salem       : '#0A7B3E',
-            Forest      : '#004F2D',
+            Lime        : '#46e646',
+            Malachite   : '#0bda51',
+            Nature      : '#4fbf26',
+            Salem       : '#0a7b3e',
+            Forest      : '#004f2d',
             BlueishPine : '#015249',
-            DarkForest  : '#0C2F22',
-            PhthaloGreen: '#14342B'
+            DarkForest  : '#0c2f22',
+            PhthaloGreen: '#14342b'
         },
-        
+
         Cyan: {
-            FrozenRiver   : '#B0F6EF',
-            Aquamarine    : '#00FFFF',
-            AgalAquamarine: '#16F5E3',
+            FrozenRiver   : '#b0f6ef',
+            Aquamarine    : '#00ffff',
+            AgalAquamarine: '#16f5e3',
             Shamrock      : '#28c3a6',
             MintIcepop    : '#3beeb7',
-            CaribbeanGreen: '#00C4B1',
+            CaribbeanGreen: '#00c4b1',
             Saltwater     : '#009eb3',
             Ming          : '#1e6b71',
-            DeepOcean     : '#004A59',
+            DeepOcean     : '#004a59',
             Slate         : '#2d3543',
             Tiber         : '#07393c',
-            Gunmetal      : '#2C3539'
+            Gunmetal      : '#2c3539'
         },
-        
+
         Blue: {
             PastelBlue       : '#a1c4fd',
-            PaleSky          : '#7BDFF2',
+            PaleSky          : '#7bdff2',
             Sky              : '#10d0f9',
-            SunnySky         : '#00B2FF',
-            NaturalBlue      : '#499DD0',
+            SunnySky         : '#00b2ff',
+            NaturalBlue      : '#499dd0',
             River            : '#3498db',
             Azure            : '#0073ff',
-            PureBlue         : '#2552FE',
-            DarkBlue         : '#004E92',
-            CatalinaBlue     : '#23416A',
-            VividCatalinaBlue: '#0D257F',
+            PureBlue         : '#2552fe',
+            DarkBlue         : '#004e92',
+            CatalinaBlue     : '#23416a',
+            VividCatalinaBlue: '#0d257f',
             VividDarkBlue    : '#020887',
             NavyBlue         : '#142954',
-            Eclipse          : '#121E48',
+            Eclipse          : '#121e48',
             NightSky         : '#001738'
         },
-        
+
         Yellow: {
-            MaskingTape: '#FBFAD9',
-            Vanilla    : '#fff4ba',
-            PostIt     : '#fcfb95',
-            VividPostIt: '#fbf963',
-            Warmth     : '#FFE36D',
-            Honey      : '#FFCC00'
+            MaskingTape  : '#fbfad9',
+            PancakeDough : '#fff4ba',
+            Duckling     : '#fcfb95',
+            PostIt       : '#fbf963',
+            SliceOfCheese: '#feee69',
+            Warmth       : '#ffe36d',
+            Mustard      : '#e9d83a',
+            Honey        : '#ffcc00'
         },
-        
+
         Gold: {
-            LightGold   : '#F1E07E',
-            Marigold    : '#F7CE3E',
+            LightGold   : '#f1e07e',
+            Marigold    : '#f7ce3e',
             Gold        : '#d7b45a',
-            MetallicGold: '#D4AF37',
-            DarkGold    : '#B1892A'
+            MetallicGold: '#d4af37',
+            DarkGold    : '#b1892a'
         },
-        
+
         Orange: {
             Papaya      : '#f29e77',
             StrongPapaya: '#f99a4f',
-            IndianOrange: '#FF7722',
+            IndianOrange: '#ff7722',
             Pumpkin     : '#ee7b30',
             VividOrange : '#fd5300',
             Sunset      : '#e6a919'
         },
-        
+
         Brown: {
             RosyBrown   : '#c2948a',
-            Leather     : '#AF986E',
             CoffeeLatte : '#d3b284',
-            Straw       : '#CEBB7E',
-            Wood        : '#D69E63',
-            BrownSugar  : '#B57547',
-            RustedCopper: '#984B43',
-            Coffee      : '#7B5847',
+            Straw       : '#cebb7e',
+            Leather     : '#cb9274',
+            Wood        : '#d69e63',
+            BrownSugar  : '#b57547',
+            RustedCopper: '#984b43',
+            Coffee      : '#7b5847',
             CoffeeStain : '#8b5227',
             VividBrown  : '#a0430a',
             Chocolate   : '#54210a'
         },
-        
+
         Red: {
+            Lips      : '#fc585a',
             Coral     : '#ff533d',
-            SpanishRed: '#E60026',
-            Berry     : '#B31942',
-            NobleRed  : '#BC2D29',
+            SpanishRed: '#e60026',
+            Berry     : '#b31942',
+            NobleRed  : '#bc2d29',
             Blood     : '#a50104',
             DarkBlood : '#590004'
         },
-        
+
         Pink: {
-            IcedPink          : '#FDDAE5',
-            CottonCandy       : '#FFD2E7',
+            IcedPink          : '#fddae5',
+            CottonCandy       : '#ffd2e7',
             SubtlePink        : '#fad0c4',
             Apricot           : '#ffcab1',
             GrapefruitCocktail: '#f0a390',
-            Fluff             : '#F18EAE',
+            Fluff             : '#f18eae',
             HubbaBubbba       : '#ff789a',
-            VividPink         : '#FD0054',
-            Cosmic            : '#7A436A',
-            DarkPink          : '#60213E'
+            VividPink         : '#fd0054',
+            Cosmic            : '#7a436a',
+            DarkPink          : '#60213e'
         },
-        
+
         Violet: {
             PaleViolet: '#a18cd1',
             SoftViolet: '#8057e4'
         },
-        
+
         Purple: {
             LilacPlant  : '#ffd1ff',
             Orchid      : '#ff83fa',
             DarkOrchid  : '#fd6ae0',
             SoftMagenta : '#de5cf1',
-            Fuchsia     : '#A239CA',
-            PurplePowder: '#6B3CAA',
-            VividPurple : '#6A0F8E',
+            Fuchsia     : '#a239ca',
+            PurplePowder: '#6b3caa',
+            VividPurple : '#6a0f8e',
             PurpleOrchid: '#541741',
-            Grape       : '#3C1642'
+            Grape       : '#3c1642'
         },
-        
+
         Greyscale: {
             SnowWhite     : '#ffffff',
-            BrightGrey    : '#EBECF0',
-            MistyMorning  : '#E6E6E6',
+            BrightGrey    : '#ebecf0',
+            MistyMorning  : '#e6e6e6',
             Titanium      : '#dcdcdc',
             Smoke         : '#c9c9c9',
-            SubtleGrey    : '#B1B1B1',
-            CoolGrey      : '#B9BDC1',
+            SubtleGrey    : '#b1b1b1',
+            CoolGrey      : '#b9bdc1',
             Dust          : '#9c9c9c',
             Asbestos      : '#7f8c8d',
             LightCharcoal : '#646464',
             Charcoal      : '#464646',
-            Granite       : '#201F25',
+            Granite       : '#201f25',
             AlmostMidnight: '#152334',
             Midnight      : '#011627',
             PitchBlack    : '#000000',
