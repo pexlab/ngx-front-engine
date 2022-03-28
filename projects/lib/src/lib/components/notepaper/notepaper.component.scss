@@ -1,0 +1,197 @@
+@use '../../../../assets/fe-styles/theme' with ($scope: 'notepaper');
+
+$lineHeight  : 30px;
+$notePadding : 20px;
+
+:host {
+
+    display : block;
+
+    filter  : drop-shadow(0 1px 3px rgba(0, 0, 0, 0.12)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.24));
+
+    & .note {
+
+        position       : relative;
+
+        width          : calc(100vw - (15px * 2));
+        max-width      : 450px;
+        height         : fit-content;
+
+        display        : grid;
+        grid-auto-flow : row;
+        grid-gap       : $notePadding;
+
+        border-radius  : 10px;
+
+        box-sizing     : border-box;
+
+        font-size      : 18px;
+        font-family    : 'Architects Daughter', cursive;
+
+        padding        : $notePadding 0;
+
+        color          : black;
+        background     : linear-gradient(to bottom, theme.hex('background-top'), theme.hex('background-bottom') 135px);
+
+        clip-path      : polygon(100% 0, 100% calc(100% - (13px * 2) - 1px), calc(100% - (13px * 2) - 1px) 100%, 0 100%, 0 0);
+
+        /* Folded corner */
+        &:before {
+            content       : '';
+            position      : absolute;
+            bottom        : 0;
+            right         : 0;
+            border-style  : solid;
+            width         : 0;
+            border-width  : 13px;
+            border-color  : rgba(0, 0, 0, 0.2) transparent transparent rgba(0, 0, 0, 0.2);
+            border-radius : 5px 0 0 0;
+        }
+
+        /* Realistic holes produced by a hole puncher */
+        & .holes {
+
+            width                 : 100%;
+            height                : $lineHeight * 2;
+
+            display               : grid;
+            grid-auto-flow        : column;
+            grid-template-columns : 1fr 1fr;
+
+            padding-left          : 40px;
+            padding-right         : 40px;
+
+            align-items           : center;
+
+            & .hole {
+
+                width         : 20px;
+                height        : 20px;
+
+                border-radius : 50%;
+                box-shadow    : inset 0 0 2px 0 #888888;
+
+                background    : theme.hex('background-holes');
+
+                &.left {
+                    justify-self : left;
+                }
+
+                &.right {
+                    justify-self : right;
+                }
+            }
+        }
+
+        & .text-wrapper {
+
+            position       : relative;
+
+            width          : 100%;
+            height         : fit-content;
+            display        : grid;
+            grid-auto-flow : row;
+            grid-gap       : 0;
+
+            line-height    : $lineHeight;
+
+            min-height     : $lineHeight * 3;
+            margin-bottom  : $lineHeight - 1px;
+
+            &:before {
+                z-index          : -1;
+                content          : '';
+                position         : absolute;
+                top              : 0;
+                left             : 0;
+                bottom           : 0;
+                right            : 0;
+                background-image : repeating-linear-gradient(to bottom, transparent 0px, transparent #{$lineHeight - 1px}, black #{$lineHeight});
+                background-size  : 100% $lineHeight;
+            }
+
+            & > span:nth-child(1) {
+                display       : block;
+                width         : 100%;
+                text-align    : center;
+                font-weight   : bold;
+                font-family   : 'Pangolin', cursive;
+                margin-bottom : $lineHeight;
+            }
+
+            & > span:nth-child(n + 2) {
+
+                display    : block;
+
+                width      : 100%;
+                padding    : 0 20px;
+                box-sizing : border-box;
+
+                font-size  : 18px;
+
+                min-height : $lineHeight;
+
+                &.listItem:before {
+                    content     : '● ';
+                    font-family : 'Architects Daughter', cursive;
+                    font-size   : 18px;
+                }
+
+                &.important {
+
+                    font-family      : 'Pangolin', cursive;
+
+                    background-image : repeating-linear-gradient(to bottom, theme.hex('highlight') 0px, theme.hex('highlight') #{$lineHeight - 1px}, black #{$lineHeight});
+                    background-size  : 100% $lineHeight;
+                }
+            }
+
+            & > .divider {
+
+                display       : block;
+
+                width         : 100%;
+                height        : 3px;
+
+                background    : theme.hex('divider');
+
+                margin-top    : $lineHeight - 3px;
+                margin-bottom : $lineHeight;
+            }
+        }
+
+        & .link {
+
+            opacity        : .8;
+
+            margin         : 0 auto $notePadding;
+            width          : fit-content;
+
+            display        : grid;
+            grid-auto-flow : column;
+            grid-gap       : 10px;
+            align-items    : center;
+
+            border         : solid 2px theme.hex('button');
+            border-radius  : 255px 15px 225px 15px/15px 225px 15px 255px;
+
+            cursor         : pointer;
+
+            & span {
+
+                font-size   : 15px;
+                font-weight : bold;
+                color       : theme.hex('button');
+
+                padding     : 10px 10px;
+
+                transition  : padding .4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            }
+
+            &:hover span {
+                padding         : 10px 25px;
+                text-decoration : underline solid rgba(#41403E, .5);
+            }
+        }
+    }
+}

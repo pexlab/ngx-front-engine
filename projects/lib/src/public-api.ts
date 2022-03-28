@@ -21,6 +21,9 @@ export * from './lib/components/dropdown/dropdown.component';
 export * from './lib/components/dropdown/choice/dropdown-choice.component';
 export * from './lib/components/dropdown/dropdown.module';
 
+export * from './lib/components/notepaper/notepaper.component';
+export * from './lib/components/notepaper/notepaper.module';
+
 export * from './lib/components/checkbox/checkbox.component';
 export * from './lib/components/checkbox/checkbox.module';
 

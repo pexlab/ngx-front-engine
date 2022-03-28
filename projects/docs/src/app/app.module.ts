@@ -11,6 +11,7 @@ import {
     FeCheckboxModule,
     FeDropdownModule,
     FeModule,
+    FeNotepaperModule,
     FeRootModule,
     FeSpeedometerModule,
     FeStepperModule,
@@ -40,10 +41,11 @@ import { StepperComponent } from './pages/showcase/stepper/stepper.component';
 import { SwitchComponent } from './pages/showcase/switch/switch.component';
 import { TextFieldComponent } from './pages/showcase/text-field/text-field.component';
 import { NutmegComponent } from './popups/nutmeg/nutmeg.component';
+import { NotepaperComponent } from './pages/showcase/notepaper/notepaper.component';
 
 @NgModule(
     {
-        
+
         declarations: [
             AppComponent,
             TextFieldComponent,
@@ -63,14 +65,15 @@ import { NutmegComponent } from './popups/nutmeg/nutmeg.component';
             SpeedometerComponent,
             IntroductionComponent,
             GettingStartedComponent,
-            CommentComponent
+            CommentComponent,
+            NotepaperComponent
         ],
-        
+
         imports: [
-            
+
             BrowserModule,
             BrowserAnimationsModule,
-            
+
             HttpClientModule,
             AngularSvgIconModule.forRoot(),
             MarkdownModule.forRoot(
@@ -80,7 +83,7 @@ import { NutmegComponent } from './popups/nutmeg/nutmeg.component';
                 }
             ),
             ReactiveFormsModule,
-            
+
             FeModule,
             FeRootModule,
             FeButtonModule,
@@ -93,13 +96,14 @@ import { NutmegComponent } from './popups/nutmeg/nutmeg.component';
             FeSwitchModule,
             FeAlertPortalModule,
             FeSpeedometerModule,
-            
+            FeNotepaperModule,
+
             AppRoutingModule,
             CommentModule
         ],
-        
+
         providers: [],
-        
+
         bootstrap: [
             AppComponent
         ]

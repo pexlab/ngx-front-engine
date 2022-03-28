@@ -11,6 +11,7 @@ import { BannerCarouselComponent } from './pages/showcase/banner-carousel/banner
 import { ButtonComponent } from './pages/showcase/button/button.component';
 import { CommentComponent } from './pages/showcase/comment/comment.component';
 import { DropdownComponent } from './pages/showcase/dropdown/dropdown.component';
+import { NotepaperComponent } from './pages/showcase/notepaper/notepaper.component';
 import { PopupComponent } from './pages/showcase/popup/popup.component';
 import { ShowcaseSidebarComponent } from './pages/showcase/sidebar/showcase-sidebar.component';
 import { SpeedometerComponent } from './pages/showcase/speedometer/speedometer.component';
@@ -51,6 +52,10 @@ import { TextFieldComponent } from './pages/showcase/text-field/text-field.compo
                             {
                                 path     : 'dropdown',
                                 component: DropdownComponent
+                            },
+                            {
+                                path     : 'notepaper',
+                                component: NotepaperComponent
                             },
                             {
                                 path     : 'button',

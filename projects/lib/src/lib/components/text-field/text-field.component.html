@@ -1,6 +1,7 @@
 <div #textField
      class="field"
      [class.isArea]="feType === 'multi'"
+     [class.hasLabel]="!!template"
 >
 
     <svg class="border idle" #idleBorder>
@@ -11,11 +12,11 @@
         <path [attr.d]="focusedBorderPath"></path>
     </svg>
 
-    <div class="label" #label>
+    <div class="label" #label *ngIf="template">
         <ng-container [ngTemplateOutlet]="template"></ng-container>
     </div>
 
-    <div class="divider"></div>
+    <div class="divider" *ngIf="template"></div>
 
     <div class="input" #inputContainer>
 

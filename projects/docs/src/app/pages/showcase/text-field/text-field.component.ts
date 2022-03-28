@@ -9,16 +9,17 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 )
 
 export class TextFieldComponent implements OnInit {
-    
+
     constructor( private fb: FormBuilder ) { }
-    
+
     public formGroup!: FormGroup;
-    
+
     public ngOnInit(): void {
         this.formGroup = this.fb.group(
             {
                 moving_placeholder       : null,
                 disappearing_placeholder : null,
+                custom_label             : null,
                 disabled_with_placeholder: this.fb.control(
                     {
                         value   : null,

@@ -5,6 +5,7 @@ import { ZButtonTheme } from '../components/button/button.component';
 import { ZCheckboxTheme } from '../components/checkbox/checkbox.component';
 import { ZCommentTheme } from '../components/comment/comment.component';
 import { ZDropdownTheme } from '../components/dropdown/dropdown.component';
+import { ZNotepaperTheme } from '../components/notepaper/notepaper.component';
 import { ZPopupTheme } from '../components/popup/popup.component';
 import { ZSpeedometerTheme } from '../components/speedometer/speedometer.component';
 import { ZStepperTheme } from '../components/stepper/stepper.component';
@@ -15,7 +16,7 @@ import { ZFont } from './typography.interface';
 
 export const ZCommonTheme = z.object(
     {
-        
+
         typography: z.object(
             {
                 display    : ZFont,
@@ -28,7 +29,7 @@ export const ZCommonTheme = z.object(
                 code       : ZFont
             }
         ),
-        
+
         palette: z.object(
             {
                 accent: z.object(
@@ -44,7 +45,7 @@ export const ZCommonTheme = z.object(
                         warning         : ZHEXColor
                     }
                 ),
-                
+
                 text: z.object(
                     {
                         primary            : ZHEXColor,
@@ -55,7 +56,7 @@ export const ZCommonTheme = z.object(
                         on_secondary_accent: ZHEXColor
                     }
                 ),
-                
+
                 background: z.object(
                     {
                         primary   : ZHEXColor,
@@ -64,7 +65,7 @@ export const ZCommonTheme = z.object(
                         quaternary: ZHEXColor
                     }
                 ),
-                
+
                 custom: z.record( ZHEXColor ).optional()
             }
         )
@@ -76,6 +77,7 @@ export const ZPartialCommonTheme = ZCommonTheme.deepPartial();
 export type ThemeableComponents = 'textField'
                                   | 'button'
                                   | 'dropdown'
+                                  | 'notepaper'
                                   | 'checkbox'
                                   | 'stepper'
                                   | 'bannerCarousel'
@@ -96,6 +98,7 @@ export const ZComponentThemes = z.object(
             textField     : ZTextFieldTheme,
             button        : ZButtonTheme,
             dropdown      : ZDropdownTheme,
+            notepaper     : ZNotepaperTheme,
             checkbox      : ZCheckboxTheme,
             stepper       : ZStepperTheme,
             bannerCarousel: ZBannerCarouselTheme,

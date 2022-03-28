@@ -2,29 +2,28 @@
     <div class="container">
 
         <fe-text-field fePlaceholder="Moving placeholder"
-                       feAlignGroup="text-field-showcase"
                        formControlName="moving_placeholder">
-            <ng-template>
-                <svg-icon name="text"></svg-icon>
-            </ng-template>
         </fe-text-field>
 
         <fe-text-field fePlaceholder="Disappearing placeholder"
                        feStatic
-                       feAlignGroup="text-field-showcase"
                        formControlName="disappearing_placeholder">
+        </fe-text-field>
+
+        <fe-text-field fePlaceholder="Custom label"
+                       formControlName="custom_label">
             <ng-template>
                 <svg-icon name="text"></svg-icon>
             </ng-template>
         </fe-text-field>
 
         <fe-text-field
-                fePlaceholder="This is a more spacious text-area. You can write something fairly elaborate here!"
-                feStatic
-                feType="multi"
-                feAlignGroup="text-field-showcase"
-                formControlName="area"
-                [style.height]="'150px'">
+            fePlaceholder="This is a more spacious text-area. You can write something fairly elaborate here!"
+            feStatic
+            feType="multi"
+            feAlignGroup="text-field-showcase"
+            formControlName="area"
+            [style.height]="'150px'">
             <ng-template>
                 <svg-icon name="text"></svg-icon>
             </ng-template>

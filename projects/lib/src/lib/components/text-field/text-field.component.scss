@@ -4,309 +4,312 @@ $PADDING : 20px;
 
 
 @mixin stateStyle($state) {
-  
+
   background-color : config.hex('#{$state}-background');
-  
+
   & > .label {
 	color : config.hex('#{$state}-text');
   }
-  
+
   & > .input {
 	& > input, & > textarea {
 	  color       : config.hex('#{$state}-text');
 	  caret-color : config.hex('#{$state}-text');
 	}
   }
-  
+
   &.pinned {
 	& > .input > span.placeholder {
 	  color : config.hex('#{$state}-pinned-placeholder');
 	}
   }
-  
+
   &.static {
 	& > .input > span.placeholder {
 	  color : config.hex('#{$state}-static-placeholder');
 	}
   }
-  
+
   & > .divider {
 	background-color : config.hex('#{$state}-divider');
   }
 }
 
 :host {
-  
+
   position : relative;
-  
+
   display  : block;
-  
+
   width    : 100%;
-  
+
   @include config.commonFont('body');
-  
+
   & > .measurement, & > .field > .label {
-	
+
 	width          : fit-content;
-	
+
 	display        : grid;
 	grid-auto-flow : column;
 	grid-gap       : 10px;
 	place-items    : center left;
-	
+
 	padding-top    : $PADDING;
 	padding-bottom : $PADDING;
 	box-sizing     : border-box;
-	
+
 	@include config.inlineDeepIcon(20px);
   }
-  
+
   & > .measurement {
-	
+
 	position       : absolute;
 	top            : 0;
 	left           : 0;
-	
+
 	z-index        : -1;
 	opacity        : 0;
 	pointer-events : none;
 	user-select    : none;
-	
+
 	white-space    : nowrap;
-	
+
 	max-width      : 50%;
   }
-  
+
   /* Field states */
   & > .field {
-	
+
 	// Activate transition only after initialisation to avoid running the transition directly on render
 	&.activate_transitions {
-	  
+
 	  transition : border .25s ease, background-color .25s ease;
-	  
+
 	  & > .border {
-		
+
 		transition : opacity .25s .15s ease;
-		
+
 		& > path {
 		  transition : stroke .25s ease;
 		}
 	  }
-	  
+
 	  & > .label {
 		transition : color 0.35s ease;
 	  }
-	  
+
 	  & > .divider {
 		transition : background-color 0.35s ease;
 	  }
-	  
+
 	  & > .input {
-		
+
 		& > span.placeholder {
 		  transition : color .25s ease, left .25s ease, top .25s ease;
 		}
-		
+
 		& > input, & > textarea {
 		  transition : color 0.35s ease;
 		}
 	  }
 	}
-	
+
 	@include stateStyle('idle');
-	
+
 	&.idle {
-	  
+
 	  & > .border > path {
 		stroke : config.hex('idle-border');
 	  }
 	}
-	
+
 	&.idle:not(.initial) {
-	  
+
 	  & > .border.idle {
 		animation : idleBorderIn 0.25s ease forwards;
 	  }
-	  
+
 	  & .border.focused {
 		animation : focusedBorderBlur 0.25s cubic-bezier(0, 0.55, 0.45, 1) forwards;
 	  }
 	}
-	
+
 	&.disabled {
-	  
+
 	  @include stateStyle('disabled');
-	  
+
 	  cursor : not-allowed;
-	  
+
 	  & > .input {
 		& > input, & > textarea {
 		  cursor : not-allowed;
 		}
 	  }
 	}
-	
+
 	&.focused {
-	  
+
 	  @include stateStyle('focused');
-	  
+
 	  & > .border {
-		
+
 		&.idle {
 		  animation : idleBorderBlur 0.25s 0.15s ease forwards;
 		}
-		
+
 		&.focused {
 		  animation : focusedBorderIn 0.45s cubic-bezier(0, 0.55, 0.45, 1) forwards;
 		}
 	  }
 	}
-	
+
 	&.invalid {
-	  
+
 	  @include stateStyle('invalid');
-	  
+
 	  &:not(:focus-within) {
-		
+
 		& > .border.idle {
-		  
+
 		  & > path {
 			stroke : config.hex('invalid-border');
 		  }
-		  
+
 		  animation : invalidShake .5s linear !important;
 		}
 	  }
 	}
   }
-  
+
   & > .field {
-	
+
 	position              : relative;
-	
+
 	width                 : 100%;
 	height                : fit-content;
-	
+
 	padding-left          : $PADDING;
 	box-sizing            : border-box;
-	
+
 	display               : grid;
-	grid-template-columns : var(--label-width) 1px 1fr;
 	grid-auto-flow        : column;
 	grid-gap              : 20px;
 	place-items           : center;
-	
+
 	cursor                : text;
-	
+
 	border-radius         : 10px;
-	
+
 	backdrop-filter       : blur(5px);
-	
+
 	&.isArea {
 	  height : 100%;
 	}
-	
+
+    &.hasLabel {
+      grid-template-columns : var(--label-width) 1px 1fr;
+    }
+
 	& > .border {
-	  
+
 	  opacity  : 1;
-	  
+
 	  position : absolute;
-	  
+
 	  left     : 0;
 	  top      : 0;
-	  
+
 	  width    : 100%;
 	  height   : 100%;
-	  
+
 	  & > path {
 		fill         : none;
 		stroke-width : 2;
 	  }
-	  
+
 	  &.idle {
-		
+
 		& > path {
 		  stroke : config.hex('idle-border');
 		}
 	  }
-	  
+
 	  &.focused {
-		
+
 		opacity : 0;
-		
+
 		& > path {
 		  stroke : config.hex('focused-border');
 		}
 	  }
 	}
-	
+
 	& > .label {
 	  justify-self : left;
 	  user-select  : none;
 	}
-	
+
 	& .divider {
 	  width  : 100%;
 	  height : calc(100% - (2 * #{$PADDING}));
 	}
-	
+
 	& > .input {
-	  
+
 	  z-index        : 1;
-	  
+
 	  position       : relative;
-	  
+
 	  width          : 100%;
 	  height         : 100%;
-	  
+
 	  padding-top    : $PADDING;
 	  padding-bottom : $PADDING;
 	  padding-right  : $PADDING;
-	  
+
 	  box-sizing     : border-box;
-	  
+
 	  & > span.placeholder {
-		
+
 		position       : absolute;
-		
+
 		left           : var(--placeholder-x);
 		top            : var(--placeholder-y);
-		
+
 		padding-right  : $PADDING;
-		
+
 		user-select    : none;
 		pointer-events : none;
-		
+
 		&.hidden {
 		  opacity : 0;
 		}
 	  }
-	  
+
 	  & > input, & > textarea {
-		
+
 		width      : 100%;
 		height     : 100%;
-		
+
 		border     : none;
 		outline    : none;
-		
+
 		margin     : 0;
 		padding    : 0;
-		
+
 		@include config.commonFont('body');
-		
+
 		background : transparent;
-		
+
 		&:-webkit-autofill {
 		  -webkit-background-clip : text;
 		}
 	  }
-	  
+
 	  & > textarea {
 		resize : none;
 	  }
-	  
+
 	  & > input[type='date']::-webkit-calendar-picker-indicator {
 		display : none;
 	  }
@@ -317,34 +320,34 @@ $PADDING : 20px;
 /* Keyframes */
 
 @keyframes idleBorderIn {
-  
+
   0% {
 	opacity : 0;
   }
-  
+
   100% {
 	opacity : 1;
   }
 }
 
 @keyframes idleBorderBlur {
-  
+
   0% {
 	opacity : 1;
   }
-  
+
   100% {
 	opacity : 0;
   }
 }
 
 @keyframes focusedBorderIn {
-  
+
   0% {
 	opacity   : 0;
 	transform : scale(1.25);
   }
-  
+
   100% {
 	opacity   : 1;
 	transform : scale(1);
@@ -352,12 +355,12 @@ $PADDING : 20px;
 }
 
 @keyframes focusedBorderBlur {
-  
+
   0% {
 	opacity   : 1;
 	transform : scale(1);
   }
-  
+
   100% {
 	opacity   : 0;
 	transform : scale(1.1);
@@ -365,7 +368,7 @@ $PADDING : 20px;
 }
 
 @keyframes invalidShake {
-  
+
   8%, 41% {
 	transform : translateX(-10px);
   }

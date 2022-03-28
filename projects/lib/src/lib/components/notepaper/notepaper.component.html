@@ -1,0 +1,38 @@
+<div class="note">
+
+    <div class="holes">
+        <div class="hole left"></div>
+        <div class="hole right"></div>
+    </div>
+
+    <div class="text-wrapper">
+
+        <span>{{ feHeading }}</span>
+
+        <ng-container *ngFor="let text of inferredNotes;" [ngSwitch]="text.divider">
+
+            <ng-container *ngSwitchCase="true">
+                <div class="divider"></div>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="false" [ngSwitch]="text.important">
+
+                <ng-container *ngSwitchCase="true">
+                    <span class="important" [class.listItem]="text.listItem">{{ text.stripped }}</span>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="false">
+                    <span [class.listItem]="text.listItem">{{ text.stripped }}</span>
+                </ng-container>
+
+            </ng-container>
+
+        </ng-container>
+
+    </div>
+
+    <div class="link" *ngIf="feButtonText" [fe-tactile] (tactileClick)="feButtonClick.emit()">
+        <span>{{ feButtonText }}</span>
+    </div>
+
+</div>
