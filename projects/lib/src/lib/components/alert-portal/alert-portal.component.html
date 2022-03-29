@@ -1,4 +1,5 @@
-<div class="wrapper" [class.hasElements]="alerts.length > 0" [style.--fe-alert-margin]="feMargin ? feMargin[0] + ' 0 ' + feMargin[1] + ' 0' : '0'">
+<div class="wrapper" [class.hasElements]="alerts.length > 0"
+     [style.--fe-alert-margin]="feMargin ? feMargin[0] + ' 0 ' + feMargin[1] + ' 0' : '0'">
     <div *ngFor="let a of alerts; index as i; trackBy:identify"
          class="alert"
          [ngClass]="[a.type, i === alerts.length - 1 ? 'last' : 'not-last']"

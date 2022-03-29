@@ -1,151 +1,151 @@
 @use '../../../../assets/fe-styles/theme' as config with ($scope: 'checkbox');
 
 :host {
-  
-  position       : relative;
-  
-  display        : grid;
-  grid-auto-flow : column;
-  grid-gap       : 10px;
-  
-  align-items    : center;
-  
-  width          : fit-content;
-  height         : fit-content;
-  
-  cursor         : pointer;
-  user-select    : none;
-  
-  &:after {
-	
-	z-index       : 0;
-	
-	content       : '';
-	
-	position      : absolute;
-	
-	top           : -7px;
-	left          : -7px;
-	right         : -7px;
-	bottom        : -7px;
-	
-	border-radius : 5px;
-	
-	background    : config.hex('hover-background');
-	
-	opacity       : 0;
-	transform     : scale(.9);
-	
-	transition    : opacity .25s cubic-bezier(0, 0.55, 0.45, 1), transform .25s cubic-bezier(0, 0.55, 0.45, 1);
-  }
-  
-  &:hover {
-	
-	& > svg.unchecked > path.outline {
-	  &.hover {
-		opacity      : 1;
-		stroke-width : 2.5px;
-	  }
-	}
-	
-	&:after {
-	  opacity   : 1;
-	  transform : scale(1);
-	}
-  }
-  
-  & > svg {
-	
-	z-index    : 1;
-	position   : relative;
-	
-	transition : filter .25s ease;
-	
-	&.checked {
-	  filter : drop-shadow(0 1px 3px rgba(0, 0, 0, 0.05)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15));
-	}
-	
-	& > path.outline {
-	  
-	  transition : stroke-width .25s ease, opacity .25s ease;
-	  
-	  &.idle {
-		fill         : config.hex('fill-unchecked');
-		stroke       : config.hex('outline-idle');
-		stroke-width : 2px;
-	  }
-	  
-	  &.hover {
-		fill         : transparent;
-		stroke       : config.hex('outline-hover');
-		opacity      : 0;
-		stroke-width : 0;
-	  }
-	  
-	  &.checked {
-		
-		fill             : config.hex('fill-checked');
-		
-		opacity          : 0;
-		
-		stroke           : config.hex('outline-checked');
-		
-		stroke-linecap   : round;
-		stroke-width     : 1.5px;
-		
-		stroke-dasharray : var(--length);
-		
-		&.visible {
-		  opacity           : 1;
-		  stroke-dashoffset : 0;
-		  transition        : stroke-dashoffset .35s .15s ease, opacity .25s ease;
-		}
-		
-		&.hidden {
-		  opacity           : 0;
-		  stroke-dashoffset : var(--length);
-		  transition        : stroke-dashoffset .35s ease, opacity .25s .25s ease;
-		}
-	  }
-	}
-	
-	& > path.checkmark {
-	  
-	  fill             : transparent;
-	  
-	  stroke           : config.hex('checkmark');
-	  stroke-width     : 2px;
-	  stroke-dasharray : var(--length);
-	  
-	  transform-origin : center;
-	  
-	  transition       : transform .25s .35s cubic-bezier(0.34, 2.8, 0.64, 1), stroke-dashoffset .25s .35s ease;
-	  
-	  &.visible {
-		stroke-dashoffset : 0;
-		transform         : scale(1);
-	  }
-	  
-	  &.hidden {
-		stroke-dashoffset : var(--length);
-		transform         : scale(.8);
-	  }
-	}
-  }
-  
-  & > span {
-	
-	position   : relative;
-	z-index    : 1;
-	
-	color      : config.hex('label-unchecked');
-	
-	@include config.commonFont('body');
-	
-	transition : color .25s ease;
-	
-	&.checked {
-	  color : config.hex('label-checked');
-	}
-  }
+
+    position       : relative;
+
+    display        : grid;
+    grid-auto-flow : column;
+    grid-gap       : 10px;
+
+    align-items    : center;
+
+    width          : fit-content;
+    height         : fit-content;
+
+    cursor         : pointer;
+    user-select    : none;
+
+    &:after {
+
+        z-index       : 0;
+
+        content       : '';
+
+        position      : absolute;
+
+        top           : -7px;
+        left          : -7px;
+        right         : -7px;
+        bottom        : -7px;
+
+        border-radius : 5px;
+
+        background    : config.hex('hover-background');
+
+        opacity       : 0;
+        transform     : scale(.9);
+
+        transition    : opacity .25s cubic-bezier(0, 0.55, 0.45, 1), transform .25s cubic-bezier(0, 0.55, 0.45, 1);
+    }
+
+    &:hover {
+
+        & > svg.unchecked > path.outline {
+            &.hover {
+                opacity      : 1;
+                stroke-width : 2.5px;
+            }
+        }
+
+        &:after {
+            opacity   : 1;
+            transform : scale(1);
+        }
+    }
+
+    & > svg {
+
+        z-index    : 1;
+        position   : relative;
+
+        transition : filter .25s ease;
+
+        &.checked {
+            filter : drop-shadow(0 1px 3px rgba(0, 0, 0, 0.05)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15));
+        }
+
+        & > path.outline {
+
+            transition : stroke-width .25s ease, opacity .25s ease;
+
+            &.idle {
+                fill         : config.hex('fill-unchecked');
+                stroke       : config.hex('outline-idle');
+                stroke-width : 2px;
+            }
+
+            &.hover {
+                fill         : transparent;
+                stroke       : config.hex('outline-hover');
+                opacity      : 0;
+                stroke-width : 0;
+            }
+
+            &.checked {
+
+                fill             : config.hex('fill-checked');
+
+                opacity          : 0;
+
+                stroke           : config.hex('outline-checked');
+
+                stroke-linecap   : round;
+                stroke-width     : 1.5px;
+
+                stroke-dasharray : var(--length);
+
+                &.visible {
+                    opacity           : 1;
+                    stroke-dashoffset : 0;
+                    transition        : stroke-dashoffset .35s .15s ease, opacity .25s ease;
+                }
+
+                &.hidden {
+                    opacity           : 0;
+                    stroke-dashoffset : var(--length);
+                    transition        : stroke-dashoffset .35s ease, opacity .25s .25s ease;
+                }
+            }
+        }
+
+        & > path.checkmark {
+
+            fill             : transparent;
+
+            stroke           : config.hex('checkmark');
+            stroke-width     : 2px;
+            stroke-dasharray : var(--length);
+
+            transform-origin : center;
+
+            transition       : transform .25s .35s cubic-bezier(0.34, 2.8, 0.64, 1), stroke-dashoffset .25s .35s ease;
+
+            &.visible {
+                stroke-dashoffset : 0;
+                transform         : scale(1);
+            }
+
+            &.hidden {
+                stroke-dashoffset : var(--length);
+                transform         : scale(.8);
+            }
+        }
+    }
+
+    & > span {
+
+        position   : relative;
+        z-index    : 1;
+
+        color      : config.hex('label-unchecked');
+
+        @include config.commonFont('body');
+
+        transition : color .25s ease;
+
+        &.checked {
+            color : config.hex('label-checked');
+        }
+    }
 }

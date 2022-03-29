@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { z } from 'zod';
 import { ComponentTheme, ZHEXColor } from '../../interfaces/color.interface';
@@ -32,7 +32,7 @@ export class AlertPortalComponent implements OnInit {
     public feInstance!: string;
 
     @Input()
-    public feMargin?: [string, string];
+    public feMargin?: [ string, string ];
 
     public alerts: TaggedAlert[] = [];
 

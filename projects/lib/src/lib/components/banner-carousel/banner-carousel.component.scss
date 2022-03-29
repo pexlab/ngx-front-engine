@@ -1,267 +1,267 @@
 @use '../../../../assets/fe-styles/theme' with ($scope: 'banner-carousel');
 
 :host {
-  
-  display : block;
-  
-  width   : 100%;
-  height  : 100%;
-  
-  & > .reduced {
-	
-	display               : grid;
-	grid-auto-flow        : column;
-	grid-template-columns : auto 1fr auto;
-	grid-gap              : 20px;
-	
-	align-items           : center;
-	justify-items         : center;
-	
-	& > .text {
-	  
-	  display        : grid;
-	  grid-auto-flow : row;
-	  grid-gap       : 5px;
-	  
-	  & > span {
-		display    : block;
-		width      : 100%;
-		text-align : center;
-	  }
-	  
-	  & > span:nth-child(1) {
-		@include theme.commonFont('subheading');
-		color : theme.hex('reduced-appearance-heading')
-	  }
-	  
-	  & > span:nth-child(2) {
-		@include theme.commonFont('decorative');
-		white-space : pre-line;
-		color       : theme.hex('reduced-appearance-subheading');
-	  }
-	}
-	
-	& > .left, .right {
-	  
-	  & > .button {
-		
-		display        : grid;
-		grid-auto-flow : column;
-		grid-gap       : 7px;
-		align-items    : center;
-		
-		padding        : 7px 10px;
-		border-radius  : 5px;
-		
-		cursor         : pointer;
-		
-		color          : theme.hex('reduced-appearance-button-idle-text');
-		background     : theme.hex('reduced-appearance-button-idle-background');
-		
-		transition     : .25s ease color, .25s ease background-color;
-		
-		&:hover {
-		  color      : theme.hex('reduced-appearance-button-hover-text');
-		  background : theme.hex('reduced-appearance-button-hover-background');
-		}
-		
-		& > svg-icon {
-		  
-		  width       : 20px;
-		  height      : 20px;
-		  
-		  display     : grid;
-		  place-items : center;
-		  
-		  & > svg {
-			width  : 20px;
-			height : 20px;
-		  }
-		}
-	  }
-	}
-  }
-  
-  & > .rich {
-	
-	display               : grid;
-	grid-auto-flow        : column;
-	grid-template-columns : 1fr auto;
-	grid-gap              : 0;
-	align-items           : center;
-	
-	height                : 100%;
-	min-height            : 150px;
-	
-	& > .banner {
-	  
-	  position         : relative;
-	  
-	  height           : 100%;
-	  
-	  padding-left     : 30px;
-	  
-	  overflow         : hidden;
-	  box-sizing       : border-box;
-	  
-	  border-radius    : 30px;
-	  
-	  background-color : theme.hex('rich-appearance-background');
-	  
-	  transition       : .5s ease-out background-color;
-	  
-	  & > .text-wrapper {
-		
-		display   : block;
-		
-		position  : relative;
-		
-		width     : 100%;
-		height    : 100%;
-		
-		overflow  : hidden;
-		clip-path : polygon(0 0, 100% 0, 100% 100%, 0 100%);
-		
-		& > .text {
-		  
-		  position    : absolute;
-		  
-		  width       : fit-content;
-		  height      : fit-content;
-		  
-		  top         : 50%;
-		  transform   : translateY(-50%);
-		  
-		  color       : theme.hex('rich-appearance-text');
-		  
-		  will-change : top, opacity;
-		  
-		  & > span.heading {
-			
-			display : block;
-			
-			color   : theme.hex('rich-appearance-heading');
-			
-			@include theme.commonFont('display');
-		  }
-		  
-		  & > span.subheading {
-			
-			display     : block;
-			width       : 100%;
-			
-			color       : theme.hex('rich-appearance-subheading');
-			
-			white-space : pre-line;
-			
-			@include theme.commonFont('subheading');
-		  }
-		}
-	  }
-	  
-	  & > .image {
-		
-		position : absolute;
-		
-		&.top {
-		  top : 0;
-		}
-		
-		&.bottom {
-		  bottom : 0;
-		}
-		
-		&.center {
-		  top       : 50%;
-		  transform : translateY(-50%);
-		}
-	  }
-	}
-	
-	& > .buttons {
-	  
-	  display        : grid;
-	  grid-auto-flow : row;
-	  grid-gap       : 10px;
-	  
-	  width          : 200px;
-	  height         : fit-content;
-	  
-	  margin-left    : 15px;
-	  
-	  & > div {
-		
-		width            : 200px;
-		height           : fit-content;
-		
-		display          : grid;
-		place-items      : center;
-		
-		box-sizing       : border-box;
-		padding          : 15px;
-		border-radius    : 15px;
-		
-		color            : theme.hex('rich-appearance-button-idle-text');
-		
-		background-color : theme.hex('rich-appearance-button-idle-background');
-		
-		user-select      : none;
-		cursor           : pointer;
-		
-		transition       : width .25s ease, box-shadow .25s ease, background-color .25s ease, color .25s ease;
-		
-		& > .content {
-		  
-		  width          : 100%;
-		  height         : fit-content;
-		  
-		  display        : grid;
-		  grid-auto-flow : column;
-		  place-items    : center;
-		  
-		  text-align     : center;
-		  
-		  &.hasIcon {
-			grid-template-columns : auto 1fr;
-		  }
-		  
-		  & > svg-icon {
-			
-			width       : 20px;
-			height      : 20px;
-			
-			display     : grid;
-			place-items : center;
-			
-			& > svg {
-			  width  : 20px;
-			  height : 20px;
-			}
-		  }
-		  
-		  & > span {
-			
-			width         : 100%;
-			
-			overflow      : hidden;
-			text-overflow : ellipsis;
-			white-space   : nowrap;
-			
-			@include theme.commonFont('body');
-		  }
-		}
-		
-		&:hover {
-		  
-		  width      : 220px;
-		  
-		  color      : theme.hex('rich-appearance-button-hover-text');
-		  
-		  background : theme.hex('rich-appearance-button-hover-background');
-		  
-		  box-shadow : 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-		}
-	  }
-	}
-  }
+
+    display : block;
+
+    width   : 100%;
+    height  : 100%;
+
+    & > .reduced {
+
+        display               : grid;
+        grid-auto-flow        : column;
+        grid-template-columns : auto 1fr auto;
+        grid-gap              : 20px;
+
+        align-items           : center;
+        justify-items         : center;
+
+        & > .text {
+
+            display        : grid;
+            grid-auto-flow : row;
+            grid-gap       : 5px;
+
+            & > span {
+                display    : block;
+                width      : 100%;
+                text-align : center;
+            }
+
+            & > span:nth-child(1) {
+                @include theme.commonFont('subheading');
+                color : theme.hex('reduced-appearance-heading')
+            }
+
+            & > span:nth-child(2) {
+                @include theme.commonFont('decorative');
+                white-space : pre-line;
+                color       : theme.hex('reduced-appearance-subheading');
+            }
+        }
+
+        & > .left, .right {
+
+            & > .button {
+
+                display        : grid;
+                grid-auto-flow : column;
+                grid-gap       : 7px;
+                align-items    : center;
+
+                padding        : 7px 10px;
+                border-radius  : 5px;
+
+                cursor         : pointer;
+
+                color          : theme.hex('reduced-appearance-button-idle-text');
+                background     : theme.hex('reduced-appearance-button-idle-background');
+
+                transition     : .25s ease color, .25s ease background-color;
+
+                &:hover {
+                    color      : theme.hex('reduced-appearance-button-hover-text');
+                    background : theme.hex('reduced-appearance-button-hover-background');
+                }
+
+                & > svg-icon {
+
+                    width       : 20px;
+                    height      : 20px;
+
+                    display     : grid;
+                    place-items : center;
+
+                    & > svg {
+                        width  : 20px;
+                        height : 20px;
+                    }
+                }
+            }
+        }
+    }
+
+    & > .rich {
+
+        display               : grid;
+        grid-auto-flow        : column;
+        grid-template-columns : 1fr auto;
+        grid-gap              : 0;
+        align-items           : center;
+
+        height                : 100%;
+        min-height            : 150px;
+
+        & > .banner {
+
+            position         : relative;
+
+            height           : 100%;
+
+            padding-left     : 30px;
+
+            overflow         : hidden;
+            box-sizing       : border-box;
+
+            border-radius    : 30px;
+
+            background-color : theme.hex('rich-appearance-background');
+
+            transition       : .5s ease-out background-color;
+
+            & > .text-wrapper {
+
+                display   : block;
+
+                position  : relative;
+
+                width     : 100%;
+                height    : 100%;
+
+                overflow  : hidden;
+                clip-path : polygon(0 0, 100% 0, 100% 100%, 0 100%);
+
+                & > .text {
+
+                    position    : absolute;
+
+                    width       : fit-content;
+                    height      : fit-content;
+
+                    top         : 50%;
+                    transform   : translateY(-50%);
+
+                    color       : theme.hex('rich-appearance-text');
+
+                    will-change : top, opacity;
+
+                    & > span.heading {
+
+                        display : block;
+
+                        color   : theme.hex('rich-appearance-heading');
+
+                        @include theme.commonFont('display');
+                    }
+
+                    & > span.subheading {
+
+                        display     : block;
+                        width       : 100%;
+
+                        color       : theme.hex('rich-appearance-subheading');
+
+                        white-space : pre-line;
+
+                        @include theme.commonFont('subheading');
+                    }
+                }
+            }
+
+            & > .image {
+
+                position : absolute;
+
+                &.top {
+                    top : 0;
+                }
+
+                &.bottom {
+                    bottom : 0;
+                }
+
+                &.center {
+                    top       : 50%;
+                    transform : translateY(-50%);
+                }
+            }
+        }
+
+        & > .buttons {
+
+            display        : grid;
+            grid-auto-flow : row;
+            grid-gap       : 10px;
+
+            width          : 200px;
+            height         : fit-content;
+
+            margin-left    : 15px;
+
+            & > div {
+
+                width            : 200px;
+                height           : fit-content;
+
+                display          : grid;
+                place-items      : center;
+
+                box-sizing       : border-box;
+                padding          : 15px;
+                border-radius    : 15px;
+
+                color            : theme.hex('rich-appearance-button-idle-text');
+
+                background-color : theme.hex('rich-appearance-button-idle-background');
+
+                user-select      : none;
+                cursor           : pointer;
+
+                transition       : width .25s ease, box-shadow .25s ease, background-color .25s ease, color .25s ease;
+
+                & > .content {
+
+                    width          : 100%;
+                    height         : fit-content;
+
+                    display        : grid;
+                    grid-auto-flow : column;
+                    place-items    : center;
+
+                    text-align     : center;
+
+                    &.hasIcon {
+                        grid-template-columns : auto 1fr;
+                    }
+
+                    & > svg-icon {
+
+                        width       : 20px;
+                        height      : 20px;
+
+                        display     : grid;
+                        place-items : center;
+
+                        & > svg {
+                            width  : 20px;
+                            height : 20px;
+                        }
+                    }
+
+                    & > span {
+
+                        width         : 100%;
+
+                        overflow      : hidden;
+                        text-overflow : ellipsis;
+                        white-space   : nowrap;
+
+                        @include theme.commonFont('body');
+                    }
+                }
+
+                &:hover {
+
+                    width      : 220px;
+
+                    color      : theme.hex('rich-appearance-button-hover-text');
+
+                    background : theme.hex('rich-appearance-button-hover-background');
+
+                    box-shadow : 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+                }
+            }
+        }
+    }
 }

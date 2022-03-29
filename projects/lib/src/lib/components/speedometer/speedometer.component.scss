@@ -2,178 +2,178 @@
 @use 'sass:math';
 
 :host {
-  
-  position : relative;
-  
-  display  : block;
-  
-  width    : 450px;
-  height   : 450px;
-  
-  & > .center {
-	position  : absolute;
-	left      : 50%;
-	top       : 50%;
-	transform : translateX(-50%) translateY(-50%);
-  }
-  
-  & .foreground-text {
-	
-	z-index   : 1;
-	position  : relative;
-	
-	@include theme.commonFont('body');
-	font-size : 75px;
-	color     : white;
-  }
-  
-  & .background-text {
-	
-	position  : absolute;
-	left      : 50%;
-	top       : 50%;
-	
-	@include theme.commonFont('caption');
-	font-size : 75px;
-	color     : white;
-	
-	opacity   : .15;
-	
-	transform : translateY(-93%) translateX(-50%);
-  }
-  
-  & > .bottom {
-	
-	position    : absolute;
-	
-	display     : grid;
-	place-items : center;
-	
-	width       : 150px;
-	height      : 80px;
-	
-	bottom      : math.div(450px - 300px, 2);
-	left        : 50%;
-	
-	transform   : translateX(-50%);
-	
-	& > span:nth-child(1) {
-	  
-	  z-index     : 1;
-	  
-	  position    : absolute;
-	  
-	  left        : 50%;
-	  top         : 10px;
-	  transform   : translateX(-50%);
-	  
-	  color       : theme.hex('background-outer');
-	  
-	  @include theme.commonFont('body');
-	  font-size   : 28px;
-	  
-	  text-align  : center;
-	  white-space : nowrap;
-	}
-	
-	& > span:nth-child(2) {
-	  
-	  z-index     : 1;
-	  
-	  position    : absolute;
-	  
-	  left        : 50%;
-	  bottom      : 10px;
-	  transform   : translateX(-50%);
-	  
-	  color       : white;
-	  
-	  opacity     : .15;
-	  
-	  @include theme.commonFont('body');
-	  font-size   : 21px;
-	  
-	  text-align  : center;
-	  white-space : nowrap;
-	}
-  }
+
+    position : relative;
+
+    display  : block;
+
+    width    : 450px;
+    height   : 450px;
+
+    & > .center {
+        position  : absolute;
+        left      : 50%;
+        top       : 50%;
+        transform : translateX(-50%) translateY(-50%);
+    }
+
+    & .foreground-text {
+
+        z-index   : 1;
+        position  : relative;
+
+        @include theme.commonFont('body');
+        font-size : 75px;
+        color     : white;
+    }
+
+    & .background-text {
+
+        position  : absolute;
+        left      : 50%;
+        top       : 50%;
+
+        @include theme.commonFont('caption');
+        font-size : 75px;
+        color     : white;
+
+        opacity   : .15;
+
+        transform : translateY(-93%) translateX(-50%);
+    }
+
+    & > .bottom {
+
+        position    : absolute;
+
+        display     : grid;
+        place-items : center;
+
+        width       : 150px;
+        height      : 80px;
+
+        bottom      : math.div(450px - 300px, 2);
+        left        : 50%;
+
+        transform   : translateX(-50%);
+
+        & > span:nth-child(1) {
+
+            z-index     : 1;
+
+            position    : absolute;
+
+            left        : 50%;
+            top         : 10px;
+            transform   : translateX(-50%);
+
+            color       : theme.hex('background-outer');
+
+            @include theme.commonFont('body');
+            font-size   : 28px;
+
+            text-align  : center;
+            white-space : nowrap;
+        }
+
+        & > span:nth-child(2) {
+
+            z-index     : 1;
+
+            position    : absolute;
+
+            left        : 50%;
+            bottom      : 10px;
+            transform   : translateX(-50%);
+
+            color       : white;
+
+            opacity     : .15;
+
+            @include theme.commonFont('body');
+            font-size   : 21px;
+
+            text-align  : center;
+            white-space : nowrap;
+        }
+    }
 }
 
 svg.speedometer {
-  
-  & > circle.outer-frame {
-	fill       : transparent;
-	stroke     : theme.hex('border-outer');
-	transition : stroke .25s ease;
-  }
-  
-  & > circle.inner-frame {
-	fill : transparent;
-  }
-  
-  & > circle.background {
-	fill       : theme.hex('background-outer');
-	transition : fill .25s ease;
-  }
-  
-  & > circle.indicator {
-	
-	position         : relative;
-	
-	fill             : transparent;
-	
-	transform-origin : center;
-	transform        : rotate(180deg - 50deg);
-	
-	transition       : stroke-dashoffset .5s cubic-bezier(0.65, 0, 0.35, 1);
-  }
-  
-  & > circle.outer-indicator-frame {
-	stroke     : theme.hex('background-outer');
-	transition : stroke .25s ease;
-  }
-  
-  & > circle.inner-indicator-frame {
-	stroke     : theme.hex('background-outer');
-	transition : stroke .25s ease;
-  }
-  
-  & > path.hud {
-	stroke-width : 3px;
-	stroke       : theme.hex('hud');
-	fill         : transparent;
-	transition   : stroke .25s ease;
-  }
-  
-  & > defs {
-	
-	& > .indicator-gradient {
-	  
-	  & > stop:nth-child(1) {
-		stop-color : theme.hex('indicator-gradient-end');
-		transition : stop-color .25s ease;
-	  }
-	  
-	  & > stop:nth-child(2) {
-		stop-color : theme.hex('indicator-gradient-start');
-		transition : stop-color .25s ease;
-	  }
-	}
-	
-	& > .inner-circle-gradient {
-	  
-	  & > stop {
-		stop-color : theme.hex('background-inner');
-		transition : stop-color .25s ease;
-	  }
-	}
-	
-	& > .inner-frame-gradient {
-	  
-	  & > stop {
-		stop-color : theme.hex('border-inner');
-		transition : stop-color .25s ease;
-	  }
-	}
-  }
+
+    & > circle.outer-frame {
+        fill       : transparent;
+        stroke     : theme.hex('border-outer');
+        transition : stroke .25s ease;
+    }
+
+    & > circle.inner-frame {
+        fill : transparent;
+    }
+
+    & > circle.background {
+        fill       : theme.hex('background-outer');
+        transition : fill .25s ease;
+    }
+
+    & > circle.indicator {
+
+        position         : relative;
+
+        fill             : transparent;
+
+        transform-origin : center;
+        transform        : rotate(180deg - 50deg);
+
+        transition       : stroke-dashoffset .5s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+
+    & > circle.outer-indicator-frame {
+        stroke     : theme.hex('background-outer');
+        transition : stroke .25s ease;
+    }
+
+    & > circle.inner-indicator-frame {
+        stroke     : theme.hex('background-outer');
+        transition : stroke .25s ease;
+    }
+
+    & > path.hud {
+        stroke-width : 3px;
+        stroke       : theme.hex('hud');
+        fill         : transparent;
+        transition   : stroke .25s ease;
+    }
+
+    & > defs {
+
+        & > .indicator-gradient {
+
+            & > stop:nth-child(1) {
+                stop-color : theme.hex('indicator-gradient-end');
+                transition : stop-color .25s ease;
+            }
+
+            & > stop:nth-child(2) {
+                stop-color : theme.hex('indicator-gradient-start');
+                transition : stop-color .25s ease;
+            }
+        }
+
+        & > .inner-circle-gradient {
+
+            & > stop {
+                stop-color : theme.hex('background-inner');
+                transition : stop-color .25s ease;
+            }
+        }
+
+        & > .inner-frame-gradient {
+
+            & > stop {
+                stop-color : theme.hex('border-inner');
+                transition : stop-color .25s ease;
+            }
+        }
+    }
 }
