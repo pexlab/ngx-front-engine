@@ -16,41 +16,41 @@ export class TableComponent implements OnInit {
 
     public tableColumns: TableColumn[] = [
         {
-            linkedProperty: 'test',
+            linkedProperty: 'a',
             label         : {
-                text       : 'Anlagen-Nr.',
+                text       : 'Property A',
                 icon       : 'help',
                 collapsible: true
             }
         },
         {
-            linkedProperty: 'test',
+            linkedProperty: 'b',
             label         : {
-                text       : 'Wartungskunde',
+                text       : 'Property B',
                 icon       : 'help',
                 collapsible: true
             }
         },
         {
-            linkedProperty: 'test',
+            linkedProperty: 'c',
             label         : {
-                text       : 'Firma',
+                text       : 'Property C',
                 icon       : 'help',
                 collapsible: true
             }
         },
         {
-            linkedProperty: 'test',
+            linkedProperty: 'd',
             label         : {
-                text       : 'Ort',
+                text       : 'Property d',
                 icon       : 'help',
                 collapsible: true
             }
         },
         {
-            linkedProperty: 'test',
+            linkedProperty: 'e',
             label         : {
-                text       : 'Matchcode',
+                text       : 'Property E',
                 icon       : 'help',
                 collapsible: true
             }
@@ -59,7 +59,11 @@ export class TableComponent implements OnInit {
 
     public sampleData = [
         {
-            test: 'test 123!'
+            a: 'Test A',
+            b: 'Test B',
+            c: 'Test C',
+            d: 'Test D',
+            e: 'Test E'
         }
     ];
 }
