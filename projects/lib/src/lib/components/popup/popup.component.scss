@@ -68,9 +68,11 @@
             max-width     : 90vw;
             max-height    : 90vh;
 
-            border-radius : 10px;
+            border-radius : 1rem;
 
             border        : 1px solid theme.hex('outer-border');
+
+            box-shadow    : 0 1rem 1.9rem rgb(black, 0.5);
         }
 
         @include responsive.mobile {
@@ -82,8 +84,10 @@
 
             align-self              : end;
 
-            border-top-left-radius  : 25px;
-            border-top-right-radius : 25px;
+            border-top-left-radius  : 1.5rem;
+            border-top-right-radius : 1.5rem;
+
+            box-shadow              : 0 -1rem 1.9rem rgb(black, 0.3);
         }
 
         & > .title-bar {
