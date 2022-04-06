@@ -10,6 +10,7 @@ import { ZPopupTheme } from '../components/popup/popup.component';
 import { ZSpeedometerTheme } from '../components/speedometer/speedometer.component';
 import { ZStepperTheme } from '../components/stepper/stepper.component';
 import { ZSwitchTheme } from '../components/switch/switch.component';
+import { ZTableTheme } from '../components/table/table.component';
 import { ZTextFieldTheme } from '../components/text-field/text-field.component';
 import { ZHEXColor } from './color.interface';
 import { ZFont } from './typography.interface';
@@ -74,18 +75,19 @@ export const ZCommonTheme = z.object(
 
 export const ZPartialCommonTheme = ZCommonTheme.deepPartial();
 
-export type ThemeableComponents = 'textField'
+export type ThemeableComponents = 'alertPortal'
+                                  | 'bannerCarousel'
                                   | 'button'
+                                  | 'checkbox'
+                                  | 'comment'
                                   | 'dropdown'
                                   | 'notepaper'
-                                  | 'checkbox'
-                                  | 'stepper'
-                                  | 'bannerCarousel'
-                                  | 'switch'
                                   | 'popup'
-                                  | 'alertPortal'
-                                  | 'comment'
-                                  | 'speedometer';
+                                  | 'speedometer'
+                                  | 'stepper'
+                                  | 'switch'
+                                  | 'table'
+                                  | 'textField';
 
 /** Used to guarantee that each component is preset but also gets assigned its very own type */
 function createComponentThemes<c extends { [key in ThemeableComponents]: unknown }>( shape: c ): c {
@@ -95,18 +97,19 @@ function createComponentThemes<c extends { [key in ThemeableComponents]: unknown
 export const ZComponentThemes = z.object(
     createComponentThemes(
         {
-            textField     : ZTextFieldTheme,
+            alertPortal   : ZAlertPortalTheme,
+            bannerCarousel: ZBannerCarouselTheme,
             button        : ZButtonTheme,
+            checkbox      : ZCheckboxTheme,
+            comment       : ZCommentTheme,
             dropdown      : ZDropdownTheme,
             notepaper     : ZNotepaperTheme,
-            checkbox      : ZCheckboxTheme,
-            stepper       : ZStepperTheme,
-            bannerCarousel: ZBannerCarouselTheme,
-            switch        : ZSwitchTheme,
             popup         : ZPopupTheme,
-            alertPortal   : ZAlertPortalTheme,
-            comment       : ZCommentTheme,
-            speedometer   : ZSpeedometerTheme
+            speedometer   : ZSpeedometerTheme,
+            stepper       : ZStepperTheme,
+            switch        : ZSwitchTheme,
+            table         : ZTableTheme,
+            textField     : ZTextFieldTheme
         }
     )
 );

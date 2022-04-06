@@ -286,161 +286,6 @@ export class ThemeService {
 
         const fallback: ComponentThemes = {
 
-            textField: {
-
-                idle: {
-                    text             : this.commonTheme.palette.text.secondary,
-                    border           : this.commonTheme.palette.text.tertiary,
-                    divider          : this.commonTheme.palette.text.tertiary,
-                    background       : FeColorPalette.Greyscale.Transparent,
-                    staticPlaceholder: this.commonTheme.palette.text.tertiary,
-                    pinnedPlaceholder: this.commonTheme.palette.text.secondary
-                },
-
-                focused: {
-                    text             : this.commonTheme.palette.text.primary,
-                    border           : this.commonTheme.palette.text.primary,
-                    divider          : this.commonTheme.palette.text.primary,
-                    background       : FeColorPalette.Greyscale.Transparent,
-                    staticPlaceholder: this.commonTheme.palette.text.tertiary,
-                    pinnedPlaceholder: this.commonTheme.palette.text.primary
-                },
-
-                disabled: {
-                    text             : this.commonTheme.palette.text.secondary,
-                    border           : this.commonTheme.palette.text.tertiary,
-                    divider          : this.commonTheme.palette.text.tertiary,
-                    background       : FeColorPalette.Greyscale.MistyMorning,
-                    staticPlaceholder: this.commonTheme.palette.text.tertiary,
-                    pinnedPlaceholder: this.commonTheme.palette.text.secondary
-                },
-
-                invalid: {
-                    text             : this.commonTheme.palette.text.failure,
-                    border           : this.commonTheme.palette.accent.failure,
-                    divider          : this.commonTheme.palette.accent.failure,
-                    background       : Color.fadeHex( this.commonTheme.palette.accent.failure, .1 ),
-                    staticPlaceholder: this.commonTheme.palette.text.failure,
-                    pinnedPlaceholder: this.commonTheme.palette.text.failure
-                }
-            },
-
-            button: {
-                text        : this.commonTheme.palette.text.on_primary_accent,
-                background  : this.commonTheme.palette.accent.primary,
-                borderBottom: this.commonTheme.palette.accent.secondary
-            },
-
-            dropdown: {
-
-                placeholderIdlePanelText      : this.commonTheme.palette.text.on_primary_accent,
-                placeholderIdlePanelBorder    : FeColorPalette.Greyscale.Transparent,
-                placeholderIdlePanelBackground: this.commonTheme.palette.accent.primary,
-
-                placeholderSelectedPanelText      : this.commonTheme.palette.text.on_primary_accent,
-                placeholderSelectedPanelBorder    : FeColorPalette.Greyscale.Transparent,
-                placeholderSelectedPanelBackground: this.commonTheme.palette.accent.primary,
-
-                optionsStripe         : this.commonTheme.palette.accent.primary,
-                optionsIdleText       : this.commonTheme.palette.text.primary,
-                optionsIdleBackground : this.commonTheme.palette.background.primary,
-                optionsHoverText      : this.commonTheme.palette.text.primary,
-                optionsHoverBackground: this.commonTheme.palette.background.secondary,
-
-                clearButtonIdle           : this.commonTheme.palette.text.primary,
-                clearButtonIdleBackground : FeColorPalette.Greyscale.Transparent,
-                clearButtonHover          : this.commonTheme.palette.text.failure,
-                clearButtonHoverBackground: Color.fadeHex( this.commonTheme.palette.accent.failure, .2 )
-            },
-
-            notepaper: {
-                divider         : FeColorPalette.Brown.Leather,
-                highlight       : Color.fadeHex( FeColorPalette.Red.Lips, .25 ),
-                button          : FeColorPalette.Greyscale.Charcoal,
-                backgroundHoles : this.commonTheme.palette.background.primary,
-                backgroundTop   : FeColorPalette.Yellow.Mustard,
-                backgroundBottom: FeColorPalette.Yellow.SliceOfCheese
-            },
-
-            checkbox: {
-                labelChecked   : this.commonTheme.palette.text.primary,
-                labelUnchecked : this.commonTheme.palette.text.secondary,
-                checkmark      : this.commonTheme.palette.text.on_primary_accent,
-                fillChecked    : this.commonTheme.palette.accent.primary,
-                fillUnchecked  : FeColorPalette.Greyscale.Transparent,
-                outlineIdle    : this.commonTheme.palette.text.tertiary,
-                outlineHover   : this.commonTheme.palette.accent.primary,
-                outlineChecked : this.commonTheme.palette.accent.secondary,
-                hoverBackground: Color.fadeHex( this.commonTheme.palette.accent.primary, .05 )
-            },
-
-            stepper: {
-                text            : this.commonTheme.palette.text.primary,
-                buttonIcon      : this.commonTheme.palette.text.on_primary_accent,
-                buttonBackground: this.commonTheme.palette.accent.primary
-            },
-
-            bannerCarousel: {
-
-                richAppearance: {
-
-                    heading   : this.commonTheme.palette.text.on_primary_accent,
-                    subheading: Color.fadeHex( this.commonTheme.palette.text.on_primary_accent, .75 ),
-                    background: this.commonTheme.palette.accent.primary,
-
-                    buttonIdleText      : this.commonTheme.palette.text.on_primary_accent,
-                    buttonIdleBackground: this.commonTheme.palette.accent.primary,
-
-                    buttonHoverText      : this.commonTheme.palette.text.on_secondary_accent,
-                    buttonHoverBackground: this.commonTheme.palette.accent.secondary
-                },
-
-                reducedAppearance: {
-
-                    heading   : this.commonTheme.palette.text.primary,
-                    subheading: this.commonTheme.palette.text.secondary,
-
-                    buttonIdleText      : this.commonTheme.palette.accent.primary,
-                    buttonIdleBackground: FeColorPalette.Greyscale.Transparent,
-
-                    buttonHoverText      : this.commonTheme.palette.text.on_primary_accent,
-                    buttonHoverBackground: this.commonTheme.palette.accent.primary
-                }
-            },
-
-            switch: {
-
-                activeLabel  : this.commonTheme.palette.text.primary,
-                inactiveLabel: this.commonTheme.palette.text.secondary,
-
-                minimalOuterBallLeft: this.commonTheme.palette.accent.secondary,
-                minimalInnerBallLeft: this.commonTheme.palette.text.on_secondary_accent,
-                minimalLineLeft     : this.commonTheme.palette.accent.secondary,
-
-                minimalOuterBallRight: this.commonTheme.palette.accent.primary,
-                minimalInnerBallRight: this.commonTheme.palette.text.on_primary_accent,
-                minimalLineRight     : this.commonTheme.palette.accent.primary,
-
-                traditionalBallLeft      : this.commonTheme.palette.accent.secondary,
-                traditionalBorderLeft    : this.commonTheme.palette.accent.secondary,
-                traditionalIconLeft      : this.commonTheme.palette.text.on_secondary_accent,
-                traditionalBackgroundLeft: FeColorPalette.Greyscale.Transparent,
-
-                traditionalBallRight      : this.commonTheme.palette.text.on_primary_accent,
-                traditionalBorderRight    : this.commonTheme.palette.accent.primary,
-                traditionalIconRight      : this.commonTheme.palette.accent.primary,
-                traditionalBackgroundRight: this.commonTheme.palette.accent.primary
-            },
-
-            popup: {
-                text              : this.commonTheme.palette.text.primary,
-                background        : this.commonTheme.palette.background.primary,
-                titleBarBackground: FeColorPalette.Greyscale.Transparent,
-                divider           : this.commonTheme.palette.background.tertiary,
-                exit              : this.commonTheme.palette.text.failure,
-                outerBorder       : FeColorPalette.Greyscale.Transparent
-            },
-
             alertPortal: {
 
                 generic: {
@@ -514,6 +359,56 @@ export class ThemeService {
                 }
             },
 
+            bannerCarousel: {
+
+                richAppearance: {
+
+                    heading   : this.commonTheme.palette.text.on_primary_accent,
+                    subheading: Color.fadeHex( this.commonTheme.palette.text.on_primary_accent, .75 ),
+                    background: this.commonTheme.palette.accent.primary,
+
+                    buttonIdleText      : this.commonTheme.palette.text.on_primary_accent,
+                    buttonIdleBackground: this.commonTheme.palette.accent.primary,
+
+                    buttonHoverText      : this.commonTheme.palette.text.on_secondary_accent,
+                    buttonHoverBackground: this.commonTheme.palette.accent.secondary
+                },
+
+                reducedAppearance: {
+
+                    heading   : this.commonTheme.palette.text.primary,
+                    subheading: this.commonTheme.palette.text.secondary,
+
+                    buttonIdleText      : this.commonTheme.palette.accent.primary,
+                    buttonIdleBackground: FeColorPalette.Greyscale.Transparent,
+
+                    buttonHoverText      : this.commonTheme.palette.text.on_primary_accent,
+                    buttonHoverBackground: this.commonTheme.palette.accent.primary
+                }
+            },
+
+            button: {
+                text        : this.commonTheme.palette.text.on_primary_accent,
+                background  : this.commonTheme.palette.accent.primary,
+                borderBottom: this.commonTheme.palette.accent.secondary,
+                hinge       : {
+                    hoverText      : this.commonTheme.palette.text.on_secondary_accent,
+                    hoverBackground: this.commonTheme.palette.accent.secondary
+                }
+            },
+
+            checkbox: {
+                labelChecked   : this.commonTheme.palette.text.primary,
+                labelUnchecked : this.commonTheme.palette.text.secondary,
+                checkmark      : this.commonTheme.palette.text.on_primary_accent,
+                fillChecked    : this.commonTheme.palette.accent.primary,
+                fillUnchecked  : FeColorPalette.Greyscale.Transparent,
+                outlineIdle    : this.commonTheme.palette.text.tertiary,
+                outlineHover   : this.commonTheme.palette.accent.primary,
+                outlineChecked : this.commonTheme.palette.accent.secondary,
+                hoverBackground: Color.fadeHex( this.commonTheme.palette.accent.primary, .05 )
+            },
+
             comment: {
                 text         : this.commonTheme.palette.text.primary,
                 date         : this.commonTheme.palette.text.tertiary,
@@ -521,6 +416,46 @@ export class ThemeService {
                 verifiedBadge: FeColorPalette.Blue.Azure,
                 border       : this.commonTheme.palette.background.tertiary,
                 background   : this.commonTheme.palette.background.primary
+            },
+
+            dropdown: {
+
+                placeholderIdlePanelText      : this.commonTheme.palette.text.on_primary_accent,
+                placeholderIdlePanelBorder    : FeColorPalette.Greyscale.Transparent,
+                placeholderIdlePanelBackground: this.commonTheme.palette.accent.primary,
+
+                placeholderSelectedPanelText      : this.commonTheme.palette.text.on_primary_accent,
+                placeholderSelectedPanelBorder    : FeColorPalette.Greyscale.Transparent,
+                placeholderSelectedPanelBackground: this.commonTheme.palette.accent.primary,
+
+                optionsStripe         : this.commonTheme.palette.accent.primary,
+                optionsIdleText       : this.commonTheme.palette.text.primary,
+                optionsIdleBackground : this.commonTheme.palette.background.primary,
+                optionsHoverText      : this.commonTheme.palette.text.primary,
+                optionsHoverBackground: this.commonTheme.palette.background.secondary,
+
+                clearButtonIdle           : this.commonTheme.palette.text.primary,
+                clearButtonIdleBackground : FeColorPalette.Greyscale.Transparent,
+                clearButtonHover          : this.commonTheme.palette.text.failure,
+                clearButtonHoverBackground: Color.fadeHex( this.commonTheme.palette.accent.failure, .2 )
+            },
+
+            notepaper: {
+                divider         : FeColorPalette.Brown.Leather,
+                highlight       : Color.fadeHex( FeColorPalette.Red.Lips, .25 ),
+                button          : FeColorPalette.Greyscale.Charcoal,
+                backgroundHoles : this.commonTheme.palette.background.primary,
+                backgroundTop   : FeColorPalette.Yellow.Mustard,
+                backgroundBottom: FeColorPalette.Yellow.SliceOfCheese
+            },
+
+            popup: {
+                text              : this.commonTheme.palette.text.primary,
+                background        : this.commonTheme.palette.background.primary,
+                titleBarBackground: FeColorPalette.Greyscale.Transparent,
+                divider           : this.commonTheme.palette.background.tertiary,
+                exit              : this.commonTheme.palette.text.failure,
+                outerBorder       : FeColorPalette.Greyscale.Transparent
             },
 
             speedometer: {
@@ -540,6 +475,77 @@ export class ThemeService {
                 background: {
                     inner: FeColorPalette.Blue.PureBlue,
                     outer: FeColorPalette.Blue.Eclipse
+                }
+            },
+
+            stepper: {
+                text            : this.commonTheme.palette.text.primary,
+                buttonIcon      : this.commonTheme.palette.text.on_primary_accent,
+                buttonBackground: this.commonTheme.palette.accent.primary
+            },
+
+            switch: {
+
+                activeLabel  : this.commonTheme.palette.text.primary,
+                inactiveLabel: this.commonTheme.palette.text.secondary,
+
+                minimalOuterBallLeft: this.commonTheme.palette.accent.secondary,
+                minimalInnerBallLeft: this.commonTheme.palette.text.on_secondary_accent,
+                minimalLineLeft     : this.commonTheme.palette.accent.secondary,
+
+                minimalOuterBallRight: this.commonTheme.palette.accent.primary,
+                minimalInnerBallRight: this.commonTheme.palette.text.on_primary_accent,
+                minimalLineRight     : this.commonTheme.palette.accent.primary,
+
+                traditionalBallLeft      : this.commonTheme.palette.accent.secondary,
+                traditionalBorderLeft    : this.commonTheme.palette.accent.secondary,
+                traditionalIconLeft      : this.commonTheme.palette.text.on_secondary_accent,
+                traditionalBackgroundLeft: FeColorPalette.Greyscale.Transparent,
+
+                traditionalBallRight      : this.commonTheme.palette.text.on_primary_accent,
+                traditionalBorderRight    : this.commonTheme.palette.accent.primary,
+                traditionalIconRight      : this.commonTheme.palette.accent.primary,
+                traditionalBackgroundRight: this.commonTheme.palette.accent.primary
+            },
+
+            table: {},
+
+            textField: {
+
+                idle: {
+                    text             : this.commonTheme.palette.text.secondary,
+                    border           : this.commonTheme.palette.text.tertiary,
+                    divider          : this.commonTheme.palette.text.tertiary,
+                    background       : FeColorPalette.Greyscale.Transparent,
+                    staticPlaceholder: this.commonTheme.palette.text.tertiary,
+                    pinnedPlaceholder: this.commonTheme.palette.text.secondary
+                },
+
+                focused: {
+                    text             : this.commonTheme.palette.text.primary,
+                    border           : this.commonTheme.palette.text.primary,
+                    divider          : this.commonTheme.palette.text.primary,
+                    background       : FeColorPalette.Greyscale.Transparent,
+                    staticPlaceholder: this.commonTheme.palette.text.tertiary,
+                    pinnedPlaceholder: this.commonTheme.palette.text.primary
+                },
+
+                disabled: {
+                    text             : this.commonTheme.palette.text.secondary,
+                    border           : this.commonTheme.palette.text.tertiary,
+                    divider          : this.commonTheme.palette.text.tertiary,
+                    background       : FeColorPalette.Greyscale.MistyMorning,
+                    staticPlaceholder: this.commonTheme.palette.text.tertiary,
+                    pinnedPlaceholder: this.commonTheme.palette.text.secondary
+                },
+
+                invalid: {
+                    text             : this.commonTheme.palette.text.failure,
+                    border           : this.commonTheme.palette.accent.failure,
+                    divider          : this.commonTheme.palette.accent.failure,
+                    background       : Color.fadeHex( this.commonTheme.palette.accent.failure, .1 ),
+                    staticPlaceholder: this.commonTheme.palette.text.failure,
+                    pinnedPlaceholder: this.commonTheme.palette.text.failure
                 }
             }
         };

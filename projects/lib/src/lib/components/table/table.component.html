@@ -1,0 +1,50 @@
+<div class="heading">
+
+    <div class="select">
+        <fe-checkbox></fe-checkbox>
+    </div>
+
+    <div class="divider"></div>
+
+    <ng-container *ngFor="let column of feColumns; let i = index">
+
+        <div class="divider" *ngIf="i > 0"></div>
+
+        <div class="title">
+            <svg-icon *ngIf="column.label.icon; let icon" [name]="icon"></svg-icon>
+            <span>{{ column.label.text }}</span>
+        </div>
+
+    </ng-container>
+
+</div>
+
+<div class="connector">
+    <div class="left">
+        <fe-button feAppearance="simple" [feTheme]="inactiveButtonTheme">
+            <svg-icon name="fe-bookmarks"></svg-icon>
+        </fe-button>
+        <fe-button feAppearance="simple" [feTheme]="inactiveButtonTheme">
+            <svg-icon name="fe-grid"></svg-icon>
+        </fe-button>
+        <fe-button feAppearance="simple" [feTheme]="inactiveButtonTheme">
+            <svg-icon name="fe-maximize"></svg-icon>
+        </fe-button>
+    </div>
+    <div class="divider"></div>
+    <div class="right">
+        <fe-button feAppearance="simple" [feTheme]="inactiveButtonTheme">
+            <svg-icon name="fe-table-export"></svg-icon>
+        </fe-button>
+        <fe-button feAppearance="simple" [feTheme]="inactiveButtonTheme">
+            <svg-icon name="fe-filter"></svg-icon>
+        </fe-button>
+        <fe-button feAppearance="simple" [feTheme]="inactiveButtonTheme">
+            <svg-icon name="fe-add"></svg-icon>
+        </fe-button>
+    </div>
+</div>
+
+<div class="content">
+
+</div>

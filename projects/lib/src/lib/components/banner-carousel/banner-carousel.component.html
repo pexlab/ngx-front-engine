@@ -34,10 +34,10 @@
 
         <div *ngIf="buttons !== null" class="buttons" [@buttons]="buttons">
             <div *ngFor="let btn of buttons" [fe-tactile] (tactileClick)="btn.onClick()" [routerLink]="btn.link">
-                <div class="content" [class.hasIcon]="btn.icon">
+                <fe-button feAppearance="hinge" [feTheme]="buttonTheme">
                     <svg-icon *ngIf="btn.icon" [name]="btn.icon"></svg-icon>
                     <span>{{btn.text}}</span>
-                </div>
+                </fe-button>
             </div>
         </div>
 

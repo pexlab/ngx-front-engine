@@ -17,6 +17,7 @@ import { ShowcaseSidebarComponent } from './pages/showcase/sidebar/showcase-side
 import { SpeedometerComponent } from './pages/showcase/speedometer/speedometer.component';
 import { StepperComponent } from './pages/showcase/stepper/stepper.component';
 import { SwitchComponent } from './pages/showcase/switch/switch.component';
+import { TableComponent } from './pages/showcase/table/table.component';
 import { TextFieldComponent } from './pages/showcase/text-field/text-field.component';
 
 @NgModule(
@@ -46,8 +47,20 @@ import { TextFieldComponent } from './pages/showcase/text-field/text-field.compo
                                 pathMatch : 'full'
                             },
                             {
-                                path     : 'text-field',
-                                component: TextFieldComponent
+                                path     : 'alert-portal',
+                                component: AlertPortalComponent
+                            },
+                            {
+                                path     : 'banner-carousel',
+                                component: BannerCarouselComponent
+                            },
+                            {
+                                path     : 'button',
+                                component: ButtonComponent
+                            },
+                            {
+                                path     : 'comment',
+                                component: CommentComponent
                             },
                             {
                                 path     : 'dropdown',
@@ -58,12 +71,12 @@ import { TextFieldComponent } from './pages/showcase/text-field/text-field.compo
                                 component: NotepaperComponent
                             },
                             {
-                                path     : 'button',
-                                component: ButtonComponent
+                                path     : 'popup',
+                                component: PopupComponent
                             },
                             {
-                                path     : 'banner-carousel',
-                                component: BannerCarouselComponent
+                                path     : 'speedometer',
+                                component: SpeedometerComponent
                             },
                             {
                                 path     : 'stepper',
@@ -74,20 +87,12 @@ import { TextFieldComponent } from './pages/showcase/text-field/text-field.compo
                                 component: SwitchComponent
                             },
                             {
-                                path     : 'popup',
-                                component: PopupComponent
+                                path     : 'table',
+                                component: TableComponent
                             },
                             {
-                                path     : 'alert-portal',
-                                component: AlertPortalComponent
-                            },
-                            {
-                                path     : 'comment',
-                                component: CommentComponent
-                            },
-                            {
-                                path     : 'speedometer',
-                                component: SpeedometerComponent
+                                path     : 'text-field',
+                                component: TextFieldComponent
                             }
                         ]
                     },

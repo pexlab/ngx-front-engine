@@ -19,6 +19,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
         this.iconReg.loadSvg( 'assets/logo.svg', 'logo' );
 
         this.iconReg.loadSvg( 'assets/icons/chevron-left.svg', 'left' );
+        this.iconReg.loadSvg( 'assets/icons/circle-dashed.svg', 'circle-dashed' );
         this.iconReg.loadSvg( 'assets/icons/comments-solid.svg', 'comment' );
         this.iconReg.loadSvg( 'assets/icons/gem-solid.svg', 'gem' );
         this.iconReg.loadSvg( 'assets/icons/heart-solid.svg', 'heart' );

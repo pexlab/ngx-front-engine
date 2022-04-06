@@ -1,4 +1,5 @@
-@use '../../../../assets/fe-styles/theme' as config with ($scope: 'button');
+@use '../../../../assets/fe-styles/theme' with ($scope: 'button');
+@use 'sass:math';
 
 :host {
 
@@ -10,26 +11,32 @@
     user-select : none;
 
     & > button {
+        text-decoration : none;
+        border          : none;
+        background      : none;
+    }
 
-        position         : relative;
+    & > button.simple,
+    & > button.raised-simple,
+    & > button.pill,
+    & > button.raised-pill,
+    & > button.artistic-curves,
+    & > button.see-through-light,
+    & > button.see-through-dark {
 
-        cursor           : pointer;
+        overflow        : hidden;
 
-        display          : block;
+        padding         : .75rem 1.25rem;
 
-        padding          : 15px 35px;
+        border-radius   : .5rem;
 
-        text-decoration  : none;
+        cursor          : pointer;
+        backdrop-filter : blur(7px);
 
-        border           : none;
-        border-radius    : 22px 7px 22px 7px;
+        line-height     : 1.3rem;
 
-        overflow         : hidden;
-
-        border-bottom    : 3px solid config.hex('border-bottom');
-
-        color            : config.hex('text');
-        background-color : config.hex('background');
+        color           : theme.hex('text');
+        background      : theme.hex('background');
 
         & > .content {
 
@@ -38,14 +45,14 @@
 
             display        : grid;
             grid-auto-flow : column;
-            grid-gap       : 10px;
+            grid-gap       : .5rem;
             align-items    : center;
 
-            text-align     : left;
-
-            @include config.commonFont('body');
-            @include config.inlineDeepIcon(15px);
+            @include theme.commonFont('body');
+            @include theme.inlineDeepIcon(1.3rem);
         }
+
+        transition      : box-shadow .25s ease-in-out;
 
         & > .gradient {
             opacity    : 0;
@@ -58,11 +65,183 @@
             bottom     : 0;
             right      : 0;
             background : linear-gradient(to bottom, rgba(white, .2), rgba(white, 0));
-            transition : opacity .15s ease;
+            transition : opacity .25s ease;
         }
 
         &:hover > .gradient {
             opacity : 1;
+        }
+    }
+
+    & > button.raised-simple {
+        border-bottom : 0.2rem solid theme.hex('border-bottom');
+    }
+
+    & > button.pill {
+        padding       : .7rem 1rem;
+        border-radius : math.div(1.3rem, 2) + .75rem;
+    }
+
+    & > button.raised-pill {
+        padding       : .7rem 1rem;
+        border-radius : math.div(1.3rem, 2) + .75rem + .2rem;
+        border-bottom : .2rem solid theme.hex('border-bottom');
+    }
+
+    & > button.hinge {
+
+        width            : 12rem;
+        height           : fit-content;
+
+        display          : grid;
+        place-items      : center;
+
+        box-sizing       : border-box;
+        padding          : 1rem;
+        border-radius    : 1rem;
+
+        color            : theme.hex('text');
+
+        background-color : theme.hex('background');
+
+        user-select      : none;
+        cursor           : pointer;
+
+        transition       : width .25s ease, box-shadow .25s ease, background-color .25s ease, color .25s ease;
+
+        & > .content {
+
+            width           : 100%;
+            height          : fit-content;
+
+            display         : flex;
+            align-items     : center;
+            justify-items   : center;
+            justify-content : left;
+
+            ::ng-deep {
+
+                & > svg-icon {
+
+                    width       : 1.3rem;
+                    height      : 1.3rem;
+
+                    display     : grid;
+                    place-items : center;
+
+                    & > svg {
+                        width  : 1.3rem;
+                        height : 1.3rem;
+                    }
+                }
+
+                & > span {
+
+                    display       : block;
+
+                    width         : 100%;
+
+                    overflow      : hidden;
+                    text-overflow : ellipsis;
+                    white-space   : nowrap;
+
+                    line-height   : 1.3rem;
+
+                    @include theme.commonFont('body');
+                }
+            }
+        }
+
+        &:hover {
+
+            width      : 13rem;
+
+            color      : theme.hex('hinge-hover-text');
+            background : theme.hex('hinge-hover-background');
+
+            box-shadow : 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+        }
+    }
+
+    & > button.artistic-curves {
+
+        padding       : 1rem 2rem;
+
+        border-radius : 1.5rem .5rem 1.5rem .5rem;
+
+        border-bottom : 3px solid theme.hex('border-bottom');
+    }
+
+    & > button.see-through-light,
+    & > button.see-through-dark {
+        backdrop-filter : blur(7px);
+    }
+
+    & > button.see-through-light {
+
+        @supports (backdrop-filter : blur(7px)) {
+            & {
+                color      : theme.hex('text');
+                background : rgba(white, .4);
+            }
+        }
+
+        @supports not (backdrop-filter : blur(7px)) {
+            & {
+                color      : black;
+                background : rgba(white, .7);
+            }
+        }
+    }
+
+    & > button.see-through-dark {
+
+        @supports (backdrop-filter : blur(7px)) {
+            & {
+                color      : theme.hex('text');
+                background : rgba(black, .4);
+            }
+        }
+
+        @supports not (backdrop-filter : blur(7px)) {
+            & {
+                color      : white;
+                background : rgba(black, .7);
+            }
+        }
+    }
+
+    & > button.handwritten {
+
+        opacity        : .8;
+
+        width          : fit-content;
+
+        display        : grid;
+        grid-auto-flow : column;
+        grid-gap       : .5rem;
+        align-items    : center;
+
+        border         : solid 2px theme.commonHex('text-secondary');
+        border-radius  : 17rem 1rem 17rem 1rem / 1rem 17rem 1rem 17rem;
+
+        cursor         : pointer;
+
+        padding        : .75rem 1.25rem;
+
+        font-family    : 'Architects Daughter', cursive;
+        font-size      : 15px;
+        font-weight    : bold;
+
+        color          : theme.commonHex('text-secondary');
+
+        transition     : padding .4s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+        @include theme.inlineDeepIcon(1.3rem);
+
+        &:hover {
+            padding         : .75rem 2rem;
+            text-decoration : underline solid rgba(#41403E, .5);
         }
     }
 }

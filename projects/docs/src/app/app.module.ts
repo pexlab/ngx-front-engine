@@ -17,7 +17,7 @@ import {
     FeStepperModule,
     FeSwitchModule,
     FeTactileModule,
-    FeTextFieldModule
+    FeTextFieldModule, TableModule
 } from '@pexlab/ngx-front-engine';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { MarkdownModule } from 'ngx-markdown';
@@ -42,6 +42,7 @@ import { SwitchComponent } from './pages/showcase/switch/switch.component';
 import { TextFieldComponent } from './pages/showcase/text-field/text-field.component';
 import { NutmegComponent } from './popups/nutmeg/nutmeg.component';
 import { NotepaperComponent } from './pages/showcase/notepaper/notepaper.component';
+import { TableComponent } from './pages/showcase/table/table.component';
 
 @NgModule(
     {
@@ -66,7 +67,8 @@ import { NotepaperComponent } from './pages/showcase/notepaper/notepaper.compone
             IntroductionComponent,
             GettingStartedComponent,
             CommentComponent,
-            NotepaperComponent
+            NotepaperComponent,
+            TableComponent
         ],
 
         imports: [
@@ -99,7 +101,8 @@ import { NotepaperComponent } from './pages/showcase/notepaper/notepaper.compone
             FeNotepaperModule,
 
             AppRoutingModule,
-            CommentModule
+            CommentModule,
+            TableModule
         ],
 
         providers: [],

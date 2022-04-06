@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { FeTactileModule } from '../../directives/tactile/tactile.module';
+import { FeButtonModule } from '../button/button.module';
 import { BannerCarouselComponent } from './banner-carousel.component';
 
 @NgModule(
@@ -10,14 +11,15 @@ import { BannerCarouselComponent } from './banner-carousel.component';
         declarations: [
             BannerCarouselComponent
         ],
-        
+
         imports: [
             CommonModule,
             RouterModule,
             FeTactileModule,
-            AngularSvgIconModule
+            AngularSvgIconModule,
+            FeButtonModule
         ],
-        
+
         exports: [
             BannerCarouselComponent
         ]

@@ -1,0 +1,108 @@
+@use '../../../../assets/fe-styles/theme' with ($scope: 'table');
+
+:host {
+
+    display        : grid;
+    grid-auto-flow : row;
+
+    width          : 100%;
+    height         : fit-content;
+
+    & > .heading {
+
+        width           : 100%;
+
+        display         : grid;
+        grid-auto-flow  : column;
+        justify-content : left;
+        align-items     : center;
+
+        border          : 1px solid theme.commonHex('background-quaternary');
+        border-radius   : 99px;
+
+        padding         : 0 2rem;
+
+        height          : 3.5rem;
+
+        @include theme.commonFont('decorative');
+
+        & > .title {
+
+            display        : grid;
+            grid-auto-flow : column;
+            grid-gap       : 5px;
+            align-items    : center;
+
+            height         : 100%;
+
+            padding        : 0 15px;
+
+            @include theme.inlineIcon(20px);
+
+            cursor         : pointer;
+
+            transition     : background .25s ease;
+
+            &:hover {
+                background : theme.fadeCommonHex('background-quaternary', .2);
+            }
+        }
+
+        & > .select {
+            margin : 0 2rem 0 0;
+        }
+
+        & > .divider {
+            height           : 50%;
+            width            : 1px;
+            background-color : theme.commonHex('background-quaternary');
+        }
+    }
+
+    & > .connector {
+
+        justify-self          : center;
+        width                 : fit-content;
+
+        display               : grid;
+        grid-auto-flow        : column;
+        grid-template-columns : 1fr 1px 1fr;
+        grid-gap              : 1rem;
+
+        & > .divider {
+
+            width            : 1px;
+            height           : 100%;
+
+            background-color : theme.commonHex('background-quaternary');
+        }
+
+        & > .right, & > .left {
+
+            display        : grid;
+            grid-auto-flow : column;
+            grid-gap       : 1rem;
+
+            margin         : .7rem 0;
+        }
+
+        & > .left {
+            justify-self : right;
+        }
+
+        & > .right {
+            justify-self : left;
+        }
+    }
+
+    & > .content {
+
+        width         : 100%;
+        height        : 300px;
+
+        padding       : 1rem 2rem;
+
+        border        : 1px solid theme.commonHex('background-quaternary');
+        border-radius : 1rem;
+    }
+}

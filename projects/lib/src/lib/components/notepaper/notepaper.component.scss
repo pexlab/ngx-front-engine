@@ -160,38 +160,8 @@ $notePadding : 20px;
             }
         }
 
-        & .link {
-
-            opacity        : .8;
-
+        & > fe-button {
             margin         : 0 auto $notePadding;
-            width          : fit-content;
-
-            display        : grid;
-            grid-auto-flow : column;
-            grid-gap       : 10px;
-            align-items    : center;
-
-            border         : solid 2px theme.hex('button');
-            border-radius  : 255px 15px 225px 15px/15px 225px 15px 255px;
-
-            cursor         : pointer;
-
-            & span {
-
-                font-size   : 15px;
-                font-weight : bold;
-                color       : theme.hex('button');
-
-                padding     : 10px 10px;
-
-                transition  : padding .4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            }
-
-            &:hover span {
-                padding         : 10px 25px;
-                text-decoration : underline solid rgba(#41403E, .5);
-            }
         }
     }
 }

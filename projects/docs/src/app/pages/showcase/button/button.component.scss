@@ -1,0 +1,39 @@
+@use '~dist/ngx-front-engine/assets/fe-styles/theme';
+
+:host {
+
+    display        : grid;
+    grid-auto-flow : row;
+    grid-gap       : 40px;
+
+    & > div {
+
+        display        : grid;
+        grid-auto-flow : row;
+        grid-gap       : 20px;
+
+        & > span {
+            @include theme.commonFont('heading');
+        }
+
+        & > .image {
+
+            width               : fit-content;
+
+            padding             : 4rem 1.5rem;
+
+            background-image    : url('../../../../assets/images/pexels-bymalens-2157895.jpeg');
+            background-size     : cover;
+            background-position : center;
+
+            border-radius       : 1rem;
+        }
+
+        & > div, & > .image > div {
+            width          : fit-content;
+            display        : grid;
+            grid-auto-flow : column;
+            grid-gap       : 1rem;
+        }
+    }
+}

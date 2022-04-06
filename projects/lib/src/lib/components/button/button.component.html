@@ -1,6 +1,39 @@
-<button [type]="feType" [fe-tactile] (tactileClick)="feClick.emit()">
-    <span class="content">
-        <ng-content></ng-content>
-    </span>
-    <span class="gradient"></span>
-</button>
+<ng-template #content>
+    <ng-content></ng-content>
+</ng-template>
+
+<ng-container [ngSwitch]="feAppearance">
+
+    <button *ngSwitchCase="'hinge'"
+            [ngClass]="feAppearance"
+            [fe-tactile]
+            (tactileClick)="feClick.emit()">
+
+        <div class="content">
+            <ng-container *ngTemplateOutlet="content"></ng-container>
+        </div>
+
+    </button>
+
+    <button *ngSwitchCase="'handwritten'"
+            [ngClass]="feAppearance"
+            [fe-tactile]
+            (tactileClick)="feClick.emit()">
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+    </button>
+
+    <button *ngSwitchDefault
+            [ngClass]="feAppearance"
+            [type]="feType"
+            [fe-tactile]
+            (tactileClick)="feClick.emit()">
+
+        <span class="content">
+              <ng-container *ngTemplateOutlet="content"></ng-container>
+        </span>
+
+        <span class="gradient"></span>
+
+    </button>
+
+</ng-container>

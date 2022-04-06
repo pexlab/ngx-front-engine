@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FeTactileModule } from '../../directives/tactile/tactile.module';
+import { FeButtonModule } from '../button/button.module';
 import { NotepaperComponent } from './notepaper.component';
 
 @NgModule(
@@ -11,7 +12,8 @@ import { NotepaperComponent } from './notepaper.component';
 
         imports: [
             CommonModule,
-            FeTactileModule
+            FeTactileModule,
+            FeButtonModule
         ],
 
         exports: [
