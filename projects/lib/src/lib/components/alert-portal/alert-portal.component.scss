@@ -150,7 +150,8 @@
         transition-delay : .5s;
 
         &.hasElements {
-            margin           : var(--fe-alert-margin);
+            /* Note: we subtract the last element's margin bottom */
+            margin           : var(--fe-alert-margin-top) 0 calc(var(--fe-alert-margin-bottom) - 10px) 0;
             transition-delay : 0s;
         }
 
