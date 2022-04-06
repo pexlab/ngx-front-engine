@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
-import { z } from 'zod';
-import { ComponentTheme, ZHEXColor } from '../../interfaces/color.interface';
+import { ComponentTheme } from '../../interfaces/color.interface';
 import { FeComponent } from '../../utils/component.utils';
+import { PartialButtonTheme } from './button.theme';
 
 @FeComponent( 'button' )
 @Component(
@@ -28,22 +28,3 @@ export class ButtonComponent {
     @Output()
     public feClick: EventEmitter<any> = new EventEmitter();
 }
-
-export const ZButtonTheme = z.object(
-    {
-        text        : ZHEXColor,
-        background  : ZHEXColor,
-        borderBottom: ZHEXColor,
-        hinge       : z.object(
-            {
-                hoverText      : ZHEXColor,
-                hoverBackground: ZHEXColor
-            }
-        )
-    }
-);
-
-export const ZPartialButtonTheme = ZButtonTheme.deepPartial();
-
-export type ButtonTheme = z.infer<typeof ZButtonTheme>;
-export type PartialButtonTheme = z.infer<typeof ZPartialButtonTheme>;

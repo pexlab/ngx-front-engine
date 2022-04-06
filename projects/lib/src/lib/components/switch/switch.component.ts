@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Optional, Output, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
-import { z } from 'zod';
-import { ComponentTheme, ZHEXColor } from '../../interfaces/color.interface';
+import { ComponentTheme } from '../../interfaces/color.interface';
 import { FeComponent } from '../../utils/component.utils';
+import { PartialSwitchTheme } from './switch.theme';
 
 @FeComponent( 'switch' )
 @Component(
@@ -130,43 +130,3 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
 }
 
 export type SwitchInputValue = 'left' | 'right';
-
-export const ZSwitchTheme = z.object(
-    {
-
-        /* Shared */
-
-        activeLabel  : ZHEXColor,
-        inactiveLabel: ZHEXColor,
-
-        /* Minimal */
-
-        minimalOuterBallLeft : ZHEXColor,
-        minimalOuterBallRight: ZHEXColor,
-
-        minimalInnerBallLeft : ZHEXColor,
-        minimalInnerBallRight: ZHEXColor,
-
-        minimalLineLeft : ZHEXColor,
-        minimalLineRight: ZHEXColor,
-
-        /* Traditional */
-
-        traditionalBackgroundLeft : ZHEXColor,
-        traditionalBackgroundRight: ZHEXColor,
-
-        traditionalBorderLeft : ZHEXColor,
-        traditionalBorderRight: ZHEXColor,
-
-        traditionalBallLeft : ZHEXColor,
-        traditionalBallRight: ZHEXColor,
-
-        traditionalIconLeft : ZHEXColor,
-        traditionalIconRight: ZHEXColor
-    }
-);
-
-export const ZPartialSwitchTheme = ZSwitchTheme.partial();
-
-export type SwitchTheme = z.infer<typeof ZSwitchTheme>;
-export type PartialSwitchTheme = z.infer<typeof ZPartialSwitchTheme>;

@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { z } from 'zod';
-import { ComponentTheme, ZHEXColor } from '../../interfaces/color.interface';
+import { ComponentTheme } from '../../interfaces/color.interface';
 import { FeComponent } from '../../utils/component.utils';
 import { AlertPortalAnimation } from './alert-portal.animation';
 import { AlertPortalService } from './alert-portal.service';
+import { PartialAlertPortalTheme } from './alert-portal.theme';
 
 @FeComponent( 'alertPortal' )
 @Component(
@@ -87,34 +87,3 @@ export type Alert = {
 };
 
 export type TaggedAlert = Alert & { id: string, remove: () => void };
-
-export const ZAlertTheme = z.object(
-    {
-
-        title      : ZHEXColor,
-        description: ZHEXColor,
-        background : ZHEXColor,
-
-        icon          : ZHEXColor,
-        iconBackground: ZHEXColor,
-
-        code          : ZHEXColor,
-        codeBorder    : ZHEXColor,
-        codeBackground: ZHEXColor
-    }
-);
-
-export const ZAlertPortalTheme = z.object(
-    {
-        generic: ZAlertTheme,
-        info   : ZAlertTheme,
-        success: ZAlertTheme,
-        warning: ZAlertTheme,
-        error  : ZAlertTheme
-    }
-);
-
-export const ZPartialAlertPortalTheme = ZAlertPortalTheme.partial();
-
-export type AlertPortalTheme = z.infer<typeof ZAlertPortalTheme>;
-export type PartialAlertPortalTheme = z.infer<typeof ZPartialAlertPortalTheme>;

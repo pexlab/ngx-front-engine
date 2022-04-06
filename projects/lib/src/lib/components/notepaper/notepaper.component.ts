@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
-import { z } from 'zod';
-import { ComponentTheme, ZHEXColor } from '../../interfaces/color.interface';
+import { ComponentTheme } from '../../interfaces/color.interface';
 import { FeComponent } from '../../utils/component.utils';
+import { PartialNotepaperTheme } from './notepaper.theme';
 
 @FeComponent( 'notepaper' )
 @Component(
@@ -104,19 +104,3 @@ type TextLine = {
     listItem: boolean,
     stripped: string
 }
-
-export const ZNotepaperTheme = z.object(
-    {
-        divider         : ZHEXColor,
-        highlight       : ZHEXColor,
-        button          : ZHEXColor,
-        backgroundHoles : ZHEXColor,
-        backgroundTop   : ZHEXColor,
-        backgroundBottom: ZHEXColor
-    }
-);
-
-export const ZPartialNotepaperTheme = ZNotepaperTheme.partial();
-
-export type NotepaperTheme = z.infer<typeof ZNotepaperTheme>;
-export type PartialNotepaperTheme = z.infer<typeof ZPartialNotepaperTheme>;

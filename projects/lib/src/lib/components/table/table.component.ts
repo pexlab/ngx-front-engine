@@ -2,7 +2,8 @@ import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit } from '@
 import { z } from 'zod';
 import { ComponentTheme } from '../../interfaces/color.interface';
 import { FeComponent } from '../../utils/component.utils';
-import { PartialButtonTheme } from '../button/button.component';
+import { PartialButtonTheme } from '../button/button.theme';
+import { PartialTableTheme } from './table.theme';
 
 @FeComponent( 'table' )
 @Component(
@@ -45,7 +46,7 @@ export class TableComponent implements OnInit {
         palette: {
             background: '#808080'
         }
-    }
+    };
 }
 
 const ZTableColumnLabel = z.union(
@@ -99,12 +100,3 @@ export const ZTableColumn = z.object(
 );
 
 export type TableColumn = z.infer<typeof ZTableColumn>;
-
-export const ZTableTheme = z.object(
-    {}
-);
-
-export const ZPartialTableTheme = ZTableTheme.partial();
-
-export type TableTheme = z.infer<typeof ZTableTheme>;
-export type PartialTableTheme = z.infer<typeof ZPartialTableTheme>;

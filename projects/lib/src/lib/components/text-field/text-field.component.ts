@@ -22,10 +22,10 @@ import {
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { parsePath, roundCommands } from '@twixes/svg-round-corners';
 import { nanoid } from 'nanoid';
-import { z } from 'zod';
-import { ComponentTheme, ZHEXColor } from '../../interfaces/color.interface';
+import { ComponentTheme } from '../../interfaces/color.interface';
 import { AsynchronouslyInitialisedComponent, FeComponent } from '../../utils/component.utils';
 import { LabelAlignerService } from './label-aligner.service';
+import { PartialTextFieldTheme } from './text-field.theme';
 
 @FeComponent( 'textField' )
 @Component(
@@ -541,31 +541,3 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         this.isDisabled = isDisabled;
     }
 }
-
-export const ZTextFieldStateTheme        = z.object(
-    {
-        text             : ZHEXColor,
-        border           : ZHEXColor,
-        divider          : ZHEXColor,
-        background       : ZHEXColor,
-        staticPlaceholder: ZHEXColor,
-        pinnedPlaceholder: ZHEXColor
-    }
-);
-export const ZPartialTextFieldStateTheme = ZTextFieldStateTheme.partial();
-
-export type TextFieldStateTheme = z.infer<typeof ZTextFieldStateTheme>;
-export type PartialTextFieldStateTheme = z.infer<typeof ZPartialTextFieldStateTheme>;
-
-export const ZTextFieldTheme        = z.object(
-    {
-        idle    : ZTextFieldStateTheme,
-        focused : ZTextFieldStateTheme,
-        disabled: ZTextFieldStateTheme,
-        invalid : ZTextFieldStateTheme
-    }
-);
-export const ZPartialTextFieldTheme = ZTextFieldTheme.partial();
-
-export type TextFieldTheme = z.infer<typeof ZTextFieldTheme>;
-export type PartialTextFieldTheme = z.infer<typeof ZPartialTextFieldTheme>;

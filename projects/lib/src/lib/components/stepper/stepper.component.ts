@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostBinding, Input, OnInit, Optional, Output, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
-import { z } from 'zod';
-import { ComponentTheme, ZHEXColor } from '../../interfaces/color.interface';
+import { ComponentTheme } from '../../interfaces/color.interface';
 import { FeComponent } from '../../utils/component.utils';
+import { PartialStepperTheme } from './stepper.theme';
 
 @FeComponent( 'stepper' )
 @Component(
@@ -181,16 +181,3 @@ export class StepperComponent implements OnInit, ControlValueAccessor {
         this.formBlurEvent = fn;
     }
 }
-
-export const ZStepperTheme = z.object(
-    {
-        text            : ZHEXColor,
-        buttonIcon      : ZHEXColor,
-        buttonBackground: ZHEXColor
-    }
-);
-
-export const ZPartialStepperTheme = ZStepperTheme.partial();
-
-export type StepperTheme = z.infer<typeof ZStepperTheme>;
-export type PartialStepperTheme = z.infer<typeof ZPartialStepperTheme>;

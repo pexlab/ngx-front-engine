@@ -1,10 +1,10 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit } from '@angular/core';
-import { z } from 'zod';
-import { ComponentTheme, ZHEXColor } from '../../interfaces/color.interface';
+import { ComponentTheme } from '../../interfaces/color.interface';
 import { FeComponent } from '../../utils/component.utils';
-import { PartialButtonTheme } from '../button/button.component';
+import { PartialButtonTheme } from '../button/button.theme';
 import { BannerCarouselAnimation, BannerCarouselButtonAnimation, BannerCarouselImageAnimation } from './banner-carousel.animation';
 import { BannerCarouselButton, BannerCarouselComplimentaryImage, BannerCarouselService } from './banner-carousel.service';
+import { PartialBannerCarouselTheme } from './banner-carousel.theme';
 
 @FeComponent( 'bannerCarousel' )
 @Component(
@@ -175,29 +175,3 @@ export class BannerCarouselComponent implements OnInit, AfterViewInit {
         }
     }
 }
-
-const ZBannerCarouselBase = z.object(
-    {
-        heading   : ZHEXColor,
-        subheading: ZHEXColor,
-        background: ZHEXColor,
-
-        buttonIdleText      : ZHEXColor,
-        buttonIdleBackground: ZHEXColor,
-
-        buttonHoverText      : ZHEXColor,
-        buttonHoverBackground: ZHEXColor
-    }
-);
-
-export const ZBannerCarouselTheme = z.object(
-    {
-        richAppearance   : ZBannerCarouselBase,
-        reducedAppearance: ZBannerCarouselBase.omit( { background: true } )
-    }
-);
-
-export const ZPartialBannerCarouselTheme = ZBannerCarouselTheme.deepPartial();
-
-export type BannerCarouselTheme = z.infer<typeof ZBannerCarouselTheme>;
-export type PartialBannerCarouselTheme = z.infer<typeof ZPartialBannerCarouselTheme>;
