@@ -24,6 +24,10 @@
     & > button.see-through-light,
     & > button.see-through-dark {
 
+        position        : relative;
+
+        display         : block;
+
         overflow        : hidden;
 
         padding         : .75rem 1.25rem;
@@ -55,17 +59,18 @@
         transition      : box-shadow .25s ease-in-out;
 
         & > .gradient {
-            opacity    : 0;
-            z-index    : 0;
-            content    : '';
-            display    : block;
-            position   : absolute;
-            left       : 0;
-            top        : 0;
-            bottom     : 0;
-            right      : 0;
-            background : linear-gradient(to bottom, rgba(white, .2), rgba(white, 0));
-            transition : opacity .25s ease;
+            pointer-events : none;
+            opacity        : 0;
+            z-index        : 0;
+            content        : '';
+            display        : block;
+            position       : absolute;
+            left           : 0;
+            top            : 0;
+            bottom         : 0;
+            right          : 0;
+            background     : linear-gradient(to bottom, rgba(white, .2), rgba(white, 0));
+            transition     : opacity .25s ease;
         }
 
         &:hover > .gradient {
