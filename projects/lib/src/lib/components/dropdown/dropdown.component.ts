@@ -178,15 +178,15 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
         this.ngZone.runOutsideAngular( () => {
 
             this.disposeListeners.push(
-                this.renderer.listen( this.hostElement.nativeElement, 'mousedown', () => {
+                this.renderer.listen( this.hostElement.nativeElement, 'pointerdown', () => {
                     this.discardNextUp = true;
                 } ),
 
-                this.renderer.listen( this.hostElement.nativeElement, 'mouseup', () => {
+                this.renderer.listen( this.hostElement.nativeElement, 'pointerup', () => {
                     this.localMouseUp = true;
                 } ),
 
-                this.renderer.listen( document.documentElement, 'mouseup', () => {
+                this.renderer.listen( document.documentElement, 'pointerup', () => {
 
                     if ( !this.localMouseUp && !this.discardNextUp && this.dropdownVisible ) {
                         this.ngZone.run( () => this.toggleMenu() );
