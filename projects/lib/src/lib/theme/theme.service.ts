@@ -455,7 +455,9 @@ export class ThemeService {
                 titleBarBackground: FeColorPalette.Greyscale.Transparent,
                 divider           : this.commonTheme.palette.background.tertiary,
                 exit              : this.commonTheme.palette.text.failure,
-                outerBorder       : FeColorPalette.Greyscale.Transparent
+                outerBorder       : FeColorPalette.Greyscale.Transparent,
+                scrollbar         : this.commonTheme.palette.background.tertiary,
+                scrollbarHover    : this.commonTheme.palette.background.quaternary
             },
 
             speedometer: {

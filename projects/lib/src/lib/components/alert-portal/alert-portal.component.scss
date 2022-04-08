@@ -104,7 +104,7 @@
                         @include theme.commonFont('code');
                         white-space      : pre;
 
-                        @include theme.scrollbar-tiny(theme.hex($type + '-code-border'), transparent);
+                        @include theme.scrollbar(theme.hex($type + '-code-border'), theme.hex($type + '-code-border'), transparent, 'none', 0.5rem, 0.25rem);
 
                         color            : theme.hex($type + '-code');
                         border           : 1px solid theme.hex($type + '-code-border');

@@ -8,7 +8,9 @@ export const ZPopupTheme = z.object(
         titleBarBackground: ZHEXColor,
         divider           : ZHEXColor,
         exit              : ZHEXColor,
-        outerBorder       : ZHEXColor
+        outerBorder       : ZHEXColor,
+        scrollbar         : ZHEXColor,
+        scrollbarHover    : ZHEXColor
     }
 );
 

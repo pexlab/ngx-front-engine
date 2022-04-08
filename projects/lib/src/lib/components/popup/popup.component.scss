@@ -212,7 +212,9 @@
 
             height      : fit-content;
 
-            @include theme.scrollbar-y-overlay(theme.hex('divider'), transparent);
+            overflow-x  : hidden;
+
+            @include theme.scrollbar(theme.hex('scrollbar'), theme.hex('scrollbar-hover'), transparent, 'y', 0.5rem, 0.25rem);
 
             @include responsive.desktop {
                 width      : 100%;

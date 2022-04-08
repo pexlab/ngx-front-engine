@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 $scope : 'custom' !default;
 
 @function hex($name) {
@@ -69,43 +71,80 @@ $scope : 'custom' !default;
     }
 }
 
-@mixin scrollbar-y-overlay($color, $background) {
+@mixin scrollbar($thumb, $thumbHover, $track, $overlay: 'y', $size: 0.5rem, $padding: 0.25rem) {
 
     /* Firefox scrollbar styling */
-    scrollbar-color : $color $background;
+    scrollbar-color : $thumb $track;
 
     /* Chrome scrollbar styling */
     & {
 
-        &::-webkit-scrollbar, &::-webkit-scrollbar-thumb, &::-webkit-scrollbar-track {
-            width  : 0.5rem;
-            height : 0.5rem;
+        &::-webkit-scrollbar {
+            width  : $size + ($padding * 2);
+            height : $size + ($padding * 2);
         }
 
         &::-webkit-scrollbar-thumb {
-            border           : transparent;
-            border-radius    : 0.25rem;
-            background-color : $color;
+
+            border-radius    : math.div($size, 2) + $padding;
+
+            border-style     : solid;
+            border-color     : transparent;
+            border-width     : $padding;
+
+            background-color : $thumb;
+            background-clip  : padding-box;
+
+            transition       : .25s ease background-color;
+
+            &:hover {
+                background-color : $thumbHover;
+            }
         }
 
         &::-webkit-scrollbar-track {
             border           : none;
             border-radius    : 0;
-            background-color : transparent;
+            background-color : $track;
         }
     }
 
-    /* Try to make the scrollbar act as an overlay so that it doesn't push the content around */
-    @supports (overflow-y: overlay) {
-        & {
-            overflow-y : overlay;
-        }
-    }
+    @if $overlay == 'y' or $overlay == 'x' or $overlay == 'xy' {
 
-    /* The scrollbar pushes the content, therefore show the track at all times to prevent jumping */
-    @supports not (overflow-y: overlay) {
-        & {
-            overflow-y : scroll;
+        /* Try to make the scrollbar act as an overlay so that it doesn't push the content around */
+        @supports (overflow-y: overlay) {
+            & {
+
+                @if $overlay == 'y' or $overlay == 'xy' {
+                    overflow-y : overlay;
+                } @else {
+                    overflow-y : hidden;
+                }
+
+                @if $overlay == 'x' or $overlay == 'xy' {
+                    overflow-x : overlay;
+                } @else {
+                    overflow-x : hidden;
+                }
+            }
+        }
+
+        /* The scrollbar pushes the content, therefore show the track at all times to prevent jumping */
+        @supports not (overflow-y: overlay) {
+            & {
+
+                @if $overlay == 'y' or $overlay == 'xy' {
+                    overflow-y : scroll;
+                } @else {
+                    overflow-y : hidden;
+                }
+
+                @if $overlay == 'x' or $overlay == 'xy' {
+                    overflow-x : scroll;
+                } @else {
+                    overflow-x : hidden;
+                }
+            }
         }
     }
 }
@@ -118,7 +157,7 @@ $scope : 'custom' !default;
     /* Chrome scrollbar styling */
     & {
 
-        &::-webkit-scrollbar, &::-webkit-scrollbar-thumb, &::-webkit-scrollbar-track {
+        &::-webkit-scrollbar {
             width  : 0.4rem;
             height : 0.4rem;
         }
@@ -132,7 +171,7 @@ $scope : 'custom' !default;
         &::-webkit-scrollbar-track {
             border           : none;
             border-radius    : 0;
-            background-color : transparent;
+            background-color : $background;
         }
     }
 }
