@@ -140,6 +140,7 @@ export class TactileDirective implements OnInit, OnDestroy {
 
         /* If the mouse is not on the component anymore, ignore the click. Most users behave this way, if they accidentally clicked. */
         if ( this.isOnHostElement( event ) ) {
+            console.log('triggered');
             if ( this.hostElement.nativeElement.click !== undefined ) {
                 this.hostElement.nativeElement.click();
             }
@@ -200,8 +201,8 @@ export class TactileDirective implements OnInit, OnDestroy {
         const hostXEnd   = this.hostElement.nativeElement.getBoundingClientRect().right + ( widthDifference / 2 ) + radiusX;
         const hostYEnd   = this.hostElement.nativeElement.getBoundingClientRect().bottom + ( heightDifference / 2 ) + radiusY;
 
-        const pointerX = event.pageX;
-        const pointerY = event.pageY;
+        const pointerX = event.clientX;
+        const pointerY = event.clientY;
 
         return !( pointerX < hostXStart || pointerX > hostXEnd || pointerY < hostYStart || pointerY > hostYEnd );
     }
