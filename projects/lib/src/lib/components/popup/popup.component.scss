@@ -207,7 +207,12 @@
 
         & > .content-wrapper {
 
-            height          : fit-content;
+            display     : grid;
+            place-items : center;
+
+            height      : fit-content;
+
+            @include theme.scrollbar-y-overlay(theme.hex('divider'), transparent);
 
             @include responsive.desktop {
                 width      : 100%;
@@ -219,13 +224,6 @@
                 width      : 100%;
                 max-height : calc(90vh - 50px);
             }
-
-            /* TODO: overlay a scrollbar on firefox as well */
-            overflow-y      : overlay; /* Overlay scrollbar on webkit */
-            scrollbar-width : none; /* Hide scrollbar on firefox */
-
-            display         : grid;
-            place-items     : center;
 
             & .content {
 

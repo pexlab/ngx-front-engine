@@ -102,31 +102,13 @@
                         box-sizing       : border-box;
 
                         @include theme.commonFont('code');
-
                         white-space      : pre;
+
+                        @include theme.scrollbar-tiny(theme.hex($type + '-code-border'), transparent);
 
                         color            : theme.hex($type + '-code');
                         border           : 1px solid theme.hex($type + '-code-border');
                         background-color : theme.hex($type + '-code-background');
-
-                        scrollbar-width  : thin;
-
-                        &::-webkit-scrollbar {
-                            width  : 6px;
-                            height : 6px;
-                        }
-
-                        &::-webkit-scrollbar-track {
-                            background : transparent;
-                        }
-
-                        &::-webkit-scrollbar-thumb {
-
-                            border           : transparent;
-                            border-radius    : 99px;
-
-                            background-color : theme.hex($type + '-code-border');
-                        }
                     }
                 }
             }

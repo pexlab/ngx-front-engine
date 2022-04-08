@@ -68,3 +68,71 @@ $scope : 'custom' !default;
         }
     }
 }
+
+@mixin scrollbar-y-overlay($color, $background) {
+
+    /* Firefox scrollbar styling */
+    scrollbar-color : $color $background;
+
+    /* Chrome scrollbar styling */
+    & {
+
+        &::-webkit-scrollbar, &::-webkit-scrollbar-thumb, &::-webkit-scrollbar-track {
+            width  : 0.5rem;
+            height : 0.5rem;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border           : transparent;
+            border-radius    : 0.25rem;
+            background-color : $color;
+        }
+
+        &::-webkit-scrollbar-track {
+            border           : none;
+            border-radius    : 0;
+            background-color : transparent;
+        }
+    }
+
+    /* Try to make the scrollbar act as an overlay so that it doesn't push the content around */
+    @supports (overflow-y: overlay) {
+        & {
+            overflow-y : overlay;
+        }
+    }
+
+    /* The scrollbar pushes the content, therefore show the track at all times to prevent jumping */
+    @supports not (overflow-y: overlay) {
+        & {
+            overflow-y : scroll;
+        }
+    }
+}
+
+@mixin scrollbar-tiny($color, $background) {
+
+    /* Firefox scrollbar styling */
+    scrollbar-color : $color $background;
+
+    /* Chrome scrollbar styling */
+    & {
+
+        &::-webkit-scrollbar, &::-webkit-scrollbar-thumb, &::-webkit-scrollbar-track {
+            width  : 0.4rem;
+            height : 0.4rem;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border           : transparent;
+            border-radius    : 0.2rem;
+            background-color : $color;
+        }
+
+        &::-webkit-scrollbar-track {
+            border           : none;
+            border-radius    : 0;
+            background-color : transparent;
+        }
+    }
+}
