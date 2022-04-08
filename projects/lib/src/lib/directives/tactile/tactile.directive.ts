@@ -12,11 +12,12 @@ export class TactileDirective implements OnInit, OnDestroy {
     private heldDown                           = false;
     private lastHeldDown                       = 0;
     private disposeListeners: ( () => void )[] = [];
-    private mouseOnElement                     = false;
+    private touchRadiusX                       = 0;
+    private touchRadiusY                       = 0;
 
     constructor(
         private builder: AnimationBuilder,
-        private hostElement: ElementRef,
+        private hostElement: ElementRef<HTMLElement>,
         private renderer: Renderer2,
         private ngZone: NgZone
     ) {
@@ -30,26 +31,24 @@ export class TactileDirective implements OnInit, OnDestroy {
             this.disposeListeners.push(
                 this.renderer.listen(
                     this.hostElement.nativeElement,
-                    'mousedown',
-                    event => this.onMouseDown( event )
+                    'touchstart',
+                    ( event: TouchEvent ) => {
+                        this.touchRadiusX = event.touches[ 0 ].radiusX ?? 0;
+                        this.touchRadiusY = event.touches[ 0 ].radiusY ?? 0;
+                        this.onPointerDown( event );
+                    }
                 ),
 
                 this.renderer.listen(
                     this.hostElement.nativeElement,
-                    'touchstart',
-                    event => this.onMouseDown( event )
+                    'pointerdown',
+                    event => this.onPointerDown( event )
                 ),
 
                 this.renderer.listen(
                     document.documentElement,
-                    'mouseup',
-                    event => this.onMouseUp( event )
-                ),
-
-                this.renderer.listen(
-                    document.documentElement,
-                    'touchend',
-                    event => this.onMouseUp( event, true )
+                    'pointerup',
+                    event => this.onPointerUp( event )
                 ),
 
                 this.renderer.listen(
@@ -62,22 +61,6 @@ export class TactileDirective implements OnInit, OnDestroy {
                     this.hostElement.nativeElement,
                     'click',
                     event => this.onClick( event )
-                ),
-
-                this.renderer.listen(
-                    this.hostElement.nativeElement,
-                    'mouseenter',
-                    () => {
-                        this.mouseOnElement = true;
-                    }
-                ),
-
-                this.renderer.listen(
-                    this.hostElement.nativeElement,
-                    'mouseleave',
-                    () => {
-                        this.mouseOnElement = false;
-                    }
                 )
             );
         } );
@@ -113,9 +96,19 @@ export class TactileDirective implements OnInit, OnDestroy {
         }
     }
 
-    private onMouseDown( event: MouseEvent ): void {
+    private onPointerDown( event: PointerEvent | TouchEvent ): void {
 
         if ( this.heldDown ) {
+            return;
+        }
+
+        /* E.g. when the users touch was meant for scrolling */
+        if ( !event.cancelable ) {
+            return;
+        }
+
+        /* Reject pointerdown events triggered by touch to ensure they come only through the touchstart event */
+        if ( ( event as any ).pointerType && ( event as any ).pointerType === 'touch' ) {
             return;
         }
 
@@ -137,7 +130,7 @@ export class TactileDirective implements OnInit, OnDestroy {
         player.play();
     }
 
-    private onMouseUp( event: MouseEvent, ignoreBoundaries = false ): void {
+    private onPointerUp( event: PointerEvent ): void {
 
         if ( !this.heldDown ) {
             return;
@@ -146,8 +139,7 @@ export class TactileDirective implements OnInit, OnDestroy {
         event.preventDefault();
 
         /* If the mouse is not on the component anymore, ignore the click. Most users behave this way, if they accidentally clicked. */
-        if ( this.mouseOnElement || ignoreBoundaries ) {
-
+        if ( this.isOnHostElement( event ) ) {
             if ( this.hostElement.nativeElement.click !== undefined ) {
                 this.hostElement.nativeElement.click();
             }
@@ -192,5 +184,25 @@ export class TactileDirective implements OnInit, OnDestroy {
                 100 * 15
             ) / area
         ), 0.85 ).toFixed( 2 );
+    }
+
+    private isOnHostElement( event: PointerEvent ): boolean {
+
+        /* Difference caused by the transform effect */
+        const widthDifference  = this.hostElement.nativeElement.offsetWidth - this.hostElement.nativeElement.getBoundingClientRect().width;
+        const heightDifference = this.hostElement.nativeElement.offsetHeight - this.hostElement.nativeElement.getBoundingClientRect().height;
+
+        const radiusX = event.pointerType === 'touch' ? this.touchRadiusX : 0;
+        const radiusY = event.pointerType === 'touch' ? this.touchRadiusY : 0;
+
+        const hostXStart = this.hostElement.nativeElement.getBoundingClientRect().left - ( widthDifference / 2 ) - radiusX;
+        const hostYStart = this.hostElement.nativeElement.getBoundingClientRect().top - ( heightDifference / 2 ) - radiusY;
+        const hostXEnd   = this.hostElement.nativeElement.getBoundingClientRect().right + ( widthDifference / 2 ) + radiusX;
+        const hostYEnd   = this.hostElement.nativeElement.getBoundingClientRect().bottom + ( heightDifference / 2 ) + radiusY;
+
+        const pointerX = event.pageX;
+        const pointerY = event.pageY;
+
+        return !( pointerX < hostXStart || pointerX > hostXEnd || pointerY < hostYStart || pointerY > hostYEnd );
     }
 }
