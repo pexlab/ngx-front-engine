@@ -4,7 +4,9 @@
     <div *ngFor="let a of alerts; index as i; trackBy:identify"
          class="alert"
          [ngClass]="[a.type, i === alerts.length - 1 ? 'last' : 'not-last']"
-         [@alert]>
+         [@alert]
+         (@alert.start)="onAnimationStart($event)"
+         (@alert.done)="onAnimationDone($event)">
         <div class="wrapper">
             <div class="content">
 

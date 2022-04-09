@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit } from '@angular/core';
+import { AnimationEvent } from '@angular/animations';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ComponentTheme } from '../../interfaces/color.interface';
 import { FeComponent } from '../../utils/component.utils';
@@ -34,6 +35,12 @@ export class AlertPortalComponent implements OnInit {
     @Input()
     public feMargin?: [ string, string ];
 
+    @Output()
+    public feAnimationStart: EventEmitter<AnimationEvent> = new EventEmitter();
+
+    @Output()
+    public feAnimationDone: EventEmitter<AnimationEvent> = new EventEmitter();
+
     public alerts: TaggedAlert[] = [];
 
     private channelSubscription!: Subscription;
@@ -61,6 +68,14 @@ export class AlertPortalComponent implements OnInit {
 
     public ngOnDestroy(): void {
         this.channelSubscription.unsubscribe();
+    }
+
+    public onAnimationStart( event: AnimationEvent ) {
+        this.feAnimationStart.emit( event );
+    }
+
+    public onAnimationDone( event: AnimationEvent ) {
+        this.feAnimationDone.emit( event );
     }
 
     public identify( index: number, alert: TaggedAlert ) {
