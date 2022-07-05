@@ -1,0 +1,41 @@
+@use 'sass:math';
+
+/* Origin: https://stackoverflow.com/a/71769304 */
+
+@mixin middle-child($n) {
+
+    @for $i from 3 to $n {
+
+        $mid : math.ceil(math.div($i, 2));
+
+        &:first-child:nth-last-child(#{$i}) {
+
+            ~ :nth-child(#{$mid}) {
+                @content;
+            }
+        }
+    }
+
+    &:first-child:last-child {
+        @content;
+    }
+}
+
+@mixin middle-child-of-type($n) {
+
+    @for $i from 3 to $n {
+
+        $mid : math.ceil(math.div($i, 2));
+
+        &:first-of-type:nth-last-of-type(#{$i}) {
+
+            ~ :nth-of-type(#{$mid}) {
+                @content;
+            }
+        }
+    }
+
+    &:first-of-type:last-of-type {
+        @content;
+    }
+}
