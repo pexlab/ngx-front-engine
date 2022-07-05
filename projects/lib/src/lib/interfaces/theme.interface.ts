@@ -17,7 +17,6 @@ import { ZFont } from './typography.interface';
 
 export const ZCommonTheme = z.object(
     {
-
         typography: z.object(
             {
                 display    : ZFont,

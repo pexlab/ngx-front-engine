@@ -444,7 +444,7 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
             const paddingTop  = window.getComputedStyle( this.inputContainerRef.nativeElement, null ).paddingTop;
             const paddingLeft = window.getComputedStyle( this.inputContainerRef.nativeElement, null ).paddingLeft;
 
-            /* Leave some space (2px) for the text-caret. Otherwise the placeholder will be directly on top of the caret */
+            /* Leave some space (2px) for the text-caret. Otherwise, the placeholder will be directly on top of the caret */
             this.placeholderRef.nativeElement.style.setProperty( '--placeholder-x', 'calc(' + paddingLeft + ' + 2px)' );
             this.placeholderRef.nativeElement.style.setProperty( '--placeholder-y', paddingTop );
         }

@@ -101,7 +101,7 @@ export class ThemeService {
         /* Extract every possible key/path from the palette */
         const elements = _.keysDeep( palette, { leavesOnly: true } );
 
-        /* Iterate through every key/path and get it's value. The key/path is needed to determine the name of the css property */
+        /* Iterate through every key/path and get its value. The key/path is needed to determine the name of the css property */
         elements.forEach( ( pathKey ) => {
 
             const key = String( pathKey );
