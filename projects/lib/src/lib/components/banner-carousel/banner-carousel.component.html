@@ -6,7 +6,7 @@
 
             <div class="text-wrapper">
 
-                <div class="text" [@carousel] *ngFor="let t of text">
+                <div class="text" [@carousel]="t.heading + ',' + t.subheading" *ngFor="let t of text">
 
                     <span class="heading" *ngIf="t.heading !== null">
                         {{t.heading}}

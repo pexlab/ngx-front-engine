@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ComponentTheme } from '../../interfaces/color.interface';
 import { PartialBannerCarouselTheme } from './banner-carousel.theme';
+import lodash from 'lodash-es';
 
 @Injectable(
     {
@@ -36,6 +37,11 @@ export class BannerCarouselService {
             this.register( instanceName, state );
 
         } else {
+
+            /* Prevent duplicate from re-animating */
+            if ( lodash.isEqual( this.instances[ instanceName ].state.value, state ) ) {
+                return;
+            }
 
             this.instances[ instanceName ].state.next( state );
         }
