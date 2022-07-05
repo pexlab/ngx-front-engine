@@ -51,6 +51,11 @@ export class ThemeService {
         return this.commonTheme;
     }
 
+    /* Public alias in order to obtain properties from the current component theme */
+    public get component(): ComponentThemes {
+        return this.componentThemes;
+    }
+
     /** Try to find an already evaluated color in cache */
     public matchColor( matchHex: HEXColor, newName: string ): EvaluatedColor | undefined {
 
