@@ -403,6 +403,9 @@ export class ThemeService {
                 hinge       : {
                     hoverText      : this.commonTheme.palette.text.on_secondary_accent,
                     hoverBackground: this.commonTheme.palette.accent.secondary
+                },
+                circle      : {
+                    tooltipText: this.commonTheme.palette.text.primary
                 }
             },
 

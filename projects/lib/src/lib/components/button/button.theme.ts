@@ -11,6 +11,11 @@ export const ZButtonTheme = z.object(
                 hoverText      : ZHEXColor,
                 hoverBackground: ZHEXColor
             }
+        ),
+        circle      : z.object(
+            {
+                tooltipText: ZHEXColor
+            }
         )
     }
 );

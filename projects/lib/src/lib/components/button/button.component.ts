@@ -20,7 +20,16 @@ export class ButtonComponent {
     public feTheme!: ComponentTheme<PartialButtonTheme>;
 
     @Input()
-    public feAppearance: 'simple' | 'raised-simple' | 'pill' | 'raised-pill' | 'hinge' | 'artistic-curves' | 'see-through-light' | 'see-through-dark' | 'handwritten' = 'pill';
+    public feAppearance: 'simple'
+                         | 'raised-simple'
+                         | 'pill'
+                         | 'raised-pill'
+                         | 'circle'
+                         | 'hinge'
+                         | 'artistic-curves'
+                         | 'see-through-light'
+                         | 'see-through-dark'
+                         | 'handwritten' = 'pill';
 
     @Input()
     public feType: 'submit' | 'button' = 'button';

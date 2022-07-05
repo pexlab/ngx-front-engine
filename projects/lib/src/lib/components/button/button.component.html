@@ -4,6 +4,13 @@
 
 <ng-container [ngSwitch]="feAppearance">
 
+    <button *ngSwitchCase="'circle'"
+            [ngClass]="feAppearance"
+            [fe-tactile]
+            (tactileClick)="feClick.emit()">
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+    </button>
+
     <button *ngSwitchCase="'hinge'"
             [ngClass]="feAppearance"
             [fe-tactile]

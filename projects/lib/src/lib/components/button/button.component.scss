@@ -3,7 +3,8 @@
 
 :host {
 
-    display     : block;
+    display     : grid;
+    place-items : center;
 
     width       : fit-content;
     height      : fit-content;
@@ -14,6 +15,7 @@
         text-decoration : none;
         border          : none;
         background      : none;
+        padding         : 0;
     }
 
     & > button.simple,
@@ -24,23 +26,22 @@
     & > button.see-through-light,
     & > button.see-through-dark {
 
-        position        : relative;
+        position      : relative;
 
-        display         : block;
+        display       : block;
 
-        overflow        : hidden;
+        overflow      : hidden;
 
-        padding         : .75rem 1.25rem;
+        padding       : .75rem 1.25rem;
 
-        border-radius   : .5rem;
+        border-radius : .5rem;
 
-        cursor          : pointer;
-        backdrop-filter : blur(7px);
+        cursor        : pointer;
 
-        line-height     : 1.3rem;
+        line-height   : 1.3rem;
 
-        color           : theme.hex('text');
-        background      : theme.hex('background');
+        color         : theme.hex('text');
+        background    : theme.hex('background');
 
         & > .content {
 
@@ -56,7 +57,7 @@
             @include theme.inlineDeepIcon(1.3rem);
         }
 
-        transition      : box-shadow .25s ease-in-out;
+        transition    : box-shadow .25s ease-in-out;
 
         & > .gradient {
             pointer-events : none;
@@ -80,6 +81,88 @@
 
     & > button.raised-simple {
         border-bottom : 0.2rem solid theme.hex('border-bottom');
+    }
+
+    & > button.circle {
+
+        position       : relative;
+
+        display        : grid;
+        grid-auto-flow : row;
+        grid-gap       : .5rem;
+        justify-items  : center;
+
+        cursor         : pointer;
+
+        color          : theme.hex('circle-tooltip-text');
+
+        @include theme.commonFont('body');
+
+        &:hover::ng-deep {
+
+            & > svg-icon:after {
+                opacity : 1;
+            }
+
+            & > span {
+                opacity   : 1;
+                transform : translateY(calc(100% + .25rem)) translateX(-50%);
+            }
+        }
+
+        &::ng-deep {
+
+            & > span {
+
+                position    : absolute;
+
+                left        : 50%;
+                bottom      : 0;
+
+                white-space : nowrap;
+
+                opacity     : 0;
+                transform   : translateY(100%) translateX(-50%);
+                transition  : opacity .25s ease, transform .25s ease;
+            }
+
+            & > svg-icon {
+
+                position      : relative;
+
+                width         : 3rem;
+                height        : 3rem;
+
+                display       : grid;
+                place-items   : center;
+
+                border-radius : math.div(1.3rem, 2) + 1.25rem;
+                overflow      : hidden;
+
+                color         : theme.hex('text');
+                background    : theme.hex('background');
+
+                & > svg {
+                    width  : 1.3rem;
+                    height : 1.3rem;
+                }
+
+                &:after {
+                    pointer-events : none;
+                    opacity        : 0;
+                    z-index        : 0;
+                    content        : '';
+                    display        : block;
+                    position       : absolute;
+                    left           : 0;
+                    top            : 0;
+                    bottom         : 0;
+                    right          : 0;
+                    background     : linear-gradient(to bottom, rgba(white, .2), rgba(white, 0));
+                    transition     : opacity .25s ease;
+                }
+            }
+        }
     }
 
     & > button.pill {
