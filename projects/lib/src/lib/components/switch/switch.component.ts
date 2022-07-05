@@ -20,7 +20,7 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
         @Optional()
         private ngControl: NgControl,
         public hostElement: ElementRef,
-        private cdr: ChangeDetectorRef
+        public cdr: ChangeDetectorRef
     ) {
         if ( this.ngControl ) {
             this.ngControl.valueAccessor = this;

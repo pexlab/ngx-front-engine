@@ -25,7 +25,7 @@ export class BannerCarouselComponent implements OnInit, AfterViewInit {
     constructor(
         public hostElement: ElementRef,
         private manager: BannerCarouselService,
-        private cdr: ChangeDetectorRef
+        private customCdr: ChangeDetectorRef
     ) { }
 
     public feTheme!: ComponentTheme<PartialBannerCarouselTheme> & {
@@ -121,7 +121,7 @@ export class BannerCarouselComponent implements OnInit, AfterViewInit {
     public ngAfterViewInit(): void {
         /* Taking this measure because the svg-icon component dispatched many view checks on initial icon load which causes the arrays of
          the text and images to be re-evaluated which as a result causes the in-out-animation to be played multiple times. */
-        this.cdr.detach();
+        this.customCdr.detach();
     }
 
     public ngOnDestroy(): void {
@@ -141,7 +141,7 @@ export class BannerCarouselComponent implements OnInit, AfterViewInit {
                 this.buttons           = state.buttons;
                 this.feTheme           = state.theme;
 
-                this.cdr.detectChanges();
+                this.customCdr.detectChanges();
             } );
 
         } catch ( ex ) {

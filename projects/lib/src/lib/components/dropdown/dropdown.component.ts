@@ -75,7 +75,7 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
         @Self()
         @Optional()
         private ngControl: NgControl,
-        private cdr: ChangeDetectorRef,
+        public cdr: ChangeDetectorRef,
         public hostElement: ElementRef,
         private ngZone: NgZone,
         private renderer: Renderer2

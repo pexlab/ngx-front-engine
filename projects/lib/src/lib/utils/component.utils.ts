@@ -1,4 +1,4 @@
-import { ElementRef } from '@angular/core';
+import { ChangeDetectorRef, ElementRef } from '@angular/core';
 import { isEqual } from 'lodash';
 import { ReplaySubject, Subject } from 'rxjs';
 import { ComponentTheme, HEXColorRegister } from '../interfaces/color.interface';
@@ -8,7 +8,7 @@ import { ClassWithProperties } from './type.utils';
 
 export function FeComponent( name: ThemeableComponents ) {
 
-    return function <C extends ClassWithProperties<{ feTheme: ComponentTheme, hostElement: ElementRef<HTMLElement> }>>( target: C ) {
+    return function <C extends ClassWithProperties<{ feTheme: ComponentTheme, hostElement: ElementRef<HTMLElement>, cdr?: ChangeDetectorRef }>>( target: C ) {
 
         return class extends target {
 
@@ -35,6 +35,10 @@ export function FeComponent( name: ThemeableComponents ) {
                                 },
                                 this.hostElement.nativeElement
                             );
+
+                            if ( theme !== undefined && this.cdr !== undefined && this.cdr.detectChanges !== undefined ) {
+                                this.cdr.detectChanges();
+                            }
                         }
 
                         this._feTheme = theme;

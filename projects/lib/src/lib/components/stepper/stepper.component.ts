@@ -19,7 +19,7 @@ export class StepperComponent implements OnInit, ControlValueAccessor {
         @Self()
         @Optional()
         private ngControl: NgControl,
-        private cdr: ChangeDetectorRef,
+        public cdr: ChangeDetectorRef,
         public hostElement: ElementRef
     ) {
         if ( this.ngControl ) {

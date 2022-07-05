@@ -1,4 +1,4 @@
-import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
+import { EventEmitter, Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import deepdash from 'deepdash-es';
 import lodash from 'lodash-es';
 import { RootComponent } from '../components/root/root.component';
@@ -43,6 +43,8 @@ export class ThemeService {
 
     private commonTheme!: CommonTheme;
     private componentThemes!: ComponentThemes;
+
+    public onThemeChange: EventEmitter<void> = new EventEmitter();
 
     /* Public alias in order to obtain properties from the common theme */
     public get common(): CommonTheme {
@@ -279,6 +281,8 @@ export class ThemeService {
             document.documentElement,
             true
         );
+
+        this.onThemeChange.emit();
     }
 
     /** Default themes for all components of FrontEngine */
@@ -510,7 +514,33 @@ export class ThemeService {
                 traditionalBackgroundRight: this.commonTheme.palette.accent.primary
             },
 
-            table: {},
+            table: {
+                text           : this.commonTheme.palette.text.primary,
+                outline        : this.commonTheme.palette.text.tertiary,
+                button         : {
+                    text      : this.commonTheme.palette.text.on_primary_accent,
+                    background: this.commonTheme.palette.accent.primary,
+                    tooltip   : this.commonTheme.palette.text.primary
+                },
+                loader         : {
+                    circle : this.commonTheme.palette.accent.primary,
+                    stripeA: this.commonTheme.palette.accent.primary,
+                    stripeB: Color.fadeHex( this.commonTheme.palette.accent.secondary, .3 )
+                },
+                dragHandle     : this.commonTheme.palette.background.quaternary,
+                dragHandleHover: this.commonTheme.palette.text.primary,
+                background     : {
+                    header  : this.commonTheme.palette.background.primary,
+                    rowEven : this.commonTheme.palette.background.primary,
+                    rowOdd  : this.commonTheme.palette.background.secondary,
+                    rowHover: this.commonTheme.palette.background.tertiary
+                },
+                highlight      : {
+                    header : Color.fadeHex( this.commonTheme.palette.accent.primary, .2 ),
+                    cell   : Color.fadeHex( this.commonTheme.palette.accent.primary, .2 ),
+                    outline: this.commonTheme.palette.accent.primary
+                }
+            },
 
             textField: {
 
@@ -562,5 +592,7 @@ export class ThemeService {
             document.documentElement,
             true
         );
+
+        this.onThemeChange.emit();
     }
 }

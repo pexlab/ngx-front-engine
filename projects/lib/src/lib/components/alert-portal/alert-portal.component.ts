@@ -22,7 +22,7 @@ export class AlertPortalComponent implements OnInit {
     constructor(
         public hostElement: ElementRef,
         private alert: AlertPortalService,
-        private cdr: ChangeDetectorRef
+        public cdr: ChangeDetectorRef
     ) { }
 
     @Input()

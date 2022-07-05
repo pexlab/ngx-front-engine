@@ -45,7 +45,7 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         private ngControl: NgControl,
         public hostElement: ElementRef<HTMLElement>,
         private renderer: Renderer2,
-        private cdr: ChangeDetectorRef,
+        public cdr: ChangeDetectorRef,
         private ngZone: NgZone,
         private aligner: LabelAlignerService
     ) {
