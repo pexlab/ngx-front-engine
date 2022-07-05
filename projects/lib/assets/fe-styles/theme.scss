@@ -10,7 +10,7 @@ $scope : 'custom' !default;
     @return rgba(var(--fe-local-color-#{$scope}-#{$name}-rgb, var(--fe-global-color-#{$scope}-#{$name}-rgb)), $opacity)
 }
 
-@function contrast($name) {
+@function contrastHex($name) {
     @return var(--fe-local-color-#{$scope}-#{$name}-contrast, var(--fe-global-color-#{$scope}-#{$name}-contrast));
 }
 
@@ -24,7 +24,7 @@ $scope : 'custom' !default;
     @return rgba(var(--fe-local-color-#{$name}-rgb, var(--fe-global-color-#{$name}-rgb)), $opacity)
 }
 
-@function commonContrast($name) {
+@function commonContrastHex($name) {
     @return var(--fe-local-color-#{$name}-contrast, var(--fe-global-color-#{$name}-contrast));
 }
 
