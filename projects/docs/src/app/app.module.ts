@@ -43,6 +43,7 @@ import { TextFieldComponent } from './pages/showcase/text-field/text-field.compo
 import { NutmegComponent } from './popups/nutmeg/nutmeg.component';
 import { NotepaperComponent } from './pages/showcase/notepaper/notepaper.component';
 import { TableComponent } from './pages/showcase/table/table.component';
+import { EyeComponent } from './pages/showcase/table/eye/eye.component';
 
 @NgModule(
     {
@@ -68,7 +69,8 @@ import { TableComponent } from './pages/showcase/table/table.component';
             GettingStartedComponent,
             CommentComponent,
             NotepaperComponent,
-            TableComponent
+            TableComponent,
+            EyeComponent
         ],
 
         imports: [

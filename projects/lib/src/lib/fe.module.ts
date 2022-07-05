@@ -41,11 +41,13 @@ export class FeModule {
         iconReg.loadSvg( 'assets/fe-icons/caret-up-solid.svg', 'fe-caret-up' );
         iconReg.loadSvg( 'assets/fe-icons/check.svg', 'fe-success' );
         iconReg.loadSvg( 'assets/fe-icons/delete.svg', 'fe-backspace' );
+        iconReg.loadSvg( 'assets/fe-icons/drag-handle.svg', 'fe-drag-handle' );
         iconReg.loadSvg( 'assets/fe-icons/filter.svg', 'fe-filter' );
         iconReg.loadSvg( 'assets/fe-icons/info.svg', 'fe-generic' );
         iconReg.loadSvg( 'assets/fe-icons/info.svg', 'fe-info' );
         iconReg.loadSvg( 'assets/fe-icons/layout-grid.svg', 'fe-grid' );
-        iconReg.loadSvg( 'assets/fe-icons/list-details.svg', 'fe-list' );
+        iconReg.loadSvg( 'assets/fe-icons/layout-list.svg', 'fe-list' );
+        iconReg.loadSvg( 'assets/fe-icons/loading.svg', 'fe-loading' );
         iconReg.loadSvg( 'assets/fe-icons/plus.svg', 'fe-add' );
         iconReg.loadSvg( 'assets/fe-icons/table.svg', 'fe-table' );
         iconReg.loadSvg( 'assets/fe-icons/table-export.svg', 'fe-table-export' );

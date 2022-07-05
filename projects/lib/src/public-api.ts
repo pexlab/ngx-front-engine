@@ -70,6 +70,8 @@ export * from './lib/components/switch/switch.module';
 
 export * from './lib/components/table/table.component';
 export * from './lib/components/table/table.theme';
+export * from './lib/components/table/table-cell.directive';
+export * from './lib/components/table/table-cell-renderer.directive';
 export * from './lib/components/table/table.module';
 
 export * from './lib/components/text-field/text-field.component';

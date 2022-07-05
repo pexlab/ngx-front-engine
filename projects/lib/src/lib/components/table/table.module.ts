@@ -1,19 +1,25 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { VirtualScrollerModule } from '@iharbeck/ngx-virtual-scroller';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { FeButtonModule } from '../button/button.module';
 import { FeCheckboxModule } from '../checkbox/checkbox.module';
+import { TableCellRendererDirective } from './table-cell-renderer.directive';
+import { TableCellDirective } from './table-cell.directive';
 import { TableComponent } from './table.component';
 
 @NgModule( {
     declarations: [
-        TableComponent
+        TableComponent,
+        TableCellDirective,
+        TableCellRendererDirective
     ],
     imports: [
         CommonModule,
         AngularSvgIconModule,
         FeCheckboxModule,
-        FeButtonModule
+        FeButtonModule,
+        VirtualScrollerModule
     ],
     exports     : [
         TableComponent

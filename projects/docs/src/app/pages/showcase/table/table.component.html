@@ -1,8 +1,23 @@
-<div class="note">
-    <span>Note:</span>
-    <span>This is an early WIP and not functional.</span>
-</div>
+<form [formGroup]="formGroup">
 
-<fe-table [feData]="sampleData"
-          [feColumns]="tableColumns">
-</fe-table>
+    <fe-text-field fePlaceholder="Search" formControlName="quicksearch">
+        <ng-template>
+            <svg-icon name="search"></svg-icon>
+        </ng-template>
+    </fe-text-field>
+
+</form>
+
+<div class="scroll" #scrollDemo>
+
+    <fe-table [feData]="sampleData"
+              [feColumns]="tableColumns"
+              [feReorderable]="true"
+              [feSelectable]="true"
+              [feSearchTerm]="quickSearch"
+              [feActions]="tableActions"
+              [feSearchMode]="'fuzzy'"
+              [feAutoFocus]="scrollDemo">
+    </fe-table>
+
+</div>

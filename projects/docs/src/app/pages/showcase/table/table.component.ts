@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { TableColumn } from '@pexlab/ngx-front-engine';
+import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { TableColumn, TableDemoActions } from '@pexlab/ngx-front-engine';
+import { Subscription } from 'rxjs';
+import { EyeComponent } from './eye/eye.component';
+import { SampleData } from './sample-data';
 
 @Component(
     {
@@ -7,63 +11,82 @@ import { TableColumn } from '@pexlab/ngx-front-engine';
         styleUrls  : [ './table.component.scss' ]
     }
 )
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit, OnDestroy {
 
-    constructor() { }
+    constructor( private fb: FormBuilder, public hostElement: ElementRef ) {
+        this.formGroup = fb.group( {
+            quicksearch: null
+        } );
+    }
 
     public ngOnInit(): void {
+        this.formSubscription = this.formGroup.get( 'quicksearch' )?.valueChanges.subscribe( ( value ) => {
+            this.quickSearch = value;
+        } );
     }
+
+    public ngOnDestroy(): void {
+        this.formSubscription?.unsubscribe();
+    }
+
+    public quickSearch?: string;
+
+    public formGroup!: FormGroup;
+    public formSubscription?: Subscription;
+
+    public tableActions = TableDemoActions;
 
     public tableColumns: TableColumn[] = [
         {
-            linkedProperty: 'a',
+            linkedProperty: 'feInitialItemIndex',
             label         : {
-                text       : 'Property A',
-                icon       : 'help',
+                text       : 'Item Index',
+                icon       : 'hashtag',
                 collapsible: true
             }
         },
         {
-            linkedProperty: 'b',
+            linkedProperty: 'name',
             label         : {
-                text       : 'Property B',
-                icon       : 'help',
+                text       : 'Name',
+                icon       : 'user',
                 collapsible: true
             }
         },
         {
-            linkedProperty: 'c',
+            linkedProperty: 'company',
             label         : {
-                text       : 'Property C',
-                icon       : 'help',
+                text       : 'Company',
+                icon       : 'building',
                 collapsible: true
             }
         },
         {
-            linkedProperty: 'd',
+            linkedProperty: 'eye.color',
             label         : {
-                text       : 'Property d',
-                icon       : 'help',
+                text       : 'Eye Color',
+                icon       : 'eye',
                 collapsible: true
-            }
+            },
+            renderer: EyeComponent
         },
         {
-            linkedProperty: 'e',
+            linkedProperty: 'address',
             label         : {
-                text       : 'Property E',
-                icon       : 'help',
+                text       : 'Address',
+                icon       : 'location',
                 collapsible: true
             }
         }
     ];
 
-    public sampleData = [
-        {
-            a: 'Test A',
-            b: 'Test B',
-            c: 'Test C',
-            d: 'Test D',
-            e: 'Test E'
+    public sampleData: Promise<any[]> | any[] = new Promise<TableColumn[]>( ( resolve ) => {
+
+            let data: any[] = SampleData;
+
+            setTimeout( () => {
+                resolve( data );
+            }, 2000 );
         }
-    ];
+    );
 }

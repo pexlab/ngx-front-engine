@@ -1,16 +1,27 @@
 <div class="heading">
 
-    <div class="select">
-        <fe-checkbox></fe-checkbox>
+    <div class="select" *ngIf="feReorderable || feSelectable">
+        <svg-icon name="fe-drag-handle" *ngIf="feReorderable"></svg-icon>
+        <fe-checkbox *ngIf="feSelectable"></fe-checkbox>
     </div>
 
-    <div class="divider"></div>
+    <div class="divider" *ngIf="feReorderable || feSelectable"></div>
 
     <ng-container *ngFor="let column of feColumns; let i = index">
 
         <div class="divider" *ngIf="i > 0"></div>
 
-        <div class="title">
+        <div class="title"
+             [@.disabled]="!greatestColumnWidth[i]"
+             [@columnWidth]="{ value: greatestColumnWidth[i] ?? 0, params: { width: greatestColumnWidth[i] ? greatestColumnWidth[i] + 'px' : 'fit-content' } }"
+             (mouseenter)="highlightedColumnIndex = i"
+             (mouseleave)="highlightedColumnIndex = NaN()"
+             [ngClass]="column.align ?? 'left'">
+            <svg-icon *ngIf="column.label.icon; let icon" [name]="icon"></svg-icon>
+            <span>{{ column.label.text }}</span>
+        </div>
+
+        <div class="title measurement" #column>
             <svg-icon *ngIf="column.label.icon; let icon" [name]="icon"></svg-icon>
             <span>{{ column.label.text }}</span>
         </div>
@@ -19,32 +30,144 @@
 
 </div>
 
-<div class="connector">
-    <div class="left">
-        <fe-button feAppearance="simple" [feTheme]="inactiveButtonTheme">
-            <svg-icon name="fe-bookmarks"></svg-icon>
-        </fe-button>
-        <fe-button feAppearance="simple" [feTheme]="inactiveButtonTheme">
-            <svg-icon name="fe-grid"></svg-icon>
-        </fe-button>
-        <fe-button feAppearance="simple" [feTheme]="inactiveButtonTheme">
-            <svg-icon name="fe-maximize"></svg-icon>
-        </fe-button>
-    </div>
-    <div class="divider"></div>
-    <div class="right">
-        <fe-button feAppearance="simple" [feTheme]="inactiveButtonTheme">
-            <svg-icon name="fe-table-export"></svg-icon>
-        </fe-button>
-        <fe-button feAppearance="simple" [feTheme]="inactiveButtonTheme">
-            <svg-icon name="fe-filter"></svg-icon>
-        </fe-button>
-        <fe-button feAppearance="simple" [feTheme]="inactiveButtonTheme">
-            <svg-icon name="fe-add"></svg-icon>
-        </fe-button>
-    </div>
-</div>
+<ng-container [ngSwitch]="feActions.length > 0 ? feActions.length % 2 === 0 ? 'even' : 'odd' : 'none'">
 
-<div class="content">
+    <div class="connector even" *ngSwitchCase="'even'">
+
+        <div class="left">
+
+            <fe-button *ngFor="let action of feActions.slice(0, feActions.length / 2)"
+                       feAppearance="circle"
+                       [feTheme]="buttonTheme"
+                       (feClick)="action.onClick()">
+
+                <svg-icon [name]="action.icon"></svg-icon>
+                <span>{{ action.label }}</span>
+
+            </fe-button>
+
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="right">
+
+            <fe-button *ngFor="let action of feActions.slice(feActions.length / 2, feActions.length)"
+                       feAppearance="circle"
+                       [feTheme]="buttonTheme"
+                       (feClick)="action.onClick()">
+
+                <svg-icon [name]="action.icon"></svg-icon>
+                <span>{{ action.label }}</span>
+
+            </fe-button>
+
+        </div>
+
+    </div>
+
+    <div class="connector odd" *ngSwitchCase="'odd'">
+        <fe-button *ngFor="let action of feActions" feAppearance="circle" [feTheme]="buttonTheme"
+                   (feClick)="action.onClick()">
+            <svg-icon [name]="action.icon"></svg-icon>
+            <span>{{ action.label }}</span>
+        </fe-button>
+        <div class="divider">
+            <div class="a"></div>
+            <div></div>
+            <div class="b"></div>
+        </div>
+    </div>
+
+    <div class="connector none" *ngSwitchCase="'none'">
+        <div class="divider"></div>
+    </div>
+
+</ng-container>
+
+<div class="content" [class.dragging]="!isNaN(dragCurrentIndex)">
+
+    <svg-icon name="fe-loading" *ngIf="resolvedRelevantData === undefined"></svg-icon>
+    <div class="loader" *ngIf="resolvedRelevantData === undefined"></div>
+
+    <ng-container *ngIf="resolvedRelevantData !== undefined">
+
+        <virtual-scroller class="scroller"
+                          #scroll
+                          [items]="resolvedRelevantData ?? []"
+                          [bufferAmount]="2">
+
+            <ng-container *ngFor="let row of scroll.viewPortItems">
+
+                <div class="wrapper">
+
+                    <div class="divider"
+                         [class.hideTopBorder]="row['feIndex'] === 0 || (row['feIndex'] === 1 && dragCurrentIndex === 0) || (row['feIndex'] === dragCurrentIndex && row['feIndex'] !== dragTargetToIndex)"
+                         [class.hideBottomBorder]="row['feIndex'] === dragCurrentIndex"
+                         [class.aim]="!isNaN(dragTargetIndex) && row['feIndex'] === dragTargetToIndex"
+                         [style.--space]="dragDummyEl !== undefined ? dragDummyEl.clientHeight + 'px' : '0'">
+                    </div>
+
+                    <div class="row"
+                         #rowEl
+                         (pointerenter)="pointerOver(rowEl, row['feIndex'])"
+                         [ngClass]="row['feIndex'] % 2 === 0 ? 'even' : 'odd'"
+                         [class.beingDragged]="row['feIndex'] === dragCurrentIndex"
+                         [class.nonInteractive]="!isNaN(dragCurrentIndex)"
+                         [class.animateIn]="row['feIndex'] === lastDraggedItemIndex ? animateRowIn(row['feIndex']) : false">
+
+                        <div class="select"
+                             *ngIf="feReorderable || feSelectable"
+                             [class.reorderable]="feReorderable"
+                             (pointerdown)="feReorderable ? pointerDown($event, rowEl, row['feIndex']) : undefined">
+                            <svg-icon name="fe-drag-handle" *ngIf="feReorderable"></svg-icon>
+                            <fe-checkbox *ngIf="feSelectable"></fe-checkbox>
+                        </div>
+
+                        <ng-container *ngFor="let column of feColumns; let cellIndex = index">
+
+                            <div class="divider"
+                                 *ngIf="cellIndex > 0 || (feReorderable || feSelectable)"
+                                 [class.hidden]="highlightedColumnIndex >= 0 && (highlightedColumnIndex === cellIndex || highlightedColumnIndex === (cellIndex - 1))">
+                            </div>
+
+                            <div class="cell"
+                                 [fe-table-cell]="{ index: cellIndex, measurementEl: measurement }"
+                                 #cell="cellDirective"
+                                 [@.disabled]="!greatestColumnWidth[cellIndex]"
+                                 [@columnWidth]="{ value: greatestColumnWidth[cellIndex] ?? 0, params: { width: greatestColumnWidth[cellIndex] ? greatestColumnWidth[cellIndex] + 'px' : 'fit-content' } }"
+                                 [class.highlight]="highlightedColumnIndex === cellIndex"
+                                 [class.inFirstRow]="row['feIndex'] === 0"
+                                 [class.inLastRow]="row['feIndex'] === resolvedRelevantData.length - 1"
+                                 [class.passThroughClick]="column.passThroughClick"
+                                 [class.ignoreClick]="column.onClick === undefined && !column.passThroughClick"
+                                 [style.cursor]="column.onClick !== undefined ? 'pointer' : 'default'"
+                                 [ngClass]="column.align ?? 'left'"
+                                 (click)="column.onClick ? column.onClick(row) : undefined">
+
+                                <div class="measurement" #measurement>
+                                    <ng-container
+                                        [fe-table-cell-renderer]="{ renderer: column.renderer, property: getPath(row, column.linkedProperty) }"></ng-container>
+                                </div>
+
+                                <ng-container
+                                    [fe-table-cell-renderer]="{ renderer: column.renderer, property: getPath(row, column.linkedProperty) }"></ng-container>
+
+                            </div>
+
+                        </ng-container>
+
+                    </div>
+
+                    <div class="divider"
+                         *ngIf="!isScrollable && row['feIndex'] === resolvedRelevantData.length - 1"></div>
+
+                </div>
+
+            </ng-container>
+
+        </virtual-scroller>
+
+    </ng-container>
 
 </div>

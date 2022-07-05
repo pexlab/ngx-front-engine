@@ -15,7 +15,9 @@
         "@fontsource/anonymous-pro",
         "@fontsource/baloo-bhaina-2",
         "@fontsource/architects-daughter",
-        "@fontsource/pangolin"
+        "@fontsource/pangolin",
+        "@iharbeck/ngx-virtual-scroller",
+        "fuse.js"
     ],
     "assets": [
         "./assets/**/*"

@@ -2,23 +2,27 @@
 
 :host {
 
-    display        : grid;
-    grid-auto-flow : row;
-    grid-gap       : 20px;
+    display               : grid;
+    grid-auto-flow        : row;
+    grid-gap              : 20px;
+    place-content         : start;
+    grid-template-columns : 1fr;
 
-    width          : 100%;
+    width                 : 100%;
 
-    & > .note {
+    & > form {
+        margin-top : 5px;
+        max-width  : 500px;
+    }
 
-        @include theme.commonFont('code');
+    & > .scroll {
 
-        & > span {
-            display       : block;
-            margin-bottom : 5px;
-        }
+        height : calc(100vh - 80px - (2 * 35px));
 
-        & > span:nth-child(1) {
-            text-decoration : underline;
+        @include theme.scrollbar(trasparent, transparent, transparent, 'y', 0.5rem, 0.25rem);
+
+        & > fe-table {
+            margin-bottom : 100vh;
         }
     }
 }

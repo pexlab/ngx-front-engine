@@ -1,0 +1,5 @@
+@use '~dist/ngx-front-engine/assets/fe-styles/theme';
+
+:host {
+    @include theme.inlineIcon(1.2rem);
+}
