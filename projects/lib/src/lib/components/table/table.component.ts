@@ -3,7 +3,7 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
-    ElementRef, EventEmitter,
+    ElementRef, EventEmitter, HostListener,
     Input, NgZone,
     OnDestroy,
     OnInit, Output,
@@ -17,6 +17,7 @@ import { z } from 'zod';
 import { ComponentTheme } from '../../interfaces/color.interface';
 import { ThemeService } from '../../theme/theme.service';
 import { FeComponent } from '../../utils/component.utils';
+import { remToPixels } from '../../utils/element.utils';
 import { PartialButtonTheme } from '../button/button.theme';
 import { TableCellDirective } from './table-cell.directive';
 import { PartialTableTheme } from './table.theme';
@@ -39,7 +40,6 @@ import lodash from 'lodash-es';
                     style( { width: '{{ width }}' } )
                 ] ),
                 transition( '* => *', [
-                    style( { whiteSpace: 'nowrap' } ),
                     animate( '.25s ease', style( { width: '{{ width }}' } ) )
                 ], { params: { width: '0' } } ),
                 state( '*', style( { width: '{{ width }}' } ), { params: { width: '0' } } )
@@ -126,6 +126,10 @@ export class TableComponent implements OnInit, OnDestroy {
     @Input()
     public feReorderable = false;
 
+    public get reorderable(): boolean {
+        return this.feReorderable && this.resolvedSearchResultData === undefined;
+    }
+
     @Output()
     public feOnReorder: EventEmitter<{ [ key: string ]: any }[]> = new EventEmitter();
 
@@ -177,6 +181,8 @@ export class TableComponent implements OnInit, OnDestroy {
                     break;
                 }
 
+                const parts = term.toLowerCase().split( ' ' );
+
                 const matches = this.resolvedUnaffectedData.filter( ( record ) => {
 
                     const find = ( obj: Record<string, any> ) => {
@@ -185,7 +191,15 @@ export class TableComponent implements OnInit, OnDestroy {
 
                             if ( typeof obj[ key ] === 'string' || typeof obj[ key ] === 'number' ) {
 
-                                if ( String( obj[ key ] ).toLowerCase().search( new RegExp( term.toLowerCase(), 'g' ) ) !== -1 ) {
+                                let partsFound = 0;
+
+                                for ( let part of parts ) {
+                                    if ( String( obj[ key ] ).toLowerCase().search( new RegExp( part, 'g' ) ) !== -1 ) {
+                                        partsFound++;
+                                    }
+                                }
+
+                                if ( partsFound === parts.length ) {
                                     return true;
                                 }
 
@@ -223,23 +237,57 @@ export class TableComponent implements OnInit, OnDestroy {
         }
 
         this.cdr.detectChanges();
+
+        if ( this.scrollRef ) {
+            this.scrollRef.nativeElement.scrollTop  = 0;
+            this.scrollRef.nativeElement.scrollLeft = 0;
+        }
     }
 
     @Input()
     public feSearchMode: 'accurate' | 'fuzzy' = 'accurate';
 
+    @ViewChild( 'heading' )
+    public headingRef!: ElementRef<HTMLElement>;
+
     @ViewChild( 'scroll', { read: ElementRef } )
+    public set scrollRefSetter( value: ElementRef<HTMLElement> ) {
+
+        this.scrollRef = value;
+
+        if ( value === undefined ) {
+            return;
+        }
+
+        this.listeners.push(
+            /* Link the scroll postion of the body to the scroll position of the heading */
+            this.renderer.listen( value.nativeElement, 'scroll', () => {
+
+                if ( this.headingRef === undefined ) {
+                    return;
+                }
+
+                this.headingRef.nativeElement.scrollLeft = value.nativeElement.scrollLeft;
+            } )
+        );
+    }
+
     public scrollRef!: ElementRef<HTMLElement>;
 
-    @ViewChildren( 'column' )
-    public set setColumnElements( value: QueryList<ElementRef<HTMLElement>> ) {
-        this.columnElements = value;
+    @ViewChildren( 'columnHeading' )
+    public set setColumnHeadingElements( value: QueryList<ElementRef<HTMLElement>> ) {
+        this.columnHeadingRef = value;
         this.calculateGreatestColumnWidth();
     }
 
     @ViewChildren( 'cell' )
     private set setCellElements( value: QueryList<TableCellDirective> ) {
-        this.cellElements = value;
+        this.cellRef = value;
+        this.calculateGreatestColumnWidth();
+    }
+
+    @HostListener( 'window:resize' )
+    public onResize() {
         this.calculateGreatestColumnWidth();
     }
 
@@ -267,8 +315,8 @@ export class TableComponent implements OnInit, OnDestroy {
     private listeners: Function[]         = [];
     private subscriptions: Subscription[] = [];
 
-    private columnElements?: QueryList<ElementRef<HTMLElement>>;
-    private cellElements?: QueryList<TableCellDirective>;
+    private columnHeadingRef?: QueryList<ElementRef<HTMLElement>>;
+    private cellRef?: QueryList<TableCellDirective>;
 
     public get buttonTheme(): ComponentTheme<PartialButtonTheme> {
         return {
@@ -293,7 +341,10 @@ export class TableComponent implements OnInit, OnDestroy {
         return this.resolvedSearchResultData ?? this.resolvedUnaffectedData;
     }
 
-    public greatestColumnWidth: number[]  = [];
+    public idealColumnWidth: number[]   = [];
+    public minimumColumnWidth: number[] = [];
+    public gotCollapsed: number[]       = [];
+
     public highlightedColumnIndex: number = NaN;
 
     public dragCurrentIndex             = NaN;
@@ -357,28 +408,31 @@ export class TableComponent implements OnInit, OnDestroy {
 
     public calculateGreatestColumnWidth(): void {
 
-        this.greatestColumnWidth = [];
+        this.idealColumnWidth   = [];
+        this.minimumColumnWidth = [];
+        this.gotCollapsed       = [];
 
-        if ( this.cellElements === undefined ) {
+        if ( this.cellRef === undefined || this.columnHeadingRef === undefined ) {
             return;
         }
 
-        if ( this.columnElements === undefined ) {
-            return;
-        }
+        this.cellRef.forEach( ( cell ) => {
 
-        this.cellElements.forEach( ( cell ) => {
+            const columnIndexCell  = cell.info.index;
+            const idealCellWidth   = Math.ceil( cell.idealWidth );
+            const minimumCellWidth = Math.ceil( cell.minWidth );
 
-            const index     = cell.info.index;
-            const cellWidth = Math.ceil( cell.width );
-
-            if ( this.greatestColumnWidth[ index ] === undefined || this.greatestColumnWidth[ index ] < cellWidth ) {
-                this.greatestColumnWidth[ index ] = cellWidth;
+            if ( this.idealColumnWidth[ columnIndexCell ] === undefined || this.idealColumnWidth[ columnIndexCell ] < idealCellWidth ) {
+                this.idealColumnWidth[ columnIndexCell ] = idealCellWidth;
             }
 
-            this.feColumns.forEach( ( column, index ) => {
+            if ( this.minimumColumnWidth[ columnIndexCell ] === undefined || this.minimumColumnWidth[ columnIndexCell ] < minimumCellWidth ) {
+                this.minimumColumnWidth[ columnIndexCell ] = minimumCellWidth;
+            }
 
-                const columnEl = this.columnElements?.get( index )?.nativeElement;
+            this.feColumns.forEach( ( column, columnIndexHeading ) => {
+
+                const columnEl = this.columnHeadingRef?.get( columnIndexHeading )?.nativeElement;
 
                 if ( columnEl === undefined ) {
                     return;
@@ -386,11 +440,76 @@ export class TableComponent implements OnInit, OnDestroy {
 
                 const columnWidth = Math.ceil( columnEl.getBoundingClientRect().width );
 
-                if ( columnWidth > this.greatestColumnWidth[ index ] ) {
-                    this.greatestColumnWidth[ index ] = columnWidth;
+                if ( columnWidth > this.idealColumnWidth[ columnIndexHeading ] ) {
+                    this.idealColumnWidth[ columnIndexHeading ] = columnWidth;
+                }
+
+                if ( columnWidth > this.minimumColumnWidth[ columnIndexHeading ] ) {
+                    this.minimumColumnWidth[ columnIndexHeading ] = columnWidth;
                 }
             } );
+
+            if ( this.idealColumnWidth[ columnIndexCell ] < this.minimumColumnWidth[ columnIndexCell ] ) {
+                this.idealColumnWidth[ columnIndexCell ] = this.minimumColumnWidth[ columnIndexCell ];
+            }
         } );
+
+        if ( this.feColumns === undefined || this.columnHeadingRef === undefined ) {
+            return;
+        }
+
+        const widthWithoutRestrictions =
+                  this.idealColumnWidth.reduce( ( a, b ) => a + b, 0 ) +
+                  ( remToPixels( 0.8 * 2 ) * this.idealColumnWidth.length ) +
+                  ( this.idealColumnWidth.length + 1 ) +
+                  ( this.feReorderable ? remToPixels( 1.2 + ( 0.8 * 2 ) ) : 0 ) +
+                  ( this.feSelectable ? remToPixels( 2 + ( 0.8 * 2 ) ) + 18 : 0 ) +
+                  ( this.feReorderable || this.feSelectable ? 1 : 0 );
+
+        let surplus = widthWithoutRestrictions - this.hostElement.nativeElement.clientWidth;
+
+        if ( surplus > 0 ) {
+
+            let collapsibleColumns   = this.feColumns.filter( ( column ) => column.collapsible ).length;
+            let balancedCompensation = Math.ceil( surplus / collapsibleColumns );
+
+            const alreadyAddressed: number[] = [];
+
+            /* Exclude columns where the heading wouldn't fit anymore */
+            this.feColumns.forEach( ( column, index ) => {
+
+                if ( !column.collapsible ) {
+                    return;
+                }
+
+                const columnMinWidth = this.minimumColumnWidth[ index ];
+                const newColumnWidth = this.idealColumnWidth[ index ] - balancedCompensation;
+
+                if ( newColumnWidth < columnMinWidth ) {
+
+                    surplus -= this.idealColumnWidth[ index ] - columnMinWidth;
+
+                    this.idealColumnWidth[ index ] = columnMinWidth;
+
+                    collapsibleColumns -= 1;
+                    balancedCompensation = collapsibleColumns > 0 ? Math.ceil( surplus / collapsibleColumns ) : 0;
+
+                    alreadyAddressed.push( index );
+                    this.gotCollapsed.push( index );
+                }
+            } );
+
+            this.feColumns.forEach( ( column, index ) => {
+
+                if ( !column.collapsible || alreadyAddressed.includes( index ) ) {
+                    return;
+                }
+
+                this.idealColumnWidth[ index ] = Math.max( this.idealColumnWidth[ index ] - balancedCompensation, this.minimumColumnWidth[ index ] );
+
+                this.gotCollapsed.push( index );
+            } );
+        }
     }
 
     public pointerDown( event: PointerEvent, rowElRef: HTMLDivElement, index: number ): void {
@@ -584,16 +703,14 @@ const ZTableColumnLabel = z.union(
     [
         z.object(
             {
-                icon       : z.string(),
-                text       : z.string(),
-                collapsible: z.boolean().default( false ).optional()
+                icon: z.string(),
+                text: z.string()
             }
         ),
         z.object(
             {
-                icon       : z.undefined(),
-                text       : z.string(),
-                collapsible: z.undefined()
+                icon: z.undefined(),
+                text: z.string()
             }
         )
     ]
@@ -629,7 +746,8 @@ export const ZTableColumn = z.object(
         sort            : ZTableColumnSort,
         align           : z.enum( [ 'left', 'center', 'right' ] ).optional(),
         passThroughClick: z.boolean().optional(),
-        onClick         : z.function().args( z.record( z.any() ) ).returns( z.void() ).optional()
+        onClick         : z.function().args( z.record( z.any() ) ).returns( z.void() ).optional(),
+        collapsible     : z.boolean().default( false ).optional()
     }
 ).or(
     z.object(
@@ -640,7 +758,8 @@ export const ZTableColumn = z.object(
             sort            : ZTableColumnSort,
             align           : z.enum( [ 'left', 'center', 'right' ] ).optional(),
             passThroughClick: z.boolean().optional(),
-            onClick         : z.function().args( z.record( z.any() ) ).returns( z.void() ).optional()
+            onClick         : z.function().args( z.record( z.any() ) ).returns( z.void() ).optional(),
+            collapsible     : z.boolean().default( false ).optional()
         }
     )
 );

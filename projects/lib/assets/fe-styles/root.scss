@@ -26,3 +26,24 @@
         white-space : nowrap !important;
     }
 }
+
+.measure-minimum {
+
+    position       : fixed !important;
+    top            : 0 !important;
+    left           : 0 !important;
+    pointer-events : none !important;
+    user-select    : none !important;
+    opacity        : 0 !important;
+    visibility     : hidden !important;
+    width          : 0 !important;
+    height         : fit-content !important;
+    padding        : 0 !important;
+    margin         : 0 !important;
+
+    white-space    : normal !important;
+
+    & > span {
+        white-space : normal !important;
+    }
+}

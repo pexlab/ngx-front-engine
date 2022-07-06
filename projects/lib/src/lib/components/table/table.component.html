@@ -1,19 +1,19 @@
-<div class="heading">
+<div class="heading" #heading>
 
-    <div class="select" *ngIf="feReorderable || feSelectable">
-        <svg-icon name="fe-drag-handle" *ngIf="feReorderable"></svg-icon>
+    <div class="select" *ngIf="reorderable || feSelectable">
+        <svg-icon name="fe-drag-handle" *ngIf="reorderable"></svg-icon>
         <fe-checkbox *ngIf="feSelectable"></fe-checkbox>
     </div>
 
-    <div class="divider" *ngIf="feReorderable || feSelectable"></div>
+    <div class="divider" *ngIf="reorderable || feSelectable"></div>
 
     <ng-container *ngFor="let column of feColumns; let i = index">
 
         <div class="divider" *ngIf="i > 0"></div>
 
         <div class="title"
-             [@.disabled]="!greatestColumnWidth[i]"
-             [@columnWidth]="{ value: greatestColumnWidth[i] ?? 0, params: { width: greatestColumnWidth[i] ? greatestColumnWidth[i] + 'px' : 'fit-content' } }"
+             [@.disabled]="!idealColumnWidth[i]"
+             [@columnWidth]="{ value: idealColumnWidth[i] ?? 0, params: { width: idealColumnWidth[i] ? idealColumnWidth[i] + 'px' : 'fit-content' } }"
              (mouseenter)="highlightedColumnIndex = i"
              (mouseleave)="highlightedColumnIndex = NaN()"
              [ngClass]="column.align ?? 'left'">
@@ -21,7 +21,7 @@
             <span>{{ column.label.text }}</span>
         </div>
 
-        <div class="title measurement" #column>
+        <div class="title measurement" #columnHeading>
             <svg-icon *ngIf="column.label.icon; let icon" [name]="icon"></svg-icon>
             <span>{{ column.label.text }}</span>
         </div>
@@ -117,35 +117,41 @@
                          [class.animateIn]="row['feIndex'] === lastDraggedItemIndex ? animateRowIn(row['feIndex']) : false">
 
                         <div class="select"
-                             *ngIf="feReorderable || feSelectable"
-                             [class.reorderable]="feReorderable"
-                             (pointerdown)="feReorderable ? pointerDown($event, rowEl, row['feIndex']) : undefined">
-                            <svg-icon name="fe-drag-handle" *ngIf="feReorderable"></svg-icon>
+                             *ngIf="reorderable || feSelectable"
+                             [class.reorderable]="reorderable"
+                             (pointerdown)="reorderable ? pointerDown($event, rowEl, row['feIndex']) : undefined">
+                            <svg-icon name="fe-drag-handle" *ngIf="reorderable"></svg-icon>
                             <fe-checkbox *ngIf="feSelectable"></fe-checkbox>
                         </div>
 
                         <ng-container *ngFor="let column of feColumns; let cellIndex = index">
 
                             <div class="divider"
-                                 *ngIf="cellIndex > 0 || (feReorderable || feSelectable)"
+                                 *ngIf="cellIndex > 0 || (reorderable || feSelectable)"
                                  [class.hidden]="highlightedColumnIndex >= 0 && (highlightedColumnIndex === cellIndex || highlightedColumnIndex === (cellIndex - 1))">
                             </div>
 
                             <div class="cell"
-                                 [fe-table-cell]="{ index: cellIndex, measurementEl: measurement }"
+                                 [fe-table-cell]="{ index: cellIndex, idealWidthEl: idealEl, minWidthEl: minEl}"
                                  #cell="cellDirective"
-                                 [@.disabled]="!greatestColumnWidth[cellIndex]"
-                                 [@columnWidth]="{ value: greatestColumnWidth[cellIndex] ?? 0, params: { width: greatestColumnWidth[cellIndex] ? greatestColumnWidth[cellIndex] + 'px' : 'fit-content' } }"
+                                 [@.disabled]="!idealColumnWidth[cellIndex]"
+                                 [@columnWidth]="{ value: idealColumnWidth[cellIndex] ?? 0, params: { width: idealColumnWidth[cellIndex] ? idealColumnWidth[cellIndex] + 'px' : 'fit-content' } }"
                                  [class.highlight]="highlightedColumnIndex === cellIndex"
                                  [class.inFirstRow]="row['feIndex'] === 0"
                                  [class.inLastRow]="row['feIndex'] === resolvedRelevantData.length - 1"
                                  [class.passThroughClick]="column.passThroughClick"
                                  [class.ignoreClick]="column.onClick === undefined && !column.passThroughClick"
+                                 [class.originalWidth]="!gotCollapsed.includes(cellIndex)"
                                  [style.cursor]="column.onClick !== undefined ? 'pointer' : 'default'"
                                  [ngClass]="column.align ?? 'left'"
                                  (click)="column.onClick ? column.onClick(row) : undefined">
 
-                                <div class="measurement" #measurement>
+                                <div class="measurement" #idealEl>
+                                    <ng-container
+                                        [fe-table-cell-renderer]="{ renderer: column.renderer, property: getPath(row, column.linkedProperty) }"></ng-container>
+                                </div>
+
+                                <div class="measure-minimum" #minEl>
                                     <ng-container
                                         [fe-table-cell-renderer]="{ renderer: column.renderer, property: getPath(row, column.linkedProperty) }"></ng-container>
                                 </div>

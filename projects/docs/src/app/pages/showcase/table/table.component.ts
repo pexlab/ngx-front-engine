@@ -40,43 +40,39 @@ export class TableComponent implements OnInit, OnDestroy {
         {
             linkedProperty: 'feInitialItemIndex',
             label         : {
-                text       : 'Item Index',
-                icon       : 'hashtag',
-                collapsible: true
+                text: 'Item Index',
+                icon: 'hashtag'
             }
         },
         {
             linkedProperty: 'name',
             label         : {
-                text       : 'Name',
-                icon       : 'user',
-                collapsible: true
+                text: 'Name',
+                icon: 'user'
             }
         },
         {
             linkedProperty: 'company',
             label         : {
-                text       : 'Company',
-                icon       : 'building',
-                collapsible: true
+                text: 'Company',
+                icon: 'building'
             }
         },
         {
             linkedProperty: 'eye.color',
             label         : {
-                text       : 'Eye Color',
-                icon       : 'eye',
-                collapsible: true
+                text: 'Eye Color',
+                icon: 'eye'
             },
-            renderer: EyeComponent
+            renderer      : EyeComponent
         },
         {
             linkedProperty: 'address',
             label         : {
-                text       : 'Address',
-                icon       : 'location',
-                collapsible: true
-            }
+                text: 'Address',
+                icon: 'location'
+            },
+            collapsible   : true
         }
     ];
 
