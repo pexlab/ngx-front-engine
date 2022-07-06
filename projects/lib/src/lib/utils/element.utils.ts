@@ -6,3 +6,7 @@ export function elementWidthWithoutPadding( element: HTMLElement ): number {
 
     return element.offsetWidth - paddingX;
 }
+
+export function remToPixels( rem: number ) {
+    return rem * parseFloat( getComputedStyle( document.documentElement ).fontSize );
+}
