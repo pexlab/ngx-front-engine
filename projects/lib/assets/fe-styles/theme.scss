@@ -107,6 +107,10 @@ $scope : 'custom' !default;
             border-radius    : 0;
             background-color : $track;
         }
+
+        &::-webkit-scrollbar-corner {
+            background-color : $track;
+        }
     }
 
     @if $overlay == 'y' or $overlay == 'x' or $overlay == 'xy' {
