@@ -2,3 +2,7 @@ export const capitalizedKebabCase = ( str: any ) => String( str ).replace( /([a-
                                                                   .replace( /[\s_.]+/g, '-' );                 // replace all spaces, underscores and dots with a dash
 
 export const kebabCase = ( str: any ) => capitalizedKebabCase( String( str ) ).toLowerCase();
+
+export function escapeRegExp( string: string ) {
+    return string.replace( /[.*+?^${}()|[\]\\]/g, '\\$&' );
+}

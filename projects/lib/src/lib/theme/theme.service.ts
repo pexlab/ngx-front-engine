@@ -5,7 +5,7 @@ import { RootComponent } from '../components/root/root.component';
 import { ColorRegister, EvaluatedColor, HEXColor, HEXColorRegister } from '../interfaces/color.interface';
 import { CommonTheme, ComponentThemes, PartialCommonTheme, PartialComponentThemes } from '../interfaces/theme.interface';
 import { Typography } from '../interfaces/typography.interface';
-import { kebabCase } from '../utils/case.utils';
+import { kebabCase } from '../utils/string.utils';
 import { mergeObj } from '../utils/type.utils';
 import { Color } from './color';
 import { FeColorPalette } from './featured-palette';

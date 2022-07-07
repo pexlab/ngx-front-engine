@@ -18,6 +18,7 @@ import { ComponentTheme } from '../../interfaces/color.interface';
 import { ThemeService } from '../../theme/theme.service';
 import { FeComponent } from '../../utils/component.utils';
 import { remToPixels } from '../../utils/element.utils';
+import { escapeRegExp } from '../../utils/string.utils';
 import { PartialButtonTheme } from '../button/button.theme';
 import { TableCellDirective } from './table-cell.directive';
 import { PartialTableTheme } from './table.theme';
@@ -194,7 +195,7 @@ export class TableComponent implements OnInit, OnDestroy {
                                 let partsFound = 0;
 
                                 for ( let part of parts ) {
-                                    if ( String( obj[ key ] ).toLowerCase().search( new RegExp( part, 'g' ) ) !== -1 ) {
+                                    if ( String( obj[ key ] ).toLowerCase().search( new RegExp( escapeRegExp( part ), 'g' ) ) !== -1 ) {
                                         partsFound++;
                                     }
                                 }

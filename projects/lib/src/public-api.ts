@@ -8,7 +8,7 @@ export * from './lib/interfaces/color.interface';
 export * from './lib/interfaces/i18n.interface';
 export * from './lib/interfaces/theme.interface';
 
-export * from './lib/utils/case.utils';
+export * from './lib/utils/string.utils';
 export * from './lib/utils/type.utils';
 export * from './lib/utils/time.utils';
 export * from './lib/utils/translation.utils';
