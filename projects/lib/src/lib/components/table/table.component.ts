@@ -186,7 +186,11 @@ export class TableComponent implements OnInit, OnDestroy {
 
                 const matches = this.resolvedUnaffectedData.filter( ( record ) => {
 
-                    const find = ( obj: Record<string, any> ) => {
+                    const find = ( obj: Record<string, any> | undefined | null ) => {
+
+                        if ( obj === undefined || obj === null ) {
+                            return false;
+                        }
 
                         for ( const key of Object.keys( obj ) ) {
 
