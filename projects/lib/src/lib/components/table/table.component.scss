@@ -55,6 +55,8 @@
             align-items     : center;
             justify-content : start;
 
+            white-space     : nowrap;
+
             @include theme.inlineIcon(1.2rem);
 
             cursor          : pointer;
