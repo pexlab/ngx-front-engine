@@ -5,6 +5,7 @@
         "entryFile": "src/public-api.ts"
     },
     "allowedNonPeerDependencies": [
+        "@angular/cdk",
         "wcag-contrast",
         "@twixes/svg-round-corners",
         "lodash",
@@ -16,7 +17,6 @@
         "@fontsource/baloo-bhaina-2",
         "@fontsource/architects-daughter",
         "@fontsource/pangolin",
-        "@iharbeck/ngx-virtual-scroller",
         "fuse.js"
     ],
     "assets": [
