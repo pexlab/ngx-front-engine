@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { TableColumn, TableDemoActions } from '@pexlab/ngx-front-engine';
 import { Subscription } from 'rxjs';
 import { EyeComponent } from './eye/eye.component';
@@ -13,7 +13,7 @@ import { SampleData } from './sample-data';
 )
 export class TableComponent implements OnInit, OnDestroy {
 
-    constructor( private fb: FormBuilder, public hostElement: ElementRef ) {
+    constructor( private fb: UntypedFormBuilder, public hostElement: ElementRef ) {
         this.formGroup = fb.group( {
             quicksearch: null
         } );
@@ -31,7 +31,7 @@ export class TableComponent implements OnInit, OnDestroy {
 
     public quickSearch?: string;
 
-    public formGroup!: FormGroup;
+    public formGroup!: UntypedFormGroup;
     public formSubscription?: Subscription;
 
     public tableActions = TableDemoActions;

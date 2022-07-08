@@ -5,7 +5,8 @@
       "cache": {
         "enabled": false
       },
-        "packageManager": "npm"
+        "packageManager": "npm",
+        "analytics": false
     },
     "newProjectRoot": "projects",
     "projects": {
@@ -169,6 +170,5 @@
                 }
             }
         }
-    },
-    "defaultProject": "lib"
+    }
 }

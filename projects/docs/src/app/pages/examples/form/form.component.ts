@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { FeBundledTranslations } from '@pexlab/ngx-front-engine';
 
 @Component(
@@ -14,14 +14,14 @@ export class FormComponent {
     
     public numeralTranslations = FeBundledTranslations.Numerals;
     
-    public exampleForm = new FormGroup(
+    public exampleForm = new UntypedFormGroup(
         {
-            firstName          : new FormControl( '' ),
-            lastName           : new FormControl( '' ),
-            gender             : new FormControl( null ),
-            newsletter         : new FormControl( false ),
-            newsletter_interval: new FormControl( 1 ),
-            billing_rate       : new FormControl( 'fixed' )
+            firstName          : new UntypedFormControl( '' ),
+            lastName           : new UntypedFormControl( '' ),
+            gender             : new UntypedFormControl( null ),
+            newsletter         : new UntypedFormControl( false ),
+            newsletter_interval: new UntypedFormControl( 1 ),
+            billing_rate       : new UntypedFormControl( 'fixed' )
         }
     );
     

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormBuilder } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder } from '@angular/forms';
 import { ComponentTheme, PartialDropdownTheme, ThemeService } from '@pexlab/ngx-front-engine';
 import { Subscription } from 'rxjs';
 
@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 )
 export class DropdownComponent implements OnInit, OnDestroy {
     
-    constructor( private fb: FormBuilder, private theme: ThemeService ) { }
+    constructor( private fb: UntypedFormBuilder, private theme: ThemeService ) { }
     
     public formGroup = this.fb.group(
         {
@@ -24,7 +24,7 @@ export class DropdownComponent implements OnInit, OnDestroy {
     );
     
     public get properties() {
-        return this.formGroup.controls[ 'properties' ] as FormArray;
+        return this.formGroup.controls[ 'properties' ] as UntypedFormArray;
     }
     
     public defaultTheme: ComponentTheme<PartialDropdownTheme> = {

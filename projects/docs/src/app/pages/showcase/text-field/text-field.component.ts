@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 
 @Component(
     {
@@ -10,9 +10,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 export class TextFieldComponent implements OnInit {
 
-    constructor( private fb: FormBuilder ) { }
+    constructor( private fb: UntypedFormBuilder ) { }
 
-    public formGroup!: FormGroup;
+    public formGroup!: UntypedFormGroup;
 
     public ngOnInit(): void {
         this.formGroup = this.fb.group(
