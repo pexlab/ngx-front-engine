@@ -203,6 +203,8 @@
         overflow-y    : auto;
         overflow-x    : hidden;
 
+        isolation     : isolate;
+
         background    : theme.hex('background-row-even');
 
         @include theme.inlineIcon(5.5rem);
@@ -251,7 +253,7 @@
 
             @include theme.scrollbar(theme.hex('outline'), theme.hex('outline'), transparent, 'xy', 0.5rem, 0.25rem);
 
-            &::ng-deep > .scrollable-content {
+            &::ng-deep > .cdk-virtual-scroll-content-wrapper {
 
                 position : relative;
 
@@ -286,7 +288,6 @@
                     & > .row {
 
                         width           : 100%;
-                        height          : fit-content;
 
                         display         : grid;
                         grid-auto-flow  : column;
@@ -450,6 +451,8 @@
 
                             box-sizing     : content-box;
                             padding        : 0 .8rem 0 .8rem;
+
+                            touch-action   : none;
 
                             @include theme.inlineIcon(1.2rem);
 

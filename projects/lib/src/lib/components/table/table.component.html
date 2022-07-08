@@ -92,12 +92,9 @@
 
     <ng-container *ngIf="resolvedRelevantData !== undefined">
 
-        <virtual-scroller class="scroller"
-                          #scroll
-                          [items]="resolvedRelevantData ?? []"
-                          [bufferAmount]="2">
+        <cdk-virtual-scroll-viewport itemSize="45" class="scroller" #scroll>
 
-            <ng-container *ngFor="let row of scroll.viewPortItems">
+            <ng-container *cdkVirtualFor="let row of resolvedRelevantData ?? []">
 
                 <div class="wrapper">
 
@@ -110,8 +107,7 @@
 
                     <div class="row"
                          #rowEl
-                         (pointerenter)="pointerOver(rowEl, row['feIndex'])"
-                         [ngClass]="row['feIndex'] % 2 === 0 ? 'even' : 'odd'"
+                         [ngClass]="[row['feIndex'] % 2 === 0 ? 'even' : 'odd', 'fe-table-' + tableId + '-row-' + row['feIndex']]"
                          [class.beingDragged]="row['feIndex'] === dragCurrentIndex"
                          [class.nonInteractive]="!isNaN(dragCurrentIndex)"
                          [class.animateIn]="row['feIndex'] === lastDraggedItemIndex ? animateRowIn(row['feIndex']) : false">
@@ -172,7 +168,7 @@
 
             </ng-container>
 
-        </virtual-scroller>
+        </cdk-virtual-scroll-viewport>
 
     </ng-container>
 

@@ -12,6 +12,7 @@ import {
     ViewChild,
     ViewChildren
 } from '@angular/core';
+import { nanoid } from 'nanoid';
 import { Subscription } from 'rxjs';
 import { z } from 'zod';
 import { ComponentTheme } from '../../interfaces/color.interface';
@@ -266,7 +267,9 @@ export class TableComponent implements OnInit, OnDestroy {
 
         this.listeners.push(
             /* Link the scroll postion of the body to the scroll position of the heading */
-            this.renderer.listen( value.nativeElement, 'scroll', () => {
+            this.renderer.listen( value.nativeElement, 'scroll', ( event: Event ) => {
+
+                this.pointerMove( event as any, false );
 
                 if ( this.headingRef === undefined ) {
                     return;
@@ -295,6 +298,8 @@ export class TableComponent implements OnInit, OnDestroy {
     public onResize() {
         this.calculateGreatestColumnWidth();
     }
+
+    public tableId = nanoid();
 
     public getPath = lodash.get;
 
@@ -366,13 +371,13 @@ export class TableComponent implements OnInit, OnDestroy {
 
     public get isScrollable() {
 
-        const scrollableContent = this.scrollRef?.nativeElement.children.item( 1 );
+        const scroller = this.scrollRef?.nativeElement;
 
-        if ( !scrollableContent ) {
+        if ( !scroller ) {
             return false;
         }
 
-        return scrollableContent.scrollHeight > scrollableContent.clientHeight;
+        return scroller.scrollHeight > scroller.clientHeight;
     }
 
     public ngOnInit(): void {
@@ -380,8 +385,8 @@ export class TableComponent implements OnInit, OnDestroy {
         /* Listen to events without triggering change detection */
         this.ngZone.runOutsideAngular( () => {
             this.listeners.push(
-                this.renderer.listen( window, 'pointermove', ( event ) => this.pointerMove( event ) ),
-                this.renderer.listen( window, 'pointerup', () => this.pointerUp() )
+                this.renderer.listen( window, 'pointermove', ( event ) => this.pointerMove( event, true ) ),
+                this.renderer.listen( window, 'pointerup', ( event ) => this.pointerUp( event ) )
             );
         } );
 
@@ -515,6 +520,8 @@ export class TableComponent implements OnInit, OnDestroy {
                 this.gotCollapsed.push( index );
             } );
         }
+
+        this.cdr.detectChanges();
     }
 
     public pointerDown( event: PointerEvent, rowElRef: HTMLDivElement, index: number ): void {
@@ -524,7 +531,9 @@ export class TableComponent implements OnInit, OnDestroy {
             return;
         }
 
-        const scrollableContent = this.scrollRef.nativeElement.children.item( 1 );
+        event.preventDefault();
+
+        const scrollableContent = this.scrollRef.nativeElement.children.item( 0 );
 
         const dragDummy = rowElRef.cloneNode( true ) as HTMLElement;
 
@@ -546,21 +555,66 @@ export class TableComponent implements OnInit, OnDestroy {
         this.dragDummyEl.style.top = ( event.clientY - scrollableContent.getBoundingClientRect().top - this.dragOffsetY ) + 'px';
     }
 
-    public pointerMove( event: PointerEvent ) {
+    private lastClientY    = 0;
+    private lastPageX      = 0;
+    private lastPageY      = 0;
+    private stillOnRow     = false;
+    private lastHoveredRow = NaN;
+
+    public pointerMove( event: PointerEvent, prevent: boolean ) {
 
         if ( this.dragDummyEl === undefined ) {
             return;
         }
 
-        event.preventDefault();
+        if ( prevent ) {
+            event.preventDefault();
+        }
 
-        const scrollableContent = this.scrollRef.nativeElement.children.item( 1 );
+        if ( event.clientY !== undefined ) {
+            this.lastClientY = event.clientY;
+        }
+
+        if ( event.pageX !== undefined && event.pageY ) {
+            this.lastPageX = event.pageX;
+            this.lastPageY = event.pageY;
+        }
+
+        let isOnRow = false;
+
+        document.elementsFromPoint( this.lastPageX, this.lastPageY ).forEach( ( element ) => {
+
+            element.classList.forEach( ( className ) => {
+
+                if ( className.startsWith( 'fe-table-' + this.tableId + '-row-' ) ) {
+
+                    const row = +className.substring( ( 'fe-table-' + this.tableId + '-row-' ).length );
+
+                    isOnRow = true;
+
+                    if ( !this.stillOnRow || row !== this.lastHoveredRow ) {
+                        this.lastHoveredRow = row;
+                        this.pointerOver( element as HTMLElement, row );
+                    }
+                }
+            } );
+        } );
+
+        if ( !isOnRow && this.stillOnRow ) {
+            this.stillOnRow = false;
+        }
+
+        if ( isOnRow && !this.stillOnRow ) {
+            this.stillOnRow = true;
+        }
+
+        const scrollableContent = this.scrollRef.nativeElement.children.item( 0 );
 
         if ( !scrollableContent ) {
             return;
         }
 
-        this.dragDummyEl.style.top = ( event.clientY - scrollableContent.getBoundingClientRect().top - this.dragOffsetY ) + 'px';
+        this.dragDummyEl.style.top = ( this.lastClientY - scrollableContent.getBoundingClientRect().top - this.dragOffsetY ) + 'px';
     }
 
     public get dragTargetToIndex(): number {
@@ -574,11 +628,13 @@ export class TableComponent implements OnInit, OnDestroy {
         return toIndex;
     }
 
-    public pointerUp() {
+    public pointerUp( event: PointerEvent ) {
 
         if ( this.dragDummyEl === undefined || this.dragTargetEl === undefined ) {
             return;
         }
+
+        event.preventDefault();
 
         const fromIndex = this.dragCurrentIndex;
         let toIndex     = this.dragTargetIndex + ( this.dragTargetIndex >= this.dragCurrentIndex ? 0 : this.dragDirection === 'down' ? 1 : 0 );
@@ -652,6 +708,8 @@ export class TableComponent implements OnInit, OnDestroy {
         }
 
         this.dragTargetIndex = index;
+
+        this.cdr.detectChanges();
     }
 }
 
