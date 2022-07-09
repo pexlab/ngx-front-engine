@@ -20,7 +20,7 @@ import {
     ViewChildren
 } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
-import { parsePath, roundCommands } from '@twixes/svg-round-corners';
+import { parsePath, roundCommands } from 'svg-round-corners';
 import { nanoid } from 'nanoid';
 import { ComponentTheme } from '../../interfaces/color.interface';
 import { AsynchronouslyInitialisedComponent, FeComponent } from '../../utils/component.utils';

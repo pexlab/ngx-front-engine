@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Optional, Output, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
-import { parsePath, roundCommands } from '@twixes/svg-round-corners';
+import { parsePath, roundCommands } from 'svg-round-corners';
 import { ComponentTheme } from '../../interfaces/color.interface';
 import { FeComponent } from '../../utils/component.utils';
 import { PartialCheckboxTheme } from './checkbox.theme';
