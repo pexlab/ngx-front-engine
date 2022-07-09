@@ -7,8 +7,8 @@
 
     display  : block;
 
-    width    : 450px;
-    height   : 450px;
+    width: fit-content;
+    height: fit-content;
 
     & > .center {
         position  : absolute;
@@ -23,7 +23,6 @@
         position  : relative;
 
         @include theme.commonFont('body');
-        font-size : 75px;
         color     : white;
     }
 
@@ -34,12 +33,19 @@
         top       : 50%;
 
         @include theme.commonFont('caption');
-        font-size : 75px;
         color     : white;
 
         opacity   : .15;
 
         transform : translateY(-93%) translateX(-50%);
+    }
+
+    & .bottomText {
+        @include theme.commonFont('body');
+    }
+
+    & .stepText {
+        @include theme.commonFont('body');
     }
 
     & > .bottom {
@@ -49,10 +55,6 @@
         display     : grid;
         place-items : center;
 
-        width       : 150px;
-        height      : 80px;
-
-        bottom      : math.div(450px - 300px, 2);
         left        : 50%;
 
         transform   : translateX(-50%);
@@ -64,13 +66,11 @@
             position    : absolute;
 
             left        : 50%;
-            top         : 10px;
             transform   : translateX(-50%);
 
             color       : theme.hex('background-outer');
 
             @include theme.commonFont('body');
-            font-size   : 28px;
 
             text-align  : center;
             white-space : nowrap;
@@ -83,7 +83,6 @@
             position    : absolute;
 
             left        : 50%;
-            bottom      : 10px;
             transform   : translateX(-50%);
 
             color       : white;
@@ -91,7 +90,6 @@
             opacity     : .15;
 
             @include theme.commonFont('body');
-            font-size   : 21px;
 
             text-align  : center;
             white-space : nowrap;
@@ -100,6 +98,13 @@
 }
 
 svg.speedometer {
+
+    &.overlay {
+        position: absolute;
+        left: 0;
+        top: 0;
+        transition: transform .5s cubic-bezier(0.65, 0, 0.35, 1);
+    }
 
     & > circle.outer-frame {
         fill       : transparent;
@@ -139,10 +144,23 @@ svg.speedometer {
     }
 
     & > path.hud {
-        stroke-width : 3px;
         stroke       : theme.hex('hud');
         fill         : transparent;
         transition   : stroke .25s ease;
+    }
+
+    & > path.step {
+        stroke       : theme.hex('step-primary');
+        fill         : transparent;
+    }
+
+    & > path.interimStep {
+        stroke       : theme.hex('step-secondary');
+        fill         : transparent;
+    }
+
+    & > path.marker {
+        fill         : theme.hex('marker');
     }
 
     & > defs {

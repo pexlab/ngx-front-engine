@@ -489,7 +489,14 @@ export class ThemeService {
                 background: {
                     inner: FeColorPalette.Blue.PureBlue,
                     outer: FeColorPalette.Blue.Eclipse
-                }
+                },
+
+                step: {
+                    primary  : FeColorPalette.Greyscale.SnowWhite,
+                    secondary: FeColorPalette.Greyscale.SnowWhite
+                },
+
+                marker: FeColorPalette.Cyan.AgalAquamarine,
             },
 
             stepper: {

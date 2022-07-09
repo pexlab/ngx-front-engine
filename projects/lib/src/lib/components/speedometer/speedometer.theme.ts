@@ -16,6 +16,13 @@ export const ZSpeedometerTheme = z.object(
                 gradientEnd  : ZHEXColor
             }
         ),
+        step      : z.object(
+            {
+                primary  : ZHEXColor,
+                secondary: ZHEXColor
+            }
+        ),
+        marker    : ZHEXColor,
         background: z.object(
             {
                 inner: ZHEXColor,

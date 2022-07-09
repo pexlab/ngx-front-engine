@@ -1,4 +1,4 @@
-<svg class="speedometer" [attr.width]="canvasDiameter" [attr.height]="canvasDiameter"
+<svg class="speedometer" [attr.width]="feDiameter" [attr.height]="feDiameter"
      [attr.style]="domSam.bypassSecurityTrustStyle(
      '--offsetStart: ' + indicatorLength + 'px; --offsetEnd: ' + this.indicatorMaxLength + 'px; --gap: ' + indicatorGap + 'px')">
 
@@ -15,15 +15,15 @@
             [attr.stroke-width]="outerFrameWidth">
     </circle>
 
-    <circle class="inner-circle"
-            [attr.r]="circleRadius"
+    <circle id="inner_circle" class="inner-circle"
+            [attr.r]="innerCircleRadius"
             [attr.cx]="canvasRadius"
             [attr.cy]="canvasRadius"
             [attr.fill]="'url(#' + innerCircleGradientId + ')'">
     </circle>
 
     <circle class="inner-frame"
-            [attr.r]="circleRadius - (innerFrameWidth / 2)"
+            [attr.r]="innerCircleRadius - (innerFrameWidth / 2)"
             [attr.cx]="canvasRadius"
             [attr.cy]="canvasRadius"
             [attr.stroke-width]="innerFrameWidth"
@@ -31,6 +31,7 @@
     </circle>
 
     <circle class="indicator"
+            id="indicator"
             #indicator
             [attr.r]="indicatorRadius"
             [attr.cx]="canvasRadius"
@@ -41,7 +42,7 @@
     </circle>
 
     <circle class="outer-indicator-frame"
-            [attr.r]="circleRadius - (indicatorGap / 2) + indicatorGap"
+            [attr.r]="innerCircleRadius - (indicatorGap / 2) + indicatorGap"
             [attr.cx]="canvasRadius"
             [attr.cy]="canvasRadius"
             [attr.stroke-width]="indicatorGap"
@@ -50,7 +51,7 @@
     </circle>
 
     <circle class="inner-indicator-frame"
-            [attr.r]="circleRadius + indicatorGap + indicatorWidth + (indicatorGap / 2)"
+            [attr.r]="innerCircleRadius + indicatorGap + indicatorWidth + (indicatorGap / 2)"
             [attr.cx]="canvasRadius"
             [attr.cy]="canvasRadius"
             [attr.stroke-width]="indicatorGap"
@@ -58,10 +59,19 @@
             [style.opacity]="1">
     </circle>
 
-    <path class="hud" [attr.d]="path" [attr.clip-path]="'url(#' + circleId + ')'"></path>
+    <path class="hud" [attr.d]="hudPath" [style.stroke-width]="hudStrokeWidth"></path>
+
+    <text text-anchor="middle" class="bottomText" fill="#ffffff" [style.font-size]="feDiameter / 16.07 + 'px'" dominant-baseline="middle"
+          [attr.textLength]="bottomLength - 14">
+        <textPath xlink:href="#indicator" side="right"
+                  [attr.startOffset]="bottomTextBottomOffset">{{ 'SPEED' }}</textPath>
+    </text>
+
+    <path class="step" *ngFor="let step of stepPaths" [attr.d]="step" [style.stroke-width]="stepStrokeWidth"></path>
+    <path class="interimStep" *ngFor="let step of interimStepPaths" [attr.d]="step"
+          [style.stroke-width]="interimStepStrokeWidth"></path>
 
     <defs>
-
         <linearGradient [id]="indicatorGradientId" class="indicator-gradient">
             <stop offset="0%"/>
             <stop offset="100%"/>
@@ -69,7 +79,8 @@
 
         <linearGradient [id]="innerFrameGradientId" class="inner-frame-gradient" gradientTransform="rotate(90)">
             <stop offset="0%"/>
-            <stop offset="80%" stop-opacity="0"/>
+            <stop offset="83%" stop-opacity="1"/>
+            <stop offset="97%" stop-opacity="0"/>
         </linearGradient>
 
         <radialGradient [id]="innerCircleGradientId" class="inner-circle-gradient">
@@ -93,12 +104,45 @@
 
 </svg>
 
+<svg class="speedometer overlay" [attr.width]="feDiameter" [attr.height]="feDiameter"
+     [style.transform]="'rotate(90deg)'">
+
+    <circle id="stepTextCircle"
+            [attr.r]="innerCircleRadius - stepStrokeLength - (feDiameter / 450)"
+            [attr.cx]="canvasRadius"
+            [attr.cy]="canvasRadius"
+            [style.stroke]="'transparent'"
+            [attr.fill]="'transparent'">
+    </circle>
+
+    <text *ngFor="let text of stepTexts" class="stepText" fill="#ffffff" [style.font-size]="feDiameter / 40 + 'px'" dominant-baseline="hanging" text-anchor="middle">
+        <textPath xlink:href="#stepTextCircle" side="left" [attr.startOffset]="text.offset">{{ text.text }}</textPath>
+    </text>
+</svg>
+
+<svg *ngFor="let marker of markers" class="speedometer overlay" [attr.width]="feDiameter" [attr.height]="feDiameter"
+     [style.transform]="'rotate(' + marker.rotateDegree + 'deg)'">
+    <path class="marker"
+          [attr.d]="marker.path"
+          [attr.transform]="'translate(' + (marker.cx) + ',' + (marker.y - marker.height) + ')'">
+    </path>
+</svg>
+
+<svg class="speedometer overlay" [attr.width]="feDiameter" [attr.height]="feDiameter"
+     [style.transform]="'rotate(' + indicatorMarkerRotateDegree + 'deg)'">
+    <path class="marker"
+          [attr.d]="indicatorMarkerPath"
+          [attr.transform]="'translate(' + indicatorMarkerCX + ',' + (indicatorMarkerY - indicatorMarkerHeight) + ')'">
+    </path>
+</svg>
+
 <div class="center">
-    <span class="background-text">{{ feUnit }}</span>
-    <span class="foreground-text" #foregroundText></span>
+    <span class="background-text" [style.font-size]="feDiameter / 6 + 'px'">{{ feUnit }}</span>
+    <span class="foreground-text" [style.font-size]="feDiameter / 6 + 'px'" #foregroundText></span>
 </div>
 
-<div class="bottom">
-    <span>{{ feLabelPrimary }}</span>
-    <span>{{ feLabelSecondary }}</span>
+<div class="bottom" [style.width]="feDiameter / 3  + 'px'" [style.height]="feDiameter / 5.625 + 'px'" [style.bottom]="((feDiameter - (feDiameter / 1.5))) / 2 + 'px'">
+    <span [style.top]="canvasRadius / 45 + 'px'" [style.font-size]="feDiameter / 16.07 + 'px'">{{ feLabelPrimary }}</span>
+    <span [style.bottom]="canvasRadius / 45 + 'px'"
+          [style.font-size]="(feDiameter / 21.428) + 'px'">{{ feLabelSecondary }}</span>
 </div>
