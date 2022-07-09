@@ -44,6 +44,10 @@ export * from './lib/components/dropdown/choice/dropdown-choice.component';
 export * from './lib/components/dropdown/dropdown.theme';
 export * from './lib/components/dropdown/dropdown.module';
 
+export * from './lib/components/line-chart/line-chart.component';
+export * from './lib/components/line-chart/line-chart.theme';
+export * from './lib/components/line-chart/line-chart.module';
+
 export * from './lib/components/notepaper/notepaper.component';
 export * from './lib/components/notepaper/notepaper.theme';
 export * from './lib/components/notepaper/notepaper.module';

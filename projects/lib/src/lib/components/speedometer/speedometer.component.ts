@@ -2,7 +2,6 @@ import { AfterViewInit, Component, ElementRef, Input, NgZone, ViewChild } from '
 import { DomSanitizer } from '@angular/platform-browser';
 import { parsePath, roundCommands } from 'svg-round-corners';
 import { customAlphabet } from 'nanoid';
-import { error } from 'ng-packagr/lib/utils/log';
 import { ComponentTheme } from '../../interfaces/color.interface';
 import { FeComponent } from '../../utils/component.utils';
 import { PartialSpeedometerTheme } from './speedometer.theme';

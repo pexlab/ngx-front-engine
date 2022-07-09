@@ -5,6 +5,7 @@ import { ZButtonTheme } from '../components/button/button.theme';
 import { ZCheckboxTheme } from '../components/checkbox/checkbox.theme';
 import { ZCommentTheme } from '../components/comment/comment.theme';
 import { ZDropdownTheme } from '../components/dropdown/dropdown.theme';
+import { ZLineChartTheme } from '../components/line-chart/line-chart.theme';
 import { ZNotepaperTheme } from '../components/notepaper/notepaper.theme';
 import { ZPopupTheme } from '../components/popup/popup.theme';
 import { ZSpeedometerTheme } from '../components/speedometer/speedometer.theme';
@@ -80,6 +81,7 @@ export type ThemeableComponents = 'alertPortal'
                                   | 'checkbox'
                                   | 'comment'
                                   | 'dropdown'
+                                  | 'lineChart'
                                   | 'notepaper'
                                   | 'popup'
                                   | 'speedometer'
@@ -102,6 +104,7 @@ export const ZComponentThemes = z.object(
             checkbox      : ZCheckboxTheme,
             comment       : ZCommentTheme,
             dropdown      : ZDropdownTheme,
+            lineChart     : ZLineChartTheme,
             notepaper     : ZNotepaperTheme,
             popup         : ZPopupTheme,
             speedometer   : ZSpeedometerTheme,
