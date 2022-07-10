@@ -4,6 +4,7 @@ import { parsePath, roundCommands } from 'svg-round-corners';
 import { customAlphabet } from 'nanoid';
 import { ComponentTheme } from '../../interfaces/color.interface';
 import { FeComponent } from '../../utils/component.utils';
+import { SVGUtil } from '../../utils/svg.utils';
 import { PartialSpeedometerTheme } from './speedometer.theme';
 
 @FeComponent( 'speedometer' )
@@ -66,6 +67,8 @@ export class SpeedometerComponent implements AfterViewInit {
     @ViewChild( 'indicator' )
     public indicatorEl!: ElementRef<SVGCircleElement>;
 
+    public svgUtil = SVGUtil;
+
     /* SVG drawing ids (to encapsulate defs and not affect other instances of the speedometer) */
     private generateId           = customAlphabet( 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 24 );
     public indicatorGradientId   = this.generateId();
@@ -88,6 +91,7 @@ export class SpeedometerComponent implements AfterViewInit {
     public interimStepStrokeWidth!: number;
     public stepStrokeLength!: number;
     public interimStepStrokeLength!: number;
+    public stepTextCircleRadius!: number;
 
     public hudStrokeWidth!: number;
 
@@ -158,6 +162,7 @@ export class SpeedometerComponent implements AfterViewInit {
         this.interimStepStrokeWidth  = this.feDiameter / ( 450 / 2 ); // (450 / 2) Ratio between default feDiameter and default interimStepStrokeWidth
         this.stepStrokeLength        = this.feDiameter / ( 450 / 15 ); // (450 / 15) Ratio between default feDiameter and default STEP_STROKE_LENGTH
         this.interimStepStrokeLength = this.feDiameter / ( 450 / 7.5 ); // (450 / 7.5) Ratio between default feDiameter and default INTERIM_STEP_STOKE_LENGTH
+        this.stepTextCircleRadius = this.innerCircleRadius - this.stepStrokeLength;
 
         this.hudStrokeWidth = this.feDiameter / ( 450 / 3 ); // (450 / 3) Ratio between default feDiameter and default hudStrokeWidth
 
@@ -262,8 +267,6 @@ export class SpeedometerComponent implements AfterViewInit {
 
             const stepDegree = ( 280 / ( max - min ) ) * ( stepCounter * this.feStepSize[ 0 ] );
 
-            console.log( stepDegree );
-
             const xOneStep = this.canvasRadius + ( Math.cos( this.degToRad( 130 + stepDegree ) ) * ( this.innerCircleRadius ) );
             const yOneStep = this.canvasRadius + ( Math.sin( this.degToRad( 130 + stepDegree ) ) * ( this.innerCircleRadius ) );
             const xTwoStep = this.canvasRadius + ( Math.cos( this.degToRad( 130 + stepDegree ) ) * ( this.innerCircleRadius - this.stepStrokeLength ) );
@@ -284,13 +287,14 @@ export class SpeedometerComponent implements AfterViewInit {
             if ( step !== min ) {
                 this.stepPaths.push( `M ${ xOneStep } ${ yOneStep } L ${ xTwoStep } ${ yTwoStep }` );
 
-                const stepTextOffset = 2 * Math.PI * ( this.innerCircleRadius - this.stepStrokeLength ) * ( ( 40 + stepDegree ) / 360 );
+                const stepTextOffset = 2 * Math.PI * ( this.stepTextCircleRadius ) * ( ( 40 + stepDegree ) / 360 );
 
                 this.stepTexts.push( { offset: stepTextOffset, text: step.toString() } );
             }
 
             stepCounter++;
         }
+        console.log(this.stepTextCircleRadius)
     }
 
     public updateValue(): void {
