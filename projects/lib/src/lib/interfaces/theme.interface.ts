@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { ZAlertPortalTheme } from '../components/alert-portal/alert-portal.theme';
 import { ZBannerCarouselTheme } from '../components/banner-carousel/banner-carousel.theme';
+import { ZBookTheme } from '../components/book/book.theme';
 import { ZButtonTheme } from '../components/button/button.theme';
 import { ZCheckboxTheme } from '../components/checkbox/checkbox.theme';
 import { ZCommentTheme } from '../components/comment/comment.theme';
@@ -77,6 +78,7 @@ export const ZPartialCommonTheme = ZCommonTheme.deepPartial();
 
 export type ThemeableComponents = 'alertPortal'
                                   | 'bannerCarousel'
+                                  | 'book'
                                   | 'button'
                                   | 'checkbox'
                                   | 'comment'
@@ -100,6 +102,7 @@ export const ZComponentThemes = z.object(
         {
             alertPortal   : ZAlertPortalTheme,
             bannerCarousel: ZBannerCarouselTheme,
+            book          : ZBookTheme,
             button        : ZButtonTheme,
             checkbox      : ZCheckboxTheme,
             comment       : ZCommentTheme,

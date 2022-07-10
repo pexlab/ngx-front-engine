@@ -27,6 +27,10 @@ export * from './lib/components/banner-carousel/banner-carousel.theme';
 export * from './lib/components/banner-carousel/banner-carousel.service';
 export * from './lib/components/banner-carousel/banner-carousel.module';
 
+export * from './lib/components/book/book.component';
+export * from './lib/components/book/book.theme';
+export * from './lib/components/book/book.module';
+
 export * from './lib/components/button/button.component';
 export * from './lib/components/button/button.theme';
 export * from './lib/components/button/button.module';

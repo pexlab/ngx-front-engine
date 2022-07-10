@@ -1,0 +1,97 @@
+@use '../../../../assets/fe-styles/theme' with ($scope: 'line-chart');
+@use 'sass:math';
+
+$COVER_ASPECT      : math.div(150px, 220px);
+$WIDTH             : 180px;
+$HEIGHT            : math.div($WIDTH, $COVER_ASPECT);
+$DECORATION_HEIGHT : 10px;
+$EDGE              : 4px;
+
+:host {
+
+    position              : relative;
+
+    z-index               : 1;
+
+    width                 : $WIDTH;
+
+    display               : grid;
+    grid-auto-flow        : row;
+    grid-template-columns : 1fr;
+    grid-template-rows    : $HEIGHT $DECORATION_HEIGHT auto;
+
+    background            : transparent url('../../../../assets/fe-images/book-bottom.png') 0 $HEIGHT no-repeat;
+    background-size       : $WIDTH $DECORATION_HEIGHT;
+
+    user-select           : none;
+
+    transform-origin      : left;
+
+    &::after, &::before {
+
+        z-index       : -1;
+
+        content       : '';
+
+        position      : absolute;
+
+        top           : 0;
+        right         : 0;
+
+        height        : $HEIGHT - 1px;
+
+        border        : 1px solid lighten(#000000, 85%);
+        border-radius : $EDGE;
+
+        background-color    : white;
+    }
+
+    &::before {
+        left : 0;
+    }
+
+    &::after {
+
+        left                : 3px;
+
+        background-image    : url('../../../../assets/fe-images/book-page.jpg');
+        background-size     : contain;
+        background-position : center;
+        background-repeat   : no-repeat;
+    }
+}
+
+img.book-cover {
+
+    grid-row      : 1;
+
+    width         : inherit;
+    height        : $HEIGHT;
+
+    border-radius : $EDGE;
+
+    transform     : perspective(1300px) rotateY(0deg);
+
+    transition    : all .25s ease;
+
+    cursor        : pointer;
+    user-select   : none;
+
+    &.right-to-left {
+
+        transform-origin : 100% 100% 0;
+
+        &:hover {
+            transform : perspective(1300px) rotateY(30deg);
+        }
+    }
+
+    &.left-to-right {
+
+        transform-origin : 0 100% 0;
+
+        &:hover {
+            transform : perspective(1300px) rotateY(-30deg);
+        }
+    }
+}

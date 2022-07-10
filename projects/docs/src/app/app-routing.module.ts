@@ -8,6 +8,7 @@ import { IntroductionComponent } from './pages/introduction/introduction.compone
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { AlertPortalComponent } from './pages/showcase/alert-portal/alert-portal.component';
 import { BannerCarouselComponent } from './pages/showcase/banner-carousel/banner-carousel.component';
+import { BookComponent } from './pages/showcase/book/book.component';
 import { ButtonComponent } from './pages/showcase/button/button.component';
 import { CommentComponent } from './pages/showcase/comment/comment.component';
 import { DropdownComponent } from './pages/showcase/dropdown/dropdown.component';
@@ -53,6 +54,10 @@ import { TextFieldComponent } from './pages/showcase/text-field/text-field.compo
                             {
                                 path     : 'banner-carousel',
                                 component: BannerCarouselComponent
+                            },
+                            {
+                                path     : 'book',
+                                component: BookComponent
                             },
                             {
                                 path     : 'button',

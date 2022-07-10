@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
+    BookModule,
     CommentModule,
     FeAlertPortalModule,
     FeBannerCarouselModule,
@@ -44,6 +45,7 @@ import { NutmegComponent } from './popups/nutmeg/nutmeg.component';
 import { NotepaperComponent } from './pages/showcase/notepaper/notepaper.component';
 import { TableComponent } from './pages/showcase/table/table.component';
 import { EyeComponent } from './pages/showcase/table/eye/eye.component';
+import { BookComponent } from './pages/showcase/book/book.component';
 
 @NgModule(
     {
@@ -70,7 +72,8 @@ import { EyeComponent } from './pages/showcase/table/eye/eye.component';
             CommentComponent,
             NotepaperComponent,
             TableComponent,
-            EyeComponent
+            EyeComponent,
+            BookComponent
         ],
 
         imports: [
@@ -104,7 +107,8 @@ import { EyeComponent } from './pages/showcase/table/eye/eye.component';
 
             AppRoutingModule,
             CommentModule,
-            TableModule
+            TableModule,
+            BookModule
         ],
 
         providers: [],

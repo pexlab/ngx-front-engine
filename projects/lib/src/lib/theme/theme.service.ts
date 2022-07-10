@@ -396,6 +396,8 @@ export class ThemeService {
                 }
             },
 
+            book: {},
+
             button: {
                 text        : this.commonTheme.palette.text.on_primary_accent,
                 background  : this.commonTheme.palette.accent.primary,
