@@ -61,9 +61,12 @@
 
     <path class="hud" [attr.d]="hudPath" [style.stroke-width]="hudStrokeWidth"></path>
 
+    <path  id="bottomTextCircle" [style.stroke]="'transparent'"
+           [attr.fill]="'transparent'" [attr.d]="svgUtil.circularPath(canvasRadius, canvasRadius, indicatorRadius, false)"></path>
+
     <text text-anchor="middle" class="bottomText" fill="#ffffff" [style.font-size]="feDiameter / 16.07 + 'px'" dominant-baseline="middle"
           [attr.textLength]="bottomLength - 14">
-        <textPath xlink:href="#indicator" side="right"
+        <textPath xlink:href="#bottomTextCircle"
                   [attr.startOffset]="bottomTextBottomOffset">{{ 'SPEED' }}</textPath>
     </text>
 
@@ -107,10 +110,10 @@
 <svg class="speedometer overlay" [attr.width]="feDiameter" [attr.height]="feDiameter" [style.transform]="'rotate(270deg)'">
 
     <path  id="stepTextCircle" [style.stroke]="'transparent'"
-          [attr.fill]="'transparent'" [attr.d]="svgUtil.circularPath(canvasRadius, canvasRadius, stepTextCircleRadius)"></path>
+          [attr.fill]="'transparent'" [attr.d]="svgUtil.circularPath(canvasRadius, canvasRadius, stepTextCircleRadius, true)"></path>
 
     <text text-anchor="middle" dominant-baseline="hanging" *ngFor="let text of stepTexts" class="stepText" fill="#ffffff" [style.font-size]="feDiameter / 40 + 'px'">
-        <textPath [attr.startOffset]="text.offset" side="right" xlink:href="#stepTextCircle" >{{ text.text }}</textPath>
+        <textPath [attr.startOffset]="text.offset" xlink:href="#stepTextCircle" >{{ text.text }}</textPath>
     </text>
 </svg>
 

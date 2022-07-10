@@ -211,7 +211,7 @@ export class SpeedometerComponent implements AfterViewInit {
         this.indicatorOffsetStart = this.indicatorLength;
         this.indicatorOffsetEnd   = this.indicatorMaxLength;
 
-        this.bottomTextBottomOffset = 2 * Math.PI * this.indicatorRadius * ( ( 270 ) / 360 );
+        this.bottomTextBottomOffset = 2 * Math.PI * this.indicatorRadius * ( ( 90 ) / 360 );
         this.bottomLength           = this.indicatorLength - ( this.indicatorOffsetStart - this.indicatorOffsetEnd );
 
         this.calculateSteps();
