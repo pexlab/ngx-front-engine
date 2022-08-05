@@ -7,8 +7,8 @@
 
     display  : block;
 
-    width: fit-content;
-    height: fit-content;
+    width    : fit-content;
+    height   : fit-content;
 
     & > .center {
         position  : absolute;
@@ -19,11 +19,12 @@
 
     & .foreground-text {
 
-        z-index   : 1;
-        position  : relative;
+        z-index     : 1;
+        position    : relative;
 
         @include theme.commonFont('body');
-        color     : white;
+        font-family : 'Syncopate', sans-serif;
+        color       : theme.hex('text-inner');
     }
 
     & .background-text {
@@ -33,19 +34,27 @@
         top       : 50%;
 
         @include theme.commonFont('caption');
-        color     : white;
+        font-family: 'Rajdhani', sans-serif;
+        color       : theme.hex('text-inner');
 
         opacity   : .15;
 
-        transform : translateY(-93%) translateX(-50%);
+        transform : translateY(-110%) translateX(-50%);
     }
 
     & .bottomText {
+
         @include theme.commonFont('body');
+        font-family : 'Syncopate', sans-serif;
+
+        &.main {
+            fill : theme.hex('text-outer');
+        }
     }
 
     & .stepText {
         @include theme.commonFont('body');
+        fill: theme.hex('step-primary');
     }
 
     & > .bottom {
@@ -63,33 +72,10 @@
 
             z-index     : 1;
 
-            position    : absolute;
-
-            left        : 50%;
-            transform   : translateX(-50%);
-
-            color       : theme.hex('background-outer');
+            color       : theme.hex('text-hud');
 
             @include theme.commonFont('body');
-
-            text-align  : center;
-            white-space : nowrap;
-        }
-
-        & > span:nth-child(2) {
-
-            z-index     : 1;
-
-            position    : absolute;
-
-            left        : 50%;
-            transform   : translateX(-50%);
-
-            color       : white;
-
-            opacity     : .15;
-
-            @include theme.commonFont('body');
+            font-family : 'Syncopate', sans-serif;
 
             text-align  : center;
             white-space : nowrap;
@@ -100,10 +86,10 @@
 svg.speedometer {
 
     &.overlay {
-        position: absolute;
-        left: 0;
-        top: 0;
-        transition: transform .5s cubic-bezier(0.65, 0, 0.35, 1);
+        position   : absolute;
+        left       : 0;
+        top        : 0;
+        transition : transform .5s cubic-bezier(0.65, 0, 0.35, 1);
     }
 
     & > circle.outer-frame {
@@ -144,26 +130,33 @@ svg.speedometer {
     }
 
     & > path.hud {
-        stroke       : theme.hex('hud');
-        fill         : transparent;
-        transition   : stroke .25s ease;
+        stroke     : theme.hex('hud');
+        fill       : transparent;
+        transition : stroke .25s ease;
     }
 
     & > path.step {
-        stroke       : theme.hex('step-primary');
-        fill         : transparent;
+        stroke : theme.hex('step-primary');
+        fill   : transparent;
     }
 
     & > path.interimStep {
-        stroke       : theme.hex('step-secondary');
-        fill         : transparent;
+        stroke : theme.hex('step-secondary');
+        fill   : transparent;
     }
 
     & > path.marker {
-        fill         : theme.hex('marker');
+        fill : theme.hex('marker');
     }
 
     & > defs {
+
+        & > .primary-label-gradient {
+            & > stop {
+                stop-color : theme.hex('text-outer-shade');
+                transition : stop-color .25s ease;
+            }
+        }
 
         & > .indicator-gradient {
 

@@ -17,6 +17,8 @@
         "@fontsource/baloo-bhaina-2",
         "@fontsource/architects-daughter",
         "@fontsource/pangolin",
+        "@fontsource/rajdhani",
+        "@fontsource/syncopate",
         "fuse.js"
     ],
     "assets": [

@@ -75,6 +75,8 @@ export class SpeedometerComponent implements AfterViewInit {
     public innerFrameGradientId  = this.generateId();
     public innerCircleGradientId = this.generateId();
     public circleId              = this.generateId();
+    public primaryLabelId        = this.generateId();
+    public primaryLabelId2       = this.generateId();
 
     /* SVG drawing calculations */
 
@@ -91,6 +93,7 @@ export class SpeedometerComponent implements AfterViewInit {
     public interimStepStrokeWidth!: number;
     public stepStrokeLength!: number;
     public interimStepStrokeLength!: number;
+    public stepTextMargin!: number;
     public stepTextCircleRadius!: number;
 
     public hudStrokeWidth!: number;
@@ -132,7 +135,7 @@ export class SpeedometerComponent implements AfterViewInit {
 
     public indicatorMarkerPath!: string;
 
-    public markers!: { path: string, rotateDegree: number, width: number, height: number, cx: number, y: number }[]
+    public markers!: { path: string, rotateDegree: number, width: number, height: number, cx: number, y: number }[];
 
     private indicatorOffsetStart!: number;
     private indicatorOffsetEnd!: number;
@@ -143,6 +146,7 @@ export class SpeedometerComponent implements AfterViewInit {
     private currentValue?: number;
 
     public ngOnInit(): void {
+
         this.generateId            = customAlphabet( 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 24 );
         this.indicatorGradientId   = this.generateId();
         this.innerFrameGradientId  = this.generateId();
@@ -154,15 +158,16 @@ export class SpeedometerComponent implements AfterViewInit {
         this.innerCircleDiameter = this.feDiameter / 1.5; //1.5 Ratio between feDiameter and innerCircleDiameter
         this.innerCircleRadius   = this.innerCircleDiameter / 2;
 
-        this.outerFrameWidth = this.feDiameter / 90; //90 Ratio between outerFrameWidth and indicatorMargin
-        this.innerFrameWidth = this.feDiameter / 225; //225 Ratio between innerFrameWidth and indicatorMargin
+        this.outerFrameWidth = this.feDiameter / ( 450 / 3 ); //90 Ratio between outerFrameWidth and indicatorMargin
+        this.innerFrameWidth = this.feDiameter / ( 450 / 3 ); //225 Ratio between innerFrameWidth and indicatorMargin
         this.indicatorMargin = this.feDiameter / 30; //30 Ratio between canvasDiameter and indicatorMargin
 
         this.stepStrokeWidth         = this.feDiameter / ( 450 / 3 ); // (450 / 3) Ratio between default feDiameter and default stepStrokeWidth
         this.interimStepStrokeWidth  = this.feDiameter / ( 450 / 2 ); // (450 / 2) Ratio between default feDiameter and default interimStepStrokeWidth
         this.stepStrokeLength        = this.feDiameter / ( 450 / 15 ); // (450 / 15) Ratio between default feDiameter and default STEP_STROKE_LENGTH
         this.interimStepStrokeLength = this.feDiameter / ( 450 / 7.5 ); // (450 / 7.5) Ratio between default feDiameter and default INTERIM_STEP_STOKE_LENGTH
-        this.stepTextCircleRadius = this.innerCircleRadius - this.stepStrokeLength;
+        this.stepTextMargin          = ( this.feDiameter / 40 );
+        this.stepTextCircleRadius    = this.innerCircleRadius - this.stepStrokeLength - this.stepTextMargin;
 
         this.hudStrokeWidth = this.feDiameter / ( 450 / 3 ); // (450 / 3) Ratio between default feDiameter and default hudStrokeWidth
 
@@ -267,21 +272,24 @@ export class SpeedometerComponent implements AfterViewInit {
 
             const stepDegree = ( 280 / ( max - min ) ) * ( stepCounter * this.feStepSize[ 0 ] );
 
-            const xOneStep = this.canvasRadius + ( Math.cos( this.degToRad( 130 + stepDegree ) ) * ( this.innerCircleRadius ) );
-            const yOneStep = this.canvasRadius + ( Math.sin( this.degToRad( 130 + stepDegree ) ) * ( this.innerCircleRadius ) );
-            const xTwoStep = this.canvasRadius + ( Math.cos( this.degToRad( 130 + stepDegree ) ) * ( this.innerCircleRadius - this.stepStrokeLength ) );
-            const yTwoStep = this.canvasRadius + ( Math.sin( this.degToRad( 130 + stepDegree ) ) * ( this.innerCircleRadius - this.stepStrokeLength ) );
+            const xOneStep = this.canvasRadius + ( Math.cos( this.degToRad( 130 + stepDegree ) ) * ( this.innerCircleRadius - this.innerFrameWidth ) );
+            const yOneStep = this.canvasRadius + ( Math.sin( this.degToRad( 130 + stepDegree ) ) * ( this.innerCircleRadius - this.innerFrameWidth ) );
+            const xTwoStep = this.canvasRadius + ( Math.cos( this.degToRad( 130 + stepDegree ) ) * ( this.innerCircleRadius - this.innerFrameWidth - this.stepStrokeLength ) );
+            const yTwoStep = this.canvasRadius + ( Math.sin( this.degToRad( 130 + stepDegree ) ) * ( this.innerCircleRadius - this.innerFrameWidth - this.stepStrokeLength ) );
 
             for ( let interimStep = this.feStepSize[ 1 ]; interimStep < this.feStepSize[ 0 ]; interimStep += this.feStepSize[ 1 ] ) {
 
                 const interimStepDegree = ( 280 / ( max - min ) ) * ( interimStep + ( stepCounter * this.feStepSize[ 0 ] ) );
 
-                const xOneInterimStep = this.canvasRadius + ( Math.cos( this.degToRad( 130 + interimStepDegree ) ) * ( this.innerCircleRadius ) );
-                const yOneInterimStep = this.canvasRadius + ( Math.sin( this.degToRad( 130 + interimStepDegree ) ) * ( this.innerCircleRadius ) );
-                const xTwoInterimStep = this.canvasRadius + ( Math.cos( this.degToRad( 130 + interimStepDegree ) ) * ( this.innerCircleRadius - this.interimStepStrokeLength ) );
-                const yTwoInterimStep = this.canvasRadius + ( Math.sin( this.degToRad( 130 + interimStepDegree ) ) * ( this.innerCircleRadius - this.interimStepStrokeLength ) );
+                if(interimStepDegree < 280) {
 
-                this.interimStepPaths.push( `M ${ xOneInterimStep } ${ yOneInterimStep } L ${ xTwoInterimStep } ${ yTwoInterimStep }` );
+                    const xOneInterimStep = this.canvasRadius + ( Math.cos( this.degToRad( 130 + interimStepDegree ) ) * ( this.innerCircleRadius - this.innerFrameWidth ) );
+                    const yOneInterimStep = this.canvasRadius + ( Math.sin( this.degToRad( 130 + interimStepDegree ) ) * ( this.innerCircleRadius - this.innerFrameWidth ) );
+                    const xTwoInterimStep = this.canvasRadius + ( Math.cos( this.degToRad( 130 + interimStepDegree ) ) * ( this.innerCircleRadius - this.innerFrameWidth - this.interimStepStrokeLength ) );
+                    const yTwoInterimStep = this.canvasRadius + ( Math.sin( this.degToRad( 130 + interimStepDegree ) ) * ( this.innerCircleRadius - this.innerFrameWidth - this.interimStepStrokeLength ) );
+
+                    this.interimStepPaths.push( `M ${ xOneInterimStep } ${ yOneInterimStep } L ${ xTwoInterimStep } ${ yTwoInterimStep }` );
+                }
             }
 
             if ( step !== min ) {
@@ -294,7 +302,6 @@ export class SpeedometerComponent implements AfterViewInit {
 
             stepCounter++;
         }
-        console.log(this.stepTextCircleRadius)
     }
 
     public updateValue(): void {

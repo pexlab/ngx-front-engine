@@ -61,13 +61,44 @@
 
     <path class="hud" [attr.d]="hudPath" [style.stroke-width]="hudStrokeWidth"></path>
 
-    <path  id="bottomTextCircle" [style.stroke]="'transparent'"
-           [attr.fill]="'transparent'" [attr.d]="svgUtil.circularPath(canvasRadius, canvasRadius, indicatorRadius, false)"></path>
+    <path id="bottomTextCircle" [style.stroke]="'transparent'"
+          [attr.fill]="'transparent'"
+          [attr.d]="svgUtil.circularPath(canvasRadius, canvasRadius, indicatorRadius, false)"></path>
 
-    <text text-anchor="middle" class="bottomText" fill="#ffffff" [style.font-size]="feDiameter / 16.07 + 'px'" dominant-baseline="middle"
-          [attr.textLength]="bottomLength - 14">
-        <textPath xlink:href="#bottomTextCircle"
-                  [attr.startOffset]="bottomTextBottomOffset">{{ 'SPEED' }}</textPath>
+
+    <text *ngIf="feLabelPrimary"
+          class="bottomText main"
+          text-anchor="middle"
+          dominant-baseline="middle"
+          [style.font-size]="feDiameter / 16.07 + 'px'"
+          [attr.textLength]="feLabelPrimary.length * (bottomLength / 8)">
+        <textPath xlink:href="#bottomTextCircle" [attr.startOffset]="bottomTextBottomOffset" method="stretch">
+            {{ feLabelPrimary }}
+        </textPath>
+    </text>
+
+    <text *ngIf="feLabelPrimary"
+          class="bottomText"
+          [attr.fill]="'url(#' + primaryLabelId + ')'"
+          text-anchor="middle"
+          dominant-baseline="middle"
+          [style.font-size]="feDiameter / 16.07 + 'px'"
+          [attr.textLength]="feLabelPrimary.length * (bottomLength / 8)">
+        <textPath xlink:href="#bottomTextCircle" [attr.startOffset]="bottomTextBottomOffset" method="stretch">
+            {{ feLabelPrimary }}
+        </textPath>
+    </text>
+
+    <text *ngIf="feLabelPrimary"
+          class="bottomText"
+          [attr.fill]="'url(#' + primaryLabelId2 + ')'"
+          text-anchor="middle"
+          dominant-baseline="middle"
+          [style.font-size]="feDiameter / 16.07 + 'px'"
+          [attr.textLength]="feLabelPrimary.length * (bottomLength / 8)">
+        <textPath xlink:href="#bottomTextCircle" [attr.startOffset]="bottomTextBottomOffset" method="stretch">
+            {{ feLabelPrimary }}
+        </textPath>
     </text>
 
     <path class="step" *ngFor="let step of stepPaths" [attr.d]="step" [style.stroke-width]="stepStrokeWidth"></path>
@@ -75,6 +106,17 @@
           [style.stroke-width]="interimStepStrokeWidth"></path>
 
     <defs>
+
+        <linearGradient [id]="primaryLabelId" class="primary-label-gradient" x1="50%" y1="65%" x2="100%" y2="110%">
+            <stop offset="0%" stop-opacity="0"/>
+            <stop offset="100%" stop-opacity="1"/>
+        </linearGradient>
+
+        <linearGradient [id]="primaryLabelId2" class="primary-label-gradient" x1="50%" y1="65%" x2="0%" y2="110%">
+            <stop offset="0%" stop-opacity="0"/>
+            <stop offset="100%" stop-opacity="1"/>
+        </linearGradient>
+
         <linearGradient [id]="indicatorGradientId" class="indicator-gradient">
             <stop offset="0%"/>
             <stop offset="100%"/>
@@ -83,7 +125,7 @@
         <linearGradient [id]="innerFrameGradientId" class="inner-frame-gradient" gradientTransform="rotate(90)">
             <stop offset="0%"/>
             <stop offset="83%" stop-opacity="1"/>
-            <stop offset="97%" stop-opacity="0"/>
+            <stop offset="97%" stop-opacity="1"/>
         </linearGradient>
 
         <radialGradient [id]="innerCircleGradientId" class="inner-circle-gradient">
@@ -107,13 +149,15 @@
 
 </svg>
 
-<svg class="speedometer overlay" [attr.width]="feDiameter" [attr.height]="feDiameter" [style.transform]="'rotate(270deg)'">
+<svg class="speedometer overlay" [attr.width]="feDiameter" [attr.height]="feDiameter"
+     [style.transform]="'rotate(270deg)'">
 
-    <path  id="stepTextCircle" [style.stroke]="'transparent'"
-          [attr.fill]="'transparent'" [attr.d]="svgUtil.circularPath(canvasRadius, canvasRadius, stepTextCircleRadius, true)"></path>
+    <path id="stepTextCircle" [style.stroke]="'transparent'"
+          [attr.fill]="'transparent'"
+          [attr.d]="svgUtil.circularPath(canvasRadius, canvasRadius, stepTextCircleRadius, true)"></path>
 
-    <text text-anchor="middle" dominant-baseline="hanging" *ngFor="let text of stepTexts" class="stepText" fill="#ffffff" [style.font-size]="feDiameter / 40 + 'px'">
-        <textPath [attr.startOffset]="text.offset" xlink:href="#stepTextCircle" >{{ text.text }}</textPath>
+    <text text-anchor="middle" dominant-baseline="hanging" *ngFor="let text of stepTexts" class="stepText" [style.font-size]="feDiameter / 40 + 'px'">
+        <textPath [attr.startOffset]="text.offset" xlink:href="#stepTextCircle">{{ text.text }}</textPath>
     </text>
 </svg>
 
@@ -134,12 +178,12 @@
 </svg>
 
 <div class="center">
-    <span class="background-text" [style.font-size]="feDiameter / 6 + 'px'">{{ feUnit }}</span>
+    <span class="background-text" [style.font-size]="feDiameter / 7 + 'px'">{{ feUnit }}</span>
     <span class="foreground-text" [style.font-size]="feDiameter / 6 + 'px'" #foregroundText></span>
 </div>
 
-<div class="bottom" [style.width]="feDiameter / 3  + 'px'" [style.height]="feDiameter / 5.625 + 'px'" [style.bottom]="((feDiameter - (feDiameter / 1.5))) / 2 + 'px'">
-    <span [style.top]="canvasRadius / 45 + 'px'" [style.font-size]="feDiameter / 16.07 + 'px'">{{ feLabelPrimary }}</span>
-    <span [style.bottom]="canvasRadius / 45 + 'px'"
-          [style.font-size]="(feDiameter / 21.428) + 'px'">{{ feLabelSecondary }}</span>
+<div class="bottom" [style.width]="feDiameter / 3  + 'px'" [style.height]="feDiameter / 5.625 + 'px'"
+     [style.bottom]="((feDiameter - (feDiameter / 1.5))) / 2 + 'px'">
+    <span [style.top]="canvasRadius / 45 + 'px'"
+          [style.font-size]="feDiameter / 23 + 'px'">{{ feLabelSecondary }}</span>
 </div>

@@ -1,71 +1,71 @@
 @use '~dist/ngx-front-engine/assets/fe-styles/theme';
 
 :host {
-  
+
   display    : block;
-  
+
   position   : absolute;
-  
+
   top        : 0;
   left       : 0;
-  
+
   width      : 100vw;
   height     : 100vh;
-  
+
   background : #EEEEEE;
-  
+
   & > nav:nth-child(1) {
-	
+
 	position              : fixed;
-	
+
 	top                   : 0;
 	left                  : 0;
-	
+
 	width                 : 100vw;
 	height                : 80px;
-	
+
 	border-bottom         : 2px solid #DDDDDD;
-	
+
 	display               : grid;
 	grid-auto-flow        : column;
 	grid-template-columns : (80px * 2.5) 1fr;
 	grid-gap              : 20px;
-	
+
 	align-items           : center;
-	
+
 	& > svg-icon {
 	  justify-self : center;
 	}
   }
-  
+
   & > nav:nth-child(2) {
-	
+
 	position     : fixed;
-	
+
 	top          : 80px;
 	left         : 0;
-	
+
 	width        : 80px * 2.5;
 	height       : calc(100vh - 80px);
-	
+
 	border-right : 2px solid #DDDDDD;
-	
+
 	background   : #EEEEEE;
   }
-  
+
   & > .page {
-	
+
 	position   : absolute;
-	
+
 	left       : 80px * 2.5;
 	top        : 80px;
-	
+
 	width      : calc(100vw - (80px * 2.5));
 	height     : calc(100vh - 80px);
-	
+
 	overflow-x : hidden;
 	overflow-y : scroll;
-	
+
 	padding    : 35px;
   }
 }

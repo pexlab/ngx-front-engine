@@ -480,29 +480,36 @@ export class ThemeService {
 
             speedometer: {
 
-                hud: FeColorPalette.Greyscale.SnowWhite,
+                hud: Color.fadeHex( FeColorPalette.Greyscale.SnowWhite, .8 ),
 
                 border: {
-                    inner: FeColorPalette.Greyscale.SnowWhite,
-                    outer: FeColorPalette.Cyan.AgalAquamarine
+                    inner: Color.fadeHex( FeColorPalette.Greyscale.SnowWhite, .15 ),
+                    outer: Color.fadeHex( FeColorPalette.Greyscale.SnowWhite, .15 )
                 },
 
                 indicator: {
-                    gradientStart: FeColorPalette.Blue.VividCatalinaBlue,
+                    gradientStart: '#1949d5',
                     gradientEnd  : FeColorPalette.Cyan.AgalAquamarine
                 },
 
                 background: {
                     inner: FeColorPalette.Blue.PureBlue,
-                    outer: FeColorPalette.Blue.Eclipse
+                    outer: '#171b27'
                 },
 
                 step: {
-                    primary  : FeColorPalette.Greyscale.SnowWhite,
-                    secondary: FeColorPalette.Greyscale.SnowWhite
+                    primary  : Color.fadeHex( FeColorPalette.Greyscale.SnowWhite, .8 ),
+                    secondary: Color.fadeHex( FeColorPalette.Greyscale.SnowWhite, .4 )
                 },
 
-                marker: FeColorPalette.Cyan.AgalAquamarine,
+                text: {
+                    inner     : FeColorPalette.Greyscale.SnowWhite,
+                    outer     : FeColorPalette.Greyscale.SnowWhite,
+                    outerShade: '#171b27',
+                    hud       : '#171b27'
+                },
+
+                marker: FeColorPalette.Cyan.AgalAquamarine
             },
 
             stepper: {

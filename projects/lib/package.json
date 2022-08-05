@@ -1,6 +1,6 @@
 {
     "name": "@pexlab/ngx-front-engine",
-    "version": "0.0.47",
+    "version": "0.0.48",
     "description": "A component library for angular which features astonishing components, theming and a vast color palette",
     "license": "MIT",
     "homepage": "https://pexlab.net/projects/front-engine",
@@ -24,6 +24,8 @@
         "@fontsource/jost": "^4.5.0",
         "@fontsource/pangolin": "^4.5.2",
         "@fontsource/roboto": "^4.5.0",
+        "@fontsource/syncopate": "^4.5.7",
+        "@fontsource/rajdhani": "^4.5.8",
         "@twixes/svg-round-corners": "^0.1.1",
         "deepdash-es": "^5.3.9",
         "lodash-es": "^4.17.21",

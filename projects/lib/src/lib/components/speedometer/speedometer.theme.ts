@@ -23,6 +23,14 @@ export const ZSpeedometerTheme = z.object(
             }
         ),
         marker    : ZHEXColor,
+        text      : z.object(
+            {
+                inner: ZHEXColor,
+                outer: ZHEXColor,
+                outerShade: ZHEXColor,
+                hud  : ZHEXColor
+            }
+        ),
         background: z.object(
             {
                 inner: ZHEXColor,
