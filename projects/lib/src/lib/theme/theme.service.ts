@@ -456,10 +456,6 @@ export class ThemeService {
                 clearButtonHoverBackground: Color.fadeHex( this.commonTheme.palette.accent.failure, .2 )
             },
 
-            lineChart: {
-                line: this.commonTheme.palette.accent.primary
-            },
-
             notepaper: {
                 divider         : FeColorPalette.Brown.Leather,
                 highlight       : Color.fadeHex( FeColorPalette.Red.Lips, .25 ),
