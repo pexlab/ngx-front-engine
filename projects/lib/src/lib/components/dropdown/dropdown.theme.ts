@@ -7,6 +7,7 @@ export const ZDropdownTheme = z.object(
         placeholderIdlePanelText      : ZHEXColor,
         placeholderIdlePanelBorder    : ZHEXColor,
         placeholderIdlePanelBackground: ZHEXColor,
+        placeholderBorderBottom       : ZHEXColor,
 
         placeholderSelectedPanelText      : ZHEXColor,
         placeholderSelectedPanelBorder    : ZHEXColor,

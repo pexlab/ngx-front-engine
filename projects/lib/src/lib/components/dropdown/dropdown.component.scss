@@ -1,4 +1,4 @@
-@use '../../../../assets/fe-styles/theme' as config with ($scope: 'dropdown');
+@use '../../../../assets/fe-styles/theme' with ($scope: 'dropdown');
 @use 'sass:math';
 
 @forward '../../../../assets/fe-styles/theme';
@@ -17,7 +17,7 @@ $OPTION_PADDING              : 10px;
     box-sizing  : border-box;
 
     width       : fit-content;
-    height      : 40px;
+    height      : $PLACEHOLDER_HEIGHT;
 
     user-select : none;
 
@@ -47,8 +47,7 @@ $OPTION_PADDING              : 10px;
         width                 : fit-content;
         height                : $PLACEHOLDER_HEIGHT;
 
-        padding-left          : 15px;
-        padding-right         : 15px;
+        padding               : 0 1rem;
         box-sizing            : border-box;
 
         display               : grid;
@@ -56,21 +55,48 @@ $OPTION_PADDING              : 10px;
         grid-gap              : 10px;
         place-items           : center;
 
-        color                 : config.hex('placeholder-idle-panel-text');
-        border                : 2px solid config.hex('placeholder-idle-panel-border');
-        background            : config.hex('placeholder-idle-panel-background');
+        color                 : theme.hex('placeholder-idle-panel-text');
+        border                : 2px solid theme.hex('placeholder-idle-panel-border');
+        background            : theme.hex('placeholder-idle-panel-background');
 
         border-radius         : 99px;
 
         transition            : border-color .25s ease, color .25s ease, background-color .25s ease, box-shadow .25s ease;
 
-        @include config.inlineIcon(15px);
+        @include theme.inlineIcon(15px);
+
+        &::after {
+            opacity       : 0;
+            position      : absolute;
+            content       : '';
+            display       : block;
+            left          : -.1rem;
+            top           : -.2rem;
+            bottom        : -.2rem;
+            right         : -.1rem;
+            border-radius : 99px;
+            box-sizing    : border-box;
+            border-bottom : .2rem solid theme.hex('placeholder-border-bottom');
+            transition    : opacity .25s ease;
+        }
+
+        &.passive-raised:not(.selected)::after {
+            opacity : 1;
+        }
+
+        &.selected.active-raised::after {
+            opacity : 1;
+        }
+
+        &.always-raised::after {
+            opacity : 1;
+        }
 
         &.selected {
 
-            color      : config.hex('placeholder-selected-panel-text');
-            border     : 2px solid config.hex('placeholder-selected-panel-border');
-            background : config.hex('placeholder-selected-panel-background');
+            color      : theme.hex('placeholder-selected-panel-text');
+            border     : 2px solid theme.hex('placeholder-selected-panel-border');
+            background : theme.hex('placeholder-selected-panel-background');
 
             box-shadow : 0 14px 28px rgba(0, 0, 0, 0.15), 0 10px 10px rgba(0, 0, 0, 0.12);
         }
@@ -85,7 +111,7 @@ $OPTION_PADDING              : 10px;
             width          : fit-content;
             height         : fit-content;
 
-            @include config.inlineIcon(20px);
+            @include theme.inlineIcon(20px);
         }
     }
 
@@ -113,7 +139,7 @@ $OPTION_PADDING              : 10px;
 
         border-radius  : 5px;
 
-        background     : config.hex('options-idle-background');
+        background     : theme.hex('options-idle-background');
 
         box-shadow     : 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 
@@ -131,7 +157,7 @@ $OPTION_PADDING              : 10px;
             width      : 100%;
             height     : 3px;
 
-            background : config.hex('options-stripe');
+            background : theme.hex('options-stripe');
         }
 
         & > .clear-value {
@@ -153,18 +179,18 @@ $OPTION_PADDING              : 10px;
 
             border-radius : 99px;
 
-            color         : config.hex('clear-button-idle');
-            background    : config.hex('clear-button-idle-background');
+            color         : theme.hex('clear-button-idle');
+            background    : theme.hex('clear-button-idle-background');
 
             cursor        : pointer;
 
             transition    : background-color .25s ease, color .25s ease;
 
-            @include config.inlineIcon(18px);
+            @include theme.inlineIcon(18px);
 
             &:hover {
-                color      : config.hex('clear-button-hover');
-                background : config.hex('clear-button-hover-background');
+                color      : theme.hex('clear-button-hover');
+                background : theme.hex('clear-button-hover-background');
             }
         }
     }

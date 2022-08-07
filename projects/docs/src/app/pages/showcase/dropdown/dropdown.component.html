@@ -2,37 +2,72 @@
 
     <span>Basic example</span>
 
-    <fe-dropdown feEmptyNotice="Choose a time">
+    <div>
+        <fe-dropdown feEmptyNotice="Choose a time" feAppearance="flat">
 
-        <fe-dropdown-choice feValue="day">
+            <fe-dropdown-choice feValue="day">
 
-            <div fePlaceholder>
-                <span>You've chosen</span>
-                <svg-icon name="sun"></svg-icon>
-            </div>
+                <div fePlaceholder>
+                    <span>You've chosen</span>
+                    <svg-icon name="sun"></svg-icon>
+                </div>
 
-            <div feContent>
-                <svg-icon name="sun"></svg-icon>
-                <span>Day</span>
-            </div>
+                <div feContent>
+                    <svg-icon name="sun"></svg-icon>
+                    <span>Day</span>
+                </div>
 
-        </fe-dropdown-choice>
+            </fe-dropdown-choice>
 
-        <fe-dropdown-choice feValue="night">
+            <fe-dropdown-choice feValue="night">
 
-            <div fePlaceholder>
-                <span>You've chosen</span>
-                <svg-icon name="moon"></svg-icon>
-            </div>
+                <div fePlaceholder>
+                    <span>You've chosen</span>
+                    <svg-icon name="moon"></svg-icon>
+                </div>
 
-            <div feContent>
-                <svg-icon name="moon"></svg-icon>
-                <span>Night</span>
-            </div>
+                <div feContent>
+                    <svg-icon name="moon"></svg-icon>
+                    <span>Night</span>
+                </div>
 
-        </fe-dropdown-choice>
+            </fe-dropdown-choice>
 
-    </fe-dropdown>
+        </fe-dropdown>
+
+        <fe-dropdown feEmptyNotice="Choose a time" feAppearance="always-raised">
+
+            <fe-dropdown-choice feValue="day">
+
+                <div fePlaceholder>
+                    <span>You've chosen</span>
+                    <svg-icon name="sun"></svg-icon>
+                </div>
+
+                <div feContent>
+                    <svg-icon name="sun"></svg-icon>
+                    <span>Day</span>
+                </div>
+
+            </fe-dropdown-choice>
+
+            <fe-dropdown-choice feValue="night">
+
+                <div fePlaceholder>
+                    <span>You've chosen</span>
+                    <svg-icon name="moon"></svg-icon>
+                </div>
+
+                <div feContent>
+                    <svg-icon name="moon"></svg-icon>
+                    <span>Night</span>
+                </div>
+
+            </fe-dropdown-choice>
+
+        </fe-dropdown>
+
+    </div>
 </div>
 
 <div>
@@ -46,6 +81,7 @@
                      [formControl]="$any(control)"
                      [feEmptyTemplate]="emptyRef"
                      [feTheme]="control.value === null ? outlineTheme : defaultTheme"
+                     [feAppearance]="control.value === null ? 'active-raised' : 'always-raised'"
                      (feManualClear)="removeProperty(i)">
 
             <ng-template #emptyRef>

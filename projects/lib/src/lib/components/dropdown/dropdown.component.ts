@@ -130,6 +130,9 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
     @Input()
     public feTheme!: ComponentTheme<PartialDropdownTheme>;
 
+    @Input()
+    public feAppearance: 'flat' | 'passive-raised' | 'active-raised' | 'always-raised' = 'flat';
+
     @Output()
     public feChange = new EventEmitter();
 
