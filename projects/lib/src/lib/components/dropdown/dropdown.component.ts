@@ -138,7 +138,8 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
 
     public activePlaceholderRef?: TemplateRef<any>;
     public defaultPlaceholderRef?: TemplateRef<any>;
-    public dropdownVisible = false;
+    public dropdownVisible          = false;
+    public dropdownVisibleWithDelay = false;
 
     private choices!: QueryList<DropdownChoiceComponent>;
     private currentChoice: string | null | undefined = undefined;
@@ -201,7 +202,8 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
 
     @HostBinding( 'style.zIndex' )
     public get zIndex(): string {
-        return this.dropdownVisible ? '2' : '0';
+        /* Ensure it is *above* other unexpanded dropdowns while closing but *behind* other dropdowns that are expanded while closing */
+        return !this.dropdownVisible && this.dropdownVisibleWithDelay ? '1' : this.dropdownVisibleWithDelay ? '2' : 'auto';
     }
 
     /* To simplify the attribute usage */
@@ -320,5 +322,17 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
 
     public registerOnTouched( fn: any ): void {
         this.formBlurEvent = fn;
+    }
+
+    public captureStartEvent( event: any ) {
+        if ( event.toState === 'visible' ) {
+            this.dropdownVisibleWithDelay = true;
+        }
+    }
+
+    public captureDoneEvent( event: any ) {
+        if ( event.toState === 'hidden' ) {
+            this.dropdownVisibleWithDelay = false;
+        }
     }
 }

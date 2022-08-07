@@ -21,7 +21,10 @@ $OPTION_PADDING              : 10px;
 
     user-select : none;
 
-    @include config.commonFont('body');
+    /* Isolated stacking context for the placeholder panel and options hierarchy */
+    isolation   : isolate;
+
+    @include theme.commonFont('body');
 
     &.inline {
         margin-left  : $DROPDOWN_PADDING_HORIZONTAL;

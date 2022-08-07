@@ -10,7 +10,10 @@
     <svg-icon name="fe-caret-down"></svg-icon>
 </div>
 
-<div class="options" [@options]="dropdownVisible ? 'visible' : 'hidden'">
+<div class="options"
+     [@options]="dropdownVisible ? 'visible' : 'hidden'"
+     (@options.start)="captureStartEvent($event)"
+     (@options.done)="captureDoneEvent($event)">
 
     <ng-content></ng-content>
 
