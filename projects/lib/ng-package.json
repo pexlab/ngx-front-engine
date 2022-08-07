@@ -7,7 +7,7 @@
     "allowedNonPeerDependencies": [
         "@angular/cdk",
         "wcag-contrast",
-        "@twixes/svg-round-corners",
+        "svg-round-corners",
         "lodash",
         "deepdash-es",
         "nanoid",

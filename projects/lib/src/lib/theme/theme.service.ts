@@ -438,6 +438,8 @@ export class ThemeService {
                 placeholderIdlePanelBorder    : FeColorPalette.Greyscale.Transparent,
                 placeholderIdlePanelBackground: this.commonTheme.palette.accent.primary,
 
+                placeholderBorderBottom: this.commonTheme.palette.accent.secondary,
+
                 placeholderSelectedPanelText      : this.commonTheme.palette.text.on_primary_accent,
                 placeholderSelectedPanelBorder    : FeColorPalette.Greyscale.Transparent,
                 placeholderSelectedPanelBackground: this.commonTheme.palette.accent.primary,
