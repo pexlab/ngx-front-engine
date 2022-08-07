@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Meta, Title } from '@angular/platform-browser';
+import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
+import { filter, map, mergeMap } from 'rxjs/operators';
 import { ColorPaletteComponent } from './pages/color-palette/color-palette.component';
 import { FormComponent } from './pages/examples/form/form.component';
 import { FormSidebarComponent } from './pages/examples/sidebar/form-sidebar.component';
@@ -28,14 +30,26 @@ import { TextFieldComponent } from './pages/showcase/text-field/text-field.compo
                 [
                     {
                         path     : 'introduction',
-                        component: IntroductionComponent
+                        component: IntroductionComponent,
+                        data     : {
+                            metaTitle      : 'Introduction to FrontEngine',
+                            metaDescription: 'A angular component library which features astonishing components, theming and a vast color palette'
+                        }
                     },
                     {
                         path     : 'getting-started',
-                        component: GettingStartedComponent
+                        component: GettingStartedComponent,
+                        data     : {
+                            metaTitle      : 'Getting started with FrontEngine',
+                            metaDescription: 'Installing, customizing and making use of FrontEngine'
+                        }
                     },
                     {
                         path    : 'showcase',
+                        data    : {
+                            metaTitle      : 'Showcase of FrontEngine',
+                            metaDescription: 'Learn about the components and features of FrontEngine'
+                        },
                         children: [
                             {
                                 path     : '',
@@ -103,6 +117,10 @@ import { TextFieldComponent } from './pages/showcase/text-field/text-field.compo
                     },
                     {
                         path    : 'examples',
+                        data    : {
+                            metaTitle      : 'Examples of FrontEngine in the real world',
+                            metaDescription: 'See how FrontEngine could integrate with your existing use-cases'
+                        },
                         children: [
                             {
                                 path     : '',
@@ -122,7 +140,11 @@ import { TextFieldComponent } from './pages/showcase/text-field/text-field.compo
                     },
                     {
                         path     : 'color-palette',
-                        component: ColorPaletteComponent
+                        component: ColorPaletteComponent,
+                        data     : {
+                            metaTitle      : 'Color Palette bundled with FrontEngine',
+                            metaDescription: 'Now it is easy the ever to find the right colors with our vast color palette'
+                        }
                     },
                     {
                         path     : '404',
@@ -138,4 +160,30 @@ import { TextFieldComponent } from './pages/showcase/text-field/text-field.compo
         exports: [ RouterModule ]
     }
 )
-export class AppRoutingModule {}
+export class AppRoutingModule {
+
+    constructor(
+        private router: Router,
+        private activatedRoute: ActivatedRoute,
+        private titleService: Title,
+        private metaService: Meta
+    ) {
+        this.router.events.pipe(
+            filter( event => event instanceof NavigationEnd ),
+            map( () => this.activatedRoute ),
+            map( route => {
+                while ( route.firstChild ) {
+                    route = route.firstChild;
+                }
+                return route;
+            } ),
+            filter( route => route.outlet === 'primary' ),
+            mergeMap( route => route.data )
+        ).subscribe( ( event ) => {
+            console.log( event[ 'metaTitle' ] + ' = ' + event[ 'metaDescription' ] );
+            this.titleService.setTitle( event[ 'metaTitle' ] );
+            this.metaService.removeTag( 'name="description"' );
+            this.metaService.addTag( { name: 'description', content: event[ 'metaDescription' ] }, false );
+        } );
+    }
+}
