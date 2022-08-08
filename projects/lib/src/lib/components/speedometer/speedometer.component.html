@@ -68,11 +68,18 @@
 
     <text *ngIf="feLabelPrimary"
           class="bottomText main"
-          text-anchor="middle"
-          dominant-baseline="middle"
-          [style.font-size]="diameter / 16.07 + 'px'"
-          [attr.textLength]="feLabelPrimary.length * (bottomLength / 8)">
-        <textPath xlink:href="#bottomTextCircle" [attr.startOffset]="bottomTextBottomOffset" method="stretch">
+          [style.font-size]="diameter / 18 + 'px'"
+          [attr.textLength]="feLabelPrimary.length * (bottomLength / 8)"
+          lengthAdjust="spacing"
+          dominant-baseline="middle">
+        <textPath xlink:href="#bottomTextCircle"
+                  #labelPrimary
+                  [attr.textLength]="feLabelPrimary.length * (bottomLength / 8)"
+                  [attr.startOffset]="bottomTextBottomOffset - (primaryLabelTrueWidth / 2)"
+                  lengthAdjust="spacing"
+                  dominant-baseline="middle"
+                  method="stretch"
+                  spacing="auto">
             {{ feLabelPrimary }}
         </textPath>
     </text>
@@ -80,11 +87,17 @@
     <text *ngIf="feLabelPrimary"
           class="bottomText"
           [attr.fill]="'url(#' + primaryLabelId + ')'"
-          text-anchor="middle"
-          dominant-baseline="middle"
-          [style.font-size]="diameter / 16.07 + 'px'"
-          [attr.textLength]="feLabelPrimary.length * (bottomLength / 8)">
-        <textPath xlink:href="#bottomTextCircle" [attr.startOffset]="bottomTextBottomOffset" method="stretch">
+          [style.font-size]="diameter / 18 + 'px'"
+          [attr.textLength]="feLabelPrimary.length * (bottomLength / 8)"
+          lengthAdjust="spacing"
+          dominant-baseline="middle">
+        <textPath xlink:href="#bottomTextCircle"
+                  [attr.textLength]="feLabelPrimary.length * (bottomLength / 8)"
+                  [attr.startOffset]="bottomTextBottomOffset - (primaryLabelTrueWidth / 2)"
+                  lengthAdjust="spacing"
+                  dominant-baseline="middle"
+                  method="stretch"
+                  spacing="auto">
             {{ feLabelPrimary }}
         </textPath>
     </text>
@@ -92,11 +105,17 @@
     <text *ngIf="feLabelPrimary"
           class="bottomText"
           [attr.fill]="'url(#' + primaryLabelId2 + ')'"
-          text-anchor="middle"
-          dominant-baseline="middle"
-          [style.font-size]="diameter / 16.07 + 'px'"
-          [attr.textLength]="feLabelPrimary.length * (bottomLength / 8)">
-        <textPath xlink:href="#bottomTextCircle" [attr.startOffset]="bottomTextBottomOffset" method="stretch">
+          [style.font-size]="diameter / 18 + 'px'"
+          [attr.textLength]="feLabelPrimary.length * (bottomLength / 8)"
+          lengthAdjust="spacing"
+          dominant-baseline="middle">
+        <textPath xlink:href="#bottomTextCircle"
+                  [attr.textLength]="feLabelPrimary.length * (bottomLength / 8)"
+                  [attr.startOffset]="bottomTextBottomOffset - (primaryLabelTrueWidth / 2)"
+                  lengthAdjust="spacing"
+                  dominant-baseline="middle"
+                  method="stretch"
+                  spacing="auto">
             {{ feLabelPrimary }}
         </textPath>
     </text>
@@ -131,7 +150,9 @@
         <radialGradient [id]="innerCircleGradientId" class="inner-circle-gradient">
             <stop offset="0%"/>
             <stop offset="10%"/>
-            <stop offset="75%" stop-opacity="0.6"/>
+            <stop offset="75%" stop-opacity="0.6">
+                <animate *ngIf="fePulsate" attributeName="stop-opacity" values="0.25; 0.6; 0.25" dur="3.75s" fill="freeze" repeatCount="indefinite" />
+            </stop>
             <stop offset="100%" stop-opacity="0.2"/>
         </radialGradient>
 
@@ -156,34 +177,39 @@
           [attr.fill]="'transparent'"
           [attr.d]="svgUtil.circularPath(canvasRadius, canvasRadius, stepTextCircleRadius, true)"></path>
 
-    <text text-anchor="middle" dominant-baseline="hanging" *ngFor="let text of stepTexts" class="stepText" [style.font-size]="diameter / 40 + 'px'">
+    <text text-anchor="middle" dominant-baseline="hanging" *ngFor="let text of stepTexts" class="stepText"
+          [style.font-size]="diameter / 40 + 'px'">
         <textPath [attr.startOffset]="text.offset" xlink:href="#stepTextCircle">{{ text.text }}</textPath>
     </text>
 </svg>
 
-<svg *ngFor="let marker of markers" class="speedometer overlay" [attr.width]="diameter" [attr.height]="diameter"
+<svg *ngFor="let marker of markers; trackBy:trackByIndex" class="speedometer overlay" [attr.width]="diameter"
+     [attr.height]="diameter"
      [style.transform]="'rotate(' + marker.rotateDegree + 'deg)'">
-    <path class="marker"
-          [attr.d]="marker.path"
-          [attr.transform]="'translate(' + (marker.cx) + ',' + (marker.y - marker.height) + ')'">
-    </path>
+    <circle class="marker"
+            [attr.cx]="marker.cx"
+            [attr.cy]="marker.cy"
+            [attr.r]="marker.radius">
+    </circle>
 </svg>
 
 <svg class="speedometer overlay" [attr.width]="diameter" [attr.height]="diameter"
      [style.transform]="'rotate(' + indicatorMarkerRotateDegree + 'deg)'">
     <path class="marker"
+          [attr.stroke-width]="diameter / 300"
           [attr.d]="indicatorMarkerPath"
           [attr.transform]="'translate(' + indicatorMarkerCX + ',' + (indicatorMarkerY - indicatorMarkerHeight) + ')'">
     </path>
 </svg>
 
 <div class="center">
-    <span class="background-text" [style.font-size]="diameter / 7 + 'px'">{{ feUnit }}</span>
-    <span class="foreground-text" [style.font-size]="diameter / 6 + 'px'" #foregroundText></span>
+    <span class="background-text" [style.font-size]="diameter / 8 + 'px'">{{ feUnit }}</span>
+    <span class="foreground-text" [style.font-size]="diameter / 7 + 'px'" #foregroundText></span>
 </div>
 
-<div class="bottom" [style.width]="diameter / 3  + 'px'" [style.height]="diameter / 5.625 + 'px'"
-     [style.bottom]="((diameter - (diameter / 1.5))) / 2 + 'px'">
+<div class="bottom" [style.width]="diameter / 3  + 'px'"
+     [style.height]="diameter - yAxis2Hud - ( canvasRadius - innerCircleRadius) - innerFrameWidth - hudStrokeWidth + 'px'"
+     [style.bottom]="(canvasRadius - innerCircleRadius + outerFrameWidth + (innerFrameWidth * 2)) + 'px'">
     <span [style.top]="canvasRadius / 45 + 'px'"
-          [style.font-size]="diameter / 23 + 'px'">{{ feLabelSecondary }}</span>
+          [style.font-size]="diameter / 26 + 'px'">{{ feLabelSecondary }}</span>
 </div>

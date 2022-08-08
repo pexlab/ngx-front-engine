@@ -29,17 +29,17 @@
 
     & .background-text {
 
-        position  : absolute;
-        left      : 50%;
-        top       : 50%;
+        position    : absolute;
+        left        : 50%;
+        top         : 50%;
 
         @include theme.commonFont('caption');
-        font-family: 'Rajdhani', sans-serif;
+        font-family : 'Rajdhani', sans-serif;
         color       : theme.hex('text-inner');
 
-        opacity   : .15;
+        opacity     : .15;
 
-        transform : translateY(-110%) translateX(-50%);
+        transform   : translateY(-110%) translateX(-50%);
     }
 
     & .bottomText {
@@ -54,7 +54,7 @@
 
     & .stepText {
         @include theme.commonFont('body');
-        fill: theme.hex('step-primary');
+        fill : theme.hex('step-primary');
     }
 
     & > .bottom {
@@ -68,7 +68,7 @@
 
         transform   : translateX(-50%);
 
-        & > span:nth-child(1) {
+        & > span {
 
             z-index     : 1;
 
@@ -78,7 +78,6 @@
             font-family : 'Syncopate', sans-serif;
 
             text-align  : center;
-            white-space : nowrap;
         }
     }
 }
@@ -146,7 +145,12 @@ svg.speedometer {
     }
 
     & > path.marker {
-        fill : theme.hex('marker');
+        fill   : theme.hex('marker-fill');
+        stroke : theme.hex('marker-stroke');
+    }
+
+    & > circle.marker {
+        fill : theme.hex('marker-intermediate');
     }
 
     & > defs {

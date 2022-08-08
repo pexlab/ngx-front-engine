@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, ElementRef, Input, NgZone, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, NgZone, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { parsePath, roundCommands } from 'svg-round-corners';
 import { customAlphabet } from 'nanoid';
+import { parsePath, roundCommands } from 'svg-round-corners';
 import { ComponentTheme } from '../../interfaces/color.interface';
 import { FeComponent } from '../../utils/component.utils';
 import { SVGUtil } from '../../utils/svg.utils';
@@ -20,7 +20,8 @@ export class SpeedometerComponent implements AfterViewInit {
     constructor(
         public hostElement: ElementRef,
         public domSam: DomSanitizer,
-        public ngZone: NgZone
+        public ngZone: NgZone,
+        private change: ChangeDetectorRef
     ) {
     }
 
@@ -28,7 +29,7 @@ export class SpeedometerComponent implements AfterViewInit {
     public feTheme!: ComponentTheme<PartialSpeedometerTheme>;
 
     @Input()
-    public set feRange(value: [number, number]) {
+    public set feRange( value: [ number, number ] ) {
         this.range = value;
 
         this.ngOnInit();
@@ -37,7 +38,7 @@ export class SpeedometerComponent implements AfterViewInit {
     public range!: [ number, number ];
 
     @Input()
-    public set feDiameter(value: number) {
+    public set feDiameter( value: number ) {
         this.diameter = value;
 
         this.ngOnInit();
@@ -46,7 +47,7 @@ export class SpeedometerComponent implements AfterViewInit {
     public diameter!: number;
 
     @Input()
-    public set feStepSize(value: [ number, number ]) {
+    public set feStepSize( value: [ number, number ] ) {
         this.stepSize = value;
 
         this.ngOnInit();
@@ -55,7 +56,7 @@ export class SpeedometerComponent implements AfterViewInit {
     public stepSize!: [ number, number ];
 
     @Input()
-    public set feMarkers(value: number[]) {
+    public set feMarkers( value: number[] ) {
         this.inputMarkers = value;
 
         this.ngOnInit();
@@ -85,11 +86,24 @@ export class SpeedometerComponent implements AfterViewInit {
         }
     }
 
+    @Input()
+    public fePulsate = false;
+
     @ViewChild( 'foregroundText' )
     public foregroundValueEl!: ElementRef<HTMLSpanElement>;
 
     @ViewChild( 'indicator' )
     public indicatorEl!: ElementRef<SVGCircleElement>;
+
+    @ViewChild( 'labelPrimary', { static: false } )
+    public set labelPrimary( item: ElementRef<SVGTextPathElement> ) {
+        if ( item !== undefined ) {
+            this.primaryLabelTrueWidth = item.nativeElement.getBBox({fill: true, stroke: true, markers: true, clipped: true}).width;
+            this.change.detectChanges();
+        }
+    }
+
+    public primaryLabelTrueWidth = 0;
 
     public svgUtil = SVGUtil;
 
@@ -159,7 +173,7 @@ export class SpeedometerComponent implements AfterViewInit {
 
     public indicatorMarkerPath!: string;
 
-    public markers!: { path: string, rotateDegree: number, width: number, height: number, cx: number, y: number }[];
+    public markers!: { rotateDegree: number, radius: number, cx: number, cy: number }[];
 
     private indicatorOffsetStart!: number;
     private indicatorOffsetEnd!: number;
@@ -227,13 +241,13 @@ export class SpeedometerComponent implements AfterViewInit {
 
         this.stepTexts = [];
 
-        this.indicatorMarkerRotateDegree = 0;
+        this.indicatorMarkerRotateDegree = 40;
         this.indicatorMarkerWidth        = this.diameter / 22.5;
         this.indicatorMarkerHeight       = this.diameter / 22.5;
-        this.indicatorMarkerCX           = this.canvasRadius + ( Math.cos( 90 * Math.PI / 180.0 ) * ( this.innerCircleRadius - ( this.innerFrameWidth / 2 ) ) ) - ( this.indicatorMarkerWidth / 2 );
-        this.indicatorMarkerY            = this.canvasRadius + ( Math.sin( 90 * Math.PI / 180.0 ) * ( this.innerCircleRadius - ( this.innerFrameWidth / 2 ) ) );
+        this.indicatorMarkerCX           = this.canvasRadius + ( Math.cos( 90 * Math.PI / 180.0 ) * ( this.innerCircleRadius - ( this.innerFrameWidth + this.stepStrokeLength + ( this.diameter / 16 ) ) ) ) - ( this.indicatorMarkerWidth / 2 );
+        this.indicatorMarkerY            = this.canvasRadius + ( Math.sin( 90 * Math.PI / 180.0 ) * ( this.innerCircleRadius - ( this.innerFrameWidth + this.stepStrokeLength + ( this.diameter / 16 ) ) ) );
 
-        this.indicatorMarkerPath = `M ${ this.indicatorMarkerWidth / 2 } ${ this.indicatorMarkerHeight } L 0 0 L ${ this.indicatorMarkerWidth } 0 Z`;
+        this.indicatorMarkerPath = `M ${ this.indicatorMarkerWidth / 2 } ${ this.indicatorMarkerHeight } L 0 0 L ${ this.indicatorMarkerWidth / 2 } ${ this.indicatorMarkerHeight / 3 } L ${ this.indicatorMarkerWidth } 0 Z`;
 
         this.markers = [];
 
@@ -245,15 +259,16 @@ export class SpeedometerComponent implements AfterViewInit {
 
         this.calculateSteps();
         this.calculateMarkers();
+        this.updateValue();
     }
 
     public ngAfterViewInit(): void {
+
         this.indicatorEl.nativeElement.style.strokeDashoffset = this.indicatorOffsetStart + 'px';
 
         setTimeout( () => {
             this.feValue = this.currentValue === undefined ? Math.min( this.range[ 0 ], this.range[ 1 ] ) : this.currentValue;
         } );
-
     }
 
     public degToRad( deg: number ): number {
@@ -262,13 +277,14 @@ export class SpeedometerComponent implements AfterViewInit {
 
     public calculateMarkers() {
 
-        const width  = this.diameter / ( 450 / 10 );
-        const height = this.diameter / ( 450 / 10 );
+        if ( this.currentValue === undefined || this.range[ 0 ] === undefined || this.range[ 1 ] === undefined ) {
+            return;
+        }
 
-        const cx = ( this.canvasRadius + ( Math.cos( 90 * Math.PI / 180.0 ) * ( this.innerCircleRadius - ( this.innerFrameWidth / 2 ) - ( 450 / 17 ) ) ) ) - ( height / 2 );
-        const y  = this.canvasRadius + ( Math.sin( 90 * Math.PI / 180.0 ) * ( this.innerCircleRadius - ( this.innerFrameWidth / 2 ) - ( 450 / 17 ) ) );
+        const radius = ( this.diameter / ( 380 ) ) * 2;
 
-        const path = `M ${ width / 2 } ${ height } L 0 0 L ${ width } 0 Z`;
+        const cx = ( this.canvasRadius + ( Math.cos( 90 * Math.PI / 180.0 ) * ( this.innerCircleRadius - ( this.innerFrameWidth + this.stepStrokeLength + ( this.diameter / 19 ) ) ) ) ) - ( radius / 2 );
+        const cy = this.canvasRadius + ( Math.sin( 90 * Math.PI / 180.0 ) * ( this.innerCircleRadius - ( this.innerFrameWidth + this.stepStrokeLength + ( this.diameter / 19 ) ) ) );
 
         for ( let markerValue of this.inputMarkers ) {
 
@@ -278,11 +294,16 @@ export class SpeedometerComponent implements AfterViewInit {
             const p      = ( markerValue - min ) / ( max - min );
             const degree = ( p * ( 280 ) ) + 40;
 
-            this.markers.push( { path: path, rotateDegree: degree, width: width, height: height, cx: cx, y: y } );
+            this.markers.push( { rotateDegree: degree, radius, cx, cy } );
         }
     }
 
     public calculateSteps() {
+
+        if ( this.currentValue === undefined || this.range[ 0 ] === undefined || this.range[ 1 ] === undefined ) {
+            return;
+        }
+
         const min = Math.min( Math.min( this.range[ 0 ], this.range[ 1 ] ) );
         const max = Math.max( Math.max( this.range[ 0 ], this.range[ 1 ] ) );
 
@@ -305,7 +326,7 @@ export class SpeedometerComponent implements AfterViewInit {
 
                 const interimStepDegree = ( 280 / ( max - min ) ) * ( interimStep + ( stepCounter * this.stepSize[ 0 ] ) );
 
-                if(interimStepDegree < 280) {
+                if ( interimStepDegree < 280 ) {
 
                     const xOneInterimStep = this.canvasRadius + ( Math.cos( this.degToRad( 130 + interimStepDegree ) ) * ( this.innerCircleRadius - this.innerFrameWidth ) );
                     const yOneInterimStep = this.canvasRadius + ( Math.sin( this.degToRad( 130 + interimStepDegree ) ) * ( this.innerCircleRadius - this.innerFrameWidth ) );
@@ -330,7 +351,7 @@ export class SpeedometerComponent implements AfterViewInit {
 
     public updateValue(): void {
 
-        if ( this.currentValue === undefined ) {
+        if ( this.currentValue === undefined || this.range[ 0 ] === undefined || this.range[ 1 ] === undefined || this.indicatorEl === undefined ) {
             return;
         }
 
@@ -377,4 +398,8 @@ export class SpeedometerComponent implements AfterViewInit {
             window.requestAnimationFrame( step );
         } );
     }
+
+    public trackByIndex( index: number, item: any ) {
+        return index;
+    };
 }

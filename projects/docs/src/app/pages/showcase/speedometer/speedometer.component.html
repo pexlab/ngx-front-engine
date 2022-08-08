@@ -2,9 +2,10 @@
                 [feDiameter]="450"
                 [feRange]="[0, 250]"
                 [feStepSize]="[20, 5]"
-                [feMarkers]="[100, 194]"
+                [feMarkers]="speedometerMarker"
                 [feValue]="speedometerValue"
                 feLabelPrimary="Speed"
                 feLabelSecondary="2250 RPM"
-                [feTheme]="determineTheme(speedometerValue)">
+                [feTheme]="determineTheme(speedometerValue)"
+                [fePulsate]="true">
 </fe-speedometer>

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ComponentTheme, FeColorPalette, SpeedometerTheme, ThemeService } from '@pexlab/ngx-front-engine';
+import { Color, ComponentTheme, FeColorPalette, SpeedometerTheme, ThemeService } from '@pexlab/ngx-front-engine';
 
 @Component(
     {
@@ -11,7 +11,8 @@ export class SpeedometerComponent implements OnInit, OnDestroy {
 
     constructor( private theme: ThemeService ) { }
 
-    public speedometerValue = 0;
+    public speedometerValue            = 0;
+    public speedometerMarker: number[] = [];
     private interval!: number;
 
     private speedometerNormalTheme: SpeedometerTheme = this.theme.component.speedometer;
@@ -21,7 +22,7 @@ export class SpeedometerComponent implements OnInit, OnDestroy {
         hud: FeColorPalette.Greyscale.SnowWhite,
 
         border: {
-            inner: FeColorPalette.Greyscale.SnowWhite,
+            inner: Color.fadeHex( FeColorPalette.Orange.Papaya, .5 ),
             outer: FeColorPalette.Red.Berry
         },
 
@@ -31,11 +32,15 @@ export class SpeedometerComponent implements OnInit, OnDestroy {
         },
 
         step: {
-            primary  : FeColorPalette.Cyan.AgalAquamarine,
-            secondary: FeColorPalette.Cyan.AgalAquamarine
+            primary  : FeColorPalette.Orange.Papaya,
+            secondary: Color.fadeHex( FeColorPalette.Orange.Papaya, .5 )
         },
 
-        marker: FeColorPalette.Cyan.AgalAquamarine,
+        marker: {
+            fill        : Color.fadeHex( FeColorPalette.Orange.Papaya , .3 ),
+            stroke      : FeColorPalette.Orange.Papaya ,
+            intermediate: Color.fadeHex( FeColorPalette.Orange.Papaya , .5 )
+        },
 
         text: {
             inner     : FeColorPalette.Greyscale.SnowWhite,
@@ -65,18 +70,34 @@ export class SpeedometerComponent implements OnInit, OnDestroy {
     public ngOnInit(): void {
 
         this.interval = setInterval( () => {
-         this.setRandom();
-         }, 500 );
 
-        this.setRandom();
+            this.setRandomValue();
+            this.setRandomMarker();
+
+        }, 2000 );
+
+        this.setRandomValue();
+        this.setRandomMarker();
     }
 
-    private setRandom() {
+    private setRandomValue() {
 
         const min = 0;
         const max = 250;
 
         this.speedometerValue = Math.floor( Math.random() * ( max - min + 1 ) + min );
+    }
+
+    private setRandomMarker() {
+
+        const min = 0;
+        const max = 250;
+
+        this.speedometerMarker = [
+            Math.floor( Math.random() * ( max - min + 1 ) + min ),
+            Math.floor( Math.random() * ( max - min + 1 ) + min ),
+            Math.floor( Math.random() * ( max - min + 1 ) + min )
+        ].sort( ( a, b ) => a - b );
     }
 
     public ngOnDestroy(): void {

@@ -19,10 +19,16 @@ export const ZSpeedometerTheme = z.object(
         step      : z.object(
             {
                 primary  : ZHEXColor,
-                secondary: ZHEXColor
+                secondary: ZHEXColor,
             }
         ),
-        marker    : ZHEXColor,
+        marker    : z.object(
+            {
+                stroke: ZHEXColor,
+                fill  : ZHEXColor,
+                intermediate: ZHEXColor
+            }
+        ),
         text      : z.object(
             {
                 inner: ZHEXColor,

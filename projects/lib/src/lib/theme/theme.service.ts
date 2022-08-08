@@ -507,7 +507,11 @@ export class ThemeService {
                     hud       : '#171b27'
                 },
 
-                marker: FeColorPalette.Cyan.AgalAquamarine
+                marker: {
+                    fill        : Color.fadeHex( FeColorPalette.Cyan.AgalAquamarine, .3 ),
+                    stroke      : FeColorPalette.Cyan.AgalAquamarine,
+                    intermediate: Color.fadeHex( FeColorPalette.Cyan.AgalAquamarine, .5 )
+                }
             },
 
             stepper: {
