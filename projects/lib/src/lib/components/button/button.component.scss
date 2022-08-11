@@ -1,4 +1,5 @@
 @use '../../../../assets/fe-styles/theme' with ($scope: 'button');
+@use '../../../../assets/fe-styles/utils';
 @use 'sass:math';
 
 :host {
@@ -74,8 +75,10 @@
             transition     : opacity .25s ease;
         }
 
-        &:hover > .gradient {
-            opacity : 1;
+        @include utils.hover {
+            & > .gradient {
+                opacity : 1;
+            }
         }
     }
 
@@ -83,7 +86,7 @@
         border-bottom : 0.2rem solid theme.hex('border-bottom');
     }
 
-    & > button.circle {
+    & > button.circle, & > button.circle-hover, & > button.circle-hover-with-fallback {
 
         position       : relative;
 
@@ -97,18 +100,6 @@
         color          : theme.hex('circle-tooltip-text');
 
         @include theme.commonFont('body');
-
-        &:hover::ng-deep {
-
-            & > svg-icon:after {
-                opacity : 1;
-            }
-
-            & > span {
-                opacity   : 1;
-                transform : translateY(calc(100% + .25rem)) translateX(-50%);
-            }
-        }
 
         &::ng-deep {
 
@@ -160,6 +151,68 @@
                     right          : 0;
                     background     : linear-gradient(to bottom, rgba(white, .2), rgba(white, 0));
                     transition     : opacity .25s ease;
+                }
+            }
+        }
+
+        @include utils.hover {
+            &::ng-deep {
+                & > svg-icon:after {
+                    opacity : 1;
+                }
+            }
+        }
+    }
+
+    & > button.circle {
+        &::ng-deep {
+            & > span {
+                opacity   : 1;
+                transform : translateY(calc(100% + .25rem)) translateX(-50%);
+            }
+        }
+    }
+
+    & > button.circle-hover {
+
+        &::ng-deep {
+            & > span {
+                pointer-events : none;
+            }
+        }
+
+        @include utils.hover {
+            &::ng-deep {
+                & > span {
+                    opacity   : 1;
+                    transform : translateY(calc(100% + .25rem)) translateX(-50%);
+                }
+            }
+        }
+    }
+
+    & > button.circle-hover-with-fallback {
+
+        &::ng-deep {
+            & > span {
+                pointer-events : none;
+            }
+        }
+
+        @include utils.hoverOrAlways {
+            &::ng-deep {
+                & > span {
+                    pointer-events : visible;
+                    opacity        : 1;
+                    transform      : translateY(calc(100% + .25rem)) translateX(-50%);
+                }
+            }
+        }
+
+        @include utils.hover {
+            &::ng-deep {
+                & > span {
+                    pointer-events : none;
                 }
             }
         }
@@ -240,7 +293,7 @@
             }
         }
 
-        &:hover {
+        @include utils.hover {
 
             width      : 13rem;
 
@@ -327,7 +380,7 @@
 
         @include theme.inlineDeepIcon(1.3rem);
 
-        &:hover {
+        @include utils.hover {
             padding         : .75rem 2rem;
             text-decoration : underline solid rgba(#41403E, .5);
         }

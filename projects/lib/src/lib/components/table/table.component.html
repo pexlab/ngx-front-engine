@@ -37,7 +37,7 @@
         <div class="left">
 
             <fe-button *ngFor="let action of feActions.slice(0, feActions.length / 2)"
-                       feAppearance="circle"
+                       feAppearance="circle-hover"
                        [feTheme]="buttonTheme"
                        (feClick)="action.onClick()">
 
@@ -53,7 +53,7 @@
         <div class="right">
 
             <fe-button *ngFor="let action of feActions.slice(feActions.length / 2, feActions.length)"
-                       feAppearance="circle"
+                       feAppearance="circle-hover"
                        [feTheme]="buttonTheme"
                        (feClick)="action.onClick()">
 
@@ -67,7 +67,7 @@
     </div>
 
     <div class="connector odd" *ngSwitchCase="'odd'">
-        <fe-button *ngFor="let action of feActions" feAppearance="circle" [feTheme]="buttonTheme"
+        <fe-button *ngFor="let action of feActions" feAppearance="circle-hover" [feTheme]="buttonTheme"
                    (feClick)="action.onClick()">
             <svg-icon [name]="action.icon"></svg-icon>
             <span>{{ action.label }}</span>

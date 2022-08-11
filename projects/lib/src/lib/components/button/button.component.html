@@ -4,17 +4,22 @@
 
 <ng-container [ngSwitch]="feAppearance">
 
-    <button *ngSwitchCase="'circle'"
-            [ngClass]="feAppearance"
-            [fe-tactile]
-            (tactileClick)="feClick.emit()">
+    <button
+        *ngSwitchCase="feAppearance === 'circle' || feAppearance === 'circle-hover' || feAppearance === 'circle-hover-with-fallback' ? feAppearance : 'none'"
+        [ngClass]="feAppearance"
+        [fe-tactile]
+        [feLink]="feLink"
+        [feLinkTarget]="feLinkTarget"
+        (feClick)="feClick.emit()">
         <ng-container *ngTemplateOutlet="content"></ng-container>
     </button>
 
     <button *ngSwitchCase="'hinge'"
             [ngClass]="feAppearance"
             [fe-tactile]
-            (tactileClick)="feClick.emit()">
+            [feLink]="feLink"
+            [feLinkTarget]="feLinkTarget"
+            (feClick)="feClick.emit()">
 
         <div class="content">
             <ng-container *ngTemplateOutlet="content"></ng-container>
@@ -25,7 +30,9 @@
     <button *ngSwitchCase="'handwritten'"
             [ngClass]="feAppearance"
             [fe-tactile]
-            (tactileClick)="feClick.emit()">
+            [feLink]="feLink"
+            [feLinkTarget]="feLinkTarget"
+            (feClick)="feClick.emit()">
         <ng-container *ngTemplateOutlet="content"></ng-container>
     </button>
 
@@ -33,7 +40,9 @@
             [ngClass]="feAppearance"
             [type]="feType"
             [fe-tactile]
-            (tactileClick)="feClick.emit()">
+            [feLink]="feLink"
+            [feLinkTarget]="feLinkTarget"
+            (feClick)="feClick.emit()">
 
         <span class="content">
               <ng-container *ngTemplateOutlet="content"></ng-container>

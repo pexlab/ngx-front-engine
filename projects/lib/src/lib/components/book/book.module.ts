@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FeTactileModule } from '../../directives/tactile/tactile.module';
 import { BookComponent } from './book.component';
 
 @NgModule( {
@@ -8,9 +9,10 @@ import { BookComponent } from './book.component';
 		BookComponent
 	],
 
-	imports: [
-		CommonModule
-	],
+    imports: [
+        CommonModule,
+        FeTactileModule
+    ],
 
 	exports: [
 		BookComponent

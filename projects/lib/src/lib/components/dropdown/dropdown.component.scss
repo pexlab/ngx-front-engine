@@ -1,7 +1,9 @@
 @use '../../../../assets/fe-styles/theme' with ($scope: 'dropdown');
+@use '../../../../assets/fe-styles/utils';
 @use 'sass:math';
 
 @forward '../../../../assets/fe-styles/theme';
+@forward '../../../../assets/fe-styles/utils';
 
 $DROPDOWN_PADDING_VERTICAL   : 15px;
 $DROPDOWN_PADDING_HORIZONTAL : 25px;
@@ -188,7 +190,7 @@ $OPTION_PADDING              : 10px;
 
             @include theme.inlineIcon(18px);
 
-            &:hover {
+            @include utils.hover {
                 color      : theme.hex('clear-button-hover');
                 background : theme.hex('clear-button-hover-background');
             }

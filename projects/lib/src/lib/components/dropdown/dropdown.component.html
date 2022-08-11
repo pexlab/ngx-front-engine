@@ -2,7 +2,7 @@
      [class.selected]="dropdownVisible"
      [ngClass]="feAppearance"
      [fe-tactile]
-     (tactileClick)="toggleMenu()">
+     (feClick)="toggleMenu()">
 
     <ng-container
         *ngTemplateOutlet="activePlaceholderRef || defaultPlaceholderRef || (feEmptyTemplate ? emptyPlaceholderRef : emptyNoticePlaceholderRef)">
@@ -21,7 +21,7 @@
     <div class="clear-value"
          *ngIf="feClearable"
          [fe-tactile]
-         (tactileClick)="manualClear()">
+         (feClick)="manualClear()">
         <svg-icon name="fe-backspace"></svg-icon>
     </div>
 </div>

@@ -1,5 +1,7 @@
 import { animate, AnimationBuilder, AnimationMetadata, style } from '@angular/animations';
+import { Location } from '@angular/common';
 import { Directive, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output, Renderer2 } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Directive(
     {
@@ -14,19 +16,34 @@ export class TactileDirective implements OnInit, OnDestroy {
     private disposeListeners: ( () => void )[] = [];
     private touchRadiusX                       = 0;
     private touchRadiusY                       = 0;
+    private anchorElement?: HTMLAnchorElement;
 
     constructor(
         private builder: AnimationBuilder,
         private hostElement: ElementRef<HTMLElement>,
         private renderer: Renderer2,
-        private ngZone: NgZone
+        private ngZone: NgZone,
+        private location: Location,
+        private router: Router
     ) {
     }
 
     public ngOnInit(): void {
+
         /* The directive does not change any property. It solely plays an animation.
          It is because of that why view checking is not needed. */
         this.ngZone.runOutsideAngular( () => {
+
+            /* To improve SEO discoverability of the link (since it would exist only in javascript otherwise) */
+            if ( this.link ) {
+                this.anchorElement                     = document.createElement( 'a' );
+                this.anchorElement.href                = this.link;
+                this.anchorElement.style.position      = 'fixed';
+                this.anchorElement.style.opacity       = '0';
+                this.anchorElement.style.visibility    = 'hidden';
+                this.anchorElement.style.pointerEvents = 'none';
+                this.renderer.appendChild( document.body, this.anchorElement );
+            }
 
             this.disposeListeners.push(
                 this.renderer.listen(
@@ -68,6 +85,11 @@ export class TactileDirective implements OnInit, OnDestroy {
 
     public ngOnDestroy(): void {
         this.ngZone.runOutsideAngular( () => {
+
+            if(this.anchorElement) {
+                this.renderer.removeChild( document.body, this.anchorElement );
+            }
+
             this.disposeListeners.forEach( dispose => {
                 dispose();
             } );
@@ -77,8 +99,17 @@ export class TactileDirective implements OnInit, OnDestroy {
     @Input( 'fe-tactile' )
     public target?: HTMLElement = this.hostElement.nativeElement;
 
-    @Output()
-    public tactileClick: EventEmitter<any> = new EventEmitter();
+    @Input( 'feLink' )
+    public link?: string;
+
+    @Input( 'feLinkTarget' )
+    public linkTarget: 'auto' | 'same_tab' | 'new_tab' = 'auto';
+
+    @Input( 'feShouldAnimate' )
+    public animate = true;
+
+    @Output( 'feClick' )
+    public clickOutput: EventEmitter<any> = new EventEmitter();
 
     private onClick( event: MouseEvent ): void {
 
@@ -91,7 +122,7 @@ export class TactileDirective implements OnInit, OnDestroy {
 
             /* Trigger view checking */
             this.ngZone.run( () => {
-                this.tactileClick.emit();
+                this.clickOutput.emit();
             } );
         }
     }
@@ -100,6 +131,24 @@ export class TactileDirective implements OnInit, OnDestroy {
 
         if ( this.heldDown ) {
             return;
+        }
+
+        if ( event instanceof MouseEvent ) {
+
+            if ( !this.link ) {
+
+                /* Accept only left button on non-links */
+                if ( event.button !== 0 ) {
+                    return;
+                }
+
+            } else {
+
+                /* Ignore right click on links */
+                if ( event.button === 3 ) {
+                    return;
+                }
+            }
         }
 
         /* E.g. when the users touch was meant for scrolling */
@@ -124,10 +173,13 @@ export class TactileDirective implements OnInit, OnDestroy {
             )
         ];
 
-        const factory = this.builder.build( metadata );
-        const player  = factory.create( this.target );
+        if ( this.animate ) {
+            const factory = this.builder.build( metadata );
+            const player  = factory.create( this.target );
+            player.play();
+        }
 
-        player.play();
+        ( this.target ?? this.hostElement.nativeElement ).classList.add( 'hoverState' );
     }
 
     private onPointerUp( event: PointerEvent ): void {
@@ -140,9 +192,57 @@ export class TactileDirective implements OnInit, OnDestroy {
 
         /* If the mouse is not on the component anymore, ignore the click. Most users behave this way, if they accidentally clicked. */
         if ( this.isOnHostElement( event ) ) {
-            if ( this.hostElement.nativeElement.click !== undefined ) {
-                this.hostElement.nativeElement.click();
-            }
+
+            this.ngZone.run( () => {
+
+                if ( this.hostElement.nativeElement.click !== undefined ) {
+                    this.hostElement.nativeElement.click();
+                }
+
+                if ( this.link ) {
+
+                    const newTab =
+                              this.linkTarget === 'auto' ? (
+                                  event instanceof MouseEvent ?
+                                  (
+                                      event.button === 1 ||
+                                      event.shiftKey ||
+                                      event.ctrlKey ||
+                                      event.metaKey ||
+                                      event.altKey
+                                  ) : false
+                              ) : this.linkTarget === 'new_tab';
+
+                    if ( newTab ) {
+
+                        window.open( this.link, '_blank' );
+
+                    } else {
+
+                        if ( this.link.startsWith( 'http' ) || this.link.startsWith( 'https' ) ) {
+
+                            const base = this.location.prepareExternalUrl( '/' );
+
+                            if ( this.link.startsWith( base ) ) {
+
+                                let stripped = this.link.slice( base.length );
+
+                                if ( !stripped.startsWith( '/' ) ) {
+                                    stripped = '/' + stripped;
+                                }
+
+                                this.router.navigate( [ stripped ] ).then();
+
+                            } else {
+                                window.open( this.link, '_self' );
+                            }
+
+                        } else {
+                            this.router.navigate( [ this.link ] ).then();
+                        }
+                    }
+                }
+            } );
         }
 
         const remainingTime = (
@@ -159,10 +259,13 @@ export class TactileDirective implements OnInit, OnDestroy {
                 animate( '200ms ease', style( { transform: 'scale(1)' } ) )
             ];
 
-            const factory = this.builder.build( metadata );
-            const player  = factory.create( this.target );
+            if ( this.animate ) {
+                const factory = this.builder.build( metadata );
+                const player  = factory.create( this.target );
+                player.play();
+            }
 
-            player.play();
+            ( this.target ?? this.hostElement.nativeElement ).classList.remove( 'hoverState' );
 
         }, remainingTime );
     }

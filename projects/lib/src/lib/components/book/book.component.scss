@@ -1,4 +1,5 @@
 @use '../../../../assets/fe-styles/theme' with ($scope: 'line-chart');
+@use '../../../../assets/fe-styles/utils';
 @use 'sass:math';
 
 $COVER_ASPECT      : math.div(150px, 220px);
@@ -81,7 +82,7 @@ img.book-cover {
 
         transform-origin : 100% 100% 0;
 
-        &:hover {
+        @include utils.hover {
             transform : perspective(1300px) rotateY(30deg);
         }
     }
@@ -90,7 +91,7 @@ img.book-cover {
 
         transform-origin : 0 100% 0;
 
-        &:hover {
+        @include utils.hover {
             transform : perspective(1300px) rotateY(-30deg);
         }
     }

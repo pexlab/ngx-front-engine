@@ -1,4 +1,5 @@
 @use '../../../../assets/fe-styles/theme' as config with ($scope: 'checkbox');
+@use '../../../../assets/fe-styles/utils.scss';
 
 :host {
 
@@ -39,7 +40,7 @@
         transition    : opacity .25s cubic-bezier(0, 0.55, 0.45, 1), transform .25s cubic-bezier(0, 0.55, 0.45, 1);
     }
 
-    &:hover {
+    @include utils.hover {
 
         & > svg.unchecked > path.outline {
             &.hover {

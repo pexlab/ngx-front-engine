@@ -39,3 +39,35 @@
         @content;
     }
 }
+
+@mixin hover {
+
+    @media not all and (pointer: coarse) {
+        &:hover {
+            @content;
+        }
+    }
+
+    &.hoverState {
+        @content;
+    }
+}
+
+@mixin hoverOrAlways {
+
+    @media not all and (pointer: coarse) {
+        &:hover {
+            @content;
+        }
+
+        &.hoverState {
+            @content;
+        }
+    }
+
+    @media (pointer: coarse) {
+        & {
+            @content;
+        }
+    }
+}

@@ -25,6 +25,8 @@ export class ButtonComponent {
                          | 'pill'
                          | 'raised-pill'
                          | 'circle'
+                         | 'circle-hover'
+                         | 'circle-hover-with-fallback'
                          | 'hinge'
                          | 'artistic-curves'
                          | 'see-through-light'
@@ -33,6 +35,12 @@ export class ButtonComponent {
 
     @Input()
     public feType: 'submit' | 'button' = 'button';
+
+    @Input()
+    public feLink?: string;
+
+    @Input()
+    public feLinkTarget: 'auto' | 'same_tab' | 'new_tab' = 'auto';
 
     @Output()
     public feClick: EventEmitter<any> = new EventEmitter();

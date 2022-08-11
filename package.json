@@ -6,7 +6,7 @@
   "scripts": {
     "serve_docs": "ng serve --host 0.0.0.0 --port 42001",
     "serve_lib": "ng build --configuration development --project lib --watch",
-    "build_docs": "ng build --configuration production --project docs --base-href https://www.pexlab.net/projects/front-engine/ --deploy-url https://www.pexlab.net/projects/front-engine/",
+    "build_docs": "ng build --configuration production --project docs --base-href https://www.pexlab.net/projects/front-engine/",
     "build_lib": "ng build --configuration production --project lib",
     "build_and_serve": "ng build --configuration development --project lib && ng serve --host 0.0.0.0",
     "build_and_pack": "ng build --configuration production && cd dist/ngx-front-engine && npm pack"

@@ -1,5 +1,6 @@
 @use '../../../../assets/fe-styles/theme' with ($scope: 'popup');
 @use '../../../../assets/fe-styles/responsive' with ($breakpoint: 1000px);
+@use '../../../../assets/fe-styles/utils';
 
 :host {
 
@@ -176,9 +177,11 @@
                     transition       : opacity .25s ease, transform .25s ease;
                 }
 
-                &:hover:after {
-                    opacity   : 1;
-                    transform : scale(1);
+                @include utils.hover {
+                    &:after {
+                        opacity   : 1;
+                        transform : scale(1);
+                    }
                 }
             }
 

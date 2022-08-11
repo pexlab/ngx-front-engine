@@ -7,11 +7,11 @@ import { CheckboxComponent } from './checkbox.component';
         declarations: [
             CheckboxComponent
         ],
-        
+
         imports: [
             CommonModule
         ],
-        
+
         exports: [
             CheckboxComponent
         ]

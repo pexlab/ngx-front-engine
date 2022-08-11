@@ -33,7 +33,7 @@
         </div>
 
         <div *ngIf="buttons !== null" class="buttons" [@buttons]="buttons">
-            <div *ngFor="let btn of buttons" [fe-tactile] (tactileClick)="btn.onClick()" [routerLink]="btn.link">
+            <div *ngFor="let btn of buttons" [fe-tactile] (feClick)="btn.onClick()" [routerLink]="btn.link">
                 <fe-button feAppearance="hinge" [feTheme]="buttonTheme">
                     <svg-icon *ngIf="btn.icon" [name]="btn.icon"></svg-icon>
                     <span>{{btn.text}}</span>
@@ -46,7 +46,7 @@
     <div *ngSwitchCase="'reduced'" class="reduced">
 
         <div class="left">
-            <div class="button" *ngIf="buttons && buttons[0]" [fe-tactile] (tactileClick)="buttons[0].onClick()"
+            <div class="button" *ngIf="buttons && buttons[0]" [fe-tactile] (feClick)="buttons[0].onClick()"
                  [routerLink]="buttons[0].link">
                 <svg-icon *ngIf="buttons[0].icon" [name]="buttons[0].icon"></svg-icon>
                 <span>{{buttons[0].text}}</span>
@@ -59,7 +59,7 @@
         </div>
 
         <div class="right">
-            <div class="button" *ngIf="buttons && buttons[1]" [fe-tactile] (tactileClick)="buttons[1].onClick()"
+            <div class="button" *ngIf="buttons && buttons[1]" [fe-tactile] (feClick)="buttons[1].onClick()"
                  [routerLink]="buttons[1].link">
                 <svg-icon *ngIf="buttons[1].icon" [name]="buttons[1].icon"></svg-icon>
                 <span>{{buttons[1].text}}</span>

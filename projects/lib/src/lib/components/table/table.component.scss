@@ -63,7 +63,7 @@
 
             transition      : background .25s ease;
 
-            &:hover {
+            @include utils.hover {
                 background : theme.hex('highlight-header');
             }
         }
@@ -166,9 +166,11 @@
                 position : relative;
 
                 @include utils.middle-child-of-type(12) {
-                    &:hover ~ .divider {
-                        & > .b {
-                            background-color : transparent;
+                    @include utils.hover {
+                        & ~ .divider {
+                            & > .b {
+                                background-color : transparent;
+                            }
                         }
                     }
                 }
@@ -460,8 +462,10 @@
                                 cursor : grab;
                             }
 
-                            &:hover > svg-icon {
-                                color : theme.hex('drag-handle-hover');
+                            @include utils.hover {
+                                & > svg-icon {
+                                    color : theme.hex('drag-handle-hover');
+                                }
                             }
 
                             & > fe-checkbox {
@@ -483,12 +487,17 @@
                             background : theme.hex('background-row-odd');
                         }
 
-                        &:hover {
+                        @include utils.hover {
                             background : theme.hex('background-row-hover');
                         }
 
                         &.dragDummy {
-                            &.even, &.odd, &:hover {
+
+                            &.even, &.odd {
+                                background : transparent !important;
+                            }
+
+                            @include utils.hover {
                                 background : transparent !important;
                             }
                         }

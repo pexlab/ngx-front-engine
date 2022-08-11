@@ -1,9 +1,9 @@
-<div class="top" [fe-tactile] (tactileClick)="add()">
+<div class="top" [fe-tactile] (feClick)="add()">
     <svg-icon name="fe-caret-up"></svg-icon>
 </div>
 
 <span [style.--suffix]="getSuffix()">{{ value }}</span>
 
-<div class="bottom" [fe-tactile] (tactileClick)="subtract()">
+<div class="bottom" [fe-tactile] (feClick)="subtract()">
     <svg-icon name="fe-caret-down"></svg-icon>
 </div>

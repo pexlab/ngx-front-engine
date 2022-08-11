@@ -1,4 +1,5 @@
 @use '../../../../assets/fe-styles/theme' with ($scope: 'banner-carousel');
+@use '../../../../assets/fe-styles/utils';
 
 :host {
 
@@ -60,7 +61,7 @@
 
                 transition     : .25s ease color, .25s ease background-color;
 
-                &:hover {
+                @include utils.hover {
                     color      : theme.hex('reduced-appearance-button-hover-text');
                     background : theme.hex('reduced-appearance-button-hover-background');
                 }

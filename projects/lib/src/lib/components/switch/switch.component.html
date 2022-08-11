@@ -4,7 +4,7 @@
 
         <ng-container *ngTemplateOutlet="labelLeft"></ng-container>
 
-        <div class="switch" [ngClass]="position" [fe-tactile] (tactileClick)="toggle()">
+        <div class="switch" [ngClass]="position" [fe-tactile] (feClick)="toggle()">
             <span class="line"></span>
             <span class="ball"></span>
         </div>
@@ -16,7 +16,7 @@
 
         <ng-container *ngTemplateOutlet="labelLeft"></ng-container>
 
-        <div class="switch" [ngClass]="position" [fe-tactile]="ball" (tactileClick)="toggle()">
+        <div class="switch" [ngClass]="position" [fe-tactile]="ball" (feClick)="toggle()">
             <div class="ball-wrapper">
                 <div class="ball" #ball>
                     <svg-icon *ngIf="feIconLeft && position === 'left'" [name]="feIconLeft"></svg-icon>
@@ -35,7 +35,7 @@
          *ngIf="feLabelLeft"
          [ngClass]="position === 'left' ? 'active' : 'inactive'"
          [fe-tactile]
-         (tactileClick)="toggle(0)">
+         (feClick)="toggle(0)">
         {{ feLabelLeft }}
     </div>
 </ng-template>
@@ -45,7 +45,7 @@
          *ngIf="feLabelRight"
          [ngClass]="position === 'right' ? 'active' : 'inactive'"
          [fe-tactile]
-         (tactileClick)="toggle(1)">
+         (feClick)="toggle(1)">
         {{ feLabelRight }}
     </div>
 </ng-template>

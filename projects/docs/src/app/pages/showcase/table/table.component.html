@@ -8,16 +8,11 @@
 
 </form>
 
-<div class="scroll" #scrollDemo>
-
-    <fe-table [feData]="sampleData"
-              [feColumns]="tableColumns"
-              [feReorderable]="true"
-              [feSelectable]="true"
-              [feSearchTerm]="quickSearch"
-              [feActions]="tableActions"
-              [feSearchMode]="'accurate'"
-              [feAutoFocus]="scrollDemo">
-    </fe-table>
-
-</div>
+<fe-table [feData]="sampleData"
+          [feColumns]="tableColumns"
+          [feReorderable]="true"
+          [feSelectable]="true"
+          [feSearchTerm]="quickSearch"
+          [feActions]="tableActions"
+          [feSearchMode]="'accurate'">
+</fe-table>

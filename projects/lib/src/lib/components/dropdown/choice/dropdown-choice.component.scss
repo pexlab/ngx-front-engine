@@ -33,7 +33,7 @@
         @include hostConfig.inlineIcon(20px);
     }
 
-    &:hover {
+    @include hostConfig.hover {
         color      : hostConfig.hex('options-hover-text');
         background : hostConfig.hex('options-hover-background');
     }

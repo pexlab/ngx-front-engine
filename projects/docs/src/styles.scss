@@ -1,103 +1,102 @@
-/* You can add global styles to this file, and also import other style files */
-
 @use '~dist/ngx-front-engine/assets/fe-styles/theme';
+@use '~dist/ngx-front-engine/assets/fe-styles/utils';
 
 body {
-  
+
   margin : 40px;
-  
+
   @include theme.commonFont('body');
-  
+
   & * {
 	box-sizing : border-box;
   }
-  
+
   & a {
-	
+
 	text-decoration : none;
-	
+
 	color           : darkblue;
-	
+
 	@include theme.commonFont('body');
-	
-	&:hover {
+
+	@include utils.hover {
 	  text-decoration : underline;
 	}
   }
-  
+
   & br, & img {
 	user-select : none;
   }
-  
+
   & h1 {
 	@include theme.commonFont('heading');
 	font-size : 32px;
   }
-  
+
   & h2 {
 	@include theme.commonFont('subheading');
 	font-size : 24px;
   }
-  
+
   & h3 {
 	@include theme.commonFont('subheading');
 	font-size : 21px;
   }
-  
+
   & h4 {
 	@include theme.commonFont('subheading');
 	font-size : 16px;
   }
-  
+
   & code {
 	background    : theme.commonHex('background-quaternary');
 	padding       : 3px 5px;
 	border-radius : 5px;
 	@include theme.commonFont('code');
   }
-  
+
   & hr {
 	border-top    : 1px solid theme.commonHex('background-tertiary');
 	border-left   : none;
 	border-bottom : none;
 	border-right  : none;
   }
-  
+
   & nav {
-	
+
 	color       : #6A6A6A;
 	user-select : none;
 	@include theme.commonFont('decorative');
-	
+
 	& a, & a:hover, & a:focus, & a:active {
 	  text-decoration : none;
 	  color           : inherit;
 	  @include theme.commonFont('decorative');
 	}
-	
+
 	& > .items {
-	  
+
 	  width          : fit-content;
 	  display        : grid;
 	  grid-auto-flow : column;
 	  grid-gap       : 50px;
-	  
+
 	  & > * {
 		cursor : pointer;
 	  }
-	  
+
 	  & > a {
-		
+
 		padding       : 10px 15px;
 		border-radius : 5px;
-		
+
 		&.active {
 		  background : #DDDDDD;
 		}
 	  }
 	}
   }
-  
+
   .container {
 	width          : 500px;
 	max-width      : 100%;

@@ -14,15 +14,4 @@
         margin-top : 5px;
         max-width  : 500px;
     }
-
-    & > .scroll {
-
-        height : calc(100vh - 80px - (2 * 35px));
-
-        @include theme.scrollbar(trasparent, transparent, transparent, 'y', 0.5rem, 0.25rem);
-
-        & > fe-table {
-            margin-bottom : 100vh;
-        }
-    }
 }
