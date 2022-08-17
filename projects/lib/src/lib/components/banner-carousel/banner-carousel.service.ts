@@ -102,6 +102,6 @@ export type BannerCarouselComplimentaryImage = {
 export type BannerCarouselButton = {
     text: string,
     icon?: string,
-    link?: string[],
+    link?: string | any[],
     onClick: () => void;
 };

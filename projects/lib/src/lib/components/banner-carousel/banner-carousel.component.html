@@ -33,8 +33,8 @@
         </div>
 
         <div *ngIf="buttons !== null" class="buttons" [@buttons]="buttons">
-            <div *ngFor="let btn of buttons" [fe-tactile] (feClick)="btn.onClick()" [routerLink]="btn.link">
-                <fe-button feAppearance="hinge" [feTheme]="buttonTheme">
+            <div *ngFor="let btn of buttons">
+                <fe-button feAppearance="hinge" [feTheme]="buttonTheme" (feClick)="btn.onClick()" [feLink]="btn.link">
                     <svg-icon *ngIf="btn.icon" [name]="btn.icon"></svg-icon>
                     <span>{{btn.text}}</span>
                 </fe-button>
@@ -47,7 +47,7 @@
 
         <div class="left">
             <div class="button" *ngIf="buttons && buttons[0]" [fe-tactile] (feClick)="buttons[0].onClick()"
-                 [routerLink]="buttons[0].link">
+                 [feLink]="buttons[0].link">
                 <svg-icon *ngIf="buttons[0].icon" [name]="buttons[0].icon"></svg-icon>
                 <span>{{buttons[0].text}}</span>
             </div>
@@ -60,7 +60,7 @@
 
         <div class="right">
             <div class="button" *ngIf="buttons && buttons[1]" [fe-tactile] (feClick)="buttons[1].onClick()"
-                 [routerLink]="buttons[1].link">
+                 [feLink]="buttons[1].link">
                 <svg-icon *ngIf="buttons[1].icon" [name]="buttons[1].icon"></svg-icon>
                 <span>{{buttons[1].text}}</span>
             </div>
