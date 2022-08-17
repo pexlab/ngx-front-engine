@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Optional, Output, Self } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Optional, Output, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { ComponentTheme } from '../../interfaces/color.interface';
 import { FeComponent } from '../../utils/component.utils';
@@ -13,14 +13,14 @@ import { PartialSwitchTheme } from './switch.theme';
         changeDetection: ChangeDetectionStrategy.OnPush
     }
 )
-export class SwitchComponent implements OnInit, ControlValueAccessor {
+export class SwitchComponent implements OnInit, AfterViewInit, ControlValueAccessor {
 
     constructor(
         @Self()
         @Optional()
         private ngControl: NgControl,
         public hostElement: ElementRef,
-        public cdr: ChangeDetectorRef
+        public change: ChangeDetectorRef
     ) {
         if ( this.ngControl ) {
             this.ngControl.valueAccessor = this;
@@ -64,6 +64,10 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
         }
     }
 
+    public ngAfterViewInit(): void {
+        this.change.detach();
+    }
+
     public toggle( position?: 0 | 1 ): void {
 
         if ( position !== undefined ) {
@@ -84,6 +88,8 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
         if ( this.formInputEvent ) {
             this.formInputEvent( this.feValues[ this.positionIndex ] );
         }
+
+        this.change.detectChanges();
     }
 
     public get position(): 'left' | 'right' {
@@ -117,7 +123,7 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
 
         this.feChange.next( this.feValues[ this.positionIndex ] );
 
-        this.cdr.markForCheck();
+        this.change.detectChanges();
     }
 
     public registerOnChange( fn: any ): void {

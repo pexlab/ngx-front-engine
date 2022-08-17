@@ -10,7 +10,7 @@ import { PopupService } from '../popup/popup.service';
     }
 )
 export class RootComponent implements AfterViewInit {
-    
+
     constructor(
         private theme: ThemeService,
         private popupService: PopupService,
@@ -19,23 +19,23 @@ export class RootComponent implements AfterViewInit {
         this.theme.root        = this;
         this.popupService.root = this;
     }
-    
+
     @ViewChild( 'popupView', { read: ViewContainerRef } )
     public view!: ViewContainerRef;
-    
+
     @ViewChild( 'dimmer' )
     private dimmerRef!: ElementRef<HTMLDivElement>;
-    
+
     @ViewChild( 'scrollBarWrapper' )
     private scrollbarWrapperRef!: ElementRef<HTMLElement>;
-    
+
     @ViewChild( 'scrollbar' )
     private scrollbarRef!: ElementRef<HTMLElement>;
-    
+
     public ngAfterViewInit(): void {
-        
+
         this.clear();
-        
+
         this.renderer.setStyle(
             document.documentElement,
             '--scrollbar-width',
@@ -43,17 +43,17 @@ export class RootComponent implements AfterViewInit {
             2
         );
     }
-    
+
     public dim(): void {
         this.renderer.setStyle( this.dimmerRef.nativeElement, 'opacity', '0.9' );
         this.renderer.setStyle( this.dimmerRef.nativeElement, 'pointer-events', 'visible' );
     }
-    
+
     public clear(): void {
         this.renderer.setStyle( this.dimmerRef.nativeElement, 'opacity', '0' );
         this.renderer.setStyle( this.dimmerRef.nativeElement, 'pointer-events', 'none' );
     }
-    
+
     public getScrollbarWidth(): number {
         return this.scrollbarWrapperRef.nativeElement.offsetWidth - this.scrollbarRef.nativeElement.offsetWidth;
     }

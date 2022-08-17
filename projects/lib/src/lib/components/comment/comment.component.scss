@@ -84,7 +84,7 @@
 
             @include utils.hover {
 
-                & > .hitbox {
+                & > .background {
                     opacity   : 1;
                     transform : translateY(-50%) translateX(-50%) scale(1);
                 }
@@ -94,7 +94,7 @@
                 }
             }
 
-            & > .hitbox {
+            & > .background {
 
                 position         : absolute;
 
@@ -118,19 +118,19 @@
 
             & > svg-icon {
 
-                position    : relative;
+                position       : relative;
 
-                width       : 15px;
-                height      : 15px;
+                width          : 15px;
+                height         : 15px;
 
-                display     : grid;
-                place-items : center;
+                display        : grid;
+                place-items    : center;
 
-                color       : var(--icon-idle-color, theme.hex('icon-idle'));
+                color          : var(--icon-idle-color, theme.hex('icon-idle'));
 
-                cursor      : pointer;
+                pointer-events : none;
 
-                transition  : color .25s ease;
+                transition     : color .25s ease;
 
                 & > svg {
                     width  : 15px;

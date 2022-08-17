@@ -45,7 +45,7 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         private ngControl: NgControl,
         public hostElement: ElementRef<HTMLElement>,
         private renderer: Renderer2,
-        public cdr: ChangeDetectorRef,
+        public change: ChangeDetectorRef,
         private ngZone: NgZone,
         private aligner: LabelAlignerService
     ) {
@@ -233,7 +233,7 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
 
         this.mainResizeObserver = new ResizeObserver( () => {
             this.considerBorderPath();
-            this.cdr.detectChanges();
+            this.change.detectChanges();
         } );
 
         this.labelResizeObserver = new ResizeObserver( () => {
@@ -244,6 +244,8 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
     }
 
     public ngAfterViewInit(): void {
+
+        this.change.detach();
 
         this.viewInit = true;
 
@@ -326,7 +328,7 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         this.considerBorderPath();
         this.applyClasses( false );
 
-        this.cdr.detectChanges();
+        this.change.detectChanges();
     }
 
     private onFocusOut(): void {
@@ -348,7 +350,7 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
 
         this.applyClasses( false );
 
-        this.cdr.detectChanges();
+        this.change.detectChanges();
 
         this.ngZone.run( () => {
             if ( this.formBlurEvent ) {
@@ -380,6 +382,8 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
             if ( this.formInputEvent ) {
                 this.formInputEvent( value.length > 0 ? value : null ); /* Update the form model on input */
             }
+
+            this.change.detectChanges();
         } );
     }
 
@@ -514,6 +518,8 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
                 this.inputRef.value = value;
             }
         }
+
+        this.change.detectChanges();
     }
 
     /* TODO: additional method: get multi-line width of label */
@@ -527,6 +533,7 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
 
     public writeValue( input: string | null ): void {
         this.value = input === null ? '' : input;
+        this.change.detectChanges();
     }
 
     public registerOnChange( fn: any ): void {

@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Optional, Output, Self } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Optional, Output, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { parsePath, roundCommands } from 'svg-round-corners';
 import { ComponentTheme } from '../../interfaces/color.interface';
@@ -14,13 +14,14 @@ import { PartialCheckboxTheme } from './checkbox.theme';
     }
 )
 
-export class CheckboxComponent implements OnInit, ControlValueAccessor {
+export class CheckboxComponent implements OnInit, AfterViewInit, ControlValueAccessor {
 
     constructor(
         @Self()
         @Optional()
         private ngControl: NgControl,
-        public hostElement: ElementRef
+        public hostElement: ElementRef,
+        public change: ChangeDetectorRef
     ) {
         if ( this.ngControl ) {
             this.ngControl.valueAccessor = this;
@@ -36,7 +37,8 @@ export class CheckboxComponent implements OnInit, ControlValueAccessor {
     @Output()
     public feChange = new EventEmitter();
 
-    public isChecked = false;
+    public isChecked   = false;
+    public initialised = false;
 
     public idleOutlinePath!: string;
     public hoverOutlinePath!: string;
@@ -57,6 +59,19 @@ export class CheckboxComponent implements OnInit, ControlValueAccessor {
         this.checkmarkOutlinePath = this.drawCheckmark();
     }
 
+    public ngAfterViewInit(): void {
+
+        this.change.detach();
+
+        /* Calculate path length */
+        this.change.detectChanges();
+
+        this.initialised = true;
+
+        /* Path length has been calculated, it is now safe to show the checkmark */
+        this.change.detectChanges();
+    }
+
     @HostListener( 'click' )
     public onClick(): void {
 
@@ -67,6 +82,8 @@ export class CheckboxComponent implements OnInit, ControlValueAccessor {
         if ( this.formInputEvent ) {
             this.formInputEvent( this.isChecked );
         }
+
+        this.change.detectChanges();
     }
 
     private drawBox( strokeWidth: number ): string {
@@ -104,6 +121,7 @@ export class CheckboxComponent implements OnInit, ControlValueAccessor {
     public writeValue( input: any ): void {
         this.isChecked = Boolean( input );
         this.feChange.next( this.isChecked );
+        this.change.detectChanges();
     }
 
     public registerOnChange( fn: any ): void {

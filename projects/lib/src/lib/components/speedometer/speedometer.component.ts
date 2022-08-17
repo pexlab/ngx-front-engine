@@ -21,7 +21,7 @@ export class SpeedometerComponent implements AfterViewInit {
         public hostElement: ElementRef,
         public domSam: DomSanitizer,
         public ngZone: NgZone,
-        private change: ChangeDetectorRef
+        public change: ChangeDetectorRef
     ) {
     }
 

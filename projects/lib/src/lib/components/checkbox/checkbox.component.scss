@@ -97,15 +97,23 @@
                 stroke-dasharray : var(--length);
 
                 &.visible {
+
                     opacity           : 1;
                     stroke-dashoffset : 0;
-                    transition        : stroke-dashoffset .35s .15s ease, opacity .25s ease;
+
+                    &.initialised {
+                        transition : stroke-dashoffset .35s .15s ease, opacity .25s ease;
+                    }
                 }
 
                 &.hidden {
+
                     opacity           : 0;
                     stroke-dashoffset : var(--length);
-                    transition        : stroke-dashoffset .35s ease, opacity .25s .25s ease;
+
+                    &.initialised {
+                        transition : stroke-dashoffset .35s ease, opacity .25s .25s ease;
+                    }
                 }
             }
         }
@@ -120,8 +128,6 @@
 
             transform-origin : center;
 
-            transition       : transform .25s .35s cubic-bezier(0.34, 2.8, 0.64, 1), stroke-dashoffset .25s .35s ease;
-
             &.visible {
                 stroke-dashoffset : 0;
                 transform         : scale(1);
@@ -130,6 +136,10 @@
             &.hidden {
                 stroke-dashoffset : var(--length);
                 transform         : scale(.8);
+            }
+
+            &.initialised {
+                transition : transform .25s .35s cubic-bezier(0.34, 2.8, 0.64, 1), stroke-dashoffset .25s .35s ease;
             }
         }
     }

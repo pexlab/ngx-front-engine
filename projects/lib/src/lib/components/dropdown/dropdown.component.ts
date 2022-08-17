@@ -75,7 +75,7 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
         @Self()
         @Optional()
         private ngControl: NgControl,
-        public cdr: ChangeDetectorRef,
+        public change: ChangeDetectorRef,
         public hostElement: ElementRef,
         private ngZone: NgZone,
         private renderer: Renderer2
@@ -179,6 +179,8 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
 
     public ngAfterViewInit(): void {
 
+        this.change.detach();
+
         this.ngZone.runOutsideAngular( () => {
 
             this.disposeListeners.push(
@@ -193,7 +195,7 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
                 this.renderer.listen( document.documentElement, 'pointerup', () => {
 
                     if ( !this.localMouseUp && !this.discardNextUp && this.dropdownVisible ) {
-                        this.ngZone.run( () => this.toggleMenu() );
+                        this.toggleMenu();
                     }
 
                     this.discardNextUp = false;
@@ -241,7 +243,7 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
             this.formBlurEvent();
         }
 
-        this.cdr.detectChanges();
+        this.change.detectChanges();
     }
 
     public manualClear(): void {
@@ -285,7 +287,7 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
         this.activePlaceholderRef = choiceComponent.contentAndPlaceholderRef ?? choiceComponent.placeholderRef;
         this.dropdownVisible      = false;
 
-        this.cdr.detectChanges();
+        this.change.detectChanges();
     }
 
     public clearChoiceComponent(): void {
@@ -303,8 +305,8 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
 
         this.activePlaceholderRef = undefined;
         this.dropdownVisible      = false;
-
-        this.cdr.detectChanges();
+        ;
+        this.change.detectChanges();
     }
 
     /* Reactive forms functions */
@@ -330,12 +332,14 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
     public captureStartEvent( event: any ) {
         if ( event.toState === 'visible' ) {
             this.dropdownVisibleWithDelay = true;
+            this.change.detectChanges();
         }
     }
 
     public captureDoneEvent( event: any ) {
         if ( event.toState === 'hidden' ) {
             this.dropdownVisibleWithDelay = false;
+            this.change.detectChanges();
         }
     }
 }

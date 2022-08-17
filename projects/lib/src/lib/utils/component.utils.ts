@@ -8,7 +8,7 @@ import { ClassWithProperties } from './type.utils';
 
 export function FeComponent( name: ThemeableComponents ) {
 
-    return function <C extends ClassWithProperties<{ feTheme: ComponentTheme, hostElement: ElementRef<HTMLElement>, cdr?: ChangeDetectorRef }>>( target: C ) {
+    return function <C extends ClassWithProperties<{ feTheme: ComponentTheme, hostElement: ElementRef<HTMLElement>, change?: ChangeDetectorRef }>>( target: C ) {
 
         return class extends target {
 
@@ -36,8 +36,8 @@ export function FeComponent( name: ThemeableComponents ) {
                                 this.hostElement.nativeElement
                             );
 
-                            if ( theme !== undefined && this.cdr !== undefined && this.cdr.detectChanges !== undefined ) {
-                                this.cdr.detectChanges();
+                            if ( theme !== undefined && this.change !== undefined && this.change.detectChanges !== undefined ) {
+                                this.change.detectChanges();
                             }
                         }
 

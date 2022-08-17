@@ -53,7 +53,7 @@ export class TableComponent implements OnInit, OnDestroy {
 
     constructor(
         public hostElement: ElementRef<HTMLElement>,
-        public cdr: ChangeDetectorRef,
+        public change: ChangeDetectorRef,
         private renderer: Renderer2,
         private ngZone: NgZone,
         private theme: ThemeService
@@ -72,7 +72,7 @@ export class TableComponent implements OnInit, OnDestroy {
             this.resolvedUnaffectedData   = undefined;
             this.resolvedSearchResultData = undefined;
             this.fuse                     = undefined;
-            this.cdr.detectChanges();
+            this.change.detectChanges();
             return;
         }
 
@@ -82,7 +82,7 @@ export class TableComponent implements OnInit, OnDestroy {
             this.resolvedSearchResultData = undefined;
             this.fuse                     = undefined;
 
-            this.cdr.detectChanges();
+            this.change.detectChanges();
             this.scrollIntoView();
 
             value.then( data => {
@@ -99,7 +99,7 @@ export class TableComponent implements OnInit, OnDestroy {
 
                 this.fuse = new Fuse( this.resolvedUnaffectedData, this.fuseOptions );
 
-                this.cdr.detectChanges();
+                this.change.detectChanges();
                 this.scrollIntoView();
             } );
 
@@ -117,7 +117,7 @@ export class TableComponent implements OnInit, OnDestroy {
 
             this.fuse = new Fuse( this.resolvedUnaffectedData, this.fuseOptions );
 
-            this.cdr.detectChanges();
+            this.change.detectChanges();
             this.scrollIntoView();
         }
     };
@@ -147,7 +147,7 @@ export class TableComponent implements OnInit, OnDestroy {
 
         if ( term === undefined || term === null || term.length === 0 ) {
             this.resolvedSearchResultData = undefined;
-            this.cdr.detectChanges();
+            this.change.detectChanges();
             return;
         }
 
@@ -242,7 +242,7 @@ export class TableComponent implements OnInit, OnDestroy {
             }
         }
 
-        this.cdr.detectChanges();
+        this.change.detectChanges();
 
         if ( this.scrollRef ) {
             this.scrollRef.nativeElement.scrollTop  = 0;
@@ -392,7 +392,7 @@ export class TableComponent implements OnInit, OnDestroy {
 
         this.subscriptions.push(
             this.theme.onThemeChange.subscribe( () => {
-                this.cdr.detectChanges();
+                this.change.detectChanges();
             } )
         );
     }
@@ -521,7 +521,7 @@ export class TableComponent implements OnInit, OnDestroy {
             } );
         }
 
-        this.cdr.detectChanges();
+        this.change.detectChanges();
     }
 
     public pointerDown( event: PointerEvent, rowElRef: HTMLDivElement, index: number ): void {
@@ -669,7 +669,7 @@ export class TableComponent implements OnInit, OnDestroy {
         this.dragDummyEl  = undefined;
         this.dragTargetEl = undefined;
 
-        this.cdr.detectChanges();
+        this.change.detectChanges();
 
         if ( this.resolvedUnaffectedData !== undefined ) {
             this.feOnReorder.emit( this.resolvedUnaffectedData );
@@ -709,7 +709,7 @@ export class TableComponent implements OnInit, OnDestroy {
 
         this.dragTargetIndex = index;
 
-        this.cdr.detectChanges();
+        this.change.detectChanges();
     }
 }
 

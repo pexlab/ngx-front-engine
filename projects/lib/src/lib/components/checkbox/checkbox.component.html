@@ -7,12 +7,14 @@
           [attr.d]="hoverOutlinePath"></path>
 
     <path class="outline checked"
+          [class.initialised]="initialised === true"
           [ngClass]="isChecked ? 'visible' : 'hidden'"
           [attr.d]="checkedOutlinePath"
           #border
           [style.--length]="pathLength(border) + 'px'"></path>
 
     <path class="checkmark"
+          [class.initialised]="initialised === true"
           [ngClass]="isChecked ? 'visible' : 'hidden'"
           [attr.d]="checkmarkOutlinePath"
           #checkmark

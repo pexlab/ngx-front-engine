@@ -27,13 +27,12 @@
 
         <div class="button"
              *ngFor="let btn of feButtons"
+             #parentButton
              [style.--icon-idle-color]="btn.overwriteIdleIconColor ? btn.iconColor : undefined"
              [style.--icon-hover-color]="btn.iconColor"
-             [style.--background-color]="btn.backgroundColor"
-             [fe-tactile]
-             (feClick)="btn.onClick()">
+             [style.--background-color]="btn.backgroundColor">
 
-            <div class="hitbox"></div>
+            <div class="background" [fe-tactile]="parentButton" (feClick)="btn.onClick()"></div>
             <svg-icon [name]="btn.icon"></svg-icon>
 
         </div>

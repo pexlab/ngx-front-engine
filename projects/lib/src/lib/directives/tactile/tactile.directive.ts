@@ -86,7 +86,7 @@ export class TactileDirective implements OnInit, OnDestroy {
     public ngOnDestroy(): void {
         this.ngZone.runOutsideAngular( () => {
 
-            if(this.anchorElement) {
+            if ( this.anchorElement ) {
                 this.renderer.removeChild( document.body, this.anchorElement );
             }
 
@@ -108,6 +108,9 @@ export class TactileDirective implements OnInit, OnDestroy {
     @Input( 'feShouldAnimate' )
     public animate = true;
 
+    @Input( 'feViewCheck' )
+    public viewCheck: boolean = true;
+
     @Output( 'feClick' )
     public clickOutput: EventEmitter<any> = new EventEmitter();
 
@@ -119,11 +122,7 @@ export class TactileDirective implements OnInit, OnDestroy {
             event.stopImmediatePropagation();
 
         } else {
-
-            /* Trigger view checking */
-            this.ngZone.run( () => {
-                this.clickOutput.emit();
-            } );
+            this.clickOutput.emit();
         }
     }
 
@@ -193,7 +192,7 @@ export class TactileDirective implements OnInit, OnDestroy {
         /* If the mouse is not on the component anymore, ignore the click. Most users behave this way, if they accidentally clicked. */
         if ( this.isOnHostElement( event ) ) {
 
-            this.ngZone.run( () => {
+            const doClick = () => {
 
                 if ( this.hostElement.nativeElement.click !== undefined ) {
                     this.hostElement.nativeElement.click();
@@ -245,7 +244,13 @@ export class TactileDirective implements OnInit, OnDestroy {
                 } else if ( this.link && typeof this.link !== 'string' ) {
                     this.router.navigate( this.link ).then();
                 }
-            } );
+            };
+
+            if ( this.viewCheck ) {
+                this.ngZone.run( doClick );
+            } else {
+                doClick();
+            }
         }
 
         const remainingTime = (

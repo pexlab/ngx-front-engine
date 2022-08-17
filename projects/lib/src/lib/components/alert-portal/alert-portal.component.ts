@@ -22,7 +22,7 @@ export class AlertPortalComponent implements OnInit {
     constructor(
         public hostElement: ElementRef,
         private alert: AlertPortalService,
-        public cdr: ChangeDetectorRef
+        public change: ChangeDetectorRef
     ) { }
 
     @Input()
@@ -57,13 +57,13 @@ export class AlertPortalComponent implements OnInit {
 
             if ( event.instanceName === this.feInstance ) {
                 this.alerts = event.alerts;
-                this.cdr.detectChanges();
+                this.change.detectChanges();
             }
         } );
     }
 
     public ngAfterViewInit(): void {
-        this.cdr.detach();
+        this.change.detach();
     }
 
     public ngOnDestroy(): void {

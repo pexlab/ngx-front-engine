@@ -1,4 +1,19 @@
-import { Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    ContentChild,
+    ElementRef,
+    EventEmitter,
+    Input,
+    NgZone,
+    OnDestroy,
+    OnInit,
+    Output,
+    Renderer2,
+    TemplateRef,
+    ViewChild
+} from '@angular/core';
 import { AsynchronouslyInitialisedComponent } from '../../../utils/component.utils';
 
 @Component(
@@ -17,9 +32,14 @@ import { AsynchronouslyInitialisedComponent } from '../../../utils/component.uti
         styleUrls: [ './dropdown-choice.component.scss' ]
     }
 )
-export class DropdownChoiceComponent extends AsynchronouslyInitialisedComponent implements OnInit {
+export class DropdownChoiceComponent extends AsynchronouslyInitialisedComponent implements OnInit, OnDestroy, AfterViewInit {
 
-    constructor( public hostElement: ElementRef<HTMLElement> ) {
+    constructor(
+        public hostElement: ElementRef<HTMLElement>,
+        private renderer: Renderer2,
+        private ngZone: NgZone,
+        private change: ChangeDetectorRef
+    ) {
         super();
     }
 
@@ -75,14 +95,10 @@ export class DropdownChoiceComponent extends AsynchronouslyInitialisedComponent 
     // Note: This borrows the logic from the tactile directive.
     // TODO: As soon as directives can be added to host elements, this can be removed.
 
+    private disposeListeners: ( () => void )[] = [];
+
     private heldDown = false;
 
-    @HostListener( 'click' )
-    public onSelect(): void {
-        this.feOnSelect.emit();
-    }
-
-    @HostListener( 'touchstart', [ '$event' ] )
     public onTouchStart( event: TouchEvent ): void {
 
         this.touchRadiusX = event.touches[ 0 ].radiusX ?? 0;
@@ -91,7 +107,6 @@ export class DropdownChoiceComponent extends AsynchronouslyInitialisedComponent 
         this.onPointerDown( event );
     }
 
-    @HostListener( 'pointerdown', [ '$event' ] )
     public onPointerDown( event: PointerEvent | TouchEvent ): void {
 
         if ( this.heldDown ) {
@@ -113,7 +128,6 @@ export class DropdownChoiceComponent extends AsynchronouslyInitialisedComponent 
         this.hostElement.nativeElement.classList.add( 'hoverState' );
     }
 
-    @HostListener( 'document:pointerup', [ '$event' ] )
     public onPointerUp( event: PointerEvent ): void {
 
         if ( !this.heldDown ) {
@@ -132,15 +146,66 @@ export class DropdownChoiceComponent extends AsynchronouslyInitialisedComponent 
         }
     }
 
-    @HostListener( 'document:touchcancel' )
     public onTouchCancel(): void {
         this.heldDown = false;
     }
 
     public ngOnInit(): void {
+
         if ( !this.feValue ) {
             throw new Error( 'Value missing on dropdown choice' );
         }
+
+        this.ngZone.runOutsideAngular( () => {
+
+            this.disposeListeners.push(
+                this.renderer.listen(
+                    this.hostElement.nativeElement,
+                    'touchstart',
+                    ( event: TouchEvent ) => {
+                        this.touchRadiusX = event.touches[ 0 ].radiusX ?? 0;
+                        this.touchRadiusY = event.touches[ 0 ].radiusY ?? 0;
+                        this.onPointerDown( event );
+                    }
+                ),
+
+                this.renderer.listen(
+                    this.hostElement.nativeElement,
+                    'pointerdown',
+                    event => this.onPointerDown( event )
+                ),
+
+                this.renderer.listen(
+                    document.documentElement,
+                    'pointerup',
+                    event => this.onPointerUp( event )
+                ),
+
+                this.renderer.listen(
+                    document.documentElement,
+                    'touchcancel',
+                    event => this.heldDown = false
+                ),
+
+                this.renderer.listen(
+                    this.hostElement.nativeElement,
+                    'click',
+                    event => this.feOnSelect.emit()
+                )
+            );
+        } );
+    }
+
+    public ngAfterViewInit(): void {
+        this.change.detach();
+    }
+
+    public ngOnDestroy(): void {
+        this.ngZone.runOutsideAngular( () => {
+            this.disposeListeners.forEach( dispose => {
+                dispose();
+            } );
+        } );
     }
 
     private isOnHostElement( event: PointerEvent ): boolean {
