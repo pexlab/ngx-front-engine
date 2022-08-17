@@ -180,7 +180,6 @@ export class AppRoutingModule {
             filter( route => route.outlet === 'primary' ),
             mergeMap( route => route.data )
         ).subscribe( ( event ) => {
-            console.log( event[ 'metaTitle' ] + ' = ' + event[ 'metaDescription' ] );
             this.titleService.setTitle( event[ 'metaTitle' ] );
             this.metaService.removeTag( 'name="description"' );
             this.metaService.addTag( { name: 'description', content: event[ 'metaDescription' ] }, false );
