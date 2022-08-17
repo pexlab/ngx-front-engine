@@ -19,8 +19,8 @@
         <div class="switch" [ngClass]="position" [fe-tactile]="ball" (feClick)="toggle()">
             <div class="ball-wrapper">
                 <div class="ball" #ball>
-                    <svg-icon *ngIf="feIconLeft && position === 'left'" [name]="feIconLeft"></svg-icon>
-                    <svg-icon *ngIf="feIconRight && position === 'right'" [name]="feIconRight"></svg-icon>
+                    <svg-icon *ngIf="feIconLeft" [style.display]="feIconLeft && position === 'left' ? undefined : 'none'" [name]="feIconLeft"></svg-icon>
+                    <svg-icon *ngIf="feIconRight" [style.display]="feIconRight && position === 'right' ? undefined : 'none'" [name]="feIconRight"></svg-icon>
                 </div>
             </div>
         </div>
