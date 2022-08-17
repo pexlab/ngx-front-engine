@@ -35,7 +35,7 @@ export class TactileDirective implements OnInit, OnDestroy {
         this.ngZone.runOutsideAngular( () => {
 
             /* To improve SEO discoverability of the link (since it would exist only in javascript otherwise) */
-            if ( this.link ) {
+            if ( this.link && typeof this.link === 'string' ) {
                 this.anchorElement                     = document.createElement( 'a' );
                 this.anchorElement.href                = this.link;
                 this.anchorElement.style.position      = 'fixed';
@@ -100,7 +100,7 @@ export class TactileDirective implements OnInit, OnDestroy {
     public target?: HTMLElement = this.hostElement.nativeElement;
 
     @Input( 'feLink' )
-    public link?: string;
+    public link?: string | any[];
 
     @Input( 'feLinkTarget' )
     public linkTarget: 'auto' | 'same_tab' | 'new_tab' = 'auto';
@@ -199,7 +199,7 @@ export class TactileDirective implements OnInit, OnDestroy {
                     this.hostElement.nativeElement.click();
                 }
 
-                if ( this.link ) {
+                if ( this.link && typeof this.link === 'string' ) {
 
                     const newTab =
                               this.linkTarget === 'auto' ? (
@@ -241,6 +241,9 @@ export class TactileDirective implements OnInit, OnDestroy {
                             this.router.navigate( [ this.link ] ).then();
                         }
                     }
+
+                } else if ( this.link && typeof this.link !== 'string' ) {
+                    this.router.navigate( this.link ).then();
                 }
             } );
         }

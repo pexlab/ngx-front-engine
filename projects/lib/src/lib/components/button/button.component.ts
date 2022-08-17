@@ -37,7 +37,7 @@ export class ButtonComponent {
     public feType: 'submit' | 'button' = 'button';
 
     @Input()
-    public feLink?: string;
+    public feLink?: string | any[];
 
     @Input()
     public feLinkTarget: 'auto' | 'same_tab' | 'new_tab' = 'auto';
