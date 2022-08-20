@@ -59,6 +59,10 @@ export class BannerCarouselComponent implements OnInit, AfterViewInit {
         ];
     }
 
+    public trackText( index: number, item: { heading: string | null, subheading: string | null } ): string {
+        return item.heading ?? '' + ',' + item.subheading ?? '';
+    }
+
     /* Use an array with only one value to force angular to destroy and rebuild the element rather then patch the existing element.
      * This behavior is desired to make the in-out-animation work */
     public get image(): BannerCarouselComplimentaryImage[] | null {

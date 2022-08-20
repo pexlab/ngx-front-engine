@@ -122,7 +122,13 @@ export class TactileDirective implements OnInit, OnDestroy {
             event.stopImmediatePropagation();
 
         } else {
-            this.clickOutput.emit();
+            if ( this.viewCheck ) {
+                this.ngZone.run( () => {
+                    this.clickOutput.emit();
+                } );
+            } else {
+                this.clickOutput.emit();
+            }
         }
     }
 
@@ -192,64 +198,76 @@ export class TactileDirective implements OnInit, OnDestroy {
         /* If the mouse is not on the component anymore, ignore the click. Most users behave this way, if they accidentally clicked. */
         if ( this.isOnHostElement( event ) ) {
 
-            const doClick = () => {
+            if ( this.hostElement.nativeElement.click !== undefined ) {
+                this.hostElement.nativeElement.click();
+            }
 
-                if ( this.hostElement.nativeElement.click !== undefined ) {
-                    this.hostElement.nativeElement.click();
-                }
+            if ( this.link && typeof this.link === 'string' ) {
 
-                if ( this.link && typeof this.link === 'string' ) {
+                const newTab =
+                          this.linkTarget === 'auto' ? (
+                              event instanceof MouseEvent ?
+                              (
+                                  event.button === 1 ||
+                                  event.shiftKey ||
+                                  event.ctrlKey ||
+                                  event.metaKey ||
+                                  event.altKey
+                              ) : false
+                          ) : this.linkTarget === 'new_tab';
 
-                    const newTab =
-                              this.linkTarget === 'auto' ? (
-                                  event instanceof MouseEvent ?
-                                  (
-                                      event.button === 1 ||
-                                      event.shiftKey ||
-                                      event.ctrlKey ||
-                                      event.metaKey ||
-                                      event.altKey
-                                  ) : false
-                              ) : this.linkTarget === 'new_tab';
+                if ( newTab ) {
 
-                    if ( newTab ) {
+                    window.open( this.link, '_blank' );
 
-                        window.open( this.link, '_blank' );
+                } else {
 
-                    } else {
+                    if ( this.link.startsWith( 'http' ) || this.link.startsWith( 'https' ) ) {
 
-                        if ( this.link.startsWith( 'http' ) || this.link.startsWith( 'https' ) ) {
+                        const base = this.location.prepareExternalUrl( '/' );
 
-                            const base = this.location.prepareExternalUrl( '/' );
+                        if ( this.link.startsWith( base ) ) {
 
-                            if ( this.link.startsWith( base ) ) {
+                            let stripped = this.link.slice( base.length );
 
-                                let stripped = this.link.slice( base.length );
-
-                                if ( !stripped.startsWith( '/' ) ) {
-                                    stripped = '/' + stripped;
-                                }
-
-                                this.router.navigate( [ stripped ] ).then();
-
-                            } else {
-                                window.open( this.link, '_self' );
+                            if ( !stripped.startsWith( '/' ) ) {
+                                stripped = '/' + stripped;
                             }
 
+                            if ( this.viewCheck ) {
+                                this.ngZone.run( () => {
+                                    this.router.navigate( [ stripped ] ).then();
+                                } );
+                            } else {
+                                this.router.navigate( [ stripped ] ).then();
+                            }
+
+                        } else {
+                            window.open( this.link, '_self' );
+                        }
+
+                    } else {
+                        if ( this.viewCheck ) {
+                            this.ngZone.run( () => {
+                                this.router.navigate( [ this.link ] ).then();
+                            } );
                         } else {
                             this.router.navigate( [ this.link ] ).then();
                         }
                     }
-
-                } else if ( this.link && typeof this.link !== 'string' ) {
-                    this.router.navigate( this.link ).then();
                 }
-            };
 
-            if ( this.viewCheck ) {
-                this.ngZone.run( doClick );
-            } else {
-                doClick();
+            } else if ( this.link && typeof this.link !== 'string' ) {
+
+                const link = this.link;
+
+                if ( this.viewCheck ) {
+                    this.ngZone.run( () => {
+                        this.router.navigate( link ).then();
+                    } );
+                } else {
+                    this.router.navigate( link ).then();
+                }
             }
         }
 
