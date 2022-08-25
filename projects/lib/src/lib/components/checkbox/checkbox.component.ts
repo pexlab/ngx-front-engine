@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Optional, Output, Self } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostBinding, Input, OnInit, Optional, Output, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { parsePath, roundCommands } from 'svg-round-corners';
 import { ComponentTheme } from '../../interfaces/color.interface';
@@ -37,12 +37,14 @@ export class CheckboxComponent implements OnInit, AfterViewInit, ControlValueAcc
     @Output()
     public feChange = new EventEmitter();
 
-    public isChecked   = false;
-    public initialised = false;
+    public isChecked     = false;
+    public isInitialised = false;
+    public isEnabled = true;
 
     public idleOutlinePath!: string;
     public hoverOutlinePath!: string;
     public checkedOutlinePath!: string;
+    public backgroundPath!: string;
 
     public checkmarkOutlinePath!: string;
 
@@ -52,9 +54,10 @@ export class CheckboxComponent implements OnInit, AfterViewInit, ControlValueAcc
 
     public ngOnInit(): void {
 
-        this.idleOutlinePath    = this.drawBox( 2 );
-        this.hoverOutlinePath   = this.drawBox( 2.5 );
-        this.checkedOutlinePath = this.drawBox( 1.5 );
+        this.idleOutlinePath    = this.drawBox( 2, true );
+        this.hoverOutlinePath   = this.drawBox( 2.5, true );
+        this.checkedOutlinePath = this.drawBox( 1.5, true );
+        this.backgroundPath     = this.drawBox( 2, false );
 
         this.checkmarkOutlinePath = this.drawCheckmark();
     }
@@ -66,14 +69,17 @@ export class CheckboxComponent implements OnInit, AfterViewInit, ControlValueAcc
         /* Calculate path length */
         this.change.detectChanges();
 
-        this.initialised = true;
+        this.isInitialised = true;
 
         /* Path length has been calculated, it is now safe to show the checkmark */
         this.change.detectChanges();
     }
 
-    @HostListener( 'click' )
     public onClick(): void {
+
+        if ( !this.isEnabled ) {
+            return;
+        }
 
         this.isChecked = !this.isChecked;
 
@@ -86,17 +92,32 @@ export class CheckboxComponent implements OnInit, AfterViewInit, ControlValueAcc
         this.change.detectChanges();
     }
 
-    private drawBox( strokeWidth: number ): string {
+    private drawBox( strokeWidth: number, makeGap = false ): string {
 
-        const m = strokeWidth / 2;
+        const m = makeGap ? strokeWidth / 2 : 0;
         const w = 18 - m;
         const h = 18 - m;
 
-        return roundCommands(
-            parsePath( `M ${ w },${ h / 2 } L ${ w },${ h } L ${ m },${ h } L ${ m },${ m } L ${ w },${ m } Z` ),
-            3,
-            4
-        ).path;
+        if ( makeGap && !this.isEnabled ) {
+
+            /* Leave a small gap in the top right corner for the lock icon */
+
+            const gap = 7 - m;
+
+            return roundCommands(
+                parsePath( `M ${ w },${ h / 2 } L ${ w },${ h } L ${ m },${ h } L ${ m },${ m } L ${ w - gap },${ m } M ${ w },${ m + gap } L${ w },${ h / 2 }` ),
+                3,
+                4
+            ).path;
+
+        } else {
+
+            return roundCommands(
+                parsePath( `M ${ w },${ h / 2 } L ${ w },${ h } L ${ m },${ h } L ${ m },${ m } L ${ w },${ m } Z` ),
+                3,
+                4
+            ).path;
+        }
     }
 
     private drawCheckmark(): string {
@@ -130,5 +151,10 @@ export class CheckboxComponent implements OnInit, AfterViewInit, ControlValueAcc
 
     public registerOnTouched( fn: any ): void {
         this.formBlurEvent = fn;
+    }
+
+    public setDisabledState( isDisabled: boolean ): void {
+        this.isEnabled = !isDisabled;
+        this.change.detectChanges();
     }
 }

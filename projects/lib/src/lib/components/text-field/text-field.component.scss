@@ -1,36 +1,36 @@
-@use '../../../../assets/fe-styles/theme' as config with ($scope: 'text-field');
+@use '../../../../assets/fe-styles/theme' with ($scope: 'text-field');
 
 $PADDING : 20px;
 
 @mixin stateStyle($state) {
 
-    background-color : config.hex('#{$state}-background');
+    background-color : theme.hex('#{$state}-background');
 
     & > .label {
-        color : config.hex('#{$state}-text');
+        color : theme.hex('#{$state}-text');
     }
 
     & > .input {
         & > input, & > textarea {
-            color       : config.hex('#{$state}-text');
-            caret-color : config.hex('#{$state}-text');
+            color       : theme.hex('#{$state}-text');
+            caret-color : theme.hex('#{$state}-text');
         }
     }
 
     &.pinned {
         & > .input > span.placeholder {
-            color : config.hex('#{$state}-pinned-placeholder');
+            color : theme.hex('#{$state}-pinned-placeholder');
         }
     }
 
     &.static {
         & > .input > span.placeholder {
-            color : config.hex('#{$state}-static-placeholder');
+            color : theme.hex('#{$state}-static-placeholder');
         }
     }
 
     & > .divider {
-        background-color : config.hex('#{$state}-divider');
+        background-color : theme.hex('#{$state}-divider');
     }
 }
 
@@ -42,7 +42,7 @@ $PADDING : 20px;
 
     width    : 100%;
 
-    @include config.commonFont('body');
+    @include theme.commonFont('body');
 
     & > .measurement, & > .field > .label {
 
@@ -57,7 +57,7 @@ $PADDING : 20px;
         padding-bottom : $PADDING;
         box-sizing     : border-box;
 
-        @include config.inlineDeepIcon(20px);
+        @include theme.inlineDeepIcon(20px);
     }
 
     & > .measurement {
@@ -118,7 +118,7 @@ $PADDING : 20px;
         &.idle {
 
             & > .border > path {
-                stroke : config.hex('idle-border');
+                stroke : theme.hex('idle-border');
             }
         }
 
@@ -171,7 +171,7 @@ $PADDING : 20px;
                 & > .border.idle {
 
                     & > path {
-                        stroke : config.hex('invalid-border');
+                        stroke : theme.hex('invalid-border');
                     }
 
                     animation : invalidShake .5s linear !important;
@@ -182,22 +182,22 @@ $PADDING : 20px;
 
     & > .field {
 
-        position        : relative;
+        position       : relative;
 
-        width           : 100%;
-        height          : fit-content;
+        width          : 100%;
+        height         : fit-content;
 
-        padding-left    : $PADDING;
-        box-sizing      : border-box;
+        padding-left   : $PADDING;
+        box-sizing     : border-box;
 
-        display         : grid;
-        grid-auto-flow  : column;
-        grid-gap        : 20px;
-        place-items     : center;
+        display        : grid;
+        grid-auto-flow : column;
+        grid-gap       : 20px;
+        place-items    : center;
 
-        cursor          : text;
+        cursor         : text;
 
-        border-radius   : 11px;
+        border-radius  : 11px;
 
         &.isArea {
             height : 100%;
@@ -227,7 +227,7 @@ $PADDING : 20px;
             &.idle {
 
                 & > path {
-                    stroke : config.hex('idle-border');
+                    stroke : theme.hex('idle-border');
                 }
             }
 
@@ -236,7 +236,7 @@ $PADDING : 20px;
                 opacity : 0;
 
                 & > path {
-                    stroke : config.hex('focused-border');
+                    stroke : theme.hex('focused-border');
                 }
             }
         }
@@ -249,6 +249,20 @@ $PADDING : 20px;
         & .divider {
             width  : 100%;
             height : calc(100% - (2 * #{$PADDING}));
+        }
+
+        @include theme.inlineIcon(1rem);
+
+        & > svg-icon {
+
+            position  : absolute;
+
+            top       : 50%;
+            right     : $PADDING;
+
+            color     : theme.hex('disabled-static-placeholder');
+
+            transform : translateY(-50%);
         }
 
         & > .input {
@@ -283,6 +297,15 @@ $PADDING : 20px;
                 }
             }
 
+            &.disabled {
+
+                padding-right : calc(($PADDING * 2) + 1rem);
+
+                & > span.placeholder {
+                    padding-right : calc(($PADDING * 2) + 1rem);
+                }
+            }
+
             & > input, & > textarea {
 
                 width      : 100%;
@@ -294,7 +317,7 @@ $PADDING : 20px;
                 margin     : 0;
                 padding    : 0;
 
-                @include config.commonFont('body');
+                @include theme.commonFont('body');
 
                 background : transparent;
 

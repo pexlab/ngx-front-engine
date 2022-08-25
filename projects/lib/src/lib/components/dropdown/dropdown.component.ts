@@ -155,6 +155,8 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
     private formBlurEvent?: () => void;
     private isInitialValueWrite = true;
 
+    public isDisabled = false;
+
     /** Will return undefined until initialisation of the component */
     public get value(): string | null | undefined {
         return this.currentChoice;
@@ -178,8 +180,6 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
     private localMouseUp  = false;
 
     public ngAfterViewInit(): void {
-
-        this.change.detach();
 
         this.ngZone.runOutsideAngular( () => {
 
@@ -247,6 +247,11 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
     }
 
     public manualClear(): void {
+
+        if ( this.isDisabled ) {
+            return;
+        }
+
         this.feManualClear.next();
         this.clearChoiceComponent();
     }
@@ -272,6 +277,10 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
     }
 
     private setChoiceComponent( choiceComponent: DropdownChoiceComponent ): void {
+
+        if ( this.isDisabled ) {
+            return;
+        }
 
         this.currentChoice = choiceComponent.feValue;
 
@@ -305,7 +314,7 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
 
         this.activePlaceholderRef = undefined;
         this.dropdownVisible      = false;
-        ;
+
         this.change.detectChanges();
     }
 
@@ -327,6 +336,11 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
 
     public registerOnTouched( fn: any ): void {
         this.formBlurEvent = fn;
+    }
+
+    public setDisabledState( isDisabled: boolean ): void {
+        this.isDisabled = isDisabled;
+        this.change.detectChanges();
     }
 
     public captureStartEvent( event: any ) {

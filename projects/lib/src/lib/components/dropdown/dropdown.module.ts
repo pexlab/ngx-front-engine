@@ -11,13 +11,13 @@ import { DropdownComponent } from './dropdown.component';
             DropdownComponent,
             DropdownChoiceComponent
         ],
-        
+
         imports: [
             CommonModule,
             FeTactileModule,
             AngularSvgIconModule
         ],
-        
+
         exports: [
             DropdownComponent,
             DropdownChoiceComponent

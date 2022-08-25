@@ -9,11 +9,11 @@ import { FeBundledTranslations } from '@pexlab/ngx-front-engine';
     }
 )
 export class FormComponent {
-    
+
     constructor() { }
-    
+
     public numeralTranslations = FeBundledTranslations.Numerals;
-    
+
     public exampleForm = new UntypedFormGroup(
         {
             firstName          : new UntypedFormControl( '' ),
@@ -24,7 +24,7 @@ export class FormComponent {
             billing_rate       : new UntypedFormControl( 'fixed' )
         }
     );
-    
+
     public populate(): void {
         this.exampleForm.setValue(
             {
@@ -37,7 +37,7 @@ export class FormComponent {
             }
         );
     }
-    
+
     public reset(): void {
         this.exampleForm.reset(
             {

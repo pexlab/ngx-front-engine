@@ -35,7 +35,39 @@
 
         </fe-dropdown>
 
-        <fe-dropdown feEmptyNotice="Choose a time" feAppearance="always-raised">
+        <fe-dropdown feEmptyNotice="Disabled Version" feAppearance="flat" [formControl]="disabled">
+
+            <fe-dropdown-choice feValue="day">
+
+                <div fePlaceholder>
+                    <span>You've chosen</span>
+                    <svg-icon name="sun"></svg-icon>
+                </div>
+
+                <div feContent>
+                    <svg-icon name="sun"></svg-icon>
+                    <span>Day</span>
+                </div>
+
+            </fe-dropdown-choice>
+
+            <fe-dropdown-choice feValue="night">
+
+                <div fePlaceholder>
+                    <span>You've chosen</span>
+                    <svg-icon name="moon"></svg-icon>
+                </div>
+
+                <div feContent>
+                    <svg-icon name="moon"></svg-icon>
+                    <span>Night</span>
+                </div>
+
+            </fe-dropdown-choice>
+
+        </fe-dropdown>
+
+        <fe-dropdown feEmptyNotice="Raised Version" feAppearance="always-raised">
 
             <fe-dropdown-choice feValue="day">
 

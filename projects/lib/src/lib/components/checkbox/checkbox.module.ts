@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { AngularSvgIconModule } from 'angular-svg-icon';
+import { FeTactileModule } from '../../directives/tactile/tactile.module';
 import { CheckboxComponent } from './checkbox.component';
 
 @NgModule(
@@ -9,7 +11,9 @@ import { CheckboxComponent } from './checkbox.component';
         ],
 
         imports: [
-            CommonModule
+            CommonModule,
+            AngularSvgIconModule,
+            FeTactileModule
         ],
 
         exports: [

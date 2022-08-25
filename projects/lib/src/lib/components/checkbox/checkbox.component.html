@@ -1,24 +1,48 @@
-<svg viewBox="0 0 18 18" width="18" height="18" [ngClass]="isChecked ? 'checked' : 'unchecked'">
+<div class="wrapper"
+     [fe-tactile]="hitbox"
+     (feClick)="onClick()"
+     [feViewCheck]="isEnabled"
+     [class.enabled]="isEnabled">
 
-    <path class="outline idle"
-          [attr.d]="idleOutlinePath"></path>
+    <svg-icon
+        *ngIf="!isEnabled"
+        name="fe-lock"
+        [class.initialised]="isInitialised === true"
+        [ngClass]="isChecked ? 'checked' : 'unchecked'">
+    </svg-icon>
 
-    <path class="outline hover"
-          [attr.d]="hoverOutlinePath"></path>
+    <svg viewBox="0 0 18 18" width="18" height="18" [ngClass]="isChecked ? 'checked' : 'unchecked'">
 
-    <path class="outline checked"
-          [class.initialised]="initialised === true"
-          [ngClass]="isChecked ? 'visible' : 'hidden'"
-          [attr.d]="checkedOutlinePath"
-          #border
-          [style.--length]="pathLength(border) + 'px'"></path>
+        <path class="background"
+              [class.initialised]="isInitialised === true"
+              [ngClass]="isChecked ? 'checked' : 'unchecked'"
+              [attr.d]="backgroundPath">
+        </path>
 
-    <path class="checkmark"
-          [class.initialised]="initialised === true"
-          [ngClass]="isChecked ? 'visible' : 'hidden'"
-          [attr.d]="checkmarkOutlinePath"
-          #checkmark
-          [style.--length]="pathLength(checkmark) + 'px'"></path>
-</svg>
+        <path class="outline idle"
+              [attr.d]="idleOutlinePath"
+              [ngClass]="isChecked ? 'checked' : 'unchecked'"></path>
 
-<span *ngIf="feLabel !== undefined" [class.checked]="isChecked">{{ feLabel }}</span>
+        <path class="outline hover"
+              [attr.d]="hoverOutlinePath"></path>
+
+        <path class="outline checked"
+              [class.initialised]="isInitialised === true"
+              [ngClass]="isChecked ? 'visible' : 'hidden'"
+              [attr.d]="checkedOutlinePath"
+              #border
+              [style.--length]="pathLength(border) + 'px'"></path>
+
+        <path class="checkmark"
+              [class.initialised]="isInitialised === true"
+              [ngClass]="isChecked ? 'visible' : 'hidden'"
+              [attr.d]="checkmarkOutlinePath"
+              #checkmark
+              [style.--length]="pathLength(checkmark) + 'px'"></path>
+    </svg>
+
+    <span *ngIf="feLabel !== undefined" [class.checked]="isChecked">{{ feLabel }}</span>
+
+    <div class="hitbox" #hitbox></div>
+
+</div>

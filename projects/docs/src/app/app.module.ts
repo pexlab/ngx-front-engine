@@ -18,7 +18,8 @@ import {
     FeStepperModule,
     FeSwitchModule,
     FeTactileModule,
-    FeTextFieldModule, TableModule
+    FeTextFieldModule,
+    TableModule
 } from '@pexlab/ngx-front-engine';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { MarkdownModule } from 'ngx-markdown';
@@ -32,20 +33,21 @@ import { IntroductionComponent } from './pages/introduction/introduction.compone
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { AlertPortalComponent } from './pages/showcase/alert-portal/alert-portal.component';
 import { BannerCarouselComponent } from './pages/showcase/banner-carousel/banner-carousel.component';
+import { BookComponent } from './pages/showcase/book/book.component';
 import { ButtonComponent } from './pages/showcase/button/button.component';
+import { CheckboxComponent } from './pages/showcase/checkbox/checkbox.component';
 import { CommentComponent } from './pages/showcase/comment/comment.component';
 import { DropdownComponent } from './pages/showcase/dropdown/dropdown.component';
+import { NotepaperComponent } from './pages/showcase/notepaper/notepaper.component';
 import { PopupComponent } from './pages/showcase/popup/popup.component';
 import { ShowcaseSidebarComponent } from './pages/showcase/sidebar/showcase-sidebar.component';
 import { SpeedometerComponent } from './pages/showcase/speedometer/speedometer.component';
 import { StepperComponent } from './pages/showcase/stepper/stepper.component';
 import { SwitchComponent } from './pages/showcase/switch/switch.component';
+import { EyeComponent } from './pages/showcase/table/eye/eye.component';
+import { TableComponent } from './pages/showcase/table/table.component';
 import { TextFieldComponent } from './pages/showcase/text-field/text-field.component';
 import { NutmegComponent } from './popups/nutmeg/nutmeg.component';
-import { NotepaperComponent } from './pages/showcase/notepaper/notepaper.component';
-import { TableComponent } from './pages/showcase/table/table.component';
-import { EyeComponent } from './pages/showcase/table/eye/eye.component';
-import { BookComponent } from './pages/showcase/book/book.component';
 
 @NgModule(
     {
@@ -56,6 +58,7 @@ import { BookComponent } from './pages/showcase/book/book.component';
             ShowcaseSidebarComponent,
             NotFoundComponent,
             ButtonComponent,
+            CheckboxComponent,
             DropdownComponent,
             FormComponent,
             FormSidebarComponent,

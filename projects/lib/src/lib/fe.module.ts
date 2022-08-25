@@ -48,6 +48,7 @@ export class FeModule {
         iconReg.loadSvg( 'assets/fe-icons/layout-grid.svg', 'fe-grid' );
         iconReg.loadSvg( 'assets/fe-icons/layout-list.svg', 'fe-list' );
         iconReg.loadSvg( 'assets/fe-icons/loading.svg', 'fe-loading' );
+        iconReg.loadSvg( 'assets/fe-icons/lock.svg', 'fe-lock' );
         iconReg.loadSvg( 'assets/fe-icons/plus.svg', 'fe-add' );
         iconReg.loadSvg( 'assets/fe-icons/table.svg', 'fe-table' );
         iconReg.loadSvg( 'assets/fe-icons/table-export.svg', 'fe-table-export' );

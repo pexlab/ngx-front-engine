@@ -1,5 +1,6 @@
 <div class="placeholderPanel"
      [class.selected]="dropdownVisible"
+     [class.disabled]="isDisabled"
      [ngClass]="feAppearance"
      [fe-tactile]
      [feViewCheck]="false"
@@ -9,10 +10,11 @@
         *ngTemplateOutlet="activePlaceholderRef || defaultPlaceholderRef || (feEmptyTemplate ? emptyPlaceholderRef : emptyNoticePlaceholderRef)">
     </ng-container>
 
-    <svg-icon name="fe-caret-down"></svg-icon>
+    <svg-icon [name]="isDisabled ? 'fe-lock' : 'fe-caret-down'"></svg-icon>
 </div>
 
 <div class="options"
+     [class.disabled]="isDisabled"
      [@options]="dropdownVisible ? 'visible' : 'hidden'"
      (@options.start)="captureStartEvent($event)"
      (@options.done)="captureDoneEvent($event)">

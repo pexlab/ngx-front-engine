@@ -12,6 +12,7 @@ import { AlertPortalComponent } from './pages/showcase/alert-portal/alert-portal
 import { BannerCarouselComponent } from './pages/showcase/banner-carousel/banner-carousel.component';
 import { BookComponent } from './pages/showcase/book/book.component';
 import { ButtonComponent } from './pages/showcase/button/button.component';
+import { CheckboxComponent } from './pages/showcase/checkbox/checkbox.component';
 import { CommentComponent } from './pages/showcase/comment/comment.component';
 import { DropdownComponent } from './pages/showcase/dropdown/dropdown.component';
 import { NotepaperComponent } from './pages/showcase/notepaper/notepaper.component';
@@ -76,6 +77,10 @@ import { TextFieldComponent } from './pages/showcase/text-field/text-field.compo
                             {
                                 path     : 'button',
                                 component: ButtonComponent
+                            },
+                            {
+                                path     : 'checkbox',
+                                component: CheckboxComponent
                             },
                             {
                                 path     : 'comment',

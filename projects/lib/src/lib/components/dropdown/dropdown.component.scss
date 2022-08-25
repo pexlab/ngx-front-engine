@@ -184,8 +184,6 @@ $OPTION_PADDING              : 10px;
             color         : theme.hex('clear-button-idle');
             background    : theme.hex('clear-button-idle-background');
 
-            cursor        : pointer;
-
             transition    : background-color .25s ease, color .25s ease;
 
             @include theme.inlineIcon(18px);
@@ -193,6 +191,20 @@ $OPTION_PADDING              : 10px;
             @include utils.hover {
                 color      : theme.hex('clear-button-hover');
                 background : theme.hex('clear-button-hover-background');
+            }
+        }
+
+        ::ng-deep {
+            & > * {
+                cursor : pointer;
+            }
+        }
+
+        &.disabled {
+            ::ng-deep {
+                & > * {
+                    cursor : not-allowed;
+                }
             }
         }
     }

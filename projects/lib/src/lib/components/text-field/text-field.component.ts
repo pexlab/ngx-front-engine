@@ -20,8 +20,8 @@ import {
     ViewChildren
 } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
-import { parsePath, roundCommands } from 'svg-round-corners';
 import { nanoid } from 'nanoid';
+import { parsePath, roundCommands } from 'svg-round-corners';
 import { ComponentTheme } from '../../interfaces/color.interface';
 import { AsynchronouslyInitialisedComponent, FeComponent } from '../../utils/component.utils';
 import { LabelAlignerService } from './label-aligner.service';
@@ -115,7 +115,13 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
                 this.renderer.listen(
                     ref.first.nativeElement,
                     'focusin',
-                    () => this.onFocusIn()
+                    ( event ) => {
+                        if ( this.isDisabled ) {
+                            event.preventDefault();
+                        } else {
+                            this.onFocusIn();
+                        }
+                    }
                 ),
 
                 this.renderer.listen(
@@ -245,8 +251,6 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
 
     public ngAfterViewInit(): void {
 
-        this.change.detach();
-
         this.viewInit = true;
 
         if ( this.alignInstance ) {
@@ -262,6 +266,8 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         this.applyClasses( true );
 
         this.componentLoaded();
+
+        this.change.detectChanges();
     }
 
     public ngOnDestroy(): void {
@@ -405,7 +411,7 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
 
             } else {
 
-                /* User clicked outside of the input element, but still inside the component.
+                /* User clicked outside the input element, but still inside the component.
                  * This causes the browser to lose focus. The component will focus the input again further down below this code,
                  * so don't even show the blur animation. */
                 this.skipNextFocusBlurAnimation = true;

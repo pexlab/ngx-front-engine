@@ -18,7 +18,9 @@
 
     <div class="divider" *ngIf="template"></div>
 
-    <div class="input" #inputContainer>
+    <svg-icon *ngIf="isDisabled" name="fe-lock"></svg-icon>
+
+    <div class="input" #inputContainer [class.disabled]="isDisabled">
 
         <span class="placeholder" *ngIf="fePlaceholder" #placeholder>{{ fePlaceholder }}</span>
 
