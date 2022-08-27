@@ -2,31 +2,28 @@
 
 :host {
 
-    display        : grid;
-    grid-auto-flow : row;
-    grid-gap       : 60px;
-
-    & > div {
+    & > form {
 
         display        : grid;
         grid-auto-flow : row;
-        grid-gap       : 20px;
+        grid-gap       : 60px;
 
         & > div {
-            width          : fit-content;
-            display        : grid;
-            grid-auto-flow : column;
-            grid-gap       : 1rem;
-        }
 
-        & > span {
-            @include theme.commonFont('heading');
-        }
-
-        & > form {
             display        : grid;
             grid-auto-flow : row;
-            grid-gap       : 10px;
+            grid-gap       : 20px;
+
+            & > div {
+                width          : fit-content;
+                display        : grid;
+                grid-auto-flow : column;
+                grid-gap       : 1rem;
+            }
+
+            & > span {
+                @include theme.commonFont('heading');
+            }
         }
     }
 }

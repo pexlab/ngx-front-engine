@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { UntypedFormArray, UntypedFormBuilder } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, UntypedFormArray, UntypedFormBuilder } from '@angular/forms';
 import { ComponentTheme, PartialDropdownTheme, ThemeService } from '@pexlab/ngx-front-engine';
 import { Subscription } from 'rxjs';
 
@@ -13,13 +13,14 @@ export class DropdownComponent implements OnInit, OnDestroy {
 
     constructor( private fb: UntypedFormBuilder, private theme: ThemeService, private change: ChangeDetectorRef ) { }
 
-    public disabled = this.fb.control( { value: null, disabled: true } );
-
-    public formGroup = this.fb.group(
+    public formGroup = new FormGroup(
         {
-            properties: this.fb.array(
+            regular   : new FormControl<string | null>( null ),
+            disabled  : new FormControl<string | null>( { value: null, disabled: true } ),
+            raised    : new FormControl<string | null>( null ),
+            properties: new FormArray(
                 [
-                    this.fb.control( null )
+                    new FormControl<string | null>( null )
                 ]
             )
         }

@@ -102,6 +102,11 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
             for ( const choiceComponent of choices ) {
                 this.disposeSubscriptions.push(
                     choiceComponent.feOnSelect.subscribe( () => {
+
+                        if(this.isDisabled) {
+                            return;
+                        }
+
                         this.setChoiceComponent( choiceComponent );
                     } )
                 );
@@ -282,10 +287,6 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
     }
 
     private setChoiceComponent( choiceComponent: DropdownChoiceComponent ): void {
-
-        if ( this.isDisabled ) {
-            return;
-        }
 
         this.currentChoice = choiceComponent.feValue;
 
