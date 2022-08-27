@@ -184,7 +184,11 @@ export class TactileDirective implements OnInit, OnDestroy {
             player.play();
         }
 
-        ( this.target ?? this.hostElement.nativeElement ).classList.add( 'hoverState' );
+        if ( this.target ) {
+            this.target.classList.add( 'hoverState' );
+        }
+
+        this.hostElement.nativeElement.classList.add( 'hoverState' );
     }
 
     private onPointerUp( event: PointerEvent ): void {
@@ -291,7 +295,11 @@ export class TactileDirective implements OnInit, OnDestroy {
                 player.play();
             }
 
-            ( this.target ?? this.hostElement.nativeElement ).classList.remove( 'hoverState' );
+            if ( this.target ) {
+                this.target.classList.remove( 'hoverState' );
+            }
+
+            this.hostElement.nativeElement.classList.remove( 'hoverState' );
 
         }, remainingTime );
     }
