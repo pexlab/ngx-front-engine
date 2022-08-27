@@ -52,14 +52,14 @@ export class TactileDirective implements OnInit, OnDestroy {
                     ( event: TouchEvent ) => {
                         this.touchRadiusX = event.touches[ 0 ].radiusX ?? 0;
                         this.touchRadiusY = event.touches[ 0 ].radiusY ?? 0;
-                        this.onPointerDown( event );
+                        this.onPointerDown( event, 'touch' );
                     }
                 ),
 
                 this.renderer.listen(
                     this.hostElement.nativeElement,
                     'pointerdown',
-                    event => this.onPointerDown( event )
+                    event => this.onPointerDown( event, 'pointer' )
                 ),
 
                 this.renderer.listen(
@@ -71,7 +71,23 @@ export class TactileDirective implements OnInit, OnDestroy {
                 this.renderer.listen(
                     document.documentElement,
                     'touchcancel',
-                    event => this.heldDown = false
+                    () => {
+                        if ( this.heldDown ) {
+                            this.heldDown = false;
+                            this.animateBack();
+                        }
+                    }
+                ),
+
+                this.renderer.listen(
+                    document.documentElement,
+                    'touchmove',
+                    () => {
+                        if ( this.heldDown && !this.captureTouch ) {
+                            this.heldDown = false;
+                            this.animateBack();
+                        }
+                    }
                 ),
 
                 this.renderer.listen(
@@ -111,6 +127,9 @@ export class TactileDirective implements OnInit, OnDestroy {
     @Input( 'feViewCheck' )
     public viewCheck: boolean = true;
 
+    @Input( 'feCaptureTouch' )
+    public captureTouch: boolean = false;
+
     @Output( 'feClick' )
     public clickOutput: EventEmitter<any> = new EventEmitter();
 
@@ -132,7 +151,7 @@ export class TactileDirective implements OnInit, OnDestroy {
         }
     }
 
-    private onPointerDown( event: PointerEvent | TouchEvent ): void {
+    private onPointerDown( event: PointerEvent | TouchEvent, type: 'touch' | 'pointer' ): void {
 
         if ( this.heldDown ) {
             return;
@@ -166,7 +185,9 @@ export class TactileDirective implements OnInit, OnDestroy {
             return;
         }
 
-        event.preventDefault();
+        if ( type === 'pointer' || this.captureTouch ) {
+            event.preventDefault();
+        }
 
         this.heldDown     = true;
         this.lastHeldDown = Date.now();
@@ -198,6 +219,8 @@ export class TactileDirective implements OnInit, OnDestroy {
         }
 
         event.preventDefault();
+
+        this.animateBack();
 
         /* If the mouse is not on the component anymore, ignore the click. Most users behave this way, if they accidentally clicked. */
         if ( this.isOnHostElement( event ) ) {
@@ -274,6 +297,9 @@ export class TactileDirective implements OnInit, OnDestroy {
                 }
             }
         }
+    }
+
+    private animateBack() {
 
         const remainingTime = (
                                   Date.now() - this.lastHeldDown

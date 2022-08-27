@@ -8,6 +8,7 @@
         *ngSwitchCase="feAppearance === 'circle' || feAppearance === 'circle-hover' || feAppearance === 'circle-hover-with-fallback' ? feAppearance : 'none'"
         [ngClass]="feAppearance"
         [fe-tactile]
+        [feCaptureTouch]="true"
         [feLink]="feLink"
         [feLinkTarget]="feLinkTarget"
         (feClick)="feClick.emit()">
@@ -17,6 +18,7 @@
     <button *ngSwitchCase="'hinge'"
             [ngClass]="feAppearance"
             [fe-tactile]
+            [feCaptureTouch]="true"
             [feLink]="feLink"
             [feLinkTarget]="feLinkTarget"
             (feClick)="feClick.emit()">
@@ -30,6 +32,7 @@
     <button *ngSwitchCase="'handwritten'"
             [ngClass]="feAppearance"
             [fe-tactile]
+            [feCaptureTouch]="true"
             [feLink]="feLink"
             [feLinkTarget]="feLinkTarget"
             (feClick)="feClick.emit()">
@@ -40,6 +43,7 @@
             [ngClass]="feAppearance"
             [type]="feType"
             [fe-tactile]
+            [feCaptureTouch]="true"
             [feLink]="feLink"
             [feLinkTarget]="feLinkTarget"
             (feClick)="feClick.emit()">
