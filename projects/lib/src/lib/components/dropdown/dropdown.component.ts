@@ -133,6 +133,11 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
     @Input()
     public feAppearance: 'flat' | 'passive-raised' | 'active-raised' | 'always-raised' = 'flat';
 
+    @Input()
+    public set feDisabled( value: boolean ) {
+        this.setDisabledState( value );
+    }
+
     @Output()
     public feChange = new EventEmitter();
 

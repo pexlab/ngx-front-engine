@@ -185,6 +185,11 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         }
     }
 
+    @Input()
+    public set feDisabled( value: boolean ) {
+        this.setDisabledState( value );
+    }
+
     @Output()
     public feChange = new EventEmitter();
 

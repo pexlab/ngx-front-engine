@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostBinding, Input, OnInit, Optional, Output, Self } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Optional, Output, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { parsePath, roundCommands } from 'svg-round-corners';
 import { ComponentTheme } from '../../interfaces/color.interface';
@@ -34,12 +34,17 @@ export class CheckboxComponent implements OnInit, AfterViewInit, ControlValueAcc
     @Input()
     public feLabel!: string;
 
+    @Input()
+    public set feDisabled( value: boolean ) {
+        this.setDisabledState( value );
+    }
+
     @Output()
     public feChange = new EventEmitter();
 
     public isChecked     = false;
     public isInitialised = false;
-    public isEnabled = true;
+    public isEnabled     = true;
 
     public idleOutlinePath!: string;
     public hoverOutlinePath!: string;
