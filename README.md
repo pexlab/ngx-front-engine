@@ -83,5 +83,4 @@ ___
 
 ### » ❤️ Support
 
-Donations of any amount are hugely appreciated and very welcome. FrontEngine is currently maintained by a sole
-developer. If you want to fund this project and help it grow, please visit: https://www.buymeacoffee.com/slatedave
+Donations of any amount are hugely appreciated and very welcome. If you want to fund this project and help it grow, please visit: https://www.buymeacoffee.com/slatedave
