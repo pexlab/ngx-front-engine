@@ -435,7 +435,7 @@ export class ThemeService {
             dropdown: {
 
                 placeholderIdlePanelText      : this.commonTheme.palette.text.on_primary_accent,
-                placeholderIdlePanelBorder    : FeColorPalette.Greyscale.Transparent,
+                placeholderIdlePanelBorder    : this.commonTheme.palette.accent.primary,
                 placeholderIdlePanelBackground: this.commonTheme.palette.accent.primary,
 
                 placeholderBorderBottom: this.commonTheme.palette.accent.secondary,

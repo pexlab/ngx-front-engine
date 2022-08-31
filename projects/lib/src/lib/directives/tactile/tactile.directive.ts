@@ -94,6 +94,54 @@ export class TactileDirective implements OnInit, OnDestroy {
                     this.hostElement.nativeElement,
                     'click',
                     event => this.onClick( event )
+                ),
+
+                this.renderer.listen(
+                    this.hostElement.nativeElement,
+                    'focusin',
+                    ( event: FocusEvent ) => {
+
+                        /* Only add hover when tab key was used instead of mouse */
+                        if ( this.heldDown ) {
+                            return;
+                        }
+
+                        if ( this.target ) {
+                            this.target.classList.add( 'hoverState' );
+                        }
+
+                        this.hostElement.nativeElement.classList.add( 'hoverState' );
+                    }
+                ),
+
+                this.renderer.listen(
+                    this.hostElement.nativeElement,
+                    'focusout',
+                    () => {
+
+                        if ( this.heldDown ) {
+                            this.heldDown = false;
+                            this.animateBack();
+                        }
+
+                        if ( this.target ) {
+                            this.target.classList.remove( 'hoverState' );
+                        }
+
+                        this.hostElement.nativeElement.classList.remove( 'hoverState' );
+                    }
+                ),
+
+                this.renderer.listen(
+                    document.documentElement,
+                    'keydown',
+                    event => this.onKeyDown( event )
+                ),
+
+                this.renderer.listen(
+                    document.documentElement,
+                    'keyup',
+                    event => this.onKeyUp( event )
                 )
             );
         } );
@@ -130,8 +178,8 @@ export class TactileDirective implements OnInit, OnDestroy {
     @Input( 'feCaptureTouch' )
     public captureTouch: boolean = false;
 
-    @Input( 'feTriggerHover' )
-    public triggerHover: boolean = true;
+    @Input( 'feTriggerClickHover' )
+    public triggerClickHover: boolean = true;
 
     @Output( 'feClick' )
     public clickOutput: EventEmitter<any> = new EventEmitter();
@@ -208,7 +256,7 @@ export class TactileDirective implements OnInit, OnDestroy {
             player.play();
         }
 
-        if ( this.triggerHover ) {
+        if ( this.triggerClickHover ) {
 
             if ( this.target ) {
                 this.target.classList.add( 'hoverState' );
@@ -230,82 +278,65 @@ export class TactileDirective implements OnInit, OnDestroy {
 
         /* If the mouse is not on the component anymore, ignore the click. Most users behave this way, if they accidentally clicked. */
         if ( this.isOnHostElement( event ) ) {
-
-            if ( this.hostElement.nativeElement.click !== undefined ) {
-                this.hostElement.nativeElement.click();
-            }
-
-            if ( this.link && typeof this.link === 'string' ) {
-
-                const newTab =
-                          this.linkTarget === 'auto' ? (
-                              event instanceof MouseEvent ?
-                              (
-                                  event.button === 1 ||
-                                  event.shiftKey ||
-                                  event.ctrlKey ||
-                                  event.metaKey ||
-                                  event.altKey
-                              ) : false
-                          ) : this.linkTarget === 'new_tab';
-
-                if ( newTab ) {
-
-                    window.open( this.link, '_blank' );
-
-                } else {
-
-                    if ( this.link.startsWith( 'http' ) || this.link.startsWith( 'https' ) ) {
-
-                        const base = this.location.prepareExternalUrl( '/' );
-
-                        if ( this.link.startsWith( base ) ) {
-
-                            let stripped = this.link.slice( base.length );
-
-                            if ( !stripped.startsWith( '/' ) ) {
-                                stripped = '/' + stripped;
-                            }
-
-                            if ( this.viewCheck ) {
-                                this.ngZone.run( () => {
-                                    this.router.navigate( [ stripped ] ).then();
-                                } );
-                            } else {
-                                this.router.navigate( [ stripped ] ).then();
-                            }
-
-                        } else {
-                            window.open( this.link, '_self' );
-                        }
-
-                    } else {
-                        if ( this.viewCheck ) {
-                            this.ngZone.run( () => {
-                                this.router.navigate( [ this.link ] ).then();
-                            } );
-                        } else {
-                            this.router.navigate( [ this.link ] ).then();
-                        }
-                    }
-                }
-
-            } else if ( this.link && typeof this.link !== 'string' ) {
-
-                const link = this.link;
-
-                if ( this.viewCheck ) {
-                    this.ngZone.run( () => {
-                        this.router.navigate( link ).then();
-                    } );
-                } else {
-                    this.router.navigate( link ).then();
-                }
-            }
+            this.triggerClick( event );
         }
     }
 
-    private animateBack() {
+    private onKeyDown( event: KeyboardEvent ) {
+
+        if ( this.heldDown ) {
+            return;
+        }
+
+        if ( document.activeElement !== this.hostElement.nativeElement ) {
+            return;
+        }
+
+        if ( event.key !== 'Enter' && event.key !== ' ' ) {
+            return;
+        }
+
+        event.preventDefault();
+
+        this.heldDown     = true;
+        this.lastHeldDown = Date.now();
+
+        const metadata: AnimationMetadata[] = [
+            animate(
+                '150ms cubic-bezier(0, 0.55, 0.45, 1)',
+                style( { transform: 'scale(' + this.calculateEffect() + ')' } )
+            )
+        ];
+
+        if ( this.animate ) {
+            const factory = this.builder.build( metadata );
+            const player  = factory.create( this.target );
+            player.play();
+        }
+    }
+
+    private onKeyUp( event: KeyboardEvent ) {
+
+        if ( !this.heldDown ) {
+            return;
+        }
+
+        if ( document.activeElement !== this.hostElement.nativeElement ) {
+            return;
+        }
+
+        if ( event.key !== 'Enter' && event.key !== ' ' ) {
+            return;
+        }
+
+        event.preventDefault();
+
+        this.animateBack( false );
+
+        this.triggerClick( event );
+    }
+
+    private animateBack( removeHoverState: boolean = true ): void {
 
         const remainingTime = (
                                   Date.now() - this.lastHeldDown
@@ -327,7 +358,7 @@ export class TactileDirective implements OnInit, OnDestroy {
                 player.play();
             }
 
-            if ( this.triggerHover ) {
+            if ( removeHoverState && this.triggerClickHover && document.activeElement !== this.hostElement.nativeElement ) {
 
                 if ( this.target ) {
                     this.target.classList.remove( 'hoverState' );
@@ -376,5 +407,80 @@ export class TactileDirective implements OnInit, OnDestroy {
         const pointerY = event.clientY;
 
         return !( pointerX < hostXStart || pointerX > hostXEnd || pointerY < hostYStart || pointerY > hostYEnd );
+    }
+
+    private triggerClick( event: MouseEvent | PointerEvent | KeyboardEvent ) {
+
+        if ( this.hostElement.nativeElement.click !== undefined ) {
+            this.hostElement.nativeElement.click();
+        }
+
+        if ( this.link && typeof this.link === 'string' ) {
+
+            const newTab =
+                      this.linkTarget === 'auto' ? (
+                          event instanceof MouseEvent ?
+                          (
+                              event.button === 1 ||
+                              event.shiftKey ||
+                              event.ctrlKey ||
+                              event.metaKey ||
+                              event.altKey
+                          ) : false
+                      ) : this.linkTarget === 'new_tab';
+
+            if ( newTab ) {
+
+                window.open( this.link, '_blank' );
+
+            } else {
+
+                if ( this.link.startsWith( 'http' ) || this.link.startsWith( 'https' ) ) {
+
+                    const base = this.location.prepareExternalUrl( '/' );
+
+                    if ( this.link.startsWith( base ) ) {
+
+                        let stripped = this.link.slice( base.length );
+
+                        if ( !stripped.startsWith( '/' ) ) {
+                            stripped = '/' + stripped;
+                        }
+
+                        if ( this.viewCheck ) {
+                            this.ngZone.run( () => {
+                                this.router.navigate( [ stripped ] ).then();
+                            } );
+                        } else {
+                            this.router.navigate( [ stripped ] ).then();
+                        }
+
+                    } else {
+                        window.open( this.link, '_self' );
+                    }
+
+                } else {
+                    if ( this.viewCheck ) {
+                        this.ngZone.run( () => {
+                            this.router.navigate( [ this.link ] ).then();
+                        } );
+                    } else {
+                        this.router.navigate( [ this.link ] ).then();
+                    }
+                }
+            }
+
+        } else if ( this.link && typeof this.link !== 'string' ) {
+
+            const link = this.link;
+
+            if ( this.viewCheck ) {
+                this.ngZone.run( () => {
+                    this.router.navigate( link ).then();
+                } );
+            } else {
+                this.router.navigate( link ).then();
+            }
+        }
     }
 }

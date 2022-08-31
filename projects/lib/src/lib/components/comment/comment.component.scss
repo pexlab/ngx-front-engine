@@ -114,6 +114,10 @@
                 background-color : var(--background-color);
 
                 transition       : opacity .25s ease, transform .25s ease;
+
+                &:focus {
+                    outline : none;
+                }
             }
 
             & > svg-icon {

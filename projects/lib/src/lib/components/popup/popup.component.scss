@@ -153,6 +153,10 @@
                     }
                 }
 
+                &:focus {
+                    outline : none;
+                }
+
                 &:after {
 
                     z-index          : -1;

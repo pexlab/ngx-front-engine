@@ -2,7 +2,7 @@
 
     <div class="title-bar">
 
-        <div class="icon" [class.hidden]="hideExitIcon" [fe-tactile] (feClick)="close()">
+        <div class="icon" tabindex="0" [class.hidden]="hideExitIcon" [fe-tactile] [feCaptureTouch]="true" (feClick)="close()">
             <svg-icon name="fe-close"></svg-icon>
         </div>
 

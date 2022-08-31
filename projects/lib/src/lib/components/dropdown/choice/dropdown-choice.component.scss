@@ -2,39 +2,51 @@
 
 :host {
 
-    width       : 100%;
-    height      : fit-content;
+    display : block;
 
-    display     : grid;
-    align-items : center;
+    width   : 100%;
+    height  : fit-content;
 
-    padding     : hostConfig.$DROPDOWN_PADDING_VERTICAL hostConfig.$DROPDOWN_PADDING_HORIZONTAL;
-    margin      : 0; /* Idk why but the margin from the parent is being applied to the children as well */
-    box-sizing  : border-box;
+    & > .wrapper {
 
-    cursor      : pointer;
+        width       : 100%;
+        height      : fit-content;
 
-    color       : hostConfig.hex('options-idle-text');
-    background  : transparent; /* Reveals the panel background */
+        display     : grid;
+        align-items : center;
 
-    transition  : color .25s ease, background-color .25s ease;
+        padding     : hostConfig.$DROPDOWN_PADDING_VERTICAL hostConfig.$DROPDOWN_PADDING_HORIZONTAL;
+        margin      : 0; /* Idk why but the margin from the parent is being applied to the children as well */
+        box-sizing  : border-box;
 
-    /* ng-deep usage because the div is spawned inside by ng-content */
-    & > ::ng-deep div {
+        color       : hostConfig.hex('options-idle-text');
+        background  : transparent; /* Reveals the panel background */
 
-        display        : grid;
-        grid-auto-flow : column;
-        grid-gap       : 10px;
-        align-items    : center;
+        transition  : color .25s ease, background-color .25s ease;
 
-        width          : fit-content;
-        height         : fit-content;
+        &:focus {
+            outline : none;
+        }
 
-        @include hostConfig.inlineIcon(20px);
-    }
+        @include hostConfig.hover {
+            color      : hostConfig.hex('options-hover-text');
+            background : hostConfig.hex('options-hover-background');
+        }
 
-    @include hostConfig.hover {
-        color      : hostConfig.hex('options-hover-text');
-        background : hostConfig.hex('options-hover-background');
+        & > .inner {
+            /* ng-deep usage because the div is spawned inside by ng-content */
+            & > ::ng-deep div {
+
+                display        : grid;
+                grid-auto-flow : column;
+                grid-gap       : 10px;
+                align-items    : center;
+
+                width          : fit-content;
+                height         : fit-content;
+
+                @include hostConfig.inlineIcon(20px);
+            }
+        }
     }
 }

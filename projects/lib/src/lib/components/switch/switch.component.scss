@@ -39,13 +39,19 @@
 
         & > .switch {
 
-            position : relative;
+            position      : relative;
 
-            display  : block;
-            width    : $ballSize * 1.5;
-            height   : $ballSize;
+            display       : block;
+            width         : $ballSize * 1.5;
+            height        : $ballSize;
 
-            cursor   : pointer;
+            cursor        : pointer;
+
+            border-radius : 99px;
+
+            box-sizing    : content-box;
+            padding       : 0 math.div($ballSize, 2);
+            margin        : 0 -(math.div($ballSize, 2));
 
             & > .line {
 
@@ -55,8 +61,9 @@
 
                 position      : absolute;
                 top           : math.div($ballSize, 2) - math.div($height, 2);
+                left          : math.div($ballSize, 2);
+                right         : math.div($ballSize, 2);
 
-                width         : 100%;
                 height        : $height;
 
                 border-radius : 99px;
@@ -70,7 +77,7 @@
 
                 position      : absolute;
                 top           : 0;
-                left          : 0;
+                left          : math.div($ballSize, 2);
 
                 width         : $ballSize;
                 height        : $ballSize;
@@ -86,6 +93,12 @@
 
             &.left {
 
+                &:focus {
+                    outline        : 2px solid theme.hex('minimal-line-left');
+                    outline-offset : .15rem;
+                    transition     : outline-color .25s ease;
+                }
+
                 & > .line {
                     background-color : theme.hex('minimal-line-left');
                 }
@@ -98,6 +111,12 @@
             }
 
             &.right {
+
+                &:focus {
+                    outline        : 2px solid theme.hex('minimal-line-right');
+                    outline-offset : .15rem;
+                    transition     : outline-color .25s ease;
+                }
 
                 & > .line {
                     background-color : theme.hex('minimal-line-right');
@@ -128,15 +147,17 @@
 
         & > .switch {
 
-            position   : relative;
+            position      : relative;
 
-            width      : ($ballSize * 2.5) + ( 2 * $padding);
-            height     : ($ballSize) + ( 2 * $padding);
+            width         : ($ballSize * 2.5) + ( 2 * $padding);
+            height        : ($ballSize) + ( 2 * $padding);
 
-            box-sizing : border-box;
-            padding    : $padding;
+            box-sizing    : border-box;
+            padding       : $padding;
 
-            cursor     : pointer;
+            border-radius : 99px;
+
+            cursor        : pointer;
 
             &:after {
 
@@ -185,25 +206,13 @@
                 }
             }
 
-            &.right {
-
-                & > .ball-wrapper {
-
-                    transform : translateX($ballSize * 1.5);
-
-                    & > .ball {
-                        color            : theme.hex('traditional-icon-right');
-                        background-color : theme.hex('traditional-ball-right');
-                    }
-                }
-
-                &:after {
-                    background-color : theme.hex('traditional-background-right');
-                    border           : $borderWidth solid theme.hex('traditional-border-right');
-                }
-            }
-
             &.left {
+
+                &:focus {
+                    outline        : .1rem solid theme.hex('traditional-border-left');
+                    outline-offset : .15rem;
+                    transition     : outline-color .25s ease;
+                }
 
                 & > .ball-wrapper {
 
@@ -218,6 +227,30 @@
                 &:after {
                     background-color : theme.hex('traditional-background-left');
                     border           : $borderWidth solid theme.hex('traditional-border-left');
+                }
+            }
+
+            &.right {
+
+                &:focus {
+                    outline        : .1rem solid theme.hex('traditional-border-right');
+                    outline-offset : .15rem;
+                    transition     : outline-color .25s ease;
+                }
+
+                & > .ball-wrapper {
+
+                    transform : translateX($ballSize * 1.5);
+
+                    & > .ball {
+                        color            : theme.hex('traditional-icon-right');
+                        background-color : theme.hex('traditional-ball-right');
+                    }
+                }
+
+                &:after {
+                    background-color : theme.hex('traditional-background-right');
+                    border           : $borderWidth solid theme.hex('traditional-border-right');
                 }
             }
         }

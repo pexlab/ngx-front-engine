@@ -1,4 +1,5 @@
 <div class="placeholderPanel"
+     tabindex="0"
      [class.selected]="dropdownVisible"
      [class.disabled]="isDisabled"
      [ngClass]="feAppearance"
@@ -23,7 +24,9 @@
 
     <div class="clear-value"
          *ngIf="feClearable"
+         tabindex="0"
          [fe-tactile]
+         [feCaptureTouch]="true"
          [feViewCheck]="false"
          (feClick)="manualClear()">
         <svg-icon name="fe-backspace"></svg-icon>

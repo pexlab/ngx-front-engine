@@ -13,10 +13,16 @@
     user-select : none;
 
     & > button {
+
         text-decoration : none;
         border          : none;
         background      : none;
         padding         : 0;
+
+        &:focus {
+            outline        : .1rem solid theme.hex('background');
+            outline-offset : .15rem;
+        }
     }
 
     & > button.simple,
@@ -98,6 +104,8 @@
         cursor         : pointer;
 
         color          : theme.hex('circle-tooltip-text');
+
+        border-radius  : math.div(1.3rem, 2) + 1.25rem;
 
         @include theme.commonFont('body');
 
@@ -320,6 +328,10 @@
 
     & > button.see-through-light {
 
+        &:focus {
+            outline-color : rgba(white, .7);
+        }
+
         @supports (backdrop-filter : blur(7px)) {
             & {
                 color      : theme.hex('text');
@@ -336,6 +348,10 @@
     }
 
     & > button.see-through-dark {
+
+        &:focus {
+            outline-color : rgba(lighten(black, 15%), .7);
+        }
 
         @supports (backdrop-filter : blur(7px)) {
             & {
@@ -383,6 +399,10 @@
         @include utils.hover {
             padding         : .75rem 2rem;
             text-decoration : underline solid rgba(#41403E, .5);
+        }
+
+        &:focus {
+            outline : none;
         }
     }
 }

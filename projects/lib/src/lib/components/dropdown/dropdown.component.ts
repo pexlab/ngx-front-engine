@@ -76,7 +76,7 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
         @Optional()
         private ngControl: NgControl,
         public change: ChangeDetectorRef,
-        public hostElement: ElementRef,
+        public hostElement: ElementRef<HTMLElement>,
         private ngZone: NgZone,
         private renderer: Renderer2
     ) {
@@ -103,7 +103,7 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
                 this.disposeSubscriptions.push(
                     choiceComponent.feOnSelect.subscribe( () => {
 
-                        if(this.isDisabled) {
+                        if ( this.isDisabled ) {
                             return;
                         }
 
@@ -210,6 +210,16 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
 
                     this.discardNextUp = false;
                     this.localMouseUp  = false;
+                } ),
+
+                this.renderer.listen( this.hostElement.nativeElement, 'focusout', (event: FocusEvent) => {
+
+                    if ( event.relatedTarget && this.hostElement.nativeElement.contains( event.relatedTarget as HTMLElement ) ) {
+                        return;
+                    }
+
+                    this.dropdownVisible = false;
+                    this.change.detectChanges();
                 } )
             );
         } );
@@ -242,17 +252,7 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
     }
 
     public toggleMenu(): void {
-
         this.dropdownVisible = !this.dropdownVisible;
-
-        if ( this.dropdownVisible && document.activeElement && ( document.activeElement as any ).blur ) {
-            ( document.activeElement as HTMLInputElement ).blur();
-        }
-
-        if ( this.formBlurEvent && !this.dropdownVisible ) {
-            this.formBlurEvent();
-        }
-
         this.change.detectChanges();
     }
 

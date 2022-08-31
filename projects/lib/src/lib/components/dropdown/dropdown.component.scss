@@ -67,6 +67,11 @@ $OPTION_PADDING              : 10px;
 
         @include theme.inlineIcon(15px);
 
+        &:focus {
+            outline        : .1rem solid theme.hex('placeholder-idle-panel-border');
+            outline-offset : .15rem;
+        }
+
         &::after {
             opacity       : 0;
             position      : absolute;
@@ -191,6 +196,10 @@ $OPTION_PADDING              : 10px;
             @include utils.hover {
                 color      : theme.hex('clear-button-hover');
                 background : theme.hex('clear-button-hover-background');
+            }
+
+            &:focus {
+                outline : none;
             }
         }
 

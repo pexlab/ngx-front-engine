@@ -46,38 +46,36 @@
 
             & > .button {
 
-                display        : grid;
-                grid-auto-flow : column;
-                grid-gap       : 7px;
-                align-items    : center;
+                display         : grid;
+                grid-auto-flow  : column;
+                grid-gap        : 7px;
+                align-items     : center;
 
-                padding        : 7px 10px;
-                border-radius  : 5px;
+                padding         : 7px 10px;
 
-                cursor         : pointer;
+                border          : none;
+                border-radius   : 5px;
 
-                color          : theme.hex('reduced-appearance-button-idle-text');
-                background     : theme.hex('reduced-appearance-button-idle-background');
+                text-decoration : none;
 
-                transition     : .25s ease color, .25s ease background-color;
+                cursor          : pointer;
+
+                color           : theme.hex('reduced-appearance-button-idle-text');
+                background      : theme.hex('reduced-appearance-button-idle-background');
+
+                transition      : .25s ease color, .25s ease background-color;
+
+                &:focus {
+                    outline        : .1rem solid theme.hex('reduced-appearance-button-hover-background');
+                    outline-offset : .15rem;
+                }
+
+                @include theme.commonFont('body');
+                @include theme.inlineDeepIcon(1.3rem);
 
                 @include utils.hover {
                     color      : theme.hex('reduced-appearance-button-hover-text');
                     background : theme.hex('reduced-appearance-button-hover-background');
-                }
-
-                & > svg-icon {
-
-                    width       : 20px;
-                    height      : 20px;
-
-                    display     : grid;
-                    place-items : center;
-
-                    & > svg {
-                        width  : 20px;
-                        height : 20px;
-                    }
                 }
             }
         }

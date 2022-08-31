@@ -27,6 +27,16 @@
 
         isolation      : isolate;
 
+        &:focus {
+
+            outline : none;
+
+            & > .hitbox {
+                outline        : .1rem solid theme.hex('outline-hover');
+                outline-offset : .15rem;
+            }
+        }
+
         &.enabled {
             cursor : pointer;
         }

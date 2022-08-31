@@ -47,5 +47,10 @@
         @include config.inlineIcon(20px);
 
         cursor           : pointer;
+
+        &:focus {
+            outline        : .1rem solid config.hex('button-background');
+            outline-offset : .15rem;
+        }
     }
 }
