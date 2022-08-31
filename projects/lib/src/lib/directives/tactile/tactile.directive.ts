@@ -130,6 +130,9 @@ export class TactileDirective implements OnInit, OnDestroy {
     @Input( 'feCaptureTouch' )
     public captureTouch: boolean = false;
 
+    @Input( 'feTriggerHover' )
+    public triggerHover: boolean = true;
+
     @Output( 'feClick' )
     public clickOutput: EventEmitter<any> = new EventEmitter();
 
@@ -205,11 +208,14 @@ export class TactileDirective implements OnInit, OnDestroy {
             player.play();
         }
 
-        if ( this.target ) {
-            this.target.classList.add( 'hoverState' );
-        }
+        if ( this.triggerHover ) {
 
-        this.hostElement.nativeElement.classList.add( 'hoverState' );
+            if ( this.target ) {
+                this.target.classList.add( 'hoverState' );
+            }
+
+            this.hostElement.nativeElement.classList.add( 'hoverState' );
+        }
     }
 
     private onPointerUp( event: PointerEvent ): void {
@@ -321,11 +327,14 @@ export class TactileDirective implements OnInit, OnDestroy {
                 player.play();
             }
 
-            if ( this.target ) {
-                this.target.classList.remove( 'hoverState' );
-            }
+            if ( this.triggerHover ) {
 
-            this.hostElement.nativeElement.classList.remove( 'hoverState' );
+                if ( this.target ) {
+                    this.target.classList.remove( 'hoverState' );
+                }
+
+                this.hostElement.nativeElement.classList.remove( 'hoverState' );
+            }
 
         }, remainingTime );
     }
