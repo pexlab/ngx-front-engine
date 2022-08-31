@@ -1,13 +1,44 @@
 {
     "name": "@pexlab/ngx-front-engine",
-    "version": "0.0.56",
     "description": "A component library for angular which features astonishing components, theming and a vast color palette",
-    "license": "MIT",
-    "homepage": "https://pexlab.net/projects/front-engine",
+    "author": {
+        "name": "PexLab",
+        "email": "opensource@pexlab.net",
+        "url": "https://www.pexlab.net"
+    },
+    "contributors": [
+        {
+            "name": "David van der Sluijs",
+            "email": "david.van-der-sluijs@pexlab.net",
+            "url": "https://www.slatedave.de"
+        },
+        {
+            "name": "Philipp Glaubitz",
+            "email": "philipp.glaubitz@pexlab.net",
+            "url": "https://github.com/PhilippGlaubitz"
+        },
+        {
+            "name": "Robin Gaši",
+            "email": "robin.gasi@pexlab.net",
+            "url": "https://github.com/RobinGasi"
+        }
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/pexlab/ngx-front-engine.git"
     },
+    "bugs": {
+        "url": "https://github.com/pexlab/ngx-front-engine/issues"
+    },
+    "funding": [
+        {
+            "type": "individual",
+            "url": "https://www.buymeacoffee.com/slatedave"
+        }
+    ],
+    "version": "0.0.56",
+    "license": "MIT",
+    "homepage": "https://pexlab.net/projects/front-engine",
     "peerDependencies": {
         "@angular/common": ">=14.0.0",
         "@angular/core": ">=14.0.0",
