@@ -6,7 +6,8 @@
 
             <div class="text-wrapper">
 
-                <div class="text" *ngFor="let t of text; trackBy:trackText" [@carousel]="t.heading + ',' + t.subheading">
+                <div class="text" *ngFor="let t of text; trackBy:trackText"
+                     [@carousel]="t.heading + ',' + t.subheading">
 
                     <span class="heading" *ngIf="t.heading !== null">
                         {{t.heading}}
@@ -46,8 +47,12 @@
     <div *ngSwitchCase="'reduced'" class="reduced">
 
         <div class="left">
-            <div class="button" *ngIf="buttons && buttons[0]" [fe-tactile] (feClick)="buttons[0].onClick()"
-                 [feLink]="buttons[0].link">
+            <div class="button" *ngIf="buttons && buttons[0]"
+                 [fe-tactile]
+                 [feCaptureTouch]="true"
+                 [feTriggerHover]="false"
+                 [feLink]="buttons[0].link"
+                 (feClick)="buttons[0].onClick()">
                 <svg-icon *ngIf="buttons[0].icon" [name]="buttons[0].icon"></svg-icon>
                 <span>{{buttons[0].text}}</span>
             </div>
@@ -59,8 +64,12 @@
         </div>
 
         <div class="right">
-            <div class="button" *ngIf="buttons && buttons[1]" [fe-tactile] (feClick)="buttons[1].onClick()"
-                 [feLink]="buttons[1].link">
+            <div class="button" *ngIf="buttons && buttons[1]"
+                 [fe-tactile]
+                 [feCaptureTouch]="true"
+                 [feTriggerHover]="false"
+                 [feLink]="buttons[1].link"
+                 (feClick)="buttons[1].onClick()">
                 <svg-icon *ngIf="buttons[1].icon" [name]="buttons[1].icon"></svg-icon>
                 <span>{{buttons[1].text}}</span>
             </div>
