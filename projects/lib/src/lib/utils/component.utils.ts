@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, ElementRef } from '@angular/core';
-import { isEqual } from 'lodash';
+import { isEqual } from 'lodash-es';
 import { ReplaySubject, Subject } from 'rxjs';
 import { ComponentTheme, HEXColorRegister } from '../interfaces/color.interface';
 import { ThemeableComponents } from '../interfaces/theme.interface';
