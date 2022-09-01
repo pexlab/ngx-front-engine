@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit } from '@angular/core';
 import { ComponentTheme } from '../../interfaces/color.interface';
 import { FeComponent } from '../../utils/component.utils';
 import { PartialButtonTheme } from '../button/button.theme';
@@ -20,7 +20,7 @@ import { PartialBannerCarouselTheme } from './banner-carousel.theme';
         ]
     }
 )
-export class BannerCarouselComponent implements OnInit, AfterViewInit {
+export class BannerCarouselComponent implements OnInit {
 
     constructor(
         public hostElement: ElementRef,
@@ -120,12 +120,6 @@ export class BannerCarouselComponent implements OnInit, AfterViewInit {
         } else {
             throw new Error( 'No banner-carousel instance name provided' );
         }
-    }
-
-    public ngAfterViewInit(): void {
-        /* Taking this measure because the svg-icon component dispatched many view checks on initial icon load which causes the arrays of
-         the text and images to be re-evaluated which as a result causes the in-out-animation to be played multiple times. */
-        this.change.detach();
     }
 
     public ngOnDestroy(): void {

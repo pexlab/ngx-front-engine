@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Optional, Output, Self } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Optional, Output, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { ComponentTheme } from '../../interfaces/color.interface';
 import { FeComponent } from '../../utils/component.utils';
@@ -13,7 +13,7 @@ import { PartialSwitchTheme } from './switch.theme';
         changeDetection: ChangeDetectionStrategy.OnPush
     }
 )
-export class SwitchComponent implements OnInit, AfterViewInit, ControlValueAccessor {
+export class SwitchComponent implements OnInit, ControlValueAccessor {
 
     constructor(
         @Self()
@@ -62,10 +62,6 @@ export class SwitchComponent implements OnInit, AfterViewInit, ControlValueAcces
         if ( ( this.feIconLeft || this.feIconRight ) && this.feAppearance !== 'traditional' ) {
             throw new Error( 'Icons are only available on the traditional appearance' );
         }
-    }
-
-    public ngAfterViewInit(): void {
-        this.change.detach();
     }
 
     public toggle( position?: 0 | 1 ): void {

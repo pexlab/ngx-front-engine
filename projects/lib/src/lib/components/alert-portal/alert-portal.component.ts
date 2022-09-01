@@ -62,10 +62,6 @@ export class AlertPortalComponent implements OnInit {
         } );
     }
 
-    public ngAfterViewInit(): void {
-        this.change.detach();
-    }
-
     public ngOnDestroy(): void {
         this.channelSubscription.unsubscribe();
     }

@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostBinding, Input, OnInit, Optional, Output, Self } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostBinding, Input, OnInit, Optional, Output, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { ComponentTheme } from '../../interfaces/color.interface';
 import { FeComponent } from '../../utils/component.utils';
@@ -13,7 +13,7 @@ import { PartialStepperTheme } from './stepper.theme';
         changeDetection: ChangeDetectionStrategy.OnPush
     }
 )
-export class StepperComponent implements OnInit, AfterViewInit, ControlValueAccessor {
+export class StepperComponent implements OnInit, ControlValueAccessor {
 
     constructor(
         @Self()
@@ -70,10 +70,6 @@ export class StepperComponent implements OnInit, AfterViewInit, ControlValueAcce
         if ( this.value === undefined || this.value === null || isNaN( this.value ) ) {
             this.value = this.feMin;
         }
-    }
-
-    public ngAfterViewInit(): void {
-        this.change.detach();
     }
 
     public getSuffix(): string {

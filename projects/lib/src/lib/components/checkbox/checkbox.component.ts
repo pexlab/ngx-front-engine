@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Optional, Output, Self } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Optional, Output, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { parsePath, roundCommands } from 'svg-round-corners';
 import { ComponentTheme } from '../../interfaces/color.interface';
@@ -8,9 +8,10 @@ import { PartialCheckboxTheme } from './checkbox.theme';
 @FeComponent( 'checkbox' )
 @Component(
     {
-        selector   : 'fe-checkbox',
-        templateUrl: './checkbox.component.html',
-        styleUrls  : [ './checkbox.component.scss' ]
+        selector       : 'fe-checkbox',
+        templateUrl    : './checkbox.component.html',
+        styleUrls      : [ './checkbox.component.scss' ],
+        changeDetection: ChangeDetectionStrategy.OnPush
     }
 )
 
@@ -68,8 +69,6 @@ export class CheckboxComponent implements OnInit, AfterViewInit, ControlValueAcc
     }
 
     public ngAfterViewInit(): void {
-
-        this.change.detach();
 
         /* Calculate path length */
         this.change.detectChanges();

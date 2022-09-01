@@ -1,24 +1,10 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ContentChild,
-    ElementRef,
-    EventEmitter,
-    Input,
-    NgZone,
-    OnInit,
-    Output,
-    Renderer2,
-    TemplateRef,
-    ViewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { AsynchronouslyInitialisedComponent } from '../../../utils/component.utils';
 
 @Component(
     {
-        selector : 'fe-dropdown-choice',
-        template : `
+        selector       : 'fe-dropdown-choice',
+        template       : `
             <ng-template #placeholderTemplateRef>
                 <ng-content select="[fePlaceholder]"></ng-content>
             </ng-template>
@@ -32,16 +18,14 @@ import { AsynchronouslyInitialisedComponent } from '../../../utils/component.uti
                     <ng-container *ngTemplateOutlet="contentAndPlaceholderRef || contentTemplateRef"></ng-container>
                 </div>
             </div>`,
-        styleUrls: [ './dropdown-choice.component.scss' ]
+        styleUrls      : [ './dropdown-choice.component.scss' ],
+        changeDetection: ChangeDetectionStrategy.OnPush
     }
 )
-export class DropdownChoiceComponent extends AsynchronouslyInitialisedComponent implements OnInit, AfterViewInit {
+export class DropdownChoiceComponent extends AsynchronouslyInitialisedComponent implements OnInit {
 
     constructor(
-        public hostElement: ElementRef<HTMLElement>,
-        private renderer: Renderer2,
-        private ngZone: NgZone,
-        private change: ChangeDetectorRef
+        public hostElement: ElementRef<HTMLElement>
     ) {
         super();
     }
@@ -96,9 +80,5 @@ export class DropdownChoiceComponent extends AsynchronouslyInitialisedComponent 
         if ( !this.feValue ) {
             throw new Error( 'Value missing on dropdown choice' );
         }
-    }
-
-    public ngAfterViewInit(): void {
-        this.change.detach();
     }
 }
