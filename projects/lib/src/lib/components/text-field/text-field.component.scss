@@ -14,6 +14,7 @@ $PADDING : 20px;
         & > input, & > textarea {
             color       : theme.hex('#{$state}-text');
             caret-color : theme.hex('#{$state}-text');
+            -webkit-tap-highlight-color : transparent;
         }
     }
 

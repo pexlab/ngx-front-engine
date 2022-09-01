@@ -100,10 +100,18 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
 
             /* Add listeners that are not supposed to trigger outside view checks */
             this.disposeListeners.push(
+                /* For mouse only (don't wait for mouse button to go up again) */
                 this.renderer.listen(
                     this.fieldRef.nativeElement,
                     'mousedown',
-                    ( event: MouseEvent ) => this.focusField( event )
+                    ( event: MouseEvent ) => this.focusField( event, 'down' )
+                ),
+
+                /* For non-mouse devices */
+                this.renderer.listen(
+                    this.fieldRef.nativeElement,
+                    'click',
+                    ( event: MouseEvent ) => this.focusField( event, 'click' )
                 ),
 
                 this.renderer.listen(
@@ -115,13 +123,7 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
                 this.renderer.listen(
                     ref.first.nativeElement,
                     'focusin',
-                    ( event ) => {
-                        if ( this.isDisabled ) {
-                            event.preventDefault();
-                        } else {
-                            this.onFocusIn();
-                        }
-                    }
+                    () => this.onFocusIn()
                 ),
 
                 this.renderer.listen(
@@ -214,8 +216,6 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
     private isFocused           = false;
     public isDisabled           = false;
     private isPlaceholderPinned = false;
-
-    private skipNextFocusBlurAnimation = false;
 
     private disposeListeners: ( () => void )[] = [];
 
@@ -329,6 +329,11 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
 
     private onFocusIn(): void {
 
+        /* Only if focusing the input has succeeded */
+        if ( document.activeElement !== this.inputRef ) {
+            return;
+        }
+
         if ( this.isFocused ) {
             return;
         }
@@ -340,12 +345,22 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         this.applyClasses( false );
 
         this.change.detectChanges();
+
+        if(this.isDisabled) {
+
+            /* Select text */
+            this.inputRef.select();
+
+        } else {
+
+            /* Announce focus changes */
+            this.ngZone.run( () => {} );
+        }
     }
 
     private onFocusOut(): void {
 
-        if ( !this.isFocused || this.skipNextFocusBlurAnimation ) {
-            this.skipNextFocusBlurAnimation = false;
+        if ( !this.isFocused ) {
             return;
         }
 
@@ -363,9 +378,10 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
 
         this.change.detectChanges();
 
+        /* Announce focus changes */
         this.ngZone.run( () => {
             if ( this.formBlurEvent ) {
-                this.formBlurEvent(); /* Update the form model on blur */
+                this.formBlurEvent();
             }
         } );
     }
@@ -386,6 +402,7 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
 
         this.initialisationValue = value;
 
+        /* Announce input changes */
         this.ngZone.run( () => {
 
             this.feChange.next( value );
@@ -400,42 +417,50 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
 
     /* Action functions */
 
-    private focusField( event: MouseEvent ): void {
+    private focusField( event: MouseEvent, type: 'down' | 'click' ): void {
 
         /* Note: As the focusing will later on dispatch the focusIn event, changeDetection is not needed here */
 
-        /* Prevents unnecessary refocusing effect */
-        if ( this.isFocused ) {
+        const path = event.composedPath()[ 0 ] as HTMLElement;
 
-            const path = event.composedPath()[ 0 ] as HTMLElement;
+        if ( path.tagName === 'INPUT' || path.tagName === 'TEXTAREA' ) {
 
-            if ( path.tagName === 'INPUT' || path.tagName === 'TEXTAREA' ) {
+            /* User clicked the input element. */
+            return;
 
-                /* User clicked the input element. Don't take any action. */
+        } else {
+
+            /* User clicked outside the input element, but still inside the component. */
+
+            if ( this.isFocused ) {
+                /* This causes the browser to lose focus. The component will focus the input again so don't even show the blur animation. */
+                event.preventDefault();
                 return;
+            }
+
+            if ( type === 'down' ) {
+
+                /* Without the timeout the browser loses the focus anyway */
+                setTimeout( () => {
+                    if ( this.inputRef ) {
+                        this.inputRef.focus();
+                    }
+                } );
 
             } else {
 
-                /* User clicked outside the input element, but still inside the component.
-                 * This causes the browser to lose focus. The component will focus the input again further down below this code,
-                 * so don't even show the blur animation. */
-                this.skipNextFocusBlurAnimation = true;
+                if ( this.inputRef ) {
+                    this.inputRef.focus();
+                }
             }
         }
-
-        /* Without the timeout the browser loses the focus again */
-        setTimeout( () => {
-            if ( this.inputRef ) {
-                this.inputRef.focus();
-            }
-        } );
     }
 
     private pinPlaceholder(): void {
 
         this.isPlaceholderPinned = true;
 
-        if ( !this.isStatic ) {
+        if ( !this.isStatic && !this.isDisabled ) {
 
             if ( this.placeholderRef ) {
 
@@ -467,7 +492,7 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
 
     private considerBorderPath(): void {
 
-        if ( !this.isStatic && this.placeholderRef ) {
+        if ( !this.isStatic && !this.isDisabled && this.placeholderRef ) {
 
             this.idleBorderPath    = this.generateBorderPath( this.value.length === 0 );
             this.focusedBorderPath = this.generateBorderPath( false );
