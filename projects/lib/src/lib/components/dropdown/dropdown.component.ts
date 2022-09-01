@@ -212,13 +212,18 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
                     this.localMouseUp  = false;
                 } ),
 
-                this.renderer.listen( this.hostElement.nativeElement, 'focusout', (event: FocusEvent) => {
+                this.renderer.listen( this.hostElement.nativeElement, 'focusout', ( event: FocusEvent ) => {
 
                     if ( event.relatedTarget && this.hostElement.nativeElement.contains( event.relatedTarget as HTMLElement ) ) {
                         return;
                     }
 
                     this.dropdownVisible = false;
+
+                    if ( this.formBlurEvent ) {
+                        this.formBlurEvent();
+                    }
+
                     this.change.detectChanges();
                 } )
             );
@@ -252,7 +257,13 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
     }
 
     public toggleMenu(): void {
+
         this.dropdownVisible = !this.dropdownVisible;
+
+        if ( !this.dropdownVisible && this.formBlurEvent ) {
+            this.formBlurEvent();
+        }
+
         this.change.detectChanges();
     }
 
