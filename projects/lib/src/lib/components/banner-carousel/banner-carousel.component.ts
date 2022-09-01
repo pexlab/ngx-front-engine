@@ -68,7 +68,7 @@ export class BannerCarouselComponent implements OnInit {
     public get image(): BannerCarouselComplimentaryImage[] | null {
 
         if ( !this.feTheme || !this.feTheme.complimentaryImage ) {
-            return null;
+            return [];
         }
 
         return [
@@ -171,5 +171,9 @@ export class BannerCarouselComponent implements OnInit {
                 palette: {}
             };
         }
+    }
+
+    public trackImage(index: number, image: BannerCarouselComplimentaryImage) {
+        return image.url;
     }
 }

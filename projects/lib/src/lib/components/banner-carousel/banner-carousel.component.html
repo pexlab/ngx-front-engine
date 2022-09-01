@@ -21,15 +21,17 @@
 
             </div>
 
-            <div class="image"
-                 *ngFor="let p of image"
-                 [style.height]="(150 * (p.scale || 1)) + 'px'"
-                 [style.right]="(p.marginRight || 0) + 'px'"
-                 [style.marginTop]="(p.marginTop || 0 ) + 'px'"
-                 [style.marginBottom]="(p.marginBottom || 0 ) + 'px'"
-                 [ngClass]="p.alignment"
-            >
-                <img alt="" [@image] [src]="p.url" [style.height]="(150 * (p.scale || 1)) + 'px'"/>
+            <div class="images" [@image]="image">
+                <div class="image"
+                     *ngFor="let p of image; trackBy:trackImage"
+                     [style.height]="(150 * (p.scale || 1)) + 'px'"
+                     [style.right]="(p.marginRight || 0) + 'px'"
+                     [style.marginTop]="(p.marginTop || 0 ) + 'px'"
+                     [style.marginBottom]="(p.marginBottom || 0 ) + 'px'"
+                     [ngClass]="p.alignment"
+                >
+                    <img alt="" [src]="p.url" [style.height]="(150 * (p.scale || 1)) + 'px'"/>
+                </div>
             </div>
         </div>
 
@@ -48,11 +50,11 @@
 
         <div class="left">
             <button class="button" *ngIf="buttons && buttons[0]"
-                 [fe-tactile]
-                 [feCaptureTouch]="true"
-                 [feTriggerClickHover]="false"
-                 [feLink]="buttons[0].link"
-                 (feClick)="buttons[0].onClick()">
+                    [fe-tactile]
+                    [feCaptureTouch]="true"
+                    [feTriggerClickHover]="false"
+                    [feLink]="buttons[0].link"
+                    (feClick)="buttons[0].onClick()">
                 <svg-icon *ngIf="buttons[0].icon" [name]="buttons[0].icon"></svg-icon>
                 <span>{{buttons[0].text}}</span>
             </button>
@@ -65,11 +67,11 @@
 
         <div class="right">
             <button class="button" *ngIf="buttons && buttons[1]"
-                 [fe-tactile]
-                 [feCaptureTouch]="true"
-                 [feTriggerClickHover]="false"
-                 [feLink]="buttons[1].link"
-                 (feClick)="buttons[1].onClick()">
+                    [fe-tactile]
+                    [feCaptureTouch]="true"
+                    [feTriggerClickHover]="false"
+                    [feLink]="buttons[1].link"
+                    (feClick)="buttons[1].onClick()">
                 <svg-icon *ngIf="buttons[1].icon" [name]="buttons[1].icon"></svg-icon>
                 <span>{{buttons[1].text}}</span>
             </button>

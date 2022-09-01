@@ -158,22 +158,26 @@
                 }
             }
 
-            & > .image {
+            & > .images {
 
-                position : absolute;
+                & > .image {
 
-                &.top {
-                    top : 0;
+                    position : absolute;
+
+                    &.top {
+                        top : 0;
+                    }
+
+                    &.bottom {
+                        bottom : 0;
+                    }
+
+                    &.center {
+                        top       : 50%;
+                        transform : translateY(-50%);
+                    }
                 }
 
-                &.bottom {
-                    bottom : 0;
-                }
-
-                &.center {
-                    top       : 50%;
-                    transform : translateY(-50%);
-                }
             }
         }
 
