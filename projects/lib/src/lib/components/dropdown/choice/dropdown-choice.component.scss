@@ -9,20 +9,22 @@
 
     & > .wrapper {
 
-        width       : 100%;
-        height      : fit-content;
+        width                       : 100%;
+        height                      : fit-content;
 
-        display     : grid;
-        align-items : center;
+        display                     : grid;
+        align-items                 : center;
 
-        padding     : hostConfig.$DROPDOWN_PADDING_VERTICAL hostConfig.$DROPDOWN_PADDING_HORIZONTAL;
-        margin      : 0; /* Idk why but the margin from the parent is being applied to the children as well */
-        box-sizing  : border-box;
+        padding                     : hostConfig.$DROPDOWN_PADDING_VERTICAL hostConfig.$DROPDOWN_PADDING_HORIZONTAL;
+        margin                      : 0; /* Idk why but the margin from the parent is being applied to the children as well */
+        box-sizing                  : border-box;
 
-        color       : hostConfig.hex('options-idle-text');
-        background  : transparent; /* Reveals the panel background */
+        color                       : hostConfig.hex('options-idle-text');
+        background                  : transparent; /* Reveals the panel background */
 
-        transition  : color .25s ease, background-color .25s ease;
+        transition                  : color .25s ease, background-color .25s ease;
+
+        -webkit-tap-highlight-color : transparent;
 
         &:focus {
             outline : none;

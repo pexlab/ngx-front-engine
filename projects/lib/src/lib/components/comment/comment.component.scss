@@ -115,6 +115,8 @@
 
                 transition       : opacity .25s ease, transform .25s ease;
 
+                -webkit-tap-highlight-color : transparent;
+
                 &:focus {
                     outline : none;
                 }

@@ -67,6 +67,8 @@ $OPTION_PADDING              : 10px;
 
         @include theme.inlineIcon(15px);
 
+        -webkit-tap-highlight-color : transparent;
+
         &:focus {
             outline        : .1rem solid theme.hex('placeholder-idle-panel-border');
             outline-offset : .15rem;
@@ -197,6 +199,8 @@ $OPTION_PADDING              : 10px;
                 color      : theme.hex('clear-button-hover');
                 background : theme.hex('clear-button-hover-background');
             }
+
+            -webkit-tap-highlight-color : transparent;
 
             &:focus {
                 outline : none;

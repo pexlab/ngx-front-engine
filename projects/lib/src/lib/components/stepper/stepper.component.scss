@@ -48,6 +48,8 @@
 
         cursor           : pointer;
 
+        -webkit-tap-highlight-color : transparent;
+
         &:focus {
             outline        : .1rem solid config.hex('button-background');
             outline-offset : .15rem;

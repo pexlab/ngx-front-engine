@@ -16,6 +16,8 @@
 
         transition : color .25s ease;
 
+        -webkit-tap-highlight-color : transparent;
+
         &.active {
             color : theme.hex('active-label');
         }
@@ -52,6 +54,8 @@
             box-sizing    : content-box;
             padding       : 0 math.div($ballSize, 2);
             margin        : 0 -(math.div($ballSize, 2));
+
+            -webkit-tap-highlight-color : transparent;
 
             & > .line {
 
@@ -158,6 +162,8 @@
             border-radius : 99px;
 
             cursor        : pointer;
+
+            -webkit-tap-highlight-color : transparent;
 
             &:after {
 

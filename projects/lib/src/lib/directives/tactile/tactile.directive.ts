@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 
 export class TactileDirective implements OnInit, OnDestroy {
 
+    private pointerEvent                       = false;
     private heldDown                           = false;
     private lastHeldDown                       = 0;
     private disposeListeners: ( () => void )[] = [];
@@ -46,10 +47,13 @@ export class TactileDirective implements OnInit, OnDestroy {
             }
 
             this.disposeListeners.push(
+                /* Touch Events */
+
                 this.renderer.listen(
                     this.hostElement.nativeElement,
                     'touchstart',
                     ( event: TouchEvent ) => {
+                        this.pointerEvent = true;
                         this.touchRadiusX = event.touches[ 0 ].radiusX ?? 0;
                         this.touchRadiusY = event.touches[ 0 ].radiusY ?? 0;
                         this.onPointerDown( event, 'touch' );
@@ -57,21 +61,10 @@ export class TactileDirective implements OnInit, OnDestroy {
                 ),
 
                 this.renderer.listen(
-                    this.hostElement.nativeElement,
-                    'pointerdown',
-                    event => this.onPointerDown( event, 'pointer' )
-                ),
-
-                this.renderer.listen(
-                    document.documentElement,
-                    'pointerup',
-                    event => this.onPointerUp( event )
-                ),
-
-                this.renderer.listen(
                     document.documentElement,
                     'touchcancel',
                     () => {
+                        this.pointerEvent = true;
                         if ( this.heldDown ) {
                             this.heldDown = false;
                             this.animateBack();
@@ -83,6 +76,7 @@ export class TactileDirective implements OnInit, OnDestroy {
                     document.documentElement,
                     'touchmove',
                     () => {
+                        this.pointerEvent = true;
                         if ( this.heldDown && !this.captureTouch ) {
                             this.heldDown = false;
                             this.animateBack();
@@ -90,19 +84,56 @@ export class TactileDirective implements OnInit, OnDestroy {
                     }
                 ),
 
+                /* Pointer Events */
+
                 this.renderer.listen(
                     this.hostElement.nativeElement,
-                    'click',
-                    event => this.onClick( event )
+                    'pointerdown',
+                    event => {
+                        this.pointerEvent = true;
+                        this.onPointerDown( event, 'pointer' );
+                    }
                 ),
+
+                this.renderer.listen(
+                    document.documentElement,
+                    'pointerup',
+                    event => {
+                        this.pointerEvent = true;
+                        this.onPointerUp( event );
+                    }
+                ),
+
+                /* Keyboard Events */
+
+                this.renderer.listen(
+                    document.documentElement,
+                    'keydown',
+                    event => {
+                        this.pointerEvent = false;
+                        this.onKeyDown( event );
+                    }
+                ),
+
+                this.renderer.listen(
+                    document.documentElement,
+                    'keyup',
+                    event => {
+                        this.pointerEvent = false;
+                        this.onKeyUp( event );
+                    }
+                ),
+
+                /* Focus Events */
 
                 this.renderer.listen(
                     this.hostElement.nativeElement,
                     'focusin',
                     ( event: FocusEvent ) => {
 
-                        /* Only add hover when tab key was used instead of mouse */
-                        if ( this.heldDown ) {
+                        /* Disallow focus when it's triggered by a pointer event */
+                        if ( event.isTrusted && this.pointerEvent ) {
+                            this.hostElement.nativeElement.blur();
                             return;
                         }
 
@@ -132,16 +163,12 @@ export class TactileDirective implements OnInit, OnDestroy {
                     }
                 ),
 
-                this.renderer.listen(
-                    document.documentElement,
-                    'keydown',
-                    event => this.onKeyDown( event )
-                ),
+                /* Miscellaneous Events */
 
                 this.renderer.listen(
-                    document.documentElement,
-                    'keyup',
-                    event => this.onKeyUp( event )
+                    this.hostElement.nativeElement,
+                    'click',
+                    event => this.onClick( event )
                 )
             );
         } );
@@ -233,6 +260,8 @@ export class TactileDirective implements OnInit, OnDestroy {
 
         /* Reject pointerdown events triggered by touch to ensure they come only through the touchstart event */
         if ( ( event as any ).pointerType && ( event as any ).pointerType === 'touch' ) {
+            /* Prevent focus by touch */
+            event.preventDefault();
             return;
         }
 
