@@ -61,12 +61,12 @@ export const BannerCarouselAnimation = trigger( 'carousel', [
 
 export const BannerCarouselImageAnimation = trigger( 'image', [
 
-    transition( '* => *', [
+    transition( '* <=> *', [
 
         query( ':enter', [
             style(
                 {
-                    transform: 'scale(1.2)',
+                    transform: 'scale(1.2) translateY({{translateYIn}}%)',
                     opacity  : '0'
                 }
             )
@@ -75,7 +75,7 @@ export const BannerCarouselImageAnimation = trigger( 'image', [
         query( ':leave', [
             style(
                 {
-                    transform: 'scale(1)',
+                    transform: 'scale(1) translateY({{translateYOut}}%)',
                     opacity  : '1'
                 }
             )
@@ -84,7 +84,7 @@ export const BannerCarouselImageAnimation = trigger( 'image', [
         query( ':leave', [
             animate( '.3s cubic-bezier(0.65, 0, 0.35, 1)', style(
                 {
-                    transform: 'scale(0.8)',
+                    transform: 'scale(0.8) translateY({{translateYOut}}%)',
                     opacity  : '0'
                 }
             ) )
@@ -93,13 +93,13 @@ export const BannerCarouselImageAnimation = trigger( 'image', [
         query( ':enter', [
             animate( '.6s cubic-bezier(0.65, 0, 0.35, 1)', style(
                 {
-                    transform: 'scale(1)',
+                    transform: 'scale(1) translateY({{translateYIn}}%)',
                     opacity  : '1'
                 }
             ) )
         ], { optional: true } )
 
-    ] )
+    ], { params: { translateYIn: '0', translateYOut: '0' } } )
 ] );
 
 export const BannerCarouselButtonAnimation = trigger( 'buttons', [

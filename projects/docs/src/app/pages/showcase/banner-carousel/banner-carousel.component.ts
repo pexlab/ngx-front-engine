@@ -8,22 +8,22 @@ import { BannerCarouselService, BannerCarouselState, FeColorPalette } from '@pex
     }
 )
 export class BannerCarouselComponent implements OnInit, OnDestroy {
-    
+
     constructor( private bannerCarousel: BannerCarouselService, private ngZone: NgZone ) {
         this.initialBannerCarouselState();
     }
-    
+
     public bannerCarouselInterval?: number;
-    
+
     public ngOnInit(): void {
     }
-    
+
     public ngOnDestroy(): void {
         clearInterval( this.bannerCarouselInterval );
     }
-    
+
     public initialBannerCarouselState(): void {
-        
+
         this.bannerCarousel.rotate( 'rich-showcase', {
             heading   : 'Rich Animated Banner-Carousel',
             subheading: 'Great for advertising purposes',
@@ -33,7 +33,7 @@ export class BannerCarouselComponent implements OnInit, OnDestroy {
                 complimentaryImage: null
             }
         } );
-        
+
         this.bannerCarousel.rotate( 'reduced-showcase', {
             heading   : 'Reduced Banner-Carousel',
             subheading: 'Great for mobile usage like a title bar',
@@ -54,33 +54,33 @@ export class BannerCarouselComponent implements OnInit, OnDestroy {
             }
         } );
     }
-    
+
     public toggleRichShowcase(): void {
-        
+
         if ( this.bannerCarouselInterval ) {
             clearInterval( this.bannerCarouselInterval );
             this.bannerCarouselInterval = undefined;
             this.initialBannerCarouselState();
             return;
         }
-        
+
         let bannerCycleIndex = 0;
-        
+
         const cycleStates = () => {
-            
+
             this.bannerCarousel.rotate( 'rich-showcase', this.richBannerCycles[ bannerCycleIndex ] );
-            
+
             bannerCycleIndex++;
-            
+
             if ( bannerCycleIndex > ( this.richBannerCycles.length - 1 ) ) {
                 bannerCycleIndex = 0;
             }
         };
-        
+
         cycleStates();
         this.bannerCarouselInterval = setInterval( () => cycleStates(), 2500 * 2 );
     }
-    
+
     private richBannerCycles: BannerCarouselState[] = [
         {
             heading   : 'Turkish snacks',

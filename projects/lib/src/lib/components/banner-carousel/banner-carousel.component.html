@@ -21,7 +21,8 @@
 
             </div>
 
-            <div class="images" [@image]="image">
+            <div class="images"
+                 [@image]="{value: image[0] ?? 'initial', params: { translateYIn: (image[0])?.alignment === 'center' ? '-50' : '0', translateYOut: this.lastBannerImage ? this.lastBannerImage.alignment === 'center' ? '-50' : '0' : (image[0])?.alignment === 'center' ? '-50' : '0'} }">
                 <div class="image"
                      *ngFor="let p of image; trackBy:trackImage"
                      [style.height]="(150 * (p.scale || 1)) + 'px'"

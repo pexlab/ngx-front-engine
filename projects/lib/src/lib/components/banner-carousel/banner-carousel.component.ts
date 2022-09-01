@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit } from '@angular/core';
+import { AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit } from '@angular/core';
 import { ComponentTheme } from '../../interfaces/color.interface';
 import { FeComponent } from '../../utils/component.utils';
 import { PartialButtonTheme } from '../button/button.theme';
@@ -20,7 +20,7 @@ import { PartialBannerCarouselTheme } from './banner-carousel.theme';
         ]
     }
 )
-export class BannerCarouselComponent implements OnInit {
+export class BannerCarouselComponent implements OnInit, AfterViewChecked {
 
     constructor(
         public hostElement: ElementRef,
@@ -34,6 +34,8 @@ export class BannerCarouselComponent implements OnInit {
 
     private hasBeenInitialised = false;
     private currentInstanceName?: string;
+
+    public lastBannerImage?: BannerCarouselComplimentaryImage;
 
     private stopTrackingCurrentInstance?: () => void;
 
@@ -65,7 +67,7 @@ export class BannerCarouselComponent implements OnInit {
 
     /* Use an array with only one value to force angular to destroy and rebuild the element rather then patch the existing element.
      * This behavior is desired to make the in-out-animation work */
-    public get image(): BannerCarouselComplimentaryImage[] | null {
+    public get image(): BannerCarouselComplimentaryImage[] {
 
         if ( !this.feTheme || !this.feTheme.complimentaryImage ) {
             return [];
@@ -128,6 +130,10 @@ export class BannerCarouselComponent implements OnInit {
         }
     }
 
+    public ngAfterViewChecked(): void {
+        this.lastBannerImage = this.feTheme?.complimentaryImage ?? undefined;
+    }
+
     private trackInstance( instanceName: string ): void {
 
         try {
@@ -173,7 +179,7 @@ export class BannerCarouselComponent implements OnInit {
         }
     }
 
-    public trackImage(index: number, image: BannerCarouselComplimentaryImage) {
+    public trackImage( index: number, image: BannerCarouselComplimentaryImage ) {
         return image.url;
     }
 }
