@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Optional, Output, Self } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Optional, Output, Self, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { parsePath, roundCommands } from 'svg-round-corners';
 import { ComponentTheme } from '../../interfaces/color.interface';
@@ -43,6 +43,9 @@ export class CheckboxComponent implements OnInit, AfterViewInit, ControlValueAcc
     @Output()
     public feChange = new EventEmitter();
 
+    @ViewChild('wrapper')
+    public wrapperRef!: ElementRef<HTMLElement>;
+
     public isChecked     = false;
     public isInitialised = false;
     public isEnabled     = true;
@@ -77,6 +80,10 @@ export class CheckboxComponent implements OnInit, AfterViewInit, ControlValueAcc
 
         /* Path length has been calculated, it is now safe to show the checkmark */
         this.change.detectChanges();
+    }
+
+    public focusControl(): void {
+        this.wrapperRef.nativeElement.focus();
     }
 
     public onClick(): void {

@@ -14,6 +14,7 @@ export * from './lib/utils/time.utils';
 export * from './lib/utils/translation.utils';
 export * from './lib/utils/component.utils';
 
+export * from './lib/directives/fixes/form-fix.directive';
 export * from './lib/directives/tactile/tactile.directive';
 export * from './lib/directives/tactile/tactile.module';
 

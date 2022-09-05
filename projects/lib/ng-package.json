@@ -20,6 +20,7 @@
         "@fontsource/pangolin",
         "@fontsource/rajdhani",
         "@fontsource/syncopate",
+        "text-security",
         "fuse.js"
     ],
     "assets": [

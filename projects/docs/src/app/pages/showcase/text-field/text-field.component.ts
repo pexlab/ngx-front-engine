@@ -17,9 +17,15 @@ export class TextFieldComponent implements OnInit {
     public ngOnInit(): void {
         this.formGroup = this.fb.group(
             {
-                moving_placeholder       : null,
-                disappearing_placeholder : null,
-                custom_label             : null,
+
+                moving                   : null,
+                large                    : null,
+                changing                 : null,
+                disappearing             : null,
+                label_moving             : null,
+                label_disappearing       : null,
+                monospace                : null,
+                hidden                   : null,
                 disabled_with_placeholder: this.fb.control(
                     {
                         value   : null,
@@ -32,7 +38,27 @@ export class TextFieldComponent implements OnInit {
                         disabled: true
                     }
                 ),
-                area                     : null
+
+                single: null,
+                multi : null,
+
+                date           : null,
+                datetime       : null,
+                date_picker    : null,
+                datetime_picker: null,
+                time           : null,
+                month          : null,
+                week           : null,
+
+                email : null,
+                number: null,
+                search: null,
+                tel   : null,
+                url   : null,
+
+                username        : null,
+                current_password: null,
+                new_password    : null
             }
         );
     }

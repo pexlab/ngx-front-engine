@@ -256,6 +256,10 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
         this.disposeListeners.forEach( ( listener ) => listener() );
     }
 
+    public focusControl(): void {
+        this.placeholderPanelRef.nativeElement.focus();
+    }
+
     public toggleMenu(): void {
 
         this.dropdownVisible = !this.dropdownVisible;

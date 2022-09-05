@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostBinding, Input, OnInit, Optional, Output, Self } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostBinding, Input, OnInit, Optional, Output, Self, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { ComponentTheme } from '../../interfaces/color.interface';
 import { FeComponent } from '../../utils/component.utils';
@@ -51,6 +51,9 @@ export class StepperComponent implements OnInit, ControlValueAccessor {
     @Output()
     public feChange = new EventEmitter();
 
+    @ViewChild( 'top' )
+    public topRef!: ElementRef<HTMLElement>;
+
     /* To simplify the attribute usage */
     @HostBinding( 'class.stepper-inline' )
     private get isInline() {
@@ -70,6 +73,10 @@ export class StepperComponent implements OnInit, ControlValueAccessor {
         if ( this.value === undefined || this.value === null || isNaN( this.value ) ) {
             this.value = this.feMin;
         }
+    }
+
+    public focusControl(): void {
+        this.topRef.nativeElement.focus();
     }
 
     public getSuffix(): string {

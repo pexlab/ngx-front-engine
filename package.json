@@ -75,6 +75,7 @@
         "ngx-markdown": "^14.0.1",
         "rxjs": "~6.6.0",
         "svg-round-corners": "^0.3.0",
+        "text-security": "^3.2.1",
         "tslib": "^2.3.0",
         "wcag-contrast": "^3.0.0",
         "web-animations-js": "^2.3.2",

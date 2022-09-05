@@ -580,7 +580,9 @@ export class ThemeService {
                     divider          : this.commonTheme.palette.text.tertiary,
                     background       : FeColorPalette.Greyscale.Transparent,
                     staticPlaceholder: this.commonTheme.palette.text.tertiary,
-                    pinnedPlaceholder: this.commonTheme.palette.text.secondary
+                    pinnedPlaceholder: this.commonTheme.palette.text.secondary,
+                    icon             : this.commonTheme.palette.text.tertiary,
+                    iconBackground   : Color.fadeHex( this.commonTheme.palette.text.tertiary, .2 )
                 },
 
                 focused: {
@@ -589,7 +591,9 @@ export class ThemeService {
                     divider          : this.commonTheme.palette.text.primary,
                     background       : FeColorPalette.Greyscale.Transparent,
                     staticPlaceholder: this.commonTheme.palette.text.tertiary,
-                    pinnedPlaceholder: this.commonTheme.palette.text.primary
+                    pinnedPlaceholder: this.commonTheme.palette.text.primary,
+                    icon             : this.commonTheme.palette.text.secondary,
+                    iconBackground   : Color.fadeHex( this.commonTheme.palette.text.secondary, .2 )
                 },
 
                 disabled: {
@@ -598,7 +602,9 @@ export class ThemeService {
                     divider          : this.commonTheme.palette.text.tertiary,
                     background       : FeColorPalette.Greyscale.MistyMorning,
                     staticPlaceholder: this.commonTheme.palette.text.tertiary,
-                    pinnedPlaceholder: this.commonTheme.palette.text.secondary
+                    pinnedPlaceholder: this.commonTheme.palette.text.secondary,
+                    icon             : this.commonTheme.palette.text.tertiary,
+                    iconBackground   : Color.fadeHex( this.commonTheme.palette.text.tertiary, .2 )
                 },
 
                 invalid: {
@@ -607,7 +613,9 @@ export class ThemeService {
                     divider          : this.commonTheme.palette.accent.failure,
                     background       : Color.fadeHex( this.commonTheme.palette.accent.failure, .1 ),
                     staticPlaceholder: this.commonTheme.palette.text.failure,
-                    pinnedPlaceholder: this.commonTheme.palette.text.failure
+                    pinnedPlaceholder: this.commonTheme.palette.text.failure,
+                    icon             : this.commonTheme.palette.accent.failure,
+                    iconBackground   : Color.fadeHex( this.commonTheme.palette.accent.failure, .2 )
                 }
             }
         };

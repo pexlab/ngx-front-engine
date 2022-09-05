@@ -1,0 +1,29 @@
+@use '~dist/ngx-front-engine/assets/fe-styles/theme';
+
+:host {
+
+    & > form {
+
+        display        : grid;
+        grid-auto-flow : row;
+        grid-gap       : 60px;
+
+        & > div {
+
+            display        : grid;
+            grid-auto-flow : row;
+            grid-gap       : 20px;
+
+            & > div {
+                width          : 500px;
+                display        : grid;
+                grid-auto-flow : row;
+                grid-gap       : 1.2rem;
+            }
+
+            & > span {
+                @include theme.commonFont('heading');
+            }
+        }
+    }
+}

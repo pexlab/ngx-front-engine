@@ -1,19 +1,25 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { AngularSvgIconModule, SvgIconRegistryService } from 'angular-svg-icon';
+import { NativeElementInjectorDirective } from './directives/fixes/form-fix.directive';
 import { ThemeService } from './theme/theme.service';
 
 @NgModule(
     {
 
-        declarations: [],
+        declarations: [
+            NativeElementInjectorDirective
+        ],
 
         imports: [
             AngularSvgIconModule.forRoot()
         ],
 
-        exports: [],
+        exports: [
+            NativeElementInjectorDirective
+        ],
 
-        providers: []
+        providers: [
+        ]
     }
 )
 
@@ -42,6 +48,8 @@ export class FeModule {
         iconReg.loadSvg( 'assets/fe-icons/check.svg', 'fe-success' );
         iconReg.loadSvg( 'assets/fe-icons/delete.svg', 'fe-backspace' );
         iconReg.loadSvg( 'assets/fe-icons/drag-handle.svg', 'fe-drag-handle' );
+        iconReg.loadSvg( 'assets/fe-icons/eye.svg', 'fe-eye' );
+        iconReg.loadSvg( 'assets/fe-icons/eye-closed.svg', 'fe-eye-closed' );
         iconReg.loadSvg( 'assets/fe-icons/filter.svg', 'fe-filter' );
         iconReg.loadSvg( 'assets/fe-icons/info.svg', 'fe-generic' );
         iconReg.loadSvg( 'assets/fe-icons/info.svg', 'fe-info' );

@@ -8,7 +8,9 @@ export const ZTextFieldStateTheme        = z.object(
         divider          : ZHEXColor,
         background       : ZHEXColor,
         staticPlaceholder: ZHEXColor,
-        pinnedPlaceholder: ZHEXColor
+        pinnedPlaceholder: ZHEXColor,
+        icon             : ZHEXColor,
+        iconBackground   : ZHEXColor
     }
 );
 export const ZPartialTextFieldStateTheme = ZTextFieldStateTheme.partial();

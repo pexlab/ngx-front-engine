@@ -1,4 +1,5 @@
 @use '../../../../assets/fe-styles/theme' with ($scope: 'text-field');
+@use '../../../../assets/fe-styles/utils';
 
 $PADDING : 20px;
 
@@ -12,8 +13,8 @@ $PADDING : 20px;
 
     & > .input {
         & > input, & > textarea {
-            color       : theme.hex('#{$state}-text');
-            caret-color : theme.hex('#{$state}-text');
+            color                       : theme.hex('#{$state}-text');
+            caret-color                 : theme.hex('#{$state}-text');
             -webkit-tap-highlight-color : transparent;
         }
     }
@@ -33,6 +34,20 @@ $PADDING : 20px;
     & > .divider {
         background-color : theme.hex('#{$state}-divider');
     }
+
+    & > .icons {
+
+        color : theme.hex('#{$state}-icon');
+
+        & > .button {
+
+            color : theme.hex('#{$state}-icon');
+
+            & > .background {
+                background-color : theme.hex('#{$state}-icon-background');
+            }
+        }
+    }
 }
 
 :host {
@@ -45,7 +60,7 @@ $PADDING : 20px;
 
     @include theme.commonFont('body');
 
-    & > .measurement, & > .field > .label {
+    & > div.measurement, & > .field > .label {
 
         width          : fit-content;
 
@@ -61,7 +76,7 @@ $PADDING : 20px;
         @include theme.inlineDeepIcon(20px);
     }
 
-    & > .measurement {
+    & > div.measurement {
 
         position       : absolute;
         top            : 0;
@@ -105,7 +120,7 @@ $PADDING : 20px;
             & > .input {
 
                 & > span.placeholder {
-                    transition : color .25s ease, left .25s ease, top .25s ease;
+                    transition : color .25s ease, left .25s ease, top .25s ease, opacity .25s ease;
                 }
 
                 & > input, & > textarea {
@@ -200,6 +215,8 @@ $PADDING : 20px;
 
         border-radius  : 11px;
 
+        isolation      : isolate;
+
         &.isArea {
             height : 100%;
         }
@@ -252,18 +269,92 @@ $PADDING : 20px;
             height : calc(100% - (2 * #{$PADDING}));
         }
 
-        @include theme.inlineIcon(1rem);
+        & > .icons {
 
-        & > svg-icon {
+            z-index        : 1;
 
-            position  : absolute;
+            position       : absolute;
 
-            top       : 50%;
-            right     : $PADDING;
+            top            : 50%;
+            right          : $PADDING;
 
-            color     : theme.hex('disabled-static-placeholder');
+            transform      : translateY(-50%);
 
-            transform : translateY(-50%);
+            display        : grid;
+            grid-auto-flow : row;
+            grid-gap       : .5rem;
+
+            @include theme.inlineIcon(1rem);
+
+            & > svg-icon {
+                transition : color .25s ease;
+            }
+
+            & > .button {
+
+                z-index : 1;
+
+                @include utils.hover {
+
+                    color : theme.hex('focused-icon');
+
+                    & > .background {
+                        opacity          : 1;
+                        transform        : translateY(-50%) translateX(-50%) scale(1);
+                        background-color : theme.hex('focused-icon-background');
+                    }
+
+                    & > svg-icon {
+                        color : var(--icon-hover-color);
+                    }
+                }
+
+                & > .background {
+
+                    position                    : absolute;
+
+                    left                        : 50%;
+                    top                         : 50%;
+
+                    width                       : 2.5rem;
+                    height                      : 2.5rem;
+
+                    cursor                      : pointer;
+
+                    border-radius               : 40px;
+
+                    opacity                     : 0;
+                    transform                   : translateY(-50%) translateX(-50%) scale(0.75);
+
+                    transition                  : opacity .25s ease, transform .25s ease, background-color .25s ease;
+
+                    -webkit-tap-highlight-color : transparent;
+
+                    &:focus {
+                        outline : none;
+                    }
+                }
+
+                & > svg-icon {
+
+                    position       : relative;
+
+                    width          : 1rem;
+                    height         : 1rem;
+
+                    display        : grid;
+                    place-items    : center;
+
+                    pointer-events : none;
+
+                    transition     : color .25s ease;
+
+                    & > svg {
+                        width  : 1rem;
+                        height : 1rem;
+                    }
+                }
+            }
         }
 
         & > .input {
@@ -286,24 +377,30 @@ $PADDING : 20px;
                 position       : absolute;
 
                 left           : var(--placeholder-x);
+                right          : $PADDING + 10px;
                 top            : var(--placeholder-y);
-
-                padding-right  : $PADDING;
 
                 user-select    : none;
                 pointer-events : none;
+
+                opacity        : 1;
+
+                overflow       : hidden;
+                text-overflow  : ellipsis;
 
                 &.hidden {
                     opacity : 0;
                 }
             }
 
-            &.disabled {
+            &.iconPadding {
 
                 padding-right : calc(($PADDING * 2) + 1rem);
 
                 & > span.placeholder {
-                    padding-right : calc(($PADDING * 2) + 1rem);
+                    &.unpinned {
+                        right : calc(($PADDING * 2) + 1rem);
+                    }
                 }
             }
 
@@ -318,6 +415,8 @@ $PADDING : 20px;
                 margin     : 0;
                 padding    : 0;
 
+                text-align : left;
+
                 @include theme.commonFont('body');
 
                 background : transparent;
@@ -325,14 +424,77 @@ $PADDING : 20px;
                 &:-webkit-autofill {
                     -webkit-background-clip : text;
                 }
+
+                &.monospace {
+                    @include theme.commonFont('code');
+                    letter-spacing : .05rem;
+                }
+            }
+
+            & > label {
+                position       : fixed;
+                top            : 0;
+                left           : 0;
+                pointer-events : none;
+                visibility     : hidden;
+                opacity        : 0;
+                user-select    : none;
+            }
+
+            & > input {
+                &::-webkit-outer-spin-button,
+                &::-webkit-inner-spin-button {
+                    -webkit-appearance : none;
+                    margin             : 0;
+                }
             }
 
             & > textarea {
                 resize : none;
+                @include theme.scrollbar(theme.hex('idle-border'), theme.hex('idle-border'), transparent, 'none', 0.5rem, 0.25rem);
             }
 
-            & > input[type='date']::-webkit-calendar-picker-indicator {
-                display : none;
+            & > input[type='number'] {
+                -moz-appearance : textfield;
+            }
+
+            & > input[type='search'] {
+                &::-webkit-search-decoration,
+                &::-webkit-search-cancel-button,
+                &::-webkit-search-results-button,
+                &::-webkit-search-results-decoration {
+                    display : none;
+                }
+            }
+
+            & > input[type='date'], & > input[type='datetime-local'], & > input[type='month'], & > input[type='time'], & > input[type='week'] {
+
+                pointer-events : visible;
+                opacity        : 1;
+
+                transition     : opacity .25s ease;
+
+                &::-webkit-calendar-picker-indicator {
+                    display : none;
+                }
+
+                &::-webkit-date-and-time-value {
+                    text-align : left;
+                }
+            }
+
+            &.hidden {
+                & > input[type='date'], & > input[type='datetime-local'], & > input[type='month'], & > input[type='time'], & > input[type='week'] {
+                    pointer-events : none;
+                    opacity        : 0;
+                }
+            }
+
+            &.conceal {
+                & > input, & > textarea {
+                    letter-spacing : 0.07em;
+                    font-family    : text-security-disc, sans-serif;
+                }
             }
         }
     }

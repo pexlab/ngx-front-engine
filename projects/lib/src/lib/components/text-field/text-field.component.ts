@@ -19,11 +19,12 @@ import {
     ViewChild,
     ViewChildren
 } from '@angular/core';
-import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { ControlValueAccessor, FormControl, FormGroup, NgControl } from '@angular/forms';
 import { nanoid } from 'nanoid';
 import { parsePath, roundCommands } from 'svg-round-corners';
 import { ComponentTheme } from '../../interfaces/color.interface';
 import { AsynchronouslyInitialisedComponent, FeComponent } from '../../utils/component.utils';
+import { elementWidthWithoutPadding } from '../../utils/element.utils';
 import { LabelAlignerService } from './label-aligner.service';
 import { PartialTextFieldTheme } from './text-field.theme';
 
@@ -71,6 +72,9 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
     @ViewChild( 'placeholder' )
     private placeholderRef!: ElementRef<HTMLSpanElement>;
 
+    @ViewChild( 'placeholderMeasurement' )
+    private placeholderMeasurementRef!: ElementRef<HTMLSpanElement>;
+
     @ViewChild( 'idleBorder' )
     private idleBorderRef!: ElementRef<HTMLElement>;
 
@@ -100,32 +104,97 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
 
             /* Add listeners that are not supposed to trigger outside view checks */
             this.disposeListeners.push(
+                /*
+                 * To check if user clicked outside the field to blur it */
+                this.renderer.listen( this.hostElement.nativeElement, 'pointerdown', () => {
+                    this.discardNextUp = true;
+                } ),
+                this.renderer.listen( this.hostElement.nativeElement, 'pointerup', () => {
+                    this.localMouseUp = true;
+                } ),
+                this.renderer.listen( document.documentElement, 'pointerup', () => {
+
+                    if ( !this.localMouseUp && !this.discardNextUp && this.isFocused ) {
+                        this.inputRef?.blur();
+                    }
+
+                    this.discardNextUp = false;
+                    this.localMouseUp  = false;
+                } ),
+
+                /* Enter action */
+                this.renderer.listen( this.inputRef, 'keydown', ( event: KeyboardEvent ) => {
+
+                    if ( event.key === 'Enter' ) {
+
+                        if ( this.feType === 'multi' ) {
+                            return;
+                        }
+
+                        if ( this.feEnterAction === 'next' ) {
+
+                            event.preventDefault();
+                            event.stopPropagation();
+
+                            const ownKey = this.ngControl.name;
+                            const parent = this.ngControl.control?.parent;
+
+                            if ( ownKey && parent instanceof FormGroup ) {
+
+                                const index = Object.keys( parent.controls ).indexOf( String( ownKey ) );
+
+                                if ( isNaN( index ) ) {
+                                    return;
+                                }
+
+                                const nextControl = parent.controls[ Object.keys( parent.controls )[ ( index + 1 ) > Object.keys( parent.controls ).length - 1 ? 0 : index + 1 ] ] as any;
+
+                                if ( nextControl?.component?.focusControl ) {
+                                    nextControl.component.focusControl();
+                                } else if ( nextControl?.component?.inputRef?.focus ) {
+                                    nextControl.component.inputRef.focus();
+                                } else if ( nextControl?.component?.inputRef?.nativeElement?.focus ) {
+                                    nextControl.component.inputRef.nativeElement.focus();
+                                }
+                            }
+
+                        } else if ( typeof this.feEnterAction === 'function' ) {
+
+                            event.preventDefault();
+                            event.stopPropagation();
+
+                            this.ngZone.run( () => {
+                                if ( typeof this.feEnterAction === 'function' ) {
+                                    this.feEnterAction();
+                                }
+                            } );
+                        }
+                    }
+                } ),
+
                 /* For mouse only (don't wait for mouse button to go up again) */
                 this.renderer.listen(
                     this.fieldRef.nativeElement,
                     'mousedown',
-                    ( event: MouseEvent ) => this.focusField( event, 'down' )
+                    ( event: MouseEvent ) => this.focus( event, 'down' )
                 ),
 
                 /* For non-mouse devices */
                 this.renderer.listen(
                     this.fieldRef.nativeElement,
                     'click',
-                    ( event: MouseEvent ) => this.focusField( event, 'click' )
+                    ( event: MouseEvent ) => this.focus( event, 'click' )
                 ),
-
                 this.renderer.listen(
                     this.inputRef,
                     'input',
                     () => this.onInput( ref.first.nativeElement.value )
                 ),
-
                 this.renderer.listen(
                     ref.first.nativeElement,
                     'focusin',
                     () => this.onFocusIn()
                 ),
-
                 this.renderer.listen(
                     ref.first.nativeElement,
                     'focusout',
@@ -135,7 +204,12 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         } );
     }
 
-    private inputRef?: HTMLInputElement | HTMLTextAreaElement;
+    private discardNextUp = false;
+    private localMouseUp  = false;
+
+    public inputRef?: HTMLInputElement | HTMLTextAreaElement;
+
+    public formControlRef!: FormControl;
 
     @ContentChild( TemplateRef )
     public template!: TemplateRef<ElementRef>;
@@ -146,10 +220,29 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
     public feTheme!: ComponentTheme<PartialTextFieldTheme>;
 
     @Input()
-    public feType: 'single' | 'multi' | 'password' | 'date' = 'single';
+    public feType: 'single'
+                   | 'multi'
+                   | 'date'
+                   | 'datetime'
+                   | 'date-picker'
+                   | 'datetime-picker'
+                   | 'time'
+                   | 'month'
+                   | 'week'
+                   | 'email'
+                   | 'number'
+                   | 'search'
+                   | 'tel'
+                   | 'url'
+                   | 'username'
+                   | 'new-password'
+                   | 'current-password' = 'single';
 
     @Input()
-    public fePlaceholder = '';
+    public fePlaceholder: string | [ string, string ] = '';
+
+    @Input()
+    public feLabel?: string;
 
     @Input()
     public fePrefill?: string;
@@ -162,6 +255,18 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
 
     @Input()
     public feSpellcheck = false;
+
+    @Input()
+    public feInputMode?: 'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url';
+
+    @Input()
+    public feConceal?: boolean;
+
+    @Input()
+    public feMonospace?: boolean;
+
+    @Input()
+    public feEnterAction: 'next' | ( () => void ) | 'none' = 'next';
 
     @Input()
     public set feAlignGroup( value: string | undefined ) {
@@ -200,6 +305,8 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         this.hostElement.nativeElement.style.setProperty( '--label-width', value );
     }
 
+    public fieldId = nanoid();
+
     public idleBorderPath!: string;
     public focusedBorderPath!: string;
 
@@ -213,9 +320,10 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
 
     private viewInit = false;
 
-    private isFocused           = false;
-    public isDisabled           = false;
-    private isPlaceholderPinned = false;
+    public isFocused           = false;
+    public isDisabled          = false;
+    public isConcealed         = true;
+    public isPlaceholderPinned = false;
 
     private disposeListeners: ( () => void )[] = [];
 
@@ -237,14 +345,87 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         return this.feStatic;
     }
 
+    public get displayPlaceholder(): string {
+        if ( typeof this.fePlaceholder === 'string' ) {
+            return this.fePlaceholder;
+        } else {
+            return this.isPlaceholderPinned ? this.fePlaceholder[ 1 ] : this.fePlaceholder[ 0 ];
+        }
+    }
+
+    public get measurePlaceholder(): string {
+        if ( typeof this.fePlaceholder === 'string' ) {
+            return this.fePlaceholder;
+        } else {
+            return this.fePlaceholder[ 1 ];
+        }
+    }
+
+    public get nativeType(): string {
+        switch ( this.feType ) {
+
+            case 'single':
+            case 'multi':
+            case 'username':
+                return 'text';
+
+            case 'new-password':
+            case 'current-password':
+                return 'password';
+
+            case 'date':
+            case 'date-picker':
+                return 'date';
+
+            case 'datetime':
+            case 'datetime-picker':
+                return 'datetime-local';
+
+            default:
+                return this.feType;
+        }
+    }
+
+    public get nativeInputMode(): string {
+
+        if ( this.feInputMode ) {
+            return this.feInputMode;
+        }
+
+        switch ( this.feType ) {
+
+            case 'username':
+            case 'email':
+                return 'email';
+
+            case 'number':
+                return 'numeric';
+
+            case 'tel':
+                return 'tel';
+
+            case 'url':
+                return 'url';
+
+            case 'search':
+                return 'search';
+
+            default:
+                return 'text';
+        }
+    }
+
     private mainResizeObserver!: ResizeObserver;
     private labelResizeObserver!: ResizeObserver;
 
     public ngOnInit(): void {
 
         this.mainResizeObserver = new ResizeObserver( () => {
-            this.considerBorderPath();
-            this.change.detectChanges();
+            setTimeout( () => {
+                this.considerBorderPath();
+                this.considerPlaceholder();
+                this.change.detectChanges();
+            } );
         } );
 
         this.labelResizeObserver = new ResizeObserver( () => {
@@ -266,8 +447,6 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         this.labelResizeObserver.observe( this.measurementRef.nativeElement );
 
         /* Initialise style */
-        this.unpinPlaceholder(); /* CSS assumes initial static position as well! */
-
         this.applyClasses( true );
 
         this.componentLoaded();
@@ -323,6 +502,30 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         if ( this.isDisabled ) {
             this.renderer.addClass( this.fieldRef.nativeElement, 'disabled' );
         }
+
+        if ( this.placeholderRef ) {
+            if (
+                (
+                    this.isStatic &&
+                    this.value.length > 0
+                ) ||
+                (
+                    this.isStatic &&
+                    this.isFocused &&
+                    (
+                        this.nativeType === 'date' ||
+                        this.nativeType === 'datetime-local' ||
+                        this.nativeType === 'time' ||
+                        this.nativeType === 'month' ||
+                        this.nativeType === 'week'
+                    )
+                )
+            ) {
+                this.renderer.addClass( this.placeholderRef.nativeElement, 'hidden' );
+            } else {
+                this.renderer.removeClass( this.placeholderRef.nativeElement, 'hidden' );
+            }
+        }
     }
 
     /* Events */
@@ -340,13 +543,17 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
 
         this.isFocused = true;
 
-        this.pinPlaceholder();
+        this.considerPlaceholder();
         this.considerBorderPath();
         this.applyClasses( false );
 
+        if ( ( this.feType === 'date-picker' || this.feType === 'datetime-picker' ) && 'showPicker' in HTMLInputElement.prototype ) {
+            ( this.inputRef as any ).showPicker();
+        }
+
         this.change.detectChanges();
 
-        if(this.isDisabled) {
+        if ( this.isDisabled ) {
 
             /* Select text */
             this.inputRef.select();
@@ -366,14 +573,8 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
 
         this.isFocused = false;
 
-        if ( this.value.length > 0 ) {
-            this.pinPlaceholder();
-        } else {
-            this.unpinPlaceholder();
-        }
-
+        this.considerPlaceholder();
         this.considerBorderPath();
-
         this.applyClasses( false );
 
         this.change.detectChanges();
@@ -392,15 +593,11 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
             return;
         }
 
-        if ( this.placeholderRef ) {
-            if ( value.length > 0 && this.isStatic ) {
-                this.renderer.addClass( this.placeholderRef.nativeElement, 'hidden' );
-            } else {
-                this.renderer.removeClass( this.placeholderRef.nativeElement, 'hidden' );
-            }
-        }
-
         this.initialisationValue = value;
+
+        this.considerPlaceholder();
+        this.considerBorderPath();
+        this.applyClasses( false );
 
         /* Announce input changes */
         this.ngZone.run( () => {
@@ -417,7 +614,11 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
 
     /* Action functions */
 
-    private focusField( event: MouseEvent, type: 'down' | 'click' ): void {
+    private focus( event: MouseEvent, type: 'down' | 'click' ): void {
+
+        if ( type === 'click' && !event.isTrusted ) {
+            return;
+        }
 
         /* Note: As the focusing will later on dispatch the focusIn event, changeDetection is not needed here */
 
@@ -456,17 +657,61 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         }
     }
 
+    private considerPlaceholder(): void {
+
+        if ( !this.placeholderRef || this.isStatic ) {
+            this.unpinPlaceholder();
+            return;
+        }
+
+        if ( this.value.length > 0 ) {
+            this.pinPlaceholder();
+            return;
+        }
+
+        if ( this.isFocused && !this.isDisabled ) {
+            this.pinPlaceholder();
+            return;
+        }
+
+        this.unpinPlaceholder();
+    }
+
+    private considerBorderPath(): void {
+
+        if ( !this.placeholderRef || this.isStatic ) {
+            this.idleBorderPath    = this.generateBorderPath( true );
+            this.focusedBorderPath = this.generateBorderPath( true );
+            return;
+        }
+
+        if ( this.value.length > 0 ) {
+            this.idleBorderPath    = this.generateBorderPath( false );
+            this.focusedBorderPath = this.generateBorderPath( false );
+            return;
+        }
+
+        if ( !this.isDisabled ) {
+            this.idleBorderPath    = this.generateBorderPath( true );
+            this.focusedBorderPath = this.generateBorderPath( false );
+            return;
+        }
+
+        this.idleBorderPath    = this.generateBorderPath( true );
+        this.focusedBorderPath = this.generateBorderPath( true );
+    }
+
     private pinPlaceholder(): void {
 
         this.isPlaceholderPinned = true;
 
-        if ( !this.isStatic && !this.isDisabled ) {
+        if ( !this.isStatic && ( !this.isDisabled || this.value.length > 0 ) ) {
 
-            if ( this.placeholderRef ) {
+            if ( this.placeholderRef && this.placeholderMeasurementRef ) {
 
                 const offsetX = ( this.inputContainerRef.nativeElement.offsetLeft - 20 - 10 ) * ( -1 );
                 const offsetY = ( (
-                    this.placeholderRef.nativeElement.getBoundingClientRect().height / 2
+                    this.placeholderMeasurementRef.nativeElement.getBoundingClientRect().height / 2
                 ) + 1 ) * ( -1 );
 
                 this.placeholderRef.nativeElement.style.setProperty( '--placeholder-x', offsetX + 'px' );
@@ -481,48 +726,37 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
 
         if ( this.placeholderRef ) {
 
+            const fieldCenter = ( this.fieldRef.nativeElement.getBoundingClientRect().height / 2 ) - ( this.placeholderRef.nativeElement.getBoundingClientRect().height / 2 );
             const paddingTop  = window.getComputedStyle( this.inputContainerRef.nativeElement, null ).paddingTop;
             const paddingLeft = window.getComputedStyle( this.inputContainerRef.nativeElement, null ).paddingLeft;
 
             /* Leave some space (2px) for the text-caret. Otherwise, the placeholder will be directly on top of the caret */
             this.placeholderRef.nativeElement.style.setProperty( '--placeholder-x', 'calc(' + paddingLeft + ' + 2px)' );
-            this.placeholderRef.nativeElement.style.setProperty( '--placeholder-y', paddingTop );
-        }
-    }
-
-    private considerBorderPath(): void {
-
-        if ( !this.isStatic && !this.isDisabled && this.placeholderRef ) {
-
-            this.idleBorderPath    = this.generateBorderPath( this.value.length === 0 );
-            this.focusedBorderPath = this.generateBorderPath( false );
-
-        } else {
-
-            this.idleBorderPath    = this.generateBorderPath( true );
-            this.focusedBorderPath = this.generateBorderPath( true );
+            this.placeholderRef.nativeElement.style.setProperty( '--placeholder-y', ( this.feType === 'multi' ? paddingTop : fieldCenter + 'px' ) );
         }
     }
 
     private generateBorderPath( closed: boolean ): string {
+
+        if ( !this.hostElement?.nativeElement?.clientWidth ) {
+            return '';
+        }
 
         const strokeWidth = 2;
         const m           = strokeWidth / 2;
 
         let placeholderWidth = 0;
 
-        if ( this.placeholderRef ) {
-
-            placeholderWidth = this.placeholderRef.nativeElement.getBoundingClientRect().width;
-
-            /* Subtract the padding needed for correct line-breaking when inside the input */
-            placeholderWidth -= 20;
+        if ( !this.isStatic && this.placeholderMeasurementRef ) {
+            placeholderWidth = elementWidthWithoutPadding( this.placeholderMeasurementRef.nativeElement );
         }
 
         const gapStart = 20;
-        const gapEnd   = gapStart + placeholderWidth - m + (
-            10 * 2
-        );
+        const gapEnd   = placeholderWidth > ( this.hostElement.nativeElement.clientWidth - gapStart - ( 10 * 2 ) ) ?
+                         this.hostElement.nativeElement.clientWidth - gapStart :
+                         gapStart + placeholderWidth - m + (
+                                 10 * 2
+                             );
 
         const w = this.hostElement.nativeElement.clientWidth - ( strokeWidth / 2 );
         const h = this.hostElement.nativeElement.clientHeight - ( strokeWidth ) + 0.5;

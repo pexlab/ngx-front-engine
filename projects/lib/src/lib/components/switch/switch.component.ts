@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Optional, Output, Self } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Optional, Output, Self, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { ComponentTheme } from '../../interfaces/color.interface';
 import { FeComponent } from '../../utils/component.utils';
@@ -51,6 +51,9 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
     @Output()
     public feChange = new EventEmitter();
 
+    @ViewChild('switch')
+    public switchRef!: ElementRef<HTMLElement>;
+
     /* Form API */
     private formInputEvent?: ( value: string | boolean ) => void;
     private formBlurEvent?: () => void;
@@ -62,6 +65,10 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
         if ( ( this.feIconLeft || this.feIconRight ) && this.feAppearance !== 'traditional' ) {
             throw new Error( 'Icons are only available on the traditional appearance' );
         }
+    }
+
+    public focusControl(): void {
+        this.switchRef.nativeElement.focus();
     }
 
     public toggle( position?: 0 | 1 ): void {

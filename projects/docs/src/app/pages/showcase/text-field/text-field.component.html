@@ -1,48 +1,264 @@
 <form [formGroup]="formGroup">
-    <div class="container">
 
-        <fe-text-field fePlaceholder="Moving placeholder"
-                       formControlName="moving_placeholder">
-        </fe-text-field>
+    <div>
 
-        <fe-text-field fePlaceholder="Disappearing placeholder"
-                       feStatic
-                       formControlName="disappearing_placeholder">
-        </fe-text-field>
+        <span>Option Showcase</span>
 
-        <fe-text-field fePlaceholder="Custom label"
-                       formControlName="custom_label">
-            <ng-template>
-                <svg-icon name="text"></svg-icon>
-            </ng-template>
-        </fe-text-field>
+        <div>
 
-        <fe-text-field
-            fePlaceholder="This is a more spacious text-area. You can write something fairly elaborate here!"
-            feStatic
-            feType="multi"
-            feAlignGroup="text-field-showcase"
-            formControlName="area"
-            [style.height]="'150px'">
-            <ng-template>
-                <svg-icon name="text"></svg-icon>
-            </ng-template>
-        </fe-text-field>
+            <fe-text-field feLabel="Field with moving placeholder"
+                           fePlaceholder="Moving placeholder"
+                           formControlName="moving">
+            </fe-text-field>
 
-        <fe-text-field feAlignGroup="text-field-showcase"
-                       fePlaceholder="You can't type anything here"
-                       formControlName="disabled_with_placeholder">
-            <ng-template>
-                <svg-icon name="text"></svg-icon>
-            </ng-template>
-        </fe-text-field>
+            <fe-text-field feLabel="Field with moving placeholder but far to large to display"
+                           fePlaceholder="Moving placeholder - but far to large - Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut "
+                           formControlName="large">
+            </fe-text-field>
 
-        <fe-text-field feAlignGroup="text-field-showcase"
-                       formControlName="disabled_with_prefill">
-            <ng-template>
-                <svg-icon name="text"></svg-icon>
-            </ng-template>
-        </fe-text-field>
+            <fe-text-field feLabel="Field with moving placeholder that changes on focus"
+                           [fePlaceholder]="['Moving placeholder, that changes on focus', 'To something entirely different']"
+                           formControlName="changing">
+            </fe-text-field>
 
+            <fe-text-field feLabel="Field with disappearing placeholder on input"
+                           fePlaceholder="Disappearing placeholder"
+                           feStatic
+                           formControlName="disappearing">
+            </fe-text-field>
+
+            <fe-text-field feLabel="Field with a custom label and a moving placeholder"
+                           fePlaceholder="Custom label with moving placeholder"
+                           feAlignGroup="options"
+                           formControlName="label_moving">
+                <ng-template>
+                    <svg-icon name="text"></svg-icon>
+                </ng-template>
+            </fe-text-field>
+
+            <fe-text-field feLabel="Field with a custom label and a disappearing placeholder on input"
+                           fePlaceholder="Custom label with disappearing placeholder"
+                           feStatic
+                           feAlignGroup="options"
+                           formControlName="label_disappearing">
+                <ng-template>
+                    <svg-icon name="text"></svg-icon>
+                </ng-template>
+            </fe-text-field>
+
+            <fe-text-field feLabel="Field with a monospace font"
+                           fePlaceholder="Monospaced font when typing"
+                           [feMonospace]="true"
+                           feAlignGroup="options"
+                           formControlName="monospace">
+                <ng-template>
+                    <svg-icon name="text"></svg-icon>
+                </ng-template>
+            </fe-text-field>
+
+            <fe-text-field feLabel="Field where you can't see the input by default"
+                           fePlaceholder="Anything you type here will be hidden by default"
+                           [feConceal]="true"
+                           feAlignGroup="options"
+                           formControlName="hidden">
+                <ng-template>
+                    <svg-icon name="text"></svg-icon>
+                </ng-template>
+            </fe-text-field>
+
+            <fe-text-field feLabel="Field where you can't type"
+                           fePlaceholder="You can't type anything here"
+                           feAlignGroup="options"
+                           formControlName="disabled_with_placeholder">
+                <ng-template>
+                    <svg-icon name="text"></svg-icon>
+                </ng-template>
+            </fe-text-field>
+
+            <fe-text-field feLabel="Field where you can't change its content"
+                           feAlignGroup="text-field-showcase"
+                           formControlName="disabled_with_prefill">
+                <ng-template>
+                    <svg-icon name="text"></svg-icon>
+                </ng-template>
+            </fe-text-field>
+
+        </div>
+
+    </div>
+
+    <div>
+
+        <span>Type Showcase</span>
+
+        <div>
+
+            <fe-text-field feLabel="Input Type: Single"
+                           [fePlaceholder]="['Single - The default', 'Single']"
+                           feAlignGroup="types"
+                           formControlName="single">
+                <ng-template>
+                    <svg-icon name="text"></svg-icon>
+                </ng-template>
+            </fe-text-field>
+
+            <fe-text-field feLabel="Input Type: Multi"
+                           fePlaceholder="Multi - A more spacious text-area. You can write something fairly elaborate here!"
+                           feStatic
+                           feType="multi"
+                           feAlignGroup="types"
+                           formControlName="multi"
+                           [style.height]="'150px'">
+                <ng-template>
+                    <svg-icon name="text"></svg-icon>
+                </ng-template>
+            </fe-text-field>
+
+            <fe-text-field feLabel="Input Type: Date"
+                           feType="date"
+                           fePlaceholder="Date"
+                           formControlName="date">
+                <ng-template>
+                    <svg-icon name="calendar-event"></svg-icon>
+                </ng-template>
+            </fe-text-field>
+
+            <fe-text-field feLabel="Input Type: Datetime"
+                           feType="datetime"
+                           fePlaceholder="Date with Time"
+                           formControlName="datetime">
+                <ng-template>
+                    <svg-icon name="calendar-time"></svg-icon>
+                </ng-template>
+            </fe-text-field>
+
+            <fe-text-field feLabel="Input Type: Date-Picker"
+                           feType="date-picker"
+                           fePlaceholder="Date with Picker"
+                           formControlName="date_picker">
+                <ng-template>
+                    <svg-icon name="calendar-event"></svg-icon>
+                </ng-template>
+            </fe-text-field>
+
+            <fe-text-field feLabel="Input Type: Datetime-Picker"
+                           feType="datetime-picker"
+                           fePlaceholder="Date with Time and Picker"
+                           formControlName="datetime_picker">
+                <ng-template>
+                    <svg-icon name="calendar-time"></svg-icon>
+                </ng-template>
+            </fe-text-field>
+
+            <fe-text-field feLabel="Input Type: Time"
+                           feType="time"
+                           fePlaceholder="Time"
+                           feAlignGroup="types"
+                           formControlName="time">
+                <ng-template>
+                    <svg-icon name="clock"></svg-icon>
+                </ng-template>
+            </fe-text-field>
+
+            <fe-text-field feLabel="Input Type: Month"
+                           feType="month"
+                           fePlaceholder="Month"
+                           feAlignGroup="types"
+                           formControlName="month">
+                <ng-template>
+                    <svg-icon name="calendar"></svg-icon>
+                </ng-template>
+            </fe-text-field>
+
+            <fe-text-field feLabel="Input Type: Week"
+                           feType="week"
+                           fePlaceholder="Week"
+                           feAlignGroup="types"
+                           formControlName="week">
+                <ng-template>
+                    <svg-icon name="calendar"></svg-icon>
+                </ng-template>
+            </fe-text-field>
+
+            <fe-text-field feLabel="Input Type: E-Mail"
+                           feType="email"
+                           fePlaceholder="E-Mail Address"
+                           feAlignGroup="types"
+                           formControlName="email">
+                <ng-template>
+                    <svg-icon name="email"></svg-icon>
+                </ng-template>
+            </fe-text-field>
+
+            <fe-text-field feLabel="Input Type: Number"
+                           feType="number"
+                           feInputMode="decimal"
+                           fePlaceholder="Number"
+                           feAlignGroup="types"
+                           formControlName="number">
+                <ng-template>
+                    <svg-icon name="dialpad"></svg-icon>
+                </ng-template>
+            </fe-text-field>
+
+            <fe-text-field feLabel="Input Type: Search"
+                           feType="search"
+                           fePlaceholder="Search"
+                           feAlignGroup="types"
+                           formControlName="search">
+                <ng-template>
+                    <svg-icon name="search"></svg-icon>
+                </ng-template>
+            </fe-text-field>
+
+            <fe-text-field feLabel="Input Type: Tel"
+                           feType="tel"
+                           fePlaceholder="Telephone"
+                           feAlignGroup="types"
+                           formControlName="tel">
+                <ng-template>
+                    <svg-icon name="phone"></svg-icon>
+                </ng-template>
+            </fe-text-field>
+
+            <fe-text-field feLabel="Input Type: URL"
+                           feType="url"
+                           fePlaceholder="URL"
+                           feAlignGroup="types"
+                           formControlName="url">
+                <ng-template>
+                    <svg-icon name="link"></svg-icon>
+                </ng-template>
+            </fe-text-field>
+
+            <fe-text-field feLabel="Input Type: Username"
+                           fePlaceholder="Username"
+                           feType="username"
+                           feKey="email"
+                           formControlName="username">
+                <ng-template>
+                    <svg-icon name="user"></svg-icon>
+                </ng-template>
+            </fe-text-field>
+
+            <fe-text-field feLabel="Input Type: Current Password"
+                           feType="current-password"
+                           fePlaceholder="Current Password"
+                           formControlName="current_password">
+                <ng-template>
+                    <svg-icon name="lock"></svg-icon>
+                </ng-template>
+            </fe-text-field>
+
+            <fe-text-field feLabel="Input Type: New Password"
+                           feType="new-password"
+                           fePlaceholder="New Password"
+                           formControlName="new_password">
+                <ng-template>
+                    <svg-icon name="lock"></svg-icon>
+                </ng-template>
+            </fe-text-field>
+
+        </div>
     </div>
 </form>

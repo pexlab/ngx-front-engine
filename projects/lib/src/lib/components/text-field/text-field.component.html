@@ -18,26 +18,68 @@
 
     <div class="divider" *ngIf="template"></div>
 
-    <svg-icon *ngIf="isDisabled" name="fe-lock"></svg-icon>
+    <div class="input"
+         #inputContainer
+         [class.iconPadding]="isDisabled || (nativeType === 'search' && value.length > 0) || feConceal || nativeType === 'password'"
+         [class.hidden]="!isFocused && value.length === 0"
+         [class.conceal]="isConcealed && (feConceal || nativeType === 'password')">
 
-    <div class="input" #inputContainer [class.disabled]="isDisabled">
-
-        <span class="placeholder" *ngIf="fePlaceholder" #placeholder>{{ fePlaceholder }}</span>
+        <span class="placeholder"
+              *ngIf="fePlaceholder"
+              #placeholder
+              [class.unpinned]="!isPlaceholderPinned"
+              [style.white-space]="feType === 'multi' && !isPlaceholderPinned ? 'pre-wrap' : 'nowrap'">{{ displayPlaceholder }}</span>
 
         <input #textInput
-               *ngIf="feType === 'single' || feType === 'password' || feType === 'date'"
-               [name]="feKey"
-               [type]="feType"
+               *ngIf="feType !== 'multi'"
+               [id]="feKey ?? fieldId"
+               [type]="isConcealed ? nativeType : 'text'"
+               [attr.name]="feKey"
                [spellcheck]="feSpellcheck"
                [readOnly]="isDisabled"
+               [attr.autocomplete]="feType === 'username' || feType === 'email' || nativeType === 'password' ? feType : undefined"
+               [attr.inputmode]="nativeInputMode"
+               [class.monospace]="feMonospace ?? nativeType === 'password'"
         />
 
         <textarea #textInput
                   *ngIf="feType === 'multi'"
-                  [name]="feKey"
+                  inputmode="text"
+                  [attr.name]="feKey"
                   [spellcheck]="feSpellcheck"
                   [readOnly]="isDisabled"
+                  [class.monospace]="feMonospace ?? nativeType === 'password'"
         ></textarea>
+
+        <label *ngIf="feLabel" [for]="feKey ?? fieldId">{{ feLabel }}</label>
+    </div>
+
+    <div class="icons">
+
+        <svg-icon *ngIf="isDisabled && !(feConceal || nativeType === 'password')" name="fe-lock"></svg-icon>
+
+        <div class="button"
+             *ngIf="feConceal || nativeType === 'password'"
+             #passwordButton>
+            <div class="background"
+                 tabindex="0"
+                 [fe-tactile]="passwordButton"
+                 (feClick)="isConcealed = !isConcealed">
+            </div>
+            <svg-icon [name]="isConcealed ? 'fe-eye' : 'fe-eye-closed'"></svg-icon>
+        </div>
+
+        <div class="button"
+             *ngIf="nativeType === 'search' && value.length > 0 && !feConceal && !isDisabled"
+             #discardButton>
+            <div class="background"
+                 tabindex="0"
+                 [fe-tactile]="discardButton"
+                 (feClick)="writeValue(null)">
+            </div>
+            <svg-icon [name]="'fe-close'"></svg-icon>
+        </div>
+
     </div>
 
 </div>
@@ -45,3 +87,5 @@
 <div class="measurement" #measurement>
     <ng-container [ngTemplateOutlet]="template"></ng-container>
 </div>
+
+<span class="measurement" #placeholderMeasurement>{{ measurePlaceholder }}</span>
