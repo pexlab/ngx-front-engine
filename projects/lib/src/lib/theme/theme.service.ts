@@ -1,4 +1,5 @@
 import { EventEmitter, Injectable, Renderer2, RendererFactory2 } from '@angular/core';
+import { Meta } from '@angular/platform-browser';
 import deepdash from 'deepdash-es';
 import lodash from 'lodash-es';
 import { RootComponent } from '../components/root/root.component';
@@ -21,7 +22,8 @@ const _ = deepdash( lodash );
 export class ThemeService {
 
     constructor(
-        rendererFactory: RendererFactory2
+        private rendererFactory: RendererFactory2,
+        private meta: Meta
     ) {
 
         if ( ThemeService.singleton !== undefined ) {
@@ -245,6 +247,7 @@ export class ThemeService {
                     primary_dimmed  : FeColorPalette.Blue.VividDarkBlue,
                     secondary       : FeColorPalette.Greyscale.AlmostMidnight,
                     secondary_dimmed: FeColorPalette.Greyscale.Midnight,
+                    tab_bar         : FeColorPalette.Greyscale.SnowWhite,
                     generic         : FeColorPalette.Greyscale.AlmostMidnight,
                     info            : FeColorPalette.Blue.NaturalBlue,
                     failure         : FeColorPalette.Red.SpanishRed,
@@ -286,6 +289,12 @@ export class ThemeService {
             document.documentElement,
             true
         );
+
+        if ( this.meta.getTag( 'name=theme-color' ) ) {
+            this.meta.updateTag( { content: this.commonTheme.palette.accent.tab_bar }, 'name=theme-color' );
+        } else {
+            this.meta.addTag( { name: 'theme-color', content: this.commonTheme.palette.accent.tab_bar } );
+        }
 
         this.onThemeChange.emit();
     }

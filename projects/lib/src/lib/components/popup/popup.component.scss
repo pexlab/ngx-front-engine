@@ -4,13 +4,15 @@
 
 :host {
 
-    position              : fixed;
+    position              : absolute;
 
     left                  : 0;
     top                   : 0;
 
-    width                 : 100vw;
-    height                : 100vh;
+    width                 : 100%;
+    height                : 100%;
+
+    overflow              : hidden;
 
     display               : grid;
     grid-template-columns : 1fr;
@@ -49,25 +51,29 @@
 
     & > .container {
 
-        grid-column      : 1;
-        grid-row         : 1;
+        grid-column        : 1;
+        grid-row           : 1;
 
-        display          : grid;
-        grid-gap         : 0;
-        place-items      : center;
+        display            : grid;
+        grid-template-rows : auto 1fr;
+        grid-gap           : 0;
+        place-items        : center;
 
-        overflow         : hidden;
+        overflow           : hidden;
 
-        background-color : theme.hex('background');
+        background-color   : theme.hex('background');
 
-        opacity          : 0;
-        transform        : scale(0.7);
+        opacity            : 0;
+        transform          : scale(0.7);
+
+        touch-action       : auto;
+        pointer-events     : visible;
 
         @include responsive.desktop {
 
             width         : var(--popup-width);
-            max-width     : 90vw;
-            max-height    : 90vh;
+            max-width     : 90%;
+            max-height    : 90%;
 
             border-radius : 1rem;
 
@@ -79,9 +85,7 @@
         @include responsive.mobile {
 
             width                   : 100%;
-            height                  : fit-content;
-
-            max-height              : 90vh;
+            max-height              : 90%;
 
             align-self              : end;
 
@@ -103,27 +107,14 @@
 
             & > .icon {
 
-                cursor : pointer;
+                cursor                      : pointer;
 
-                @include responsive.desktop {
+                width                       : 40px;
+                height                      : 40px;
 
-                    width    : 40px;
-                    height   : 40px;
-
-                    position : absolute;
-                    top      : calc(50% - (40px / 2));
-                    right    : 10px;
-                }
-
-                @include responsive.mobile {
-
-                    width    : 30px;
-                    height   : 30px;
-
-                    position : absolute;
-                    top      : calc(50% - (30px / 2));
-                    right    : 20px;
-                }
+                position                    : absolute;
+                top                         : calc(50% - (40px / 2));
+                right                       : 10px;
 
                 &.hidden {
                     opacity        : 0;
@@ -198,15 +189,10 @@
                 width      : 100%;
                 height     : fit-content;
 
+                box-sizing : border-box;
+
                 margin     : 15px 0;
-
-                @include responsive.desktop {
-                    padding : 0 (40px + ( 10px * 2 ));
-                }
-
-                @include responsive.mobile {
-                    padding : 0 (30px + ( 20px * 2 ));
-                }
+                padding    : 0 (40px + ( 10px * 2 ));
 
                 text-align : center;
                 @include theme.commonFont('subheading');
@@ -216,24 +202,21 @@
 
         & > .content-wrapper {
 
-            display     : grid;
-            place-items : center;
+            display             : grid;
+            place-items         : center;
 
-            height      : fit-content;
+            width               : 100%;
+            height              : 100%;
 
-            overflow-x  : hidden;
+            overflow-x          : hidden;
 
             @include theme.scrollbar(theme.hex('scrollbar'), theme.hex('scrollbar-hover'), transparent, 'y', 0.5rem, 0.25rem);
 
-            @include responsive.desktop {
-                width      : 100%;
-                min-width  : 400px;
-                max-height : calc(90vh - 70px);
-            }
+            overflow-scrolling  : touch;
+            overscroll-behavior : contain;
 
-            @include responsive.mobile {
-                width      : 100%;
-                max-height : calc(90vh - 50px);
+            @include responsive.desktop {
+                min-width : 400px;
             }
 
             & .content {

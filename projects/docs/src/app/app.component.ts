@@ -49,6 +49,16 @@ export class AppComponent implements OnInit, AfterViewChecked {
         this.iconReg.loadSvg( 'assets/icons/type.svg', 'text' );
         this.iconReg.loadSvg( 'assets/icons/user.svg', 'user' );
 
+        this.theme.applyCommonTheme(
+            {
+                palette: {
+                    accent: {
+                        tab_bar: '#eeeeee'
+                    }
+                }
+            }
+        );
+
         this.theme.applyComponentThemes(
             {
                 notepaper: {

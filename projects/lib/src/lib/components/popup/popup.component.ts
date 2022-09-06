@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
+import * as focusTrap from 'focus-trap';
 import { Subject } from 'rxjs';
 import { ComponentTheme } from '../../interfaces/color.interface';
 import { FeComponent } from '../../utils/component.utils';
@@ -11,7 +12,7 @@ import { PartialPopupTheme } from './popup.theme';
         styleUrls  : [ './popup.component.scss' ]
     }
 )
-export class PopupComponent implements OnInit, AfterViewInit {
+export class PopupComponent implements OnInit, AfterViewInit, OnDestroy {
 
     constructor(
         public hostElement: ElementRef,
@@ -42,7 +43,15 @@ export class PopupComponent implements OnInit, AfterViewInit {
     @ViewChild( 'content', { read: ViewContainerRef, static: false } )
     public viewContainer!: ViewContainerRef;
 
+    @ViewChild( 'container' )
+    public containerRef!: ElementRef<HTMLElement>;
+
+    @ViewChild( 'contentWrapper' )
+    public contentWrapperRef!: ElementRef<HTMLElement>;
+
     private visibility!: 'visible' | 'hidden';
+
+    private focusTrap!: focusTrap.FocusTrap;
 
     public ngOnInit(): void {
 
@@ -63,6 +72,11 @@ export class PopupComponent implements OnInit, AfterViewInit {
 
     public ngAfterViewInit(): void {
 
+        this.focusTrap = focusTrap.createFocusTrap( this.containerRef.nativeElement, {
+            initialFocus: false
+        } );
+        this.focusTrap.activate();
+
         /* As soon as every component gets interactive, open the popup */
         setTimeout( () => {
 
@@ -78,6 +92,10 @@ export class PopupComponent implements OnInit, AfterViewInit {
 
             }, 500 );
         } );
+    }
+
+    public ngOnDestroy(): void {
+        this.focusTrap.deactivate();
     }
 
     public close(): void {

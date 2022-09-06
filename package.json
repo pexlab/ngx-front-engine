@@ -69,6 +69,7 @@
         "angular-svg-icon": "^14.0.0",
         "date-fns": "^2.29.2",
         "deepdash-es": "^5.3.9",
+        "focus-trap": "^7.0.0",
         "fuse.js": "^6.6.2",
         "lodash-es": "^4.17.21",
         "nanoid": "^4.0.0",

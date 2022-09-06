@@ -39,6 +39,7 @@ export const ZCommonTheme = z.object(
                         primary_dimmed  : ZHEXColor,
                         secondary       : ZHEXColor,
                         secondary_dimmed: ZHEXColor,
+                        tab_bar         : ZHEXColor,
                         generic         : ZHEXColor,
                         info            : ZHEXColor,
                         success         : ZHEXColor,

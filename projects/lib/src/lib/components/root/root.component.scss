@@ -1,43 +1,85 @@
 :host {
 
-    z-index  : 1000;
+    z-index        : 1000;
+    isolation      : isolate;
 
-    position : fixed;
+    position       : fixed;
+    left           : 0;
+    top            : 0;
 
-    & > div {
-        position : fixed;
-    }
+    overflow       : hidden;
 
-    & > .notification {
-        z-index : 2;
-    }
+    pointer-events : none;
+    touch-action   : none;
 
-    & > .popup {
-        z-index : 1;
+    /* width and height gets set by javascript (in order to stay on top of the safari bottom bar) */
+
+    & > .blurrer {
+
+        z-index         : 1;
+
+        position        : absolute;
+
+        top             : 0;
+        left            : 0;
+
+        width           : 100%;
+        height          : 100%;
+
+        pointer-events  : none;
+
+        backdrop-filter : blur(0);
+
+        transition      : backdrop-filter .5s ease;
     }
 
     & > .dimmer {
-        z-index : 0;
+
+        z-index          : 2;
+
+        position         : absolute;
+
+        top              : 0;
+        left             : 0;
+
+        width            : 100%;
+        height           : 100%;
+
+        pointer-events   : none;
+        opacity          : 0;
+
+        background-color : rgba(black, .7);
+
+        transition       : opacity .5s ease;
+    }
+
+    & > .popup {
+
+        z-index  : 3;
+
+        position : absolute;
+
+        top      : 0;
+        left     : 0;
+
+        width    : 100%;
+        height   : 100%;
+
+        overflow : hidden;
+    }
+
+    & > .notification {
+
+        z-index  : 4;
+
+        position : absolute;
     }
 
     & > .scrollbar-measure {
+
+        position   : absolute;
+
         visibility : hidden;
         overflow   : scroll;
     }
-}
-
-.dimmer {
-
-    top              : 0;
-    left             : 0;
-    bottom           : 0;
-    right            : 0;
-
-    /* Initial state */
-    pointer-events   : none;
-    opacity          : 0;
-
-    background-color : rgba(black, .8);
-
-    transition       : opacity .25s ease;
 }

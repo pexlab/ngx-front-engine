@@ -10,6 +10,7 @@
         "svg-round-corners",
         "lodash-es",
         "deepdash-es",
+        "focus-trap",
         "nanoid",
         "date-fns",
         "@fontsource/roboto",
