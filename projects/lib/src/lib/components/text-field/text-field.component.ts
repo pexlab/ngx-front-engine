@@ -726,7 +726,7 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
 
         if ( this.placeholderRef ) {
 
-            const fieldCenter = ( this.fieldRef.nativeElement.getBoundingClientRect().height / 2 ) - ( this.placeholderRef.nativeElement.getBoundingClientRect().height / 2 );
+            const fieldCenter = ( this.fieldRef.nativeElement.clientHeight / 2 ) - ( this.placeholderRef.nativeElement.clientHeight / 2 );
             const paddingTop  = window.getComputedStyle( this.inputContainerRef.nativeElement, null ).paddingTop;
             const paddingLeft = window.getComputedStyle( this.inputContainerRef.nativeElement, null ).paddingLeft;
 

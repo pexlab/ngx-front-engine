@@ -387,6 +387,7 @@ $PADDING : 20px;
 
                 overflow       : hidden;
                 text-overflow  : ellipsis;
+                text-align     : left;
 
                 &.hidden {
                     opacity : 0;
