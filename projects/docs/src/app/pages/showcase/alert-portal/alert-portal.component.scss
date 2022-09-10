@@ -1,10 +1,11 @@
 @use '~dist/ngx-front-engine/assets/fe-styles/theme';
+@use '~dist/ngx-front-engine/assets/fe-styles/utils';
 
 :host {
 
     display        : grid;
     grid-auto-flow : row;
-    grid-gap       : 20px;
+    grid-gap       : utils.fes(1.25);
 
     & > .note {
 
@@ -12,7 +13,7 @@
 
         & > span {
             display       : block;
-            margin-bottom : 5px;
+            margin-bottom : utils.fes(.31);
         }
 
         & > span:nth-child(1) {
@@ -26,15 +27,15 @@
 
         display        : grid;
         grid-auto-flow : column;
-        grid-gap       : 20px;
+        grid-gap       : utils.fes(1.25);
     }
 
     & > fe-alert-portal {
-        max-width : 500px;
+        max-width : utils.fes(30);
     }
 
     & > .divider {
         width  : 100%;
-        border : 1px solid theme.commonHex('text-tertiary');
+        border : utils.fes(.06) solid theme.commonHex('text-tertiary');
     }
 }

@@ -1,4 +1,5 @@
 @use '../../../../assets/fe-styles/theme' with ($scope: 'alert-portal');
+@use '../../../../assets/fe-styles/utils';
 
 @mixin style($type) {
 
@@ -9,7 +10,7 @@
 
         will-change   : height, margin, opacity;
 
-        margin-bottom : 10px;
+        margin-bottom : utils.fes(.65);
 
         & > .wrapper {
 
@@ -24,7 +25,7 @@
 
                 display               : grid;
                 grid-auto-flow        : column;
-                grid-template-columns : 35px 1fr;
+                grid-template-columns : utils.fes(2.25) 1fr;
                 align-items           : center;
 
                 & > .icon {
@@ -38,16 +39,16 @@
                     color                     : theme.hex($type + '-icon');
 
                     @include theme.commonFont('decorative');
-                    font-size                 : 20px;
+                    font-size                 : utils.fes(1.25);
 
                     user-select               : none;
 
                     background-color          : theme.hex($type + '-icon-background');
 
-                    border-top-left-radius    : 10px;
-                    border-bottom-left-radius : 10px;
+                    border-top-left-radius    : utils.fes(.65);
+                    border-bottom-left-radius : utils.fes(.65);
 
-                    @include theme.inlineIcon(20px);
+                    @include theme.inlineIcon(utils.fes(1.25));
                 }
 
                 & > .text {
@@ -56,18 +57,18 @@
 
                     display                    : grid;
                     grid-auto-flow             : row;
-                    grid-gap                   : 3px;
+                    grid-gap                   : utils.fes(.2);
 
                     box-sizing                 : border-box;
 
-                    padding                    : 10px;
+                    padding                    : utils.fes(.65);
 
-                    border-top                 : 2px solid theme.hex($type + '-icon-background');
-                    border-right               : 2px solid theme.hex($type + '-icon-background');
-                    border-bottom              : 2px solid theme.hex($type + '-icon-background');
+                    border-top                 : utils.fes(.15) solid theme.hex($type + '-icon-background');
+                    border-right               : utils.fes(.15) solid theme.hex($type + '-icon-background');
+                    border-bottom              : utils.fes(.15) solid theme.hex($type + '-icon-background');
 
-                    border-top-right-radius    : 10px;
-                    border-bottom-right-radius : 10px;
+                    border-top-right-radius    : utils.fes(.65);
+                    border-bottom-right-radius : utils.fes(.65);
 
                     background-color           : theme.hex($type + '-background');
 
@@ -89,13 +90,13 @@
 
                     & > code.code_embed {
 
-                        width            : calc(100% - 5px);
-                        max-height       : 250px;
+                        width            : utils.opFes('100% -', .3);
+                        max-height       : utils.fes(15);
 
-                        margin-top       : 5px;
+                        margin-top       : utils.fes(.31);
 
-                        padding          : 5px;
-                        border-radius    : 5px;
+                        padding          : utils.fes(.31);
+                        border-radius    : utils.fes(.31);
 
                         overflow-x       : auto;
 
@@ -104,10 +105,10 @@
                         @include theme.commonFont('code');
                         white-space      : pre;
 
-                        @include theme.scrollbar(theme.hex($type + '-code-border'), theme.hex($type + '-code-border'), transparent, 'none', 0.5rem, 0.25rem);
+                        @include theme.scrollbar(theme.hex($type + '-code-border'), theme.hex($type + '-code-border'), transparent, 'none', utils.fes(.5), utils.fes(.25));
 
                         color            : theme.hex($type + '-code');
-                        border           : 1px solid theme.hex($type + '-code-border');
+                        border           : utils.fes(.06) solid theme.hex($type + '-code-border');
                         background-color : theme.hex($type + '-code-background');
                     }
                 }
@@ -133,7 +134,7 @@
 
         &.hasElements {
             /* Note: we subtract the last element's margin bottom */
-            margin           : var(--fe-alert-margin-top) 0 calc(var(--fe-alert-margin-bottom) - 10px) 0;
+            margin           : var(--fe-alert-margin-top) 0 utils.opFes('var(--fe-alert-margin-bottom) -', .65) 0;
             transition-delay : 0s;
         }
 

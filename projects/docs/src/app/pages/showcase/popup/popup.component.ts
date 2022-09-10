@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PopupService } from '@pexlab/ngx-front-engine';
+import { fes, PopupService } from '@pexlab/ngx-front-engine';
 import { NutmegComponent } from '../../../popups/nutmeg/nutmeg.component';
 
 @Component(
@@ -9,19 +9,19 @@ import { NutmegComponent } from '../../../popups/nutmeg/nutmeg.component';
     }
 )
 export class PopupComponent {
-    
+
     constructor( private popup: PopupService ) { }
-    
+
     public transmissions: string[] = [];
-    
+
     public openPopup(): void {
-        
+
         const popup = this.popup.createPopup( 'Sample Popup about Nutmegs' );
-        
+
         popup.onTransmit( ( value ) => {
             this.transmissions.push( String( value ) );
         } );
-        
-        popup.open( NutmegComponent, undefined, 450 );
+
+        popup.open( NutmegComponent, undefined, { width: fes( 30 ) } );
     }
 }

@@ -23,6 +23,7 @@ import { ControlValueAccessor, FormControl, FormGroup, NgControl } from '@angula
 import { nanoid } from 'nanoid';
 import { parsePath, roundCommands } from 'svg-round-corners';
 import { ComponentTheme } from '../../interfaces/color.interface';
+import { ThemeService } from '../../theme/theme.service';
 import { AsynchronouslyInitialisedComponent, FeComponent } from '../../utils/component.utils';
 import { elementWidthWithoutPadding } from '../../utils/element.utils';
 import { LabelAlignerService } from './label-aligner.service';
@@ -48,7 +49,8 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         private renderer: Renderer2,
         public change: ChangeDetectorRef,
         private ngZone: NgZone,
-        private aligner: LabelAlignerService
+        private aligner: LabelAlignerService,
+        private theme: ThemeService
     ) {
         super();
         hostElement.nativeElement.style.setProperty( '--label-width', 'auto' );
@@ -709,7 +711,10 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
 
             if ( this.placeholderRef && this.placeholderMeasurementRef ) {
 
-                const offsetX = ( this.inputContainerRef.nativeElement.offsetLeft - 20 - 10 ) * ( -1 );
+                const gap     = ( 16 * this.theme.common.scale ) * ( Math.round( 16 * 1.25 ) / 16 );
+                const padding = ( 16 * this.theme.common.scale ) * ( Math.round( 16 * 0.63 ) / 16 );
+
+                const offsetX = ( this.inputContainerRef.nativeElement.offsetLeft - gap - padding ) * ( -1 );
                 const offsetY = ( (
                     this.placeholderMeasurementRef.nativeElement.getBoundingClientRect().height / 2
                 ) + 1 ) * ( -1 );
@@ -742,7 +747,7 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
             return '';
         }
 
-        const strokeWidth = 2;
+        const strokeWidth = ( 16 * this.theme.common.scale ) * ( Math.round( 16 * 0.13 ) / 16 );
         const m           = strokeWidth / 2;
 
         let placeholderWidth = 0;
@@ -751,11 +756,13 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
             placeholderWidth = elementWidthWithoutPadding( this.placeholderMeasurementRef.nativeElement );
         }
 
-        const gapStart = 20;
-        const gapEnd   = placeholderWidth > ( this.hostElement.nativeElement.clientWidth - gapStart - ( 10 * 2 ) ) ?
+        const padding = ( 16 * this.theme.common.scale ) * ( Math.round( 16 * 0.63 ) / 16 );
+
+        const gapStart = ( 16 * this.theme.common.scale ) * ( Math.round( 16 * 1.25 ) / 16 );
+        const gapEnd   = placeholderWidth > ( this.hostElement.nativeElement.clientWidth - gapStart - ( padding * 2 ) ) ?
                          this.hostElement.nativeElement.clientWidth - gapStart :
                          gapStart + placeholderWidth - m + (
-                                 10 * 2
+                                 padding * 2
                              );
 
         const w = this.hostElement.nativeElement.clientWidth - ( strokeWidth / 2 );
@@ -763,7 +770,11 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
 
         const path = `M${ gapEnd },${ m } L${ w },${ m } L${ w },${ h } L${ m },${ h } L${ m },${ m } L${ gapStart },${ m }`;
 
-        return roundCommands( parsePath( closed || !this.fePlaceholder ? path + ' z' : path ), 10, 2 ).path;
+        return roundCommands(
+            parsePath( closed || !this.fePlaceholder ? path + ' z' : path ),
+            ( 16 * this.theme.common.scale ) * ( Math.round( 16 * 0.63 ) / 16 ),
+            2
+        ).path;
     }
 
     /* Public exported functions */

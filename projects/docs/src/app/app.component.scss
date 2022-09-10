@@ -1,71 +1,90 @@
 @use '~dist/ngx-front-engine/assets/fe-styles/theme';
+@use '~dist/ngx-front-engine/assets/fe-styles/utils';
 
 :host {
 
-  display    : block;
+    display    : block;
 
-  position   : absolute;
+    position   : absolute;
 
-  top        : 0;
-  left       : 0;
+    top        : 0;
+    left       : 0;
 
-  width      : 100vw;
-  height     : 100vh;
+    width      : utils.vw(100);
+    height     : utils.vh(100);
 
-  background : #EEEEEE;
+    background : #eeeeee;
 
-  & > nav:nth-child(1) {
+    & > nav {
 
-	position              : fixed;
+        & > svg-icon {
 
-	top                   : 0;
-	left                  : 0;
+            display     : grid;
+            place-items : center;
 
-	width                 : 100vw;
-	height                : 80px;
+            width       : utils.fes((5 * 2.5) - (1.25 * 2));
 
-	border-bottom         : 2px solid #DDDDDD;
+            & > svg {
+                width : 100%;
+            }
+        }
 
-	display               : grid;
-	grid-auto-flow        : column;
-	grid-template-columns : (80px * 2.5) 1fr;
-	grid-gap              : 20px;
+        &:nth-child(1) {
 
-	align-items           : center;
+            position              : fixed;
 
-	& > svg-icon {
-	  justify-self : center;
-	}
-  }
+            top                   : 0;
+            left                  : 0;
 
-  & > nav:nth-child(2) {
+            width                 : utils.vw(100);
+            height                : utils.fes(5);
 
-	position     : fixed;
+            border-bottom         : utils.fes(.15) solid #dddddd;
 
-	top          : 80px;
-	left         : 0;
+            display               : grid;
+            grid-auto-flow        : column;
+            grid-template-columns : utils.fes(5 * 2.5) 1fr;
+            grid-gap              : utils.fes(1.25);
 
-	width        : 80px * 2.5;
-	height       : calc(100vh - 80px);
+            align-items           : center;
 
-	border-right : 2px solid #DDDDDD;
+            @include theme.scrollbar(#dddddd, #dddddd, transparent, 'x', utils.fes(.5), utils.fes(.25));
 
-	background   : #EEEEEE;
-  }
+            & > svg-icon {
+                justify-self : center;
+            }
+        }
 
-  & > .page {
+        &:nth-child(2) {
 
-	position   : absolute;
+            position     : fixed;
 
-	left       : 80px * 2.5;
-	top        : 80px;
+            top          : utils.fes(5);
+            left         : 0;
 
-	width      : calc(100vw - (80px * 2.5));
-	height     : calc(100vh - 80px);
+            width        : utils.fes(5 * 2.5);
+            height       : calc(#{utils.rawVh(100) + ' - ' + utils.rawFes(5)});
 
-	overflow-x : hidden;
-	overflow-y : scroll;
+            border-right : utils.fes(.15) solid #dddddd;
 
-	padding    : 35px;
-  }
+            @include theme.scrollbar(#dddddd, #dddddd, transparent, 'y', utils.fes(.5), utils.fes(.25));
+
+            background   : #eeeeee;
+        }
+    }
+
+    & > .page {
+
+        position : absolute;
+
+        left     : utils.fes(5 * 2.5);
+        top      : utils.fes(5);
+
+        width    : calc(#{utils.rawVw(100) + ' - ' + utils.rawFes(5 * 2.5)});
+        height   : calc(#{utils.rawVh(100) + ' - ' + utils.rawFes(5)});
+
+        padding  : utils.fes(2.2);
+
+        @include theme.scrollbar(#dddddd, #dddddd, transparent, 'y', utils.fes(.5), utils.fes(.25));
+    }
 }

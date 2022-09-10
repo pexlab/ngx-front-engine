@@ -1,7 +1,7 @@
 @use '../../../../assets/fe-styles/theme' with ($scope: 'text-field');
 @use '../../../../assets/fe-styles/utils';
 
-$PADDING : 20px;
+$PADDING : 1.25;
 
 @mixin stateStyle($state) {
 
@@ -66,14 +66,14 @@ $PADDING : 20px;
 
         display        : grid;
         grid-auto-flow : column;
-        grid-gap       : 10px;
+        grid-gap       : utils.fes(.65);
         place-items    : center left;
 
         padding-top    : $PADDING;
         padding-bottom : $PADDING;
         box-sizing     : border-box;
 
-        @include theme.inlineDeepIcon(20px);
+        @include theme.inlineDeepIcon(utils.fes(1.25));
     }
 
     & > div.measurement {
@@ -203,17 +203,17 @@ $PADDING : 20px;
         width          : 100%;
         height         : fit-content;
 
-        padding-left   : $PADDING;
+        padding-left   : utils.fes($PADDING);
         box-sizing     : border-box;
 
         display        : grid;
         grid-auto-flow : column;
-        grid-gap       : 20px;
+        grid-gap       : utils.fes(1.25);
         place-items    : center;
 
         cursor         : text;
 
-        border-radius  : 11px;
+        border-radius  : utils.fes(.69);
 
         isolation      : isolate;
 
@@ -222,7 +222,7 @@ $PADDING : 20px;
         }
 
         &.hasLabel {
-            grid-template-columns : var(--label-width) 1px 1fr;
+            grid-template-columns : var(--label-width) utils.fes(.06) 1fr;
         }
 
         & > .border {
@@ -239,7 +239,7 @@ $PADDING : 20px;
 
             & > path {
                 fill         : none;
-                stroke-width : 2;
+                stroke-width : utils.fes(.13);
             }
 
             &.idle {
@@ -266,7 +266,7 @@ $PADDING : 20px;
 
         & .divider {
             width  : 100%;
-            height : calc(100% - (2 * #{$PADDING}));
+            height : utils.opFes('100% -', 2 * $PADDING);
         }
 
         & > .icons {
@@ -276,15 +276,15 @@ $PADDING : 20px;
             position       : absolute;
 
             top            : 50%;
-            right          : $PADDING;
+            right          : utils.fes($PADDING);
 
             transform      : translateY(-50%);
 
             display        : grid;
             grid-auto-flow : row;
-            grid-gap       : .5rem;
+            grid-gap       : utils.fes(.5);
 
-            @include theme.inlineIcon(1rem);
+            @include theme.inlineIcon(utils.fes(1));
 
             & > svg-icon {
                 transition : color .25s ease;
@@ -316,12 +316,12 @@ $PADDING : 20px;
                     left                        : 50%;
                     top                         : 50%;
 
-                    width                       : 2.5rem;
-                    height                      : 2.5rem;
+                    width                       : utils.fes(2.5);
+                    height                      : utils.fes(2.5);
 
                     cursor                      : pointer;
 
-                    border-radius               : 40px;
+                    border-radius               : utils.fes(2.5);
 
                     opacity                     : 0;
                     transform                   : translateY(-50%) translateX(-50%) scale(0.75);
@@ -339,8 +339,8 @@ $PADDING : 20px;
 
                     position       : relative;
 
-                    width          : 1rem;
-                    height         : 1rem;
+                    width          : utils.fes(1);
+                    height         : utils.fes(1);
 
                     display        : grid;
                     place-items    : center;
@@ -350,8 +350,8 @@ $PADDING : 20px;
                     transition     : color .25s ease;
 
                     & > svg {
-                        width  : 1rem;
-                        height : 1rem;
+                        width  : utils.fes(1);
+                        height : utils.fes(1);
                     }
                 }
             }
@@ -366,9 +366,9 @@ $PADDING : 20px;
             width          : 100%;
             height         : 100%;
 
-            padding-top    : $PADDING;
-            padding-bottom : $PADDING;
-            padding-right  : $PADDING;
+            padding-top    : utils.fes($PADDING);
+            padding-bottom : utils.fes($PADDING);
+            padding-right  : utils.fes($PADDING);
 
             box-sizing     : border-box;
 
@@ -377,7 +377,7 @@ $PADDING : 20px;
                 position       : absolute;
 
                 left           : var(--placeholder-x);
-                right          : $PADDING + 10px;
+                right          : utils.fes($PADDING + .65);
                 top            : var(--placeholder-y);
 
                 user-select    : none;
@@ -396,11 +396,11 @@ $PADDING : 20px;
 
             &.iconPadding {
 
-                padding-right : calc(($PADDING * 2) + 1rem);
+                padding-right : utils.fes(($PADDING * 2) + 1);
 
                 & > span.placeholder {
                     &.unpinned {
-                        right : calc(($PADDING * 2) + 1rem);
+                        right : utils.fes(($PADDING * 2) + 1);
                     }
                 }
             }
@@ -428,7 +428,7 @@ $PADDING : 20px;
 
                 &.monospace {
                     @include theme.commonFont('code');
-                    letter-spacing : .05rem;
+                    letter-spacing : utils.fes(.06);
                 }
             }
 
@@ -452,7 +452,7 @@ $PADDING : 20px;
 
             & > textarea {
                 resize : none;
-                @include theme.scrollbar(theme.hex('idle-border'), theme.hex('idle-border'), transparent, 'none', 0.5rem, 0.25rem);
+                @include theme.scrollbar(theme.hex('idle-border'), theme.hex('idle-border'), transparent, 'none', utils.fes(0.5), utils.fes(0.25));
             }
 
             & > input[type='number'] {
@@ -493,7 +493,7 @@ $PADDING : 20px;
 
             &.conceal {
                 & > input, & > textarea {
-                    letter-spacing : 0.07em;
+                    letter-spacing : utils.fes(0.07);
                     font-family    : text-security-disc, sans-serif;
                 }
             }
@@ -554,16 +554,16 @@ $PADDING : 20px;
 @keyframes invalidShake {
 
     8%, 41% {
-        transform : translateX(-10px);
+        transform : translateX(utils.fes(-.65));
     }
     25%, 58% {
-        transform : translateX(10px);
+        transform : translateX(utils.fes(.65));
     }
     75% {
-        transform : translateX(-5px);
+        transform : translateX(utils.fes(-.3));
     }
     92% {
-        transform : translateX(5px);
+        transform : translateX(utils.fes(.31));
     }
     0%, 100% {
         transform : translateX(0);

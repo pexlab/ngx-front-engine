@@ -1,16 +1,17 @@
 @use '~dist/ngx-front-engine/assets/fe-styles/theme';
+@use '~dist/ngx-front-engine/assets/fe-styles/utils';
 
 :host {
 
     display        : grid;
     grid-auto-flow : row;
-    grid-gap       : 40px;
+    grid-gap       : utils.fes(2.5);
 
     & > div {
 
         display        : grid;
         grid-auto-flow : row;
-        grid-gap       : 20px;
+        grid-gap       : utils.fes(1.25);
 
         & > span {
             @include theme.commonFont('heading');
@@ -20,20 +21,20 @@
 
             width               : fit-content;
 
-            padding             : 4rem 1.5rem;
+            padding             : utils.fes(4) utils.fes(1.5);
 
             background-image    : url('../../../../assets/images/pexels-bymalens-2157895.jpeg');
             background-size     : cover;
             background-position : center;
 
-            border-radius       : 1rem;
+            border-radius       : utils.fes(1);
         }
 
         & > div, & > .image > div {
             width          : fit-content;
             display        : grid;
             grid-auto-flow : column;
-            grid-gap       : 1rem;
+            grid-gap       : utils.fes(1);
         }
     }
 }

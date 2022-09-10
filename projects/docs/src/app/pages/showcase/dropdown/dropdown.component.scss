@@ -1,4 +1,5 @@
 @use '~dist/ngx-front-engine/assets/fe-styles/theme';
+@use '~dist/ngx-front-engine/assets/fe-styles/utils';
 
 :host {
 
@@ -6,19 +7,19 @@
 
         display        : grid;
         grid-auto-flow : row;
-        grid-gap       : 60px;
+        grid-gap       : utils.fes(3.75);
 
         & > div {
 
             display        : grid;
             grid-auto-flow : row;
-            grid-gap       : 20px;
+            grid-gap       : utils.fes(1.25);
 
             & > div {
                 width          : fit-content;
                 display        : grid;
                 grid-auto-flow : column;
-                grid-gap       : 1rem;
+                grid-gap       : utils.fes(1);
             }
 
             & > span {

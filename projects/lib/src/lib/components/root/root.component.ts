@@ -48,15 +48,13 @@ export class RootComponent implements AfterViewInit, OnDestroy {
 
     public ngAfterViewInit(): void {
 
-        this.hostElement.nativeElement.style.width  = window.innerWidth + 'px';
-        this.hostElement.nativeElement.style.height = ( window.innerHeight + 2 ) + 'px';
+        this.renderer.setStyle( document.documentElement, '--fe-global-analyzed-scrollbar-width', this.getScrollbarWidth() + 'px', 2 );
 
         this.ngZone.runOutsideAngular( () => {
 
             this.disposeListeners.push(
                 this.renderer.listen( window, 'resize', () => {
-                    this.hostElement.nativeElement.style.width  = window.innerWidth + 'px';
-                    this.hostElement.nativeElement.style.height = ( window.innerHeight + 2 ) + 'px';
+                    this.renderer.setStyle( document.documentElement, '--fe-global-analyzed-scrollbar-width', this.getScrollbarWidth() + 'px', 2 );
                 } )
             );
 
@@ -64,13 +62,6 @@ export class RootComponent implements AfterViewInit, OnDestroy {
         } );
 
         this.clear();
-
-        this.renderer.setStyle(
-            document.documentElement,
-            '--scrollbar-width',
-            this.getScrollbarWidth() + 'px',
-            2
-        );
     }
 
     public ngOnDestroy(): void {

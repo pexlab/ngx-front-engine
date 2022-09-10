@@ -3,10 +3,10 @@
 @use 'sass:math';
 
 $COVER_ASPECT      : math.div(150px, 220px);
-$WIDTH             : 180px;
+$WIDTH             : 11;
 $HEIGHT            : math.div($WIDTH, $COVER_ASPECT);
-$DECORATION_HEIGHT : 10px;
-$EDGE              : 4px;
+$DECORATION_HEIGHT : .65;
+$EDGE              : .25;
 
 :host {
 
@@ -14,15 +14,15 @@ $EDGE              : 4px;
 
     z-index               : 1;
 
-    width                 : $WIDTH;
+    width                 : utils.fes($WIDTH);
 
     display               : grid;
     grid-auto-flow        : row;
     grid-template-columns : 1fr;
-    grid-template-rows    : $HEIGHT $DECORATION_HEIGHT auto;
+    grid-template-rows    : utils.fes($HEIGHT) utils.fes($DECORATION_HEIGHT) auto;
 
-    background            : transparent url('../../../../assets/fe-images/book-bottom.png') 0 $HEIGHT no-repeat;
-    background-size       : $WIDTH $DECORATION_HEIGHT;
+    background            : transparent url('../../../../assets/fe-images/book-bottom.png') 0 utils.fes($HEIGHT) no-repeat;
+    background-size       : utils.fes($WIDTH) utils.fes($DECORATION_HEIGHT);
 
     user-select           : none;
 
@@ -39,10 +39,10 @@ $EDGE              : 4px;
         top              : 0;
         right            : 0;
 
-        height           : $HEIGHT - 1px;
+        height           : utils.fes($HEIGHT - .06);
 
-        border           : 1px solid lighten(#000000, 85%);
-        border-radius    : $EDGE;
+        border           : utils.fes(.06) solid lighten(#000000, 85%);
+        border-radius    : utils.fes($EDGE);
 
         background-color : white;
     }
@@ -53,7 +53,7 @@ $EDGE              : 4px;
 
     &::after {
 
-        left                : 3px;
+        left                : utils.fes(.2);
 
         background-image    : url('../../../../assets/fe-images/book-page.jpg');
         background-size     : contain;
@@ -67,11 +67,11 @@ img.book-cover {
     grid-row      : 1;
 
     width         : inherit;
-    height        : $HEIGHT;
+    height        : utils.fes($HEIGHT);
 
-    border-radius : $EDGE;
+    border-radius : utils.fes($EDGE);
 
-    transform     : perspective(1300px) rotateY(0deg);
+    transform     : perspective(utils.fes(80)) rotateY(0deg);
 
     transition    : all .25s ease;
 
@@ -83,7 +83,7 @@ img.book-cover {
         transform-origin : 100% 100% 0;
 
         @include utils.hover {
-            transform : perspective(1300px) rotateY(30deg);
+            transform : perspective(utils.fes(80)) rotateY(30deg);
         }
     }
 
@@ -92,7 +92,7 @@ img.book-cover {
         transform-origin : 0 100% 0;
 
         @include utils.hover {
-            transform : perspective(1300px) rotateY(-30deg);
+            transform : perspective(utils.fes(80)) rotateY(-30deg);
         }
     }
 

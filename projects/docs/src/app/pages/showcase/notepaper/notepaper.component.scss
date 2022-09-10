@@ -1,5 +1,7 @@
+@use '~dist/ngx-front-engine/assets/fe-styles/utils';
+
 :host {
-    display : flex;
-    flex-wrap: wrap;
-    gap     : 30px;
+    display   : flex;
+    flex-wrap : wrap;
+    gap       : utils.fes(1.9);
 }

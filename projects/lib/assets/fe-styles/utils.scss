@@ -42,7 +42,7 @@
 
 @mixin hover {
 
-    @media not all and (pointer: coarse) {
+    @media not all and (pointer : coarse) {
         &:hover {
             @content;
         }
@@ -55,7 +55,7 @@
 
 @mixin hoverOrAlways {
 
-    @media not all and (pointer: coarse) {
+    @media not all and (pointer : coarse) {
         &:hover {
             @content;
         }
@@ -65,9 +65,85 @@
         }
     }
 
-    @media (pointer: coarse) {
+    @media (pointer : coarse) {
         & {
             @content;
         }
     }
+}
+
+@function maxValue() {
+    @return max(100vw, 100vh);
+}
+
+@function scrollbarWidth() {
+    @return var(--fe-local-analyzed-scrollbar-width, var(--fe-global-analyzed-scrollbar-width, 0));
+}
+
+@function rawFes($size) {
+    @return '(var(--fe-local-preference-scale, var(--fe-global-preference-scale, 1rem)) * ' + math.div(math.round(16 * $size), 16) + ')';
+}
+
+@function fes($size) {
+    @return calc(#{rawFes($size)});
+}
+
+@function fesOp($size, $operation) {
+    @return calc(#{rawFes($size) $operation});
+}
+
+@function opFes($operation, $size) {
+    @return calc(#{$operation rawFes($size)});
+}
+
+@function opFesOp($operationA, $size, $operationB) {
+    @return calc(#{$operationA rawFes($size) $operationB});
+}
+
+@function rawVw($size) {
+    @return '(' + $size + ' * (var(--fe-local-analyzed-inner-width, var(--fe-global-analyzed-inner-width, 100vw)) / 100))';
+}
+
+@function vw($size) {
+    @return calc(#{rawVw($size)});
+}
+
+@function rawVh($size) {
+    @return '(' + $size + ' * (var(--fe-local-analyzed-inner-height, var(--fe-global-analyzed-inner-height, 100vh)) / 100))';
+}
+
+@function vh($size) {
+    @return calc(#{rawVh($size)});
+}
+
+@function rawVLeft($size) {
+    @return $size;
+}
+
+@function vLeft($size) {
+    @return calc(#{rawVLeft($size)});
+}
+
+@function rawVRight($size) {
+    @return '(var(--fe-local-analyzed-inner-width, var(--fe-global-analyzed-inner-width, 100vw)) - ' + $size + ')';
+}
+
+@function vRight($size) {
+    @return calc(#{rawVRight($size)});
+}
+
+@function rawVTop($size) {
+    @return $size;
+}
+
+@function vTop($size) {
+    @return calc(#{rawVTop($size)});
+}
+
+@function rawVBottom($size) {
+    @return '(var(--fe-local-analyzed-inner-height, var(--fe-global-analyzed-inner-height, 100vh)) - ' + $size + ')';
+}
+
+@function vBottom($size) {
+    @return calc(#{rawVBottom($size)});
 }

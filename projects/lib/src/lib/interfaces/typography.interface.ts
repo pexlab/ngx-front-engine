@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const ZFont = z.object(
     {
         name  : z.string(),
-        size  : z.string().refine( s => s.endsWith( 'pt' ) || s.endsWith( 'px' ) ),
+        size  : z.string(),
         weight: z.number().positive()
     }
 );

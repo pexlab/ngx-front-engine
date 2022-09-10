@@ -1,3 +1,5 @@
+@use '../../../../assets/fe-styles/utils';
+
 :host {
 
     z-index        : 1000;
@@ -6,6 +8,9 @@
     position       : fixed;
     left           : 0;
     top            : 0;
+
+    width          : utils.vw(100);
+    height         : calc(#{utils.rawVh(100)} + 2px);
 
     overflow       : hidden;
 

@@ -10,6 +10,7 @@ export * from './lib/interfaces/theme.interface';
 
 export * from './lib/utils/string.utils';
 export * from './lib/utils/type.utils';
+export * from './lib/utils/unit.utils';
 export * from './lib/utils/time.utils';
 export * from './lib/utils/translation.utils';
 export * from './lib/utils/component.utils';

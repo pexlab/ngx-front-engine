@@ -18,16 +18,19 @@ import { ZFont } from './typography.interface';
 
 export const ZCommonTheme = z.object(
     {
+
         typography: z.object(
             {
-                display    : ZFont,
-                heading    : ZFont,
-                subheading : ZFont,
-                body       : ZFont,
-                alternative: ZFont,
-                decorative : ZFont,
-                caption    : ZFont,
-                code       : ZFont
+                display            : ZFont,
+                heading            : ZFont,
+                subheading         : ZFont,
+                body               : ZFont,
+                alternative        : ZFont,
+                decorative         : ZFont,
+                caption            : ZFont,
+                code               : ZFont,
+                handwritten_heading: ZFont,
+                handwritten_body   : ZFont
             }
         ),
 
@@ -70,7 +73,9 @@ export const ZCommonTheme = z.object(
 
                 custom: z.record( ZHEXColor ).optional()
             }
-        )
+        ),
+
+        scale: z.number().gt( 0 )
     }
 );
 

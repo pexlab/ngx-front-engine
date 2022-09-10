@@ -35,6 +35,18 @@ $scope : 'custom' !default;
     font-weight : var(--fe-local-font-#{$name}-weight, var(--fe-global-font-#{$name}-weight));
 }
 
+@mixin commonFontFamily($name) {
+    font-family : var(--fe-local-font-#{$name}-family, var(--fe-global-font-#{$name}-family)), sans-serif;
+}
+
+@mixin commonFontSize($name) {
+    font-size : var(--fe-local-font-#{$name}-size, var(--fe-global-font-#{$name}-size));
+}
+
+@mixin commonFontWeight($name) {
+    font-weight : var(--fe-local-font-#{$name}-weight, var(--fe-global-font-#{$name}-weight));
+}
+
 @mixin inlineIcon($size) {
 
     & > svg-icon {
@@ -72,7 +84,7 @@ $scope : 'custom' !default;
     }
 }
 
-@mixin scrollbar($thumb, $thumbHover, $track, $overlay: 'y', $size: 0.5rem, $padding: 0.25rem) {
+@mixin scrollbar($thumb, $thumbHover, $track, $overlay: 'y', $size: utils.fes(.5), $padding: utils.fes(.25)) {
 
     /* Firefox scrollbar styling */
     scrollbar-color : $thumb $track;
@@ -81,13 +93,13 @@ $scope : 'custom' !default;
     & {
 
         &::-webkit-scrollbar {
-            width  : $size + ($padding * 2);
-            height : $size + ($padding * 2);
+            width  : calc(#{$size} + (#{$padding} * 2));
+            height : calc(#{$size} + (#{$padding} * 2));
         }
 
         &::-webkit-scrollbar-thumb {
 
-            border-radius    : math.div($size, 2) + $padding;
+            border-radius    : calc((#{$size} / 2) + #{$padding});
 
             border-style     : solid;
             border-color     : transparent;
@@ -163,13 +175,13 @@ $scope : 'custom' !default;
     & {
 
         &::-webkit-scrollbar {
-            width  : 0.4rem;
-            height : 0.4rem;
+            width  : utils.fes(.4);
+            height : utils.fes(.4);
         }
 
         &::-webkit-scrollbar-thumb {
             border           : transparent;
-            border-radius    : 0.2rem;
+            border-radius    : utils.fes(.2);
             background-color : $color;
         }
 

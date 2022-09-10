@@ -3,6 +3,7 @@ import * as focusTrap from 'focus-trap';
 import { Subject } from 'rxjs';
 import { ComponentTheme } from '../../interfaces/color.interface';
 import { FeComponent } from '../../utils/component.utils';
+import { fes, rawFes, rawVh, rawVw } from '../../utils/unit.utils';
 import { PartialPopupTheme } from './popup.theme';
 
 @FeComponent( 'popup' )
@@ -25,16 +26,69 @@ export class PopupComponent implements OnInit, AfterViewInit, OnDestroy {
     public hideExitIcon!: boolean;
     public title!: string;
 
-    public widthSet = false;
+    public set width( value: { minWidth?: string, width?: string, maxWidth?: string } ) {
 
-    public set width( value: number ) {
-        this.widthSet = true;
-        this.renderer.setStyle(
-            this.hostElement.nativeElement,
-            '--popup-width',
-            value + 'px',
-            2
-        );
+        const clamp = value.width === undefined ?
+                      'fit-content' :
+                      isNaN( +value.width ) ?
+                      value.width :
+                      fes( +value.width );
+
+        const clampMin = value.minWidth === undefined ?
+                         'min(' + clamp + ', calc(' + rawVw( 100 ) + ' - ' + rawFes( 2.5 ) + '))' :
+                         isNaN( +value.minWidth ) ?
+                         value.minWidth :
+                         fes( +value.minWidth );
+
+        const clampMax = value.maxWidth === undefined ?
+                         'calc(' + rawVw( 100 ) + ' - ' + rawFes( 2.5 ) + ')' :
+                         isNaN( +value.maxWidth ) ?
+                         value.maxWidth :
+                         fes( +value.maxWidth );
+
+        this.renderer.setStyle( this.hostElement.nativeElement, '--popup-width-min', clampMin, 2 );
+        this.renderer.setStyle( this.hostElement.nativeElement, '--popup-width', clamp, 2 );
+        this.renderer.setStyle( this.hostElement.nativeElement, '--popup-width-max', clampMax, 2 );
+    }
+
+    public set height( value: { minHeight?: string, height?: string, maxHeight?: string } ) {
+
+        const clamp = value.height === undefined ?
+                      'fit-content' :
+                      isNaN( +value.height ) ?
+                      value.height :
+                      fes( +value.height );
+
+        const clampMin = value.minHeight === undefined ?
+                         'min(' + clamp + ', calc(' + rawVh( 100 ) + ' - ' + rawFes( 2.5 ) + '))' :
+                         isNaN( +value.minHeight ) ?
+                         value.minHeight :
+                         fes( +value.minHeight );
+
+        const clampMax = value.maxHeight === undefined ?
+                         'calc(' + rawVh( 100 ) + ' - ' + rawFes( 2.5 ) + ')' :
+                         isNaN( +value.maxHeight ) ?
+                         value.maxHeight :
+                         fes( +value.maxHeight );
+
+        this.renderer.setStyle( this.hostElement.nativeElement, '--popup-height-min', clampMin, 2 );
+        this.renderer.setStyle( this.hostElement.nativeElement, '--popup-height', clamp, 2 );
+        this.renderer.setStyle( this.hostElement.nativeElement, '--popup-height-max', clampMax, 2 );
+    }
+
+    public set kind( value: 'mobile' | 'desktop' ) {
+
+        if ( value === 'mobile' ) {
+            this.containerRef.nativeElement.classList.add( 'fe-mobile' );
+        } else {
+            this.containerRef.nativeElement.classList.remove( 'fe-mobile' );
+        }
+
+        if ( value === 'desktop' ) {
+            this.containerRef.nativeElement.classList.add( 'fe-desktop' );
+        } else {
+            this.containerRef.nativeElement.classList.remove( 'fe-desktop' );
+        }
     }
 
     /* Any other values than 'fe-open' or 'fe-close' get redirected to onTransmit method when creating a popup through the service */
@@ -61,10 +115,6 @@ export class PopupComponent implements OnInit, AfterViewInit, OnDestroy {
 
         if ( !this.title ) {
             throw new Error( 'Title hasn\'t been set for popup-component' );
-        }
-
-        if ( !this.widthSet ) {
-            this.width = 400;
         }
 
         this.popupObserver.next( 'fe-init' );

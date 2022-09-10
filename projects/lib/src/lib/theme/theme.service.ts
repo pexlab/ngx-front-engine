@@ -8,6 +8,7 @@ import { CommonTheme, ComponentThemes, PartialCommonTheme, PartialComponentTheme
 import { Typography } from '../interfaces/typography.interface';
 import { kebabCase } from '../utils/string.utils';
 import { mergeObj } from '../utils/type.utils';
+import { fes } from '../utils/unit.utils';
 import { Color } from './color';
 import { FeColorPalette } from './featured-palette';
 
@@ -171,7 +172,9 @@ export class ThemeService {
             this.renderer.setStyle(
                 element,
                 propertyName + '-size',
-                font[ 1 ].size,
+                isNaN( +font[ 1 ].size ) ?
+                font[ 1 ].size :
+                fes( +font[ 1 ].size ),
                 2
             );
 
@@ -193,50 +196,62 @@ export class ThemeService {
 
                 display: {
                     name  : 'Roboto',
-                    size  : '30px',
+                    size  : '1.85',
                     weight: 300
                 },
 
                 heading: {
                     name  : 'Jost',
-                    size  : '20px',
+                    size  : '1.25',
                     weight: 300
                 },
 
                 subheading: {
                     name  : 'Jost',
-                    size  : '18px',
+                    size  : '1.15',
                     weight: 300
                 },
 
                 body: {
                     name  : 'Jost',
-                    size  : '14px',
+                    size  : '0.85',
                     weight: 500
                 },
 
                 alternative: {
                     name  : 'Baloo Bhaina 2',
-                    size  : '14px',
+                    size  : '0.85',
                     weight: 400
                 },
 
                 decorative: {
                     name  : 'Roboto',
-                    size  : '14px',
+                    size  : '0.85',
                     weight: 300
                 },
 
                 caption: {
                     name  : 'Roboto',
-                    size  : '12px',
+                    size  : '0.75',
                     weight: 300
                 },
 
                 code: {
                     name  : 'Anonymous Pro',
-                    size  : '14px',
+                    size  : '0.85',
                     weight: 700
+                },
+
+                handwritten_heading: {
+                    name  : 'Pangolin',
+                    size  : '1.15',
+                    weight: 400
+                },
+
+                handwritten_body: {
+                    name  : 'Architects Daughter',
+                    size  : '1',
+                    weight: 400
                 }
             },
 
@@ -270,7 +285,9 @@ export class ThemeService {
                     tertiary  : FeColorPalette.Greyscale.Titanium,
                     quaternary: FeColorPalette.Greyscale.Smoke
                 }
-            }
+            },
+
+            scale: 1
         };
 
         this.commonTheme = mergeObj(
@@ -288,6 +305,13 @@ export class ThemeService {
             this.commonTheme.typography,
             document.documentElement,
             true
+        );
+
+        this.renderer.setStyle(
+            document.documentElement,
+            '--fe-global-preference-scale',
+            ( 16 * this.commonTheme.scale ) + 'px',
+            2
         );
 
         if ( this.meta.getTag( 'name=theme-color' ) ) {

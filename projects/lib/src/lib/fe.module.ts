@@ -1,4 +1,4 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule, NgZone, RendererFactory2 } from '@angular/core';
 import { AngularSvgIconModule, SvgIconRegistryService } from 'angular-svg-icon';
 import { NativeElementInjectorDirective } from './directives/fixes/form-fix.directive';
 import { ThemeService } from './theme/theme.service';
@@ -18,8 +18,7 @@ import { ThemeService } from './theme/theme.service';
             NativeElementInjectorDirective
         ],
 
-        providers: [
-        ]
+        providers: []
     }
 )
 
@@ -32,8 +31,10 @@ export class FeModule {
     }
 
     constructor(
-        theme: ThemeService,
-        iconReg: SvgIconRegistryService
+        private theme: ThemeService,
+        private iconReg: SvgIconRegistryService,
+        private rendererFactory: RendererFactory2,
+        private ngZone: NgZone
     ) {
 
         theme.applyCommonTheme();
@@ -63,5 +64,18 @@ export class FeModule {
         iconReg.loadSvg( 'assets/fe-icons/verified-badge.svg', 'fe-verified-badge' );
         iconReg.loadSvg( 'assets/fe-icons/x.svg', 'fe-close' );
         iconReg.loadSvg( 'assets/fe-icons/x-octagon.svg', 'fe-error' );
+
+        const renderer = rendererFactory.createRenderer( null, null );
+
+        this.ngZone.runOutsideAngular( () => {
+
+            const dynamicStyles = () => {
+                renderer.setStyle( document.documentElement, '--fe-global-analyzed-inner-width', window.innerWidth + 'px', 2 );
+                renderer.setStyle( document.documentElement, '--fe-global-analyzed-inner-height', window.innerHeight + 'px', 2 );
+            };
+
+            dynamicStyles();
+            renderer.listen( window, 'resize', () => dynamicStyles() );
+        } );
     }
 }

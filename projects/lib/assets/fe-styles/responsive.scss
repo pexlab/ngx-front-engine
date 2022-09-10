@@ -1,17 +1,27 @@
 $breakpoint : 1000px !default;
 
 @mixin mobile {
+
     @media only screen and (max-width : #{$breakpoint}) {
-        & {
+        &:not(.fe-desktop) {
             @content;
         }
+    }
+
+    &.fe-mobile {
+        @content;
     }
 }
 
 @mixin desktop {
+
     @media only screen and (min-width : #{$breakpoint + 1}) {
-        & {
+        &:not(.fe-mobile) {
             @content;
         }
+    }
+
+    &.fe-desktop {
+        @content;
     }
 }

@@ -1,6 +1,7 @@
 @use '../../../../assets/fe-styles/theme' with ($scope: 'popup');
 @use '../../../../assets/fe-styles/responsive' with ($breakpoint: 1000px);
 @use '../../../../assets/fe-styles/utils';
+@use 'sass:math';
 
 :host {
 
@@ -71,28 +72,35 @@
 
         @include responsive.desktop {
 
+            min-width     : var(--popup-width-min);
             width         : var(--popup-width);
-            max-width     : 90%;
-            max-height    : 90%;
+            max-width     : var(--popup-width-max);
 
-            border-radius : 1rem;
+            min-height    : var(--popup-height-min);;
+            height        : var(--popup-height);
+            max-height    : var(--popup-height-max);
 
-            border        : 1px solid theme.hex('outer-border');
+            border-radius : utils.fes(1);
 
-            box-shadow    : 0 1rem 1.9rem rgb(black, 0.5);
+            border        : utils.fes(.06) solid theme.hex('outer-border');
+
+            box-shadow    : 0 utils.fes(1) utils.fes(1.9) rgb(black, 0.5);
         }
 
         @include responsive.mobile {
 
             width                   : 100%;
-            max-height              : 90%;
+
+            min-height              : var(--popup-height-min);;
+            height                  : var(--popup-height);
+            max-height              : var(--popup-height-max);
 
             align-self              : end;
 
-            border-top-left-radius  : 1.5rem;
-            border-top-right-radius : 1.5rem;
+            border-top-left-radius  : utils.fes(1.5);
+            border-top-right-radius : utils.fes(1.5);
 
-            box-shadow              : 0 -1rem 1.9rem rgb(black, 0.3);
+            box-shadow              : 0 utils.fes(-1) utils.fes(1.9) rgb(black, 0.3);
         }
 
         & > .title-bar {
@@ -101,7 +109,7 @@
 
             width         : 100%;
 
-            border-bottom : 1px solid theme.hex('divider');
+            border-bottom : utils.fes(.06) solid theme.hex('divider');
 
             background    : theme.hex('title-bar-background');
 
@@ -109,12 +117,12 @@
 
                 cursor                      : pointer;
 
-                width                       : 40px;
-                height                      : 40px;
+                width                       : utils.fes(2.5);
+                height                      : utils.fes(2.5);
 
                 position                    : absolute;
-                top                         : calc(50% - (40px / 2));
-                right                       : 10px;
+                top                         : utils.opFes('50% -', math.div(2.5, 2));
+                right                       : utils.fes(.65);
 
                 &.hidden {
                     opacity        : 0;
@@ -131,16 +139,16 @@
                     left        : 50%;
                     top         : 50%;
 
-                    width       : 15px;
-                    height      : 15px;
+                    width       : utils.fes(1);
+                    height      : utils.fes(1);
 
                     color       : theme.hex('exit');
 
                     transform   : translateX(-50%) translateY(-50%);
 
                     & svg {
-                        width  : 15px;
-                        height : 15px;
+                        width  : utils.fes(1);
+                        height : utils.fes(1);
                     }
                 }
 
@@ -163,11 +171,11 @@
                     right            : 0;
                     bottom           : 0;
 
-                    border-radius    : 40px;
+                    border-radius    : utils.fes(2.5);
 
                     opacity          : 0;
                     background-color : theme.fadeHex('exit', .2);
-                    border           : 1px solid theme.fadeHex('exit', .2);
+                    border           : utils.fes(.06) solid theme.fadeHex('exit', .2);
 
                     transform        : scale(.8);
 
@@ -191,8 +199,8 @@
 
                 box-sizing : border-box;
 
-                margin     : 15px 0;
-                padding    : 0 (40px + ( 10px * 2 ));
+                margin     : utils.fes(1) 0;
+                padding    : 0 utils.fes(2.5 + (.65 * 2));
 
                 text-align : center;
                 @include theme.commonFont('subheading');
@@ -210,20 +218,20 @@
 
             overflow-x          : hidden;
 
-            @include theme.scrollbar(theme.hex('scrollbar'), theme.hex('scrollbar-hover'), transparent, 'y', 0.5rem, 0.25rem);
+            @include theme.scrollbar(theme.hex('scrollbar'), theme.hex('scrollbar-hover'), transparent, 'y', utils.fes(.5), utils.fes(.25));
 
             overflow-scrolling  : touch;
             overscroll-behavior : contain;
 
             @include responsive.desktop {
-                min-width : 400px;
+                min-width : utils.fes(25);
             }
 
             & .content {
 
                 width   : 100%;
 
-                padding : 30px;
+                padding : utils.fes(1.9);
 
                 color   : theme.hex('text');
 
@@ -255,7 +263,7 @@
 
     to {
         opacity   : 0;
-        transform : scale(1) translateY(350px);
+        transform : scale(1) translateY(utils.fes(20));
     }
 }
 

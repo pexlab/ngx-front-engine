@@ -5,10 +5,10 @@
 @forward '../../../../assets/fe-styles/theme';
 @forward '../../../../assets/fe-styles/utils';
 
-$DROPDOWN_PADDING_VERTICAL   : 15px;
-$DROPDOWN_PADDING_HORIZONTAL : 25px;
-$PLACEHOLDER_HEIGHT          : 40px;
-$OPTION_PADDING              : 10px;
+$DROPDOWN_PADDING_VERTICAL   : 1;
+$DROPDOWN_PADDING_HORIZONTAL : 1.5;
+$PLACEHOLDER_HEIGHT          : 2.5;
+$OPTION_PADDING              : .65;
 
 :host {
 
@@ -19,7 +19,7 @@ $OPTION_PADDING              : 10px;
     box-sizing  : border-box;
 
     width       : fit-content;
-    height      : $PLACEHOLDER_HEIGHT;
+    height      : utils.fes($PLACEHOLDER_HEIGHT);
 
     user-select : none;
 
@@ -29,8 +29,8 @@ $OPTION_PADDING              : 10px;
     @include theme.commonFont('body');
 
     &.inline {
-        margin-left  : $DROPDOWN_PADDING_HORIZONTAL;
-        margin-right : $DROPDOWN_PADDING_HORIZONTAL;
+        margin-left  : utils.fes($DROPDOWN_PADDING_HORIZONTAL);
+        margin-right : utils.fes($DROPDOWN_PADDING_HORIZONTAL);
     }
 
     & > * {
@@ -39,39 +39,41 @@ $OPTION_PADDING              : 10px;
 
     & > .placeholderPanel {
 
-        z-index               : 2;
+        z-index                     : 2;
 
-        position              : relative;
+        position                    : relative;
 
-        user-select           : none;
-        cursor                : pointer;
+        user-select                 : none;
+        cursor                      : pointer;
 
-        width                 : fit-content;
-        height                : $PLACEHOLDER_HEIGHT;
+        width                       : fit-content;
+        height                      : utils.fes($PLACEHOLDER_HEIGHT);
 
-        padding               : 0 1rem;
-        box-sizing            : border-box;
+        padding                     : 0 utils.fes(1);
+        box-sizing                  : border-box;
 
-        display               : grid;
-        grid-template-columns : 1fr auto;
-        grid-gap              : 10px;
-        place-items           : center;
+        display                     : grid;
+        grid-template-columns       : 1fr auto;
+        grid-gap                    : utils.fes(.65);
+        place-items                 : center;
 
-        color                 : theme.hex('placeholder-idle-panel-text');
-        border                : 2px solid theme.hex('placeholder-idle-panel-border');
-        background            : theme.hex('placeholder-idle-panel-background');
+        white-space                 : nowrap;
 
-        border-radius         : 99px;
+        color                       : theme.hex('placeholder-idle-panel-text');
+        border                      : utils.fes(.15) solid theme.hex('placeholder-idle-panel-border');
+        background                  : theme.hex('placeholder-idle-panel-background');
 
-        transition            : border-color .25s ease, color .25s ease, background-color .25s ease, box-shadow .25s ease;
+        border-radius               : utils.maxValue();
 
-        @include theme.inlineIcon(15px);
+        transition                  : border-color .25s ease, color .25s ease, background-color .25s ease, box-shadow .25s ease;
+
+        @include theme.inlineIcon(utils.fes(1));
 
         -webkit-tap-highlight-color : transparent;
 
         &:focus {
-            outline        : .1rem solid theme.hex('placeholder-idle-panel-border');
-            outline-offset : .15rem;
+            outline        : utils.fes(.1) solid theme.hex('placeholder-idle-panel-border');
+            outline-offset : utils.fes(.15);
         }
 
         &::after {
@@ -79,13 +81,13 @@ $OPTION_PADDING              : 10px;
             position      : absolute;
             content       : '';
             display       : block;
-            left          : -.1rem;
-            top           : -.2rem;
-            bottom        : -.2rem;
-            right         : -.1rem;
-            border-radius : 99px;
+            left          : utils.fes(-.1);
+            top           : utils.fes(-.2);
+            bottom        : utils.fes(-.2);
+            right         : utils.fes(-.1);
+            border-radius : utils.maxValue();
             box-sizing    : border-box;
-            border-bottom : .2rem solid theme.hex('placeholder-border-bottom');
+            border-bottom : utils.fes(.2) solid theme.hex('placeholder-border-bottom');
             transition    : opacity .25s ease;
         }
 
@@ -104,23 +106,23 @@ $OPTION_PADDING              : 10px;
         &.selected {
 
             color      : theme.hex('placeholder-selected-panel-text');
-            border     : 2px solid theme.hex('placeholder-selected-panel-border');
+            border     : utils.fes(.15) solid theme.hex('placeholder-selected-panel-border');
             background : theme.hex('placeholder-selected-panel-background');
 
-            box-shadow : 0 14px 28px rgba(0, 0, 0, 0.15), 0 10px 10px rgba(0, 0, 0, 0.12);
+            box-shadow : 0 utils.fes(.9) utils.fes(1.75) rgba(0, 0, 0, 0.15), 0 utils.fes(.65) utils.fes(.65) rgba(0, 0, 0, 0.12);
         }
 
         & > ::ng-deep div {
 
             display        : grid;
             grid-auto-flow : column;
-            grid-gap       : 10px;
+            grid-gap       : utils.fes(.65);
             align-items    : center;
 
             width          : fit-content;
             height         : fit-content;
 
-            @include theme.inlineIcon(20px);
+            @include theme.inlineIcon(utils.fes(1.25));
         }
     }
 
@@ -132,25 +134,25 @@ $OPTION_PADDING              : 10px;
 
         position       : absolute;
 
-        top            : math.div($PLACEHOLDER_HEIGHT, 2);
-        left           : -$DROPDOWN_PADDING_HORIZONTAL;
+        top            : utils.fes(math.div($PLACEHOLDER_HEIGHT, 2));
+        left           : utils.fes(-$DROPDOWN_PADDING_HORIZONTAL);
 
         display        : grid;
         grid-auto-flow : row;
 
-        min-width      : 200px;
-        width          : calc(100% + (#{$DROPDOWN_PADDING_HORIZONTAL} * 2) + (#{$OPTION_PADDING} * 2));
+        min-width      : utils.fes(12);
+        width          : utils.opFes('100% +', ($DROPDOWN_PADDING_HORIZONTAL * 2) + ($OPTION_PADDING * 2));
 
         margin         : 0;
-        padding-top    : math.div($PLACEHOLDER_HEIGHT, 2) + $DROPDOWN_PADDING_VERTICAL + 3px + $OPTION_PADDING;
+        padding-top    : utils.fes(math.div($PLACEHOLDER_HEIGHT, 2) + $DROPDOWN_PADDING_VERTICAL + .2 + $OPTION_PADDING);
 
         overflow       : hidden;
 
-        border-radius  : 5px;
+        border-radius  : utils.fes(.31);
 
         background     : theme.hex('options-idle-background');
 
-        box-shadow     : 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        box-shadow     : 0 utils.fes(.06) utils.fes(.2) rgba(0, 0, 0, 0.12), 0 utils.fes(.06) utils.fes(.15) rgba(0, 0, 0, 0.24);
 
         transition     : background .25s ease;
 
@@ -164,36 +166,36 @@ $OPTION_PADDING              : 10px;
             left       : 0;
 
             width      : 100%;
-            height     : 3px;
+            height     : utils.fes(.2);
 
             background : theme.hex('options-stripe');
         }
 
         & > .clear-value {
 
-            $padding_top  : math.div($PLACEHOLDER_HEIGHT, 2) + $DROPDOWN_PADDING_VERTICAL;
+            $padding_top                : math.div($PLACEHOLDER_HEIGHT, 2) + $DROPDOWN_PADDING_VERTICAL;
 
-            position      : absolute;
+            position                    : absolute;
 
-            top           : 3px + math.div($OPTION_PADDING, 2);
-            right         : $OPTION_PADDING;
+            top                         : utils.fes(.2 + math.div($OPTION_PADDING, 2));
+            right                       : utils.fes($OPTION_PADDING);
 
-            display       : grid;
-            place-items   : center;
+            display                     : grid;
+            place-items                 : center;
 
-            width         : $padding_top;
-            height        : $padding_top;
+            width                       : utils.fes($padding_top);
+            height                      : utils.fes($padding_top);
 
-            margin        : 0; /* Idk why but the margin from the parent is being applied to the children as well */
+            margin                      : 0; /* Idk why but the margin from the parent is being applied to the children as well */
 
-            border-radius : 99px;
+            border-radius               : utils.maxValue();
 
-            color         : theme.hex('clear-button-idle');
-            background    : theme.hex('clear-button-idle-background');
+            color                       : theme.hex('clear-button-idle');
+            background                  : theme.hex('clear-button-idle-background');
 
-            transition    : background-color .25s ease, color .25s ease;
+            transition                  : background-color .25s ease, color .25s ease;
 
-            @include theme.inlineIcon(18px);
+            @include theme.inlineIcon(utils.fes(1.15));
 
             @include utils.hover {
                 color      : theme.hex('clear-button-hover');

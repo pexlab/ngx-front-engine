@@ -1,43 +1,44 @@
 @use '~dist/ngx-front-engine/assets/fe-styles/theme';
+@use '~dist/ngx-front-engine/assets/fe-styles/utils';
 
 :host {
-  
+
   display        : grid;
   grid-auto-flow : row;
-  grid-gap       : 80px;
-  
+  grid-gap       : utils.fes(5);
+
   & > .category {
-	
+
 	& > span {
 	  display       : block;
 	  color         : black;
-	  margin-bottom : 15px;
+	  margin-bottom : utils.fes(1);
 	  @include theme.commonFont('heading');
 	}
-	
+
 	& > .grid {
-	  
+
 	  display               : grid;
-	  grid-gap              : 30px;
-	  grid-template-columns : repeat(auto-fill, 250px);
-	  
+	  grid-gap              : utils.fes(1.9);
+	  grid-template-columns : repeat(auto-fill, utils.fes(15));
+
 	  & > .color {
-		
+
 		width          : 100%;
 		height         : fit-content;
-		
+
 		display        : grid;
 		grid-auto-flow : row;
-		grid-gap       : 15px;
-		
+		grid-gap       : utils.fes(1);
+
 		& > div {
-		  
+
 		  width         : 100%;
-		  height        : 250px;
-		  
-		  border-radius : 10px;
+		  height        : utils.fes(15);
+
+		  border-radius : utils.fes(.65);
 		}
-		
+
 		& > span {
 		  @include theme.commonFont('decorative');
 		  width      : 100%;

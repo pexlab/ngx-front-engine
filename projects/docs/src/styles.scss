@@ -3,105 +3,103 @@
 
 body {
 
-  margin : 40px;
+    margin : utils.fes(2.5);
 
-  @include theme.commonFont('body');
+    @include theme.commonFont('body');
 
-  & * {
-	box-sizing : border-box;
-  }
+    & * {
+        box-sizing : border-box;
+    }
 
-  & a {
+    & a {
 
-	text-decoration : none;
+        text-decoration : none;
 
-	color           : darkblue;
+        color           : darkblue;
 
-	@include theme.commonFont('body');
+        @include theme.commonFont('body');
 
-	@include utils.hover {
-	  text-decoration : underline;
-	}
-  }
+        @include utils.hover {
+            text-decoration : underline;
+        }
+    }
 
-  & br, & img {
-	user-select : none;
-  }
+    & br, & img {
+        user-select : none;
+    }
 
-  & h1 {
-	@include theme.commonFont('heading');
-	font-size : 32px;
-  }
+    & h1 {
+        @include theme.commonFont('heading');
+    }
 
-  & h2 {
-	@include theme.commonFont('subheading');
-	font-size : 24px;
-  }
+    & h2 {
+        @include theme.commonFont('subheading');
+    }
 
-  & h3 {
-	@include theme.commonFont('subheading');
-	font-size : 21px;
-  }
+    & h3 {
+        @include theme.commonFont('subheading');
+    }
 
-  & h4 {
-	@include theme.commonFont('subheading');
-	font-size : 16px;
-  }
+    & h4 {
+        @include theme.commonFont('subheading');
+    }
 
-  & code {
-	background    : theme.commonHex('background-quaternary');
-	padding       : 3px 5px;
-	border-radius : 5px;
-	@include theme.commonFont('code');
-  }
+    & code {
+        background    : theme.commonHex('background-quaternary');
+        padding       : utils.fes(.2) utils.fes(.31);
+        border-radius : utils.fes(.31);
+        @include theme.commonFont('code');
+    }
 
-  & hr {
-	border-top    : 1px solid theme.commonHex('background-tertiary');
-	border-left   : none;
-	border-bottom : none;
-	border-right  : none;
-  }
+    & hr {
+        border-top    : utils.fes(.06) solid theme.commonHex('background-tertiary');
+        border-left   : none;
+        border-bottom : none;
+        border-right  : none;
+    }
 
-  & nav {
+    & nav {
 
-	color       : #6A6A6A;
-	user-select : none;
-	@include theme.commonFont('decorative');
+        color       : #6a6a6a;
+        user-select : none;
+        @include theme.commonFont('decorative');
 
-	& a, & a:hover, & a:focus, & a:active {
-	  text-decoration : none;
-	  color           : inherit;
-	  @include theme.commonFont('decorative');
-	}
+        & a, & a:hover, & a:focus, & a:active {
+            text-decoration : none;
+            color           : inherit;
+            @include theme.commonFont('decorative');
+        }
 
-	& > .items {
+        & > .items {
 
-	  width          : fit-content;
-	  display        : grid;
-	  grid-auto-flow : column;
-	  grid-gap       : 50px;
+            width          : fit-content;
+            display        : grid;
+            grid-auto-flow : column;
+            grid-gap       : utils.fes(3);
 
-	  & > * {
-		cursor : pointer;
-	  }
+            & > * {
+                cursor : pointer;
+            }
 
-	  & > a {
+            & > a {
 
-		padding       : 10px 15px;
-		border-radius : 5px;
+                padding       : utils.fes(.65) utils.fes(1);
+                border-radius : utils.fes(.31);
 
-		&.active {
-		  background : #DDDDDD;
-		}
-	  }
-	}
-  }
+                white-space   : nowrap;
 
-  .container {
-	width          : 500px;
-	max-width      : 100%;
-	display        : grid;
-	grid-auto-flow : row;
-	grid-gap       : 20px;
-  }
+                &.active {
+                    background : #dddddd;
+                }
+            }
+        }
+    }
+
+    .container {
+        width          : utils.fes(30);
+        max-width      : 100%;
+        display        : grid;
+        grid-auto-flow : row;
+        grid-gap       : utils.fes(1.25);
+    }
 }

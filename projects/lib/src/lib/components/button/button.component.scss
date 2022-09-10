@@ -22,8 +22,8 @@
         -webkit-tap-highlight-color : transparent;
 
         &:focus {
-            outline        : .1rem solid theme.hex('background');
-            outline-offset : .15rem;
+            outline        : utils.fes(.1) solid theme.hex('background');
+            outline-offset : utils.fes(.15);
         }
     }
 
@@ -41,13 +41,13 @@
 
         overflow      : hidden;
 
-        padding       : .75rem 1.25rem;
+        padding       : utils.fes(.75) utils.fes(1.25);
 
-        border-radius : .5rem;
+        border-radius : utils.fes(.5);
 
         cursor        : pointer;
 
-        line-height   : 1.3rem;
+        line-height   : utils.fes(1.3);
 
         color         : theme.hex('text');
         background    : theme.hex('background');
@@ -59,11 +59,11 @@
 
             display        : grid;
             grid-auto-flow : column;
-            grid-gap       : .5rem;
+            grid-gap       : utils.fes(.5);
             align-items    : center;
 
             @include theme.commonFont('body');
-            @include theme.inlineDeepIcon(1.3rem);
+            @include theme.inlineDeepIcon(utils.fes(1.3));
         }
 
         transition    : box-shadow .25s ease-in-out;
@@ -91,7 +91,7 @@
     }
 
     & > button.raised-simple {
-        border-bottom : 0.2rem solid theme.hex('border-bottom');
+        border-bottom : utils.fes(.2) solid theme.hex('border-bottom');
     }
 
     & > button.circle, & > button.circle-hover, & > button.circle-hover-with-fallback {
@@ -100,14 +100,14 @@
 
         display        : grid;
         grid-auto-flow : row;
-        grid-gap       : .5rem;
+        grid-gap       : utils.fes(.5);
         justify-items  : center;
 
         cursor         : pointer;
 
         color          : theme.hex('circle-tooltip-text');
 
-        border-radius  : math.div(1.3rem, 2) + 1.25rem;
+        border-radius  : utils.fes(math.div(1.3, 2) + 1.25);
 
         @include theme.commonFont('body');
 
@@ -131,21 +131,21 @@
 
                 position      : relative;
 
-                width         : 3rem;
-                height        : 3rem;
+                width         : utils.fes(3);
+                height        : utils.fes(3);
 
                 display       : grid;
                 place-items   : center;
 
-                border-radius : math.div(1.3rem, 2) + 1.25rem;
+                border-radius : utils.fes(math.div(1.3, 2) + 1.25);
                 overflow      : hidden;
 
                 color         : theme.hex('text');
                 background    : theme.hex('background');
 
                 & > svg {
-                    width  : 1.3rem;
-                    height : 1.3rem;
+                    width  : utils.fes(1.3);
+                    height : utils.fes(1.3);
                 }
 
                 &:after {
@@ -178,7 +178,7 @@
         &::ng-deep {
             & > span {
                 opacity   : 1;
-                transform : translateY(calc(100% + .25rem)) translateX(-50%);
+                transform : translateY(utils.opFes('100% +', .25)) translateX(-50%);
             }
         }
     }
@@ -195,7 +195,7 @@
             &::ng-deep {
                 & > span {
                     opacity   : 1;
-                    transform : translateY(calc(100% + .25rem)) translateX(-50%);
+                    transform : translateY(utils.opFes('100% +', .25)) translateX(-50%);
                 }
             }
         }
@@ -214,7 +214,7 @@
                 & > span {
                     pointer-events : visible;
                     opacity        : 1;
-                    transform      : translateY(calc(100% + .25rem)) translateX(-50%);
+                    transform      : translateY(utils.opFes('100% +', .25)) translateX(-50%);
                 }
             }
         }
@@ -229,27 +229,27 @@
     }
 
     & > button.pill {
-        padding       : .7rem 1rem;
-        border-radius : math.div(1.3rem, 2) + .75rem;
+        padding       : utils.fes(.7) utils.fes(1);
+        border-radius : utils.fes(math.div(1.3, 2) + .75);
     }
 
     & > button.raised-pill {
-        padding       : .7rem 1rem;
-        border-radius : math.div(1.3rem, 2) + .75rem + .2rem;
-        border-bottom : .2rem solid theme.hex('border-bottom');
+        padding       : utils.fes(.7) utils.fes(1);
+        border-radius : utils.fes(math.div(1.3, 2) + .7 + .2);
+        border-bottom : utils.fes(.2) solid theme.hex('border-bottom');
     }
 
     & > button.hinge {
 
-        width            : 12rem;
+        width            : utils.fes(12);
         height           : fit-content;
 
         display          : grid;
         place-items      : center;
 
         box-sizing       : border-box;
-        padding          : 1rem;
-        border-radius    : 1rem;
+        padding          : utils.fes(1);
+        border-radius    : utils.fes(1);
 
         color            : theme.hex('text');
 
@@ -274,15 +274,15 @@
 
                 & > svg-icon {
 
-                    width       : 1.3rem;
-                    height      : 1.3rem;
+                    width       : utils.fes(1.3);
+                    height      : utils.fes(1.3);
 
                     display     : grid;
                     place-items : center;
 
                     & > svg {
-                        width  : 1.3rem;
-                        height : 1.3rem;
+                        width  : utils.fes(1.3);
+                        height : utils.fes(1.3);
                     }
                 }
 
@@ -296,7 +296,7 @@
                     text-overflow : ellipsis;
                     white-space   : nowrap;
 
-                    line-height   : 1.3rem;
+                    line-height   : utils.fes(1.3);
 
                     @include theme.commonFont('body');
                 }
@@ -305,22 +305,22 @@
 
         @include utils.hover {
 
-            width      : 13rem;
+            width      : utils.fes(13);
 
             color      : theme.hex('hinge-hover-text');
             background : theme.hex('hinge-hover-background');
 
-            box-shadow : 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+            box-shadow : 0 utils.fes(.2) utils.fes(.4) rgba(0, 0, 0, 0.16), 0 utils.fes(.2) utils.fes(.4) rgba(0, 0, 0, 0.23);
         }
     }
 
     & > button.artistic-curves {
 
-        padding       : 1rem 2rem;
+        padding       : utils.fes(1) utils.fes(2);
 
-        border-radius : 1.5rem .5rem 1.5rem .5rem;
+        border-radius : utils.fes(1.5) utils.fes(.5) utils.fes(1.5) utils.fes(.5);
 
-        border-bottom : 3px solid theme.hex('border-bottom');
+        border-bottom : utils.fes(.2) solid theme.hex('border-bottom');
     }
 
     & > button.see-through-light,
@@ -378,28 +378,25 @@
 
         display        : grid;
         grid-auto-flow : column;
-        grid-gap       : .5rem;
+        grid-gap       : utils.fes(.5);
         align-items    : center;
 
-        border         : solid 2px theme.commonHex('text-secondary');
-        border-radius  : 17rem 1rem 17rem 1rem / 1rem 17rem 1rem 17rem;
+        border         : utils.fes(.15) solid theme.commonHex('text-secondary');
+        border-radius  : utils.fes(17) utils.fes(1) utils.fes(17) utils.fes(1) / utils.fes(1) utils.fes(17) utils.fes(1) utils.fes(17);
 
         cursor         : pointer;
 
-        padding        : .75rem 1.25rem;
-
-        font-family    : 'Architects Daughter', cursive;
-        font-size      : 15px;
-        font-weight    : bold;
+        padding        : utils.fes(.75) utils.fes(1.25);
 
         color          : theme.commonHex('text-secondary');
 
         transition     : padding .4s cubic-bezier(0.34, 1.56, 0.64, 1);
 
-        @include theme.inlineDeepIcon(1.3rem);
+        @include theme.commonFont('handwritten-body');
+        @include theme.inlineDeepIcon(utils.fes(1.3));
 
         @include utils.hover {
-            padding         : .75rem 2rem;
+            padding         : utils.fes(.75) utils.fes(2);
             text-decoration : underline solid rgba(#41403E, .5);
         }
 

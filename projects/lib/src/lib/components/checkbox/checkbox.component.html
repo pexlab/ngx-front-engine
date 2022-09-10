@@ -13,7 +13,7 @@
         [ngClass]="isChecked ? 'checked' : 'unchecked'">
     </svg-icon>
 
-    <svg viewBox="0 0 18 18" width="18" height="18" [ngClass]="isChecked ? 'checked' : 'unchecked'">
+    <svg viewBox="0 0 18 18" [ngClass]="isChecked ? 'checked' : 'unchecked'">
 
         <path class="background"
               [class.initialised]="isInitialised === true"

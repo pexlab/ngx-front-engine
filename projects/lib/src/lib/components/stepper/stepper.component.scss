@@ -1,4 +1,5 @@
-@use '../../../../assets/fe-styles/theme' as config with ($scope: 'stepper');
+@use '../../../../assets/fe-styles/theme' with ($scope: 'stepper');
+@use '../../../../assets/fe-styles/utils';
 
 :host {
 
@@ -6,53 +7,53 @@
 
     &.stepper-inline {
         display      : inline-grid;
-        margin-left  : 7px;
-        margin-right : 7px;
+        margin-left  : utils.fes(.45);
+        margin-right : utils.fes(.45);
     }
 
     width          : fit-content;
     height         : fit-content;
 
     grid-auto-flow : row;
-    grid-gap       : 10px;
+    grid-gap       : utils.fes(.65);
     justify-items  : center;
 
     & > span {
 
         white-space : nowrap;
 
-        @include config.commonFont('body');
+        @include theme.commonFont('body');
 
-        color       : config.hex('text');
+        color       : theme.hex('text');
 
         &:after {
-            content   : var(--suffix);
-            font-size : 14px;
+            content : var(--suffix);
+            @include theme.commonFont('body');
         }
     }
 
     & .top, & .bottom {
 
-        width            : 35px;
-        height           : 35px;
+        width                       : utils.fes(2.2);
+        height                      : utils.fes(2.2);
 
-        display          : grid;
-        place-items      : center;
+        display                     : grid;
+        place-items                 : center;
 
-        border-radius    : 8px;
+        border-radius               : utils.fes(.5);
 
-        color            : config.hex('button-icon');
-        background-color : config.hex('button-background');
+        color                       : theme.hex('button-icon');
+        background-color            : theme.hex('button-background');
 
-        @include config.inlineIcon(20px);
+        @include theme.inlineIcon(utils.fes(1.25));
 
-        cursor           : pointer;
+        cursor                      : pointer;
 
         -webkit-tap-highlight-color : transparent;
 
         &:focus {
-            outline        : .1rem solid config.hex('button-background');
-            outline-offset : .15rem;
+            outline        : utils.fes(.1) solid theme.hex('button-background');
+            outline-offset : utils.fes(.15);
         }
     }
 }

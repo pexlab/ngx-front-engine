@@ -5,27 +5,27 @@
 
     & > .wrapper {
 
-        position       : relative;
+        position                    : relative;
 
-        width          : fit-content;
-        height         : fit-content;
+        width                       : fit-content;
+        height                      : fit-content;
 
-        box-sizing     : content-box;
-        padding        : 7px;
+        box-sizing                  : content-box;
+        padding                     : utils.fes(.45);
 
-        margin         : -7px;
+        margin                      : utils.fes(-.45);
 
-        display        : grid;
-        grid-auto-flow : column;
-        grid-gap       : 10px;
+        display                     : grid;
+        grid-auto-flow              : column;
+        grid-gap                    : utils.fes(.65);
 
-        align-items    : center;
+        align-items                 : center;
 
-        cursor         : not-allowed;
+        cursor                      : not-allowed;
 
-        user-select    : none;
+        user-select                 : none;
 
-        isolation      : isolate;
+        isolation                   : isolate;
 
         -webkit-tap-highlight-color : transparent;
 
@@ -34,8 +34,8 @@
             outline : none;
 
             & > .hitbox {
-                outline        : .1rem solid theme.hex('outline-hover');
-                outline-offset : .15rem;
+                outline        : utils.fes(.1) solid theme.hex('outline-hover');
+                outline-offset : utils.fes(.15);
             }
         }
 
@@ -54,7 +54,7 @@
             right         : 0;
             bottom        : 0;
 
-            border-radius : 5px;
+            border-radius : utils.fes(.31);
 
             background    : theme.hex('hover-background');
 
@@ -71,7 +71,7 @@
                 & > svg.unchecked > path.outline {
                     &.hover {
                         opacity      : 1;
-                        stroke-width : 2.5px;
+                        stroke-width : 2.5;
                     }
                 }
 
@@ -107,7 +107,7 @@
             transition : filter .25s ease;
 
             &.checked {
-                filter : drop-shadow(0 1px 3px rgba(0, 0, 0, 0.05)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15));
+                filter : drop-shadow(0 utils.fes(.06) utils.fes(.2) rgba(0, 0, 0, 0.05)) drop-shadow(0 utils.fes(.06) utils.fes(.15) rgba(0, 0, 0, 0.15));
             }
 
             & > path.outline {
@@ -119,7 +119,7 @@
                 &.idle {
 
                     stroke       : theme.hex('outline-idle');
-                    stroke-width : 2px;
+                    stroke-width : 2;
 
                     &.checked {
                         opacity : 0;
@@ -142,7 +142,7 @@
 
                     stroke           : theme.hex('outline-checked');
 
-                    stroke-width     : 1.5px;
+                    stroke-width     : 1.5;
 
                     stroke-dasharray : var(--length);
 
@@ -173,7 +173,7 @@
                 fill             : transparent;
 
                 stroke           : theme.hex('checkmark');
-                stroke-width     : 2px;
+                stroke-width     : 2;
                 stroke-dasharray : var(--length);
 
                 transform-origin : center;
@@ -209,7 +209,7 @@
             }
         }
 
-        @include theme.inlineIcon(1rem);
+        @include theme.inlineIcon(utils.fes(1));
 
         & > svg-icon {
 
@@ -217,8 +217,8 @@
 
             position  : absolute;
 
-            left      : 18px + 2px + 7px;
-            top       : -2px + 7px;
+            left      : utils.fes(1.15 + .15 + .45);
+            top       : utils.fes(-.15 + .45);
 
             transform : translateX(-50%) translateY(-50%);
 
@@ -233,6 +233,11 @@
             &.checked {
                 color : theme.hex('outline-checked');
             }
+        }
+
+        & > svg {
+            width  : utils.fes(1.15);
+            height : utils.fes(1.15);
         }
     }
 }
