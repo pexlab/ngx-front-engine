@@ -259,7 +259,6 @@
             overscroll-behavior : contain;
 
             @include responsive.desktop {
-                min-width : utils.fes(25);
                 @include theme.scrollbar(theme.hex('desktop-body-scrollbar'), theme.hex('desktop-body-scrollbar-hover'), transparent, 'y', utils.fes(.5), utils.fes(.25));
             }
 
