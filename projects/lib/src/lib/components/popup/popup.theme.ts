@@ -3,14 +3,50 @@ import { ZHEXColor } from '../../interfaces/color.interface';
 
 export const ZPopupTheme = z.object(
     {
-        text              : ZHEXColor,
-        background        : ZHEXColor,
-        titleBarBackground: ZHEXColor,
-        divider           : ZHEXColor,
-        exit              : ZHEXColor,
-        outerBorder       : ZHEXColor,
-        scrollbar         : ZHEXColor,
-        scrollbarHover    : ZHEXColor
+        desktop: z.object(
+            {
+
+                border: ZHEXColor,
+
+                title: z.object(
+                    {
+                        text      : ZHEXColor,
+                        background: ZHEXColor,
+                        border    : ZHEXColor,
+                        exit      : ZHEXColor
+                    }
+                ),
+
+                body: z.object(
+                    {
+                        text          : ZHEXColor,
+                        background    : ZHEXColor,
+                        scrollbar     : ZHEXColor,
+                        scrollbarHover: ZHEXColor
+                    }
+                )
+            }
+        ),
+        mobile : z.object(
+            {
+                title: z.object(
+                    {
+                        text      : ZHEXColor,
+                        background: ZHEXColor,
+                        border    : ZHEXColor,
+                        exit      : ZHEXColor
+                    }
+                ),
+                body : z.object(
+                    {
+                        text          : ZHEXColor,
+                        background    : ZHEXColor,
+                        scrollbar     : ZHEXColor,
+                        scrollbarHover: ZHEXColor
+                    }
+                )
+            }
+        )
     }
 );
 

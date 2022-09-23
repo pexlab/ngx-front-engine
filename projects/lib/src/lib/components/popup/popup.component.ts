@@ -80,28 +80,60 @@ export class PopupComponent implements OnInit, AfterViewInit, OnDestroy {
 
         if ( value === 'mobile' ) {
             this.containerRef.nativeElement.classList.add( 'fe-mobile' );
+            this.titleBarRef.nativeElement.classList.add( 'fe-mobile' );
+            this.iconRef.nativeElement.classList.add( 'fe-mobile' );
+            this.titleSpanRef.nativeElement.classList.add( 'fe-mobile' );
+            this.contentWrapperRef.nativeElement.classList.add( 'fe-mobile' );
+            this.contentRef.nativeElement.classList.add( 'fe-mobile' );
         } else {
             this.containerRef.nativeElement.classList.remove( 'fe-mobile' );
+            this.titleBarRef.nativeElement.classList.remove( 'fe-mobile' );
+            this.iconRef.nativeElement.classList.remove( 'fe-mobile' );
+            this.titleSpanRef.nativeElement.classList.remove( 'fe-mobile' );
+            this.contentWrapperRef.nativeElement.classList.remove( 'fe-mobile' );
+            this.contentRef.nativeElement.classList.remove( 'fe-mobile' );
         }
 
         if ( value === 'desktop' ) {
             this.containerRef.nativeElement.classList.add( 'fe-desktop' );
+            this.titleBarRef.nativeElement.classList.add( 'fe-desktop' );
+            this.iconRef.nativeElement.classList.add( 'fe-desktop' );
+            this.titleSpanRef.nativeElement.classList.add( 'fe-desktop' );
+            this.contentWrapperRef.nativeElement.classList.add( 'fe-desktop' );
+            this.contentRef.nativeElement.classList.add( 'fe-desktop' );
         } else {
             this.containerRef.nativeElement.classList.remove( 'fe-desktop' );
+            this.titleBarRef.nativeElement.classList.remove( 'fe-desktop' );
+            this.iconRef.nativeElement.classList.remove( 'fe-desktop' );
+            this.titleSpanRef.nativeElement.classList.remove( 'fe-desktop' );
+            this.contentWrapperRef.nativeElement.classList.remove( 'fe-desktop' );
+            this.contentRef.nativeElement.classList.remove( 'fe-desktop' );
         }
     }
 
     /* Any other values than 'fe-open' or 'fe-close' get redirected to onTransmit method when creating a popup through the service */
     public popupObserver: Subject<'fe-init' | 'fe-open' | 'fe-close' | any> = new Subject();
 
-    @ViewChild( 'content', { read: ViewContainerRef, static: false } )
-    public viewContainer!: ViewContainerRef;
-
     @ViewChild( 'container' )
     public containerRef!: ElementRef<HTMLElement>;
 
+    @ViewChild( 'titleBar' )
+    public titleBarRef!: ElementRef<HTMLElement>;
+
+    @ViewChild( 'icon' )
+    public iconRef!: ElementRef<HTMLElement>;
+
+    @ViewChild( 'titleSpan' )
+    public titleSpanRef!: ElementRef<HTMLElement>;
+
     @ViewChild( 'contentWrapper' )
     public contentWrapperRef!: ElementRef<HTMLElement>;
+
+    @ViewChild( 'content' )
+    public contentRef!: ElementRef<HTMLElement>;
+
+    @ViewChild( 'contentTemplate', { read: ViewContainerRef, static: false } )
+    public viewContainer!: ViewContainerRef;
 
     private visibility!: 'visible' | 'hidden';
 

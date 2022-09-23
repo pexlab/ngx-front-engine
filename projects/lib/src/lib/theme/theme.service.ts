@@ -499,14 +499,37 @@ export class ThemeService {
             },
 
             popup: {
-                text              : this.commonTheme.palette.text.primary,
-                background        : this.commonTheme.palette.background.primary,
-                titleBarBackground: FeColorPalette.Greyscale.Transparent,
-                divider           : this.commonTheme.palette.background.tertiary,
-                exit              : this.commonTheme.palette.text.failure,
-                outerBorder       : FeColorPalette.Greyscale.Transparent,
-                scrollbar         : this.commonTheme.palette.background.tertiary,
-                scrollbarHover    : this.commonTheme.palette.background.quaternary
+
+                desktop: {
+                    border: FeColorPalette.Greyscale.Transparent,
+                    title : {
+                        text      : this.commonTheme.palette.text.primary,
+                        border    : this.commonTheme.palette.background.tertiary,
+                        exit      : this.commonTheme.palette.text.failure,
+                        background: this.commonTheme.palette.background.primary
+                    },
+                    body  : {
+                        text          : this.commonTheme.palette.text.primary,
+                        background    : this.commonTheme.palette.background.primary,
+                        scrollbar     : this.commonTheme.palette.background.tertiary,
+                        scrollbarHover: this.commonTheme.palette.background.quaternary
+                    }
+                },
+
+                mobile: {
+                    title: {
+                        text      : this.commonTheme.palette.text.primary,
+                        border    : this.commonTheme.palette.background.tertiary,
+                        exit      : this.commonTheme.palette.text.failure,
+                        background: this.commonTheme.palette.background.primary
+                    },
+                    body : {
+                        text          : this.commonTheme.palette.text.primary,
+                        background    : this.commonTheme.palette.background.primary,
+                        scrollbar     : this.commonTheme.palette.background.tertiary,
+                        scrollbarHover: this.commonTheme.palette.background.quaternary
+                    }
+                }
             },
 
             speedometer: {

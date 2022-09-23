@@ -62,8 +62,6 @@
 
         overflow           : hidden;
 
-        background-color   : theme.hex('background');
-
         opacity            : 0;
         transform          : scale(0.7);
 
@@ -72,19 +70,20 @@
 
         @include responsive.desktop {
 
-            min-width     : var(--popup-width-min);
-            width         : var(--popup-width);
-            max-width     : var(--popup-width-max);
+            min-width        : var(--popup-width-min);
+            width            : var(--popup-width);
+            max-width        : var(--popup-width-max);
 
-            min-height    : var(--popup-height-min);;
-            height        : var(--popup-height);
-            max-height    : var(--popup-height-max);
+            min-height       : var(--popup-height-min);;
+            height           : var(--popup-height);
+            max-height       : var(--popup-height-max);
 
-            border-radius : utils.fes(1);
+            border-radius    : utils.fes(1);
 
-            border        : utils.fes(.06) solid theme.hex('outer-border');
+            outline          : utils.fes(.06) solid theme.hex('desktop-border');
+            background-color : theme.hex('desktop-body-background');
 
-            box-shadow    : 0 utils.fes(1) utils.fes(1.9) rgb(black, 0.5);
+            box-shadow       : 0 utils.fes(1) utils.fes(1.9) rgb(black, 0.5);
         }
 
         @include responsive.mobile {
@@ -100,20 +99,30 @@
             border-top-left-radius  : utils.fes(1.5);
             border-top-right-radius : utils.fes(1.5);
 
+            background-color        : theme.hex('mobile-body-background');
+
             box-shadow              : 0 utils.fes(-1) utils.fes(1.9) rgb(black, 0.3);
         }
 
         & > .title-bar {
 
-            position      : relative;
+            position : relative;
 
-            width         : 100%;
+            width    : 100%;
 
-            border-bottom : utils.fes(.06) solid theme.hex('divider');
+            @include responsive.desktop {
+                border-bottom : utils.fes(.06) solid theme.hex('desktop-title-border');
+                background    : theme.hex('desktop-title-background');
+            }
 
-            background    : theme.hex('title-bar-background');
+            @include responsive.mobile {
+                border-bottom : utils.fes(.06) solid theme.hex('mobile-title-border');
+                background    : theme.hex('mobile-title-background');
+            }
 
             & > .icon {
+
+                isolation                   : isolate;
 
                 cursor                      : pointer;
 
@@ -124,12 +133,22 @@
                 top                         : utils.opFes('50% -', math.div(2.5, 2));
                 right                       : utils.fes(.65);
 
+                @include responsive.desktop {
+                    color : theme.hex('desktop-title-exit');
+                }
+
+                @include responsive.mobile {
+                    color : theme.hex('mobile-title-exit');
+                }
+
                 &.hidden {
                     opacity        : 0;
                     pointer-events : none;
                 }
 
-                & svg-icon {
+                & > svg-icon {
+
+                    z-index     : 1;
 
                     display     : grid;
                     place-items : center;
@@ -141,8 +160,6 @@
 
                     width       : utils.fes(1);
                     height      : utils.fes(1);
-
-                    color       : theme.hex('exit');
 
                     transform   : translateX(-50%) translateY(-50%);
 
@@ -160,26 +177,38 @@
 
                 &:after {
 
-                    z-index          : -1;
+                    z-index       : 0;
 
-                    content          : '';
+                    content       : '';
 
-                    position         : absolute;
+                    position      : absolute;
 
-                    left             : 0;
-                    top              : 0;
-                    right            : 0;
-                    bottom           : 0;
+                    left          : 0;
+                    top           : 0;
+                    right         : 0;
+                    bottom        : 0;
 
-                    border-radius    : utils.fes(2.5);
+                    border-radius : utils.fes(2.5);
 
-                    opacity          : 0;
-                    background-color : theme.fadeHex('exit', .2);
-                    border           : utils.fes(.06) solid theme.fadeHex('exit', .2);
+                    opacity       : 0;
 
-                    transform        : scale(.8);
+                    transform     : scale(.8);
 
-                    transition       : opacity .25s ease, transform .25s ease;
+                    transition    : opacity .25s ease, transform .25s ease;
+                }
+
+                @include responsive.desktop {
+                    &:after {
+                        background-color : theme.fadeHex('desktop-title-exit', .2);
+                        border           : utils.fes(.06) solid theme.fadeHex('desktop-title-exit', .2);
+                    }
+                }
+
+                @include responsive.mobile {
+                    &:after {
+                        background-color : theme.fadeHex('mobile-title-exit', .2);
+                        border           : utils.fes(.06) solid theme.fadeHex('mobile-title-exit', .2);
+                    }
                 }
 
                 @include utils.hover {
@@ -203,8 +232,16 @@
                 padding    : 0 utils.fes(2.5 + (.65 * 2));
 
                 text-align : center;
+
                 @include theme.commonFont('subheading');
-                color      : theme.hex('text');
+
+                @include responsive.desktop {
+                    color : theme.hex('desktop-title-text');
+                }
+
+                @include responsive.mobile {
+                    color : theme.hex('mobile-title-text');
+                }
             }
         }
 
@@ -218,24 +255,33 @@
 
             overflow-x          : hidden;
 
-            @include theme.scrollbar(theme.hex('scrollbar'), theme.hex('scrollbar-hover'), transparent, 'y', utils.fes(.5), utils.fes(.25));
-
             overflow-scrolling  : touch;
             overscroll-behavior : contain;
 
             @include responsive.desktop {
                 min-width : utils.fes(25);
+                @include theme.scrollbar(theme.hex('desktop-body-scrollbar'), theme.hex('desktop-body-scrollbar-hover'), transparent, 'y', utils.fes(.5), utils.fes(.25));
             }
 
-            & .content {
+            @include responsive.mobile {
+                @include theme.scrollbar(theme.hex('mobile-body-scrollbar'), theme.hex('mobile-body-scrollbar-hover'), transparent, 'y', utils.fes(.5), utils.fes(.25));
+            }
+
+            & > .content {
 
                 width   : 100%;
 
                 padding : utils.fes(1.9);
 
-                color   : theme.hex('text');
-
                 @include theme.commonFont('body');
+
+                @include responsive.desktop {
+                    color : theme.hex('desktop-body-text');
+                }
+
+                @include responsive.mobile {
+                    color : theme.hex('mobile-body-text');
+                }
             }
         }
     }

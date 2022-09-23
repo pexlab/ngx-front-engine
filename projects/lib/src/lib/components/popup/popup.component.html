@@ -1,18 +1,18 @@
 <div class="container" #container>
 
-    <div class="title-bar">
+    <div class="title-bar" #titleBar>
 
-        <div class="icon" tabindex="0" [class.hidden]="hideExitIcon" [fe-tactile] [feCaptureTouch]="true" (feClick)="close()">
+        <div class="icon" #icon tabindex="0" [class.hidden]="hideExitIcon" [fe-tactile] [feCaptureTouch]="true" (feClick)="close()">
             <svg-icon name="fe-close"></svg-icon>
         </div>
 
-        <span>{{ title }}</span>
+        <span #titleSpan>{{ title }}</span>
 
     </div>
 
     <div class="content-wrapper" #contentWrapper>
-        <div class="content">
-            <ng-template #content></ng-template>
+        <div class="content" #content>
+            <ng-template #contentTemplate></ng-template>
         </div>
     </div>
 </div>
