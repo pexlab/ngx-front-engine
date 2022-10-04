@@ -36,7 +36,7 @@
             "url": "https://www.buymeacoffee.com/slatedave"
         }
     ],
-    "version": "0.0.66",
+    "version": "0.0.67",
     "license": "MIT",
     "homepage": "https://pexlab.net/projects/front-engine",
     "peerDependencies": {

@@ -52,6 +52,8 @@
 
     & > .container {
 
+        isolation          : isolate;
+
         grid-column        : 1;
         grid-row           : 1;
 
@@ -59,8 +61,6 @@
         grid-template-rows : auto 1fr;
         grid-gap           : 0;
         place-items        : center;
-
-        overflow           : hidden;
 
         opacity            : 0;
         transform          : scale(0.7);
@@ -80,10 +80,11 @@
 
             border-radius    : utils.fes(1);
 
-            outline          : utils.fes(.06) solid theme.hex('desktop-border');
             background-color : theme.hex('desktop-body-background');
 
-            box-shadow       : 0 utils.fes(1) utils.fes(1.9) rgb(black, 0.5);
+            box-shadow       : 0 0 0 utils.fes(.06) theme.hex('desktop-border'), 0 utils.fes(1) utils.fes(1.9) rgb(black, 0.5);
+
+            transition       : box-shadow .25s ease;
         }
 
         @include responsive.mobile {
@@ -106,18 +107,30 @@
 
         & > .title-bar {
 
-            position : relative;
+            position              : relative;
 
-            width    : 100%;
+            width                 : 100%;
+
+            display               : grid;
+            grid-template-columns : 1fr;
+            justify-items         : center;
 
             @include responsive.desktop {
-                border-bottom : utils.fes(.06) solid theme.hex('desktop-title-border');
-                background    : theme.hex('desktop-title-background');
+
+                border-top-left-radius  : utils.fes(1);
+                border-top-right-radius : utils.fes(1);
+
+                border-bottom           : utils.fes(.06) solid theme.hex('desktop-title-border');
+                background              : theme.hex('desktop-title-background');
             }
 
             @include responsive.mobile {
-                border-bottom : utils.fes(.06) solid theme.hex('mobile-title-border');
-                background    : theme.hex('mobile-title-background');
+
+                border-top-left-radius  : utils.fes(1.5);
+                border-top-right-radius : utils.fes(1.5);
+
+                border-bottom           : utils.fes(.06) solid theme.hex('mobile-title-border');
+                background              : theme.hex('mobile-title-background');
             }
 
             & > .icon {
@@ -223,13 +236,12 @@
 
                 display    : block;
 
-                width      : 100%;
+                width      : calc(100% - (#{utils.rawFes(2.5 + (.65 * 2))} * 2));
                 height     : fit-content;
 
                 box-sizing : border-box;
 
                 margin     : utils.fes(1) 0;
-                padding    : 0 utils.fes(2.5 + (.65 * 2));
 
                 text-align : center;
 

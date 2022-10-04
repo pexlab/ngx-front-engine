@@ -1,4 +1,5 @@
 import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { ThemeService } from '@pexlab/ngx-front-engine';
 import { SvgIconRegistryService } from 'angular-svg-icon';
 
@@ -14,7 +15,11 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
     private viewCounter = 1;
 
-    constructor( private iconReg: SvgIconRegistryService, private theme: ThemeService ) {
+    constructor(
+        private iconReg: SvgIconRegistryService,
+        private theme: ThemeService,
+        private router: Router
+    ) {
 
         this.iconReg.loadSvg( 'assets/logo.svg', 'logo' );
 
@@ -69,6 +74,14 @@ export class AppComponent implements OnInit, AfterViewChecked {
     }
 
     public ngOnInit(): void {
+        this.router.events.subscribe( {
+            next: ( event ) => {
+                if ( event instanceof NavigationEnd ) {
+                    this.viewCounter = 0;
+                    console.log( 'Page switched to: ' + event.url );
+                }
+            }
+        } );
     }
 
     public ngAfterViewChecked(): void {

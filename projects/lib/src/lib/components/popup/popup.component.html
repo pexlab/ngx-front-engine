@@ -1,12 +1,13 @@
 <div class="container" #container>
 
-    <div class="title-bar" #titleBar>
+    <div class="title-bar" #titleBar [@title]="titleAnimation" [@.disabled]="!titleAnimationEnabled">
 
-        <div class="icon" #icon tabindex="0" [class.hidden]="hideExitIcon" [fe-tactile] [feCaptureTouch]="true" (feClick)="close()">
+        <div class="icon" #icon tabindex="0" [class.hidden]="hideExitIcon" [fe-tactile] [feCaptureTouch]="true"
+             (feClick)="close()">
             <svg-icon name="fe-close"></svg-icon>
         </div>
 
-        <span #titleSpan>{{ title }}</span>
+        <span #titleSpan *ngFor="let t of [ titleStr ?? ' ' ]; trackBy: trackTitle">{{ t }}</span>
 
     </div>
 

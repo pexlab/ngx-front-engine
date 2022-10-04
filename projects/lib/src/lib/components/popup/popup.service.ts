@@ -1,5 +1,5 @@
 import { ComponentFactoryResolver, ComponentRef, Injectable, NgZone, Type } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { RootComponent } from '../root/root.component';
 import { PopupComponent } from './popup.component';
 
@@ -18,18 +18,27 @@ export class PopupService {
 
     constructor( private factory: ComponentFactoryResolver, private ngZone: NgZone ) { }
 
-    public createPopup( title: string, hideExitIcon?: boolean ): {
-        onTransmit( observer: ( value: any ) => void ): void
-        close(): void
-        open(
+    public createPopupRef(
+        options: {
+            title: string | Observable<string>,
             component: Type<any>,
-            reflect?: {
-                name: string,
-                value: any
-            }[],
-            size?: { minWidth?: string, width?: string, maxWidth?: string, minHeight?: string, height?: string, maxHeight?: string },
-            kind?: 'mobile' | 'desktop'
-        ): void
+            reflect?: Record<string, any>,
+            size?: {
+                minWidth?: string,
+                width?: string,
+                maxWidth?: string,
+                minHeight?: string,
+                height?: string,
+                maxHeight?: string
+            },
+            fixedKind?: 'mobile' | 'desktop',
+            exitButton?: boolean
+        }
+    ): {
+        open(): void,
+        close(): void,
+        onTransmit( observer: ( value: any ) => void ): void,
+        onClose( observer: () => void ): void
     } {
 
         const subject = new Subject<any>();
@@ -42,22 +51,28 @@ export class PopupService {
 
                 await this.hideAllPopups();
 
-                const popup = this.root.view.createComponent(
+                const wrapperRef = this.root.view.createComponent(
                     this.factory.resolveComponentFactory( PopupComponent )
                 );
 
-                popup.instance.title = title;
+                if ( typeof options.title === 'string' ) {
+                    wrapperRef.instance.title = options.title;
+                } else {
+                    subscriptions.push(
+                        options.title.subscribe( title => wrapperRef.instance.title = title )
+                    );
+                }
 
-                if ( hideExitIcon !== undefined ) {
-                    popup.instance.hideExitIcon = hideExitIcon;
+                if ( options.exitButton !== undefined ) {
+                    wrapperRef.instance.hideExitIcon = !options.exitButton;
                 }
 
                 subscriptions.push(
-                    popup.instance.popupObserver.subscribe( ( value ) => {
+                    wrapperRef.instance.popupObserver.subscribe( ( value ) => {
 
                         if ( value === 'fe-init' ) {
 
-                            resolve( popup );
+                            resolve( wrapperRef );
 
                         } else if ( value === 'fe-open' ) {
 
@@ -67,7 +82,7 @@ export class PopupService {
 
                             subject.next( 'fe-closing' );
 
-                            this.closePopup( popup ).then( () => {
+                            this.closePopup( wrapperRef ).then( () => {
 
                                 subject.next( 'fe-closed' );
                                 subject.complete();
@@ -85,13 +100,23 @@ export class PopupService {
                     } )
                 );
 
-                this.activatePopup( popup );
+                this.activatePopup( wrapperRef );
 
                 subject.next( 'fe-opening' );
             } );
         } );
 
         return {
+
+            onClose: ( observer: () => void ) => {
+                subscriptions.push(
+                    subject.subscribe( ( value ) => {
+                        if ( value === 'fe-closed' ) {
+                            observer();
+                        }
+                    } )
+                );
+            },
 
             onTransmit: ( observer: ( value: any ) => void ) => {
                 subscriptions.push( subject.subscribe( observer ) );
@@ -101,39 +126,39 @@ export class PopupService {
                 ( await onOpen ).instance.popupObserver.next( 'fe-close' );
             },
 
-            open: async ( component, reflect, size, kind ) => {
+            open: async () => {
 
-                const parent = await onOpen;
+                const wrapperRef = await onOpen;
 
-                const created = parent.instance.viewContainer.createComponent(
-                    this.factory.resolveComponentFactory( component )
-                );
+                const injectedComponentRef = wrapperRef.instance.viewContainer.createComponent( options.component );
 
-                if ( reflect !== undefined ) {
-                    reflect.forEach( property => {
-                        Reflect.set( created.instance, property.name, property.value );
+                wrapperRef.instance.injectedComponentRef = injectedComponentRef;
+
+                if ( options.reflect !== undefined ) {
+                    Object.entries( options.reflect ).forEach( ( entry ) => {
+                        Reflect.set( injectedComponentRef.instance, entry[ 0 ], entry[ 1 ] );
                     } );
                 }
 
-                parent.instance.width = {
-                    minWidth: size?.minWidth,
-                    width   : size?.width,
-                    maxWidth: size?.maxWidth
+                wrapperRef.instance.width = {
+                    minWidth: options.size?.minWidth,
+                    width   : options.size?.width,
+                    maxWidth: options.size?.maxWidth
                 };
 
-                parent.instance.height = {
-                    minHeight: size?.minHeight,
-                    height   : size?.height,
-                    maxHeight: size?.maxHeight
+                wrapperRef.instance.height = {
+                    minHeight: options.size?.minHeight,
+                    height   : options.size?.height,
+                    maxHeight: options.size?.maxHeight
                 };
 
-                if ( kind !== undefined ) {
-                    parent.instance.kind = kind;
+                if ( options.fixedKind !== undefined ) {
+                    wrapperRef.instance.kind = options.fixedKind;
                 }
 
                 /* Pass down / transmit events to the main (parent) popup popup-wrapper component */
-                ( ( created.instance as any ).popupObserverTransmitter as Subject<any> ).subscribe( ( value ) => {
-                    parent.instance.popupObserver.next( value );
+                ( ( injectedComponentRef.instance as any ).popupObserverTransmitter as Subject<any> ).subscribe( ( value ) => {
+                    wrapperRef.instance.popupObserver.next( value );
                 } );
             }
         };
@@ -176,16 +201,21 @@ export class PopupService {
         await Promise.all( promises );
     }
 
-    private closePopup( popup: ComponentRef<PopupComponent> ): Promise<void> {
+    private closePopup( wrapperRef: ComponentRef<PopupComponent> ): Promise<void> {
 
         return new Promise<void>( resolve => {
 
-            popup.instance.setVisibility( 'hidden' );
-            this.deactivatePopup( popup );
+            wrapperRef.instance.setVisibility( 'hidden' );
+            wrapperRef.instance.prepareDestroy();
+            this.deactivatePopup( wrapperRef );
 
             setTimeout( () => {
 
-                popup.destroy();
+                if ( wrapperRef.instance.injectedComponentRef !== undefined ) {
+                    wrapperRef.instance.injectedComponentRef.destroy();
+                }
+
+                wrapperRef.destroy();
 
                 /* Re-open the previously displayed popup */
                 if ( this.activePopups.length > 0 ) {

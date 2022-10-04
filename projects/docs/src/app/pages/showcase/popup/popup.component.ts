@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { fes, PopupService } from '@pexlab/ngx-front-engine';
+import { Observable } from 'rxjs';
 import { NutmegComponent } from '../../../popups/nutmeg/nutmeg.component';
 
 @Component(
@@ -8,20 +9,67 @@ import { NutmegComponent } from '../../../popups/nutmeg/nutmeg.component';
         styleUrls  : [ './popup.component.scss' ]
     }
 )
-export class PopupComponent {
+export class PopupComponent implements OnDestroy {
 
     constructor( private popup: PopupService ) { }
 
     public transmissions: string[] = [];
 
+    private titleInterval?: number;
+
     public openPopup(): void {
 
-        const popup = this.popup.createPopup( 'Sample Popup about Nutmegs' );
+        const titlesCanChange = new Observable<string>( ( observer ) => {
+
+            observer.next( 'Sample Popup about...' );
+
+            setTimeout( () => {
+                observer.next( 'Nutmegs!' );
+            }, 2000 );
+
+            this.titleInterval = setInterval( () => {
+
+                observer.next( 'A pungent and a warm, slightly sweet tasting spice' );
+
+                setTimeout( () => {
+
+                    if ( this.titleInterval === undefined ) {
+                        return;
+                    }
+
+                    observer.next( 'Nutmegs!' );
+
+                }, 2000 );
+
+            }, 4000 );
+        } );
+
+        const popup = this.popup.createPopupRef( {
+            title    : titlesCanChange,
+            component: NutmegComponent,
+            size     : {
+                width: fes( 30 )
+            }
+        } );
+
+        popup.onClose( () => {
+            if ( this.titleInterval !== undefined ) {
+                clearInterval( this.titleInterval );
+                this.titleInterval = undefined;
+            }
+        } );
 
         popup.onTransmit( ( value ) => {
             this.transmissions.push( String( value ) );
         } );
 
-        popup.open( NutmegComponent, undefined, { width: fes( 30 ) } );
+        popup.open();
+    }
+
+    public ngOnDestroy(): void {
+        if ( this.titleInterval !== undefined ) {
+            clearInterval( this.titleInterval );
+            this.titleInterval = undefined;
+        }
     }
 }

@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
+import { animate, group, query, style, transition, trigger } from '@angular/animations';
+import { AfterViewInit, Component, ComponentRef, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
 import * as focusTrap from 'focus-trap';
 import { Subject } from 'rxjs';
 import { ComponentTheme } from '../../interfaces/color.interface';
@@ -10,7 +11,30 @@ import { PartialPopupTheme } from './popup.theme';
 @Component(
     {
         templateUrl: './popup.component.html',
-        styleUrls  : [ './popup.component.scss' ]
+        styleUrls  : [ './popup.component.scss' ],
+        animations : [
+            trigger( 'title', [
+                transition( '* <=> *', [
+                    style( { height: '{{ prevHeight }}' } ),
+                    query( ':enter', [
+                        style( { position: 'fixed', display: 'none', pointerEvents: 'none', opacity: 0 } )
+                    ], { optional: true } ),
+                    query( ':leave', [
+                        style( { pointerEvents: 'none' } ),
+                        animate( '0.5s ease-out', style( { opacity: 0 } ) ),
+                        style( { position: 'fixed', display: 'none' } )
+                    ], { optional: true } ),
+                    group( [
+                        animate( '0.5s ease-out', style( { height: '*' } ) ),
+                        query( ':enter', [
+                            style( { position: 'static', display: 'block', opacity: 0 } ),
+                            animate( '0.5s .25s ease-out', style( { opacity: 1 } ) ),
+                            style( { pointerEvents: 'visible' } )
+                        ], { optional: true } )
+                    ] )
+                ], { params: { prevHeight: 'auto' } } )
+            ] )
+        ]
     }
 )
 export class PopupComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -23,8 +47,29 @@ export class PopupComponent implements OnInit, AfterViewInit, OnDestroy {
 
     public feTheme!: ComponentTheme<PartialPopupTheme>;
 
-    public hideExitIcon!: boolean;
-    public title!: string;
+    public hideExitIcon: boolean = false;
+
+    public set title( value: string ) {
+
+        this.titleAnimation = {
+            value : value,
+            params: { prevHeight: this.titleSpanRef && this.titleBarRef ? this.titleBarRef.nativeElement.getBoundingClientRect().height + 'px' : 'auto' }
+        };
+        this.titleStr       = value;
+
+        /* Enable animation after initial title was set */
+        if ( !this.titleAnimationEnabled ) {
+            setTimeout( () => {
+                this.titleAnimationEnabled = true;
+            } );
+        }
+    }
+
+    public titleAnimation?: { value: string, params: { prevHeight: string } };
+    public titleStr?: string;
+    public titleAnimationEnabled = false;
+
+    public injectedComponentRef?: ComponentRef<any>;
 
     public set width( value: { minWidth?: string, width?: string, maxWidth?: string } ) {
 
@@ -140,15 +185,6 @@ export class PopupComponent implements OnInit, AfterViewInit, OnDestroy {
     private focusTrap!: focusTrap.FocusTrap;
 
     public ngOnInit(): void {
-
-        if ( !this.hideExitIcon ) {
-            this.hideExitIcon = false;
-        }
-
-        if ( !this.title ) {
-            throw new Error( 'Title hasn\'t been set for popup-component' );
-        }
-
         this.popupObserver.next( 'fe-init' );
     }
 
@@ -192,5 +228,13 @@ export class PopupComponent implements OnInit, AfterViewInit, OnDestroy {
 
     public getVisibility(): 'visible' | 'hidden' {
         return this.visibility;
+    }
+
+    public trackTitle( index: number, item: string ): string {
+        return item;
+    }
+
+    public prepareDestroy(): void {
+        this.titleAnimationEnabled = false;
     }
 }
