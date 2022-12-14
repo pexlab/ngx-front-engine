@@ -147,7 +147,7 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
     public feChange = new EventEmitter();
 
     @Output()
-    public feManualClear = new EventEmitter();
+    public feManualClear = new EventEmitter<void>();
 
     public activePlaceholderRef?: TemplateRef<any>;
     public defaultPlaceholderRef?: TemplateRef<any>;
