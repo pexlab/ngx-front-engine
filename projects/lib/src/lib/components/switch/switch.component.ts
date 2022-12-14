@@ -86,11 +86,11 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
             }
         }
 
-        this.feChange.next( this.feValues[ this.positionIndex ] );
-
         if ( this.formInputEvent ) {
             this.formInputEvent( this.feValues[ this.positionIndex ] );
         }
+
+        this.feChange.next( this.feValues[ this.positionIndex ] );
 
         this.change.detectChanges();
     }

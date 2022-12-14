@@ -604,11 +604,11 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         /* Announce input changes */
         this.ngZone.run( () => {
 
-            this.feChange.next( value );
-
             if ( this.formInputEvent ) {
-                this.formInputEvent( value.length > 0 ? value : null ); /* Update the form model on input */
+                this.formInputEvent( value.length > 0 ? value : null );
             }
+
+            this.feChange.next( value );
 
             this.change.detectChanges();
         } );

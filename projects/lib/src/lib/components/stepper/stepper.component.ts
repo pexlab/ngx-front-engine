@@ -95,11 +95,11 @@ export class StepperComponent implements OnInit, ControlValueAccessor {
 
         this.value++;
 
-        this.feChange.next( this.value );
-
         if ( this.formInputEvent ) {
             this.formInputEvent( this.value );
         }
+
+        this.feChange.next( this.value );
 
         this.change.detectChanges();
     }
@@ -112,11 +112,11 @@ export class StepperComponent implements OnInit, ControlValueAccessor {
 
         this.value--;
 
-        this.feChange.next( this.value );
-
         if ( this.formInputEvent ) {
             this.formInputEvent( this.value );
         }
+
+        this.feChange.next( this.value );
 
         this.change.detectChanges();
     }

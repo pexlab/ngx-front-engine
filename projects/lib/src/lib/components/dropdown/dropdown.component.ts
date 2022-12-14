@@ -305,14 +305,14 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
 
         this.currentChoice = choiceComponent.feValue;
 
-        this.feChange.next( choiceComponent.feValue );
-
         /* Prevents marking the field as dirty, although it was the initial value write event from the forms-api */
         if ( this.isInitialValueWrite ) {
             this.isInitialValueWrite = false;
         } else if ( this.formInputEvent ) {
             this.formInputEvent( choiceComponent.feValue );
         }
+
+        this.feChange.next( choiceComponent.feValue );
 
         this.activePlaceholderRef = choiceComponent.contentAndPlaceholderRef ?? choiceComponent.placeholderRef;
         this.dropdownVisible      = false;
@@ -324,14 +324,14 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
 
         this.currentChoice = null;
 
-        this.feChange.next( null );
-
         /* Prevents marking the field as dirty, although it was the initial value write event from the forms-api */
         if ( this.isInitialValueWrite ) {
             this.isInitialValueWrite = false;
         } else if ( this.formInputEvent ) {
             this.formInputEvent( null );
         }
+
+        this.feChange.next( null );
 
         this.activePlaceholderRef = undefined;
         this.dropdownVisible      = false;

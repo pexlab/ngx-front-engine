@@ -94,11 +94,11 @@ export class CheckboxComponent implements OnInit, AfterViewInit, ControlValueAcc
 
         this.isChecked = !this.isChecked;
 
-        this.feChange.next( this.isChecked );
-
         if ( this.formInputEvent ) {
             this.formInputEvent( this.isChecked );
         }
+
+        this.feChange.next( this.isChecked );
 
         this.change.detectChanges();
     }
