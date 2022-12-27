@@ -51,9 +51,7 @@ export class PopupService {
 
                 await this.hideAllPopups();
 
-                const wrapperRef = this.root.view.createComponent(
-                    this.factory.resolveComponentFactory( PopupComponent )
-                );
+                const wrapperRef = this.root.view.createComponent(PopupComponent );
 
                 if ( typeof options.title === 'string' ) {
                     wrapperRef.instance.title = options.title;
@@ -132,6 +130,27 @@ export class PopupService {
 
                 const injectedComponentRef = wrapperRef.instance.viewContainer.createComponent( options.component );
 
+                injectedComponentRef.instance.popupObserverTransmitter = new Subject<any>();
+
+                Reflect.defineProperty( injectedComponentRef.instance, 'transmitToHost', {
+
+                    value: ( value: any ) => {
+
+                        if ( value === 'fe-open' || value === 'fe-close' ) {
+                            console.error( 'Cannot transmit value "' + value + '" on popup because it is a preserved keyword.' );
+                            return;
+                        }
+
+                        injectedComponentRef.instance.popupObserverTransmitter.next( value );
+                    }
+                } );
+
+                Reflect.defineProperty( injectedComponentRef.instance, 'close', {
+                    value: () => {
+                        injectedComponentRef.instance.popupObserverTransmitter.next( 'fe-close' );
+                    }
+                } );
+
                 wrapperRef.instance.injectedComponentRef = injectedComponentRef;
 
                 if ( options.reflect !== undefined ) {
@@ -155,7 +174,6 @@ export class PopupService {
                 if ( options.fixedKind !== undefined ) {
                     wrapperRef.instance.kind = options.fixedKind;
                 }
-
                 /* Pass down / transmit events to the main (parent) popup popup-wrapper component */
                 ( ( injectedComponentRef.instance as any ).popupObserverTransmitter as Subject<any> ).subscribe( ( value ) => {
                     wrapperRef.instance.popupObserver.next( value );

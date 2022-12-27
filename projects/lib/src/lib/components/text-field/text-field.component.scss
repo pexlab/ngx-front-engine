@@ -1,5 +1,5 @@
-@use '../../../../assets/fe-styles/theme' with ($scope: 'text-field');
-@use '../../../../assets/fe-styles/utils';
+@use 'assets/fe-styles/theme' with ($scope: 'text-field');
+@use 'assets/fe-styles/utils';
 
 $PADDING : 1.25;
 
@@ -141,11 +141,11 @@ $PADDING : 1.25;
         &.idle:not(.initial) {
 
             & > .border.idle {
-                animation : idleBorderIn 0.25s ease forwards;
+                animation : fe-text-field_idleBorderIn 0.25s ease forwards;
             }
 
             & .border.focused {
-                animation : focusedBorderBlur 0.25s cubic-bezier(0, 0.55, 0.45, 1) forwards;
+                animation : fe-text-field_focusedBorderBlur 0.25s cubic-bezier(0, 0.55, 0.45, 1) forwards;
             }
         }
 
@@ -169,11 +169,11 @@ $PADDING : 1.25;
             & > .border {
 
                 &.idle {
-                    animation : idleBorderBlur 0.25s 0.15s ease forwards;
+                    animation : fe-text-field_idleBorderBlur 0.25s 0.15s ease forwards;
                 }
 
                 &.focused {
-                    animation : focusedBorderIn 0.45s cubic-bezier(0, 0.55, 0.45, 1) forwards;
+                    animation : fe-text-field_focusedBorderIn 0.45s cubic-bezier(0, 0.55, 0.45, 1) forwards;
                 }
             }
         }
@@ -190,7 +190,7 @@ $PADDING : 1.25;
                         stroke : theme.hex('invalid-border');
                     }
 
-                    animation : invalidShake .5s linear !important;
+                    animation : fe-text-field_invalidShake .5s linear !important;
                 }
             }
         }
@@ -498,74 +498,5 @@ $PADDING : 1.25;
                 }
             }
         }
-    }
-}
-
-/* Keyframes */
-
-@keyframes idleBorderIn {
-
-    0% {
-        opacity : 0;
-    }
-
-    100% {
-        opacity : 1;
-    }
-}
-
-@keyframes idleBorderBlur {
-
-    0% {
-        opacity : 1;
-    }
-
-    100% {
-        opacity : 0;
-    }
-}
-
-@keyframes focusedBorderIn {
-
-    0% {
-        opacity   : 0;
-        transform : scale(1.25);
-    }
-
-    100% {
-        opacity   : 1;
-        transform : scale(1);
-    }
-}
-
-@keyframes focusedBorderBlur {
-
-    0% {
-        opacity   : 1;
-        transform : scale(1);
-    }
-
-    100% {
-        opacity   : 0;
-        transform : scale(1.1);
-    }
-}
-
-@keyframes invalidShake {
-
-    8%, 41% {
-        transform : translateX(utils.fes(-.65));
-    }
-    25%, 58% {
-        transform : translateX(utils.fes(.65));
-    }
-    75% {
-        transform : translateX(utils.fes(-.3));
-    }
-    92% {
-        transform : translateX(utils.fes(.31));
-    }
-    0%, 100% {
-        transform : translateX(0);
     }
 }

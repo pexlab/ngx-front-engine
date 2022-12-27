@@ -1,5 +1,5 @@
-@use '../../../../assets/fe-styles/theme' with ($scope: 'line-chart');
-@use '../../../../assets/fe-styles/utils';
+@use 'assets/fe-styles/theme' with ($scope: 'line-chart');
+@use 'assets/fe-styles/utils';
 @use 'sass:math';
 
 $COVER_ASPECT      : math.div(150px, 220px);

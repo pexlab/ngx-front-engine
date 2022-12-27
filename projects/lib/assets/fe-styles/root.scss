@@ -1,14 +1,16 @@
-@import '~@fontsource/roboto/300';
-@import '~@fontsource/jost/500';
-@import '~@fontsource/jost/300';
-@import '~@fontsource/anonymous-pro/700';
-@import '~@fontsource/baloo-bhaina-2/400';
-@import '~@fontsource/architects-daughter/400';
-@import '~@fontsource/pangolin/400';
-@import '~@fontsource/rajdhani/300';
-@import '~@fontsource/syncopate/400';
+@use 'animations';
 
-@import '~text-security/text-security-disc.css';
+@import '@fontsource/roboto/300';
+@import '@fontsource/jost/500';
+@import '@fontsource/jost/300';
+@import '@fontsource/anonymous-pro/700';
+@import '@fontsource/baloo-bhaina-2/400';
+@import '@fontsource/architects-daughter/400';
+@import '@fontsource/pangolin/400';
+@import '@fontsource/rajdhani/300';
+@import '@fontsource/syncopate/400';
+
+@import 'text-security/text-security-disc.css';
 
 .measurement {
 

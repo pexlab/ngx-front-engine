@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, ElementRef } from '@angular/core';
 import { isEqual } from 'lodash-es';
-import { ReplaySubject, Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 import { ComponentTheme, HEXColorRegister } from '../interfaces/color.interface';
 import { ThemeableComponents } from '../interfaces/theme.interface';
 import { ThemeService } from '../theme/theme.service';
@@ -61,32 +61,9 @@ export function FePopup() {
     return function <C extends ClassWithProperties<{ close: () => void, transmitToHost: ( value: any ) => void }>>( target: C ) {
 
         return class extends target {
-
             constructor( ...args: any[] ) {
-
                 super( ...args );
-
-                Reflect.defineProperty( this, 'transmitToHost', {
-
-                    value: ( value: any ) => {
-
-                        if ( value === 'fe-open' || value === 'fe-close' ) {
-                            console.error( 'Cannot transmit value "' + value + '" on popup because it is a preserved keyword.' );
-                            return;
-                        }
-
-                        this.popupObserverTransmitter.next( value );
-                    }
-                } );
-
-                Reflect.defineProperty( this, 'close', {
-                    value: () => {
-                        this.popupObserverTransmitter.next( 'fe-close' );
-                    }
-                } );
             }
-
-            public popupObserverTransmitter: Subject<any> = new Subject<any>();
         };
     };
 }

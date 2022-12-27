@@ -1,5 +1,5 @@
-@use '../../../../assets/fe-styles/theme' with ($scope: 'notepaper');
-@use '../../../../assets/fe-styles/utils';
+@use 'assets/fe-styles/theme' with ($scope: 'notepaper');
+@use 'assets/fe-styles/utils';
 
 $lineHeight   : 1.85;
 $strokeHeight : 0.06;

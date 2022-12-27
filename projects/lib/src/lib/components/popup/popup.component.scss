@@ -1,6 +1,6 @@
-@use '../../../../assets/fe-styles/theme' with ($scope: 'popup');
-@use '../../../../assets/fe-styles/responsive' with ($breakpoint: 1000px);
-@use '../../../../assets/fe-styles/utils';
+@use 'assets/fe-styles/theme' with ($scope: 'popup');
+@use 'assets/fe-styles/responsive' with ($breakpoint: 1000px);
+@use 'assets/fe-styles/utils';
 @use 'sass:math';
 
 :host {
@@ -27,11 +27,11 @@
         & .container {
 
             @include responsive.desktop {
-                animation : containerOutDesktop .5s ease forwards;
+                animation : fe-popup_containerOutDesktop .5s ease forwards;
             }
 
             @include responsive.mobile {
-                animation : containerOutMobile .5s ease forwards;
+                animation : fe-popup_containerOutMobile .5s ease forwards;
             }
         }
     }
@@ -41,11 +41,11 @@
         & .container {
 
             @include responsive.desktop {
-                animation : containerInDesktop .5s ease forwards;
+                animation : fe-popup_containerInDesktop .5s ease forwards;
             }
 
             @include responsive.mobile {
-                animation : containerInMobile .5s ease forwards;
+                animation : fe-popup_containerInMobile .5s ease forwards;
             }
         }
     }
@@ -295,57 +295,5 @@
                 }
             }
         }
-    }
-}
-
-@keyframes containerInDesktop {
-
-    from {
-        opacity   : 0;
-        transform : scale(0.7);
-    }
-
-    to {
-        opacity   : 1;
-        transform : scale(1);
-    }
-}
-
-@keyframes containerOutDesktop {
-
-    from {
-        opacity   : 1;
-        transform : scale(1);
-    }
-
-    to {
-        opacity   : 0;
-        transform : scale(1) translateY(utils.fes(20));
-    }
-}
-
-@keyframes containerInMobile {
-
-    from {
-        opacity   : 0;
-        transform : translateY(50%);
-    }
-
-    to {
-        opacity   : 1;
-        transform : translateY(0);
-    }
-}
-
-@keyframes containerOutMobile {
-
-    from {
-        opacity   : 1;
-        transform : translateY(0);
-    }
-
-    to {
-        opacity   : 0;
-        transform : translateY(50%);
     }
 }

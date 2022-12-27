@@ -1,22 +1,22 @@
-@use '~dist/ngx-front-engine/assets/fe-styles/theme';
+@use 'dist/ngx-front-engine/assets/fe-styles/theme';
 
 :host {
-  
+
   @include theme.commonFont('body');
-  
+
   & .inline {
-	
+
 	width          : fit-content;
-	
+
 	display        : grid;
 	grid-auto-flow : column;
 	align-items    : center;
-	
+
 	& > span {
 	  display : inline;
 	}
   }
-  
+
   & > .container > p {
 	white-space : pre;
   }

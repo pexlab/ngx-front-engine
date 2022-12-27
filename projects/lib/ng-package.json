@@ -2,7 +2,10 @@
     "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
     "dest": "../../dist/ngx-front-engine",
     "lib": {
-        "entryFile": "src/public-api.ts"
+        "entryFile": "src/public-api.ts",
+        "styleIncludePaths": [
+            "."
+        ]
     },
     "allowedNonPeerDependencies": [
         "@angular/cdk",

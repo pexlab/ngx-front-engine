@@ -1,9 +1,9 @@
-@use '../../../../assets/fe-styles/theme' with ($scope: 'dropdown');
-@use '../../../../assets/fe-styles/utils';
+@use 'assets/fe-styles/theme' with ($scope: 'dropdown');
+@use 'assets/fe-styles/utils';
 @use 'sass:math';
 
-@forward '../../../../assets/fe-styles/theme';
-@forward '../../../../assets/fe-styles/utils';
+@forward 'assets/fe-styles/theme';
+@forward 'assets/fe-styles/utils';
 
 $DROPDOWN_PADDING_VERTICAL   : 1;
 $DROPDOWN_PADDING_HORIZONTAL : 1.5;

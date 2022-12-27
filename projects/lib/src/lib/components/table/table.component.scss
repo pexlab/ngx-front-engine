@@ -1,5 +1,5 @@
-@use '../../../../assets/fe-styles/theme' with ($scope: 'table');
-@use '../../../../assets/fe-styles/utils';
+@use 'assets/fe-styles/theme' with ($scope: 'table');
+@use 'assets/fe-styles/utils';
 
 :host {
 
@@ -241,7 +241,7 @@
             background-image : linear-gradient(45deg, theme.hex('loader-stripe-b') 25%, transparent 25%, transparent 50%, theme.hex('loader-stripe-b') 50%, theme.hex('loader-stripe-b') 75%, transparent 75%, transparent);
             background-size  : utils.fes(1) utils.fes(1);
 
-            animation        : loaderStripe 1s linear infinite;
+            animation        : fe-table_loaderStripe 1s linear infinite;
         }
 
         &.dragging {
@@ -324,7 +324,7 @@
                         }
 
                         &.animateIn {
-                            animation : bounce 1000ms linear both;
+                            animation : fe-table_bounce 1000ms linear both;
                         }
 
                         /* A clone to freely drag around (showing a preview of the row) */
@@ -508,95 +508,3 @@
     }
 }
 
-@keyframes bounce {
-    0% {
-        transform : matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    }
-    4.09% {
-        transform : matrix3d(0.978, 0, 0, 0, 0, 0.775, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    }
-    8.18% {
-        transform : matrix3d(0.956, 0, 0, 0, 0, 0.558, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    }
-    12.27% {
-        transform : matrix3d(0.943, 0, 0, 0, 0, 0.43, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    }
-    12.94% {
-        transform : matrix3d(0.942, 0, 0, 0, 0, 0.418, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    }
-    13.04% {
-        transform : matrix3d(0.942, 0, 0, 0, 0, 0.416, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    }
-    16.28% {
-        transform : matrix3d(0.957, 0, 0, 0, 0, 0.531, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    }
-    17.13% {
-        transform : matrix3d(0.962, 0, 0, 0, 0, 0.573, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    }
-    21.15% {
-        transform : matrix3d(0.986, 0, 0, 0, 0, 0.797, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    }
-    21.23% {
-        transform : matrix3d(0.986, 0, 0, 0, 0, 0.801, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    }
-    25.32% {
-        transform : matrix3d(1.004, 0, 0, 0, 0, 1.005, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    }
-    26.03% {
-        transform : matrix3d(1.006, 0, 0, 0, 0, 1.031, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    }
-    29.32% {
-        transform : matrix3d(1.011, 0, 0, 0, 0, 1.111, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    }
-    30.9% {
-        transform : matrix3d(1.011, 0, 0, 0, 0, 1.125, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    }
-    34.2% {
-        transform : matrix3d(1.01, 0, 0, 0, 0, 1.116, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    }
-    35.69% {
-        transform : matrix3d(1.008, 0, 0, 0, 0, 1.101, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    }
-    39.07% {
-        transform : matrix3d(1.004, 0, 0, 0, 0, 1.057, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    }
-    43.94% {
-        transform : matrix3d(1, 0, 0, 0, 0, 1.004, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    }
-    45.35% {
-        transform : matrix3d(0.999, 0, 0, 0, 0, 0.993, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    }
-    48.73% {
-        transform : matrix3d(0.998, 0, 0, 0, 0, 0.979, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    }
-    55.01% {
-        transform : matrix3d(0.999, 0, 0, 0, 0, 0.982, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    }
-    58.39% {
-        transform : matrix3d(0.999, 0, 0, 0, 0, 0.99, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    }
-    68.06% {
-        transform : matrix3d(1, 0, 0, 0, 0, 1.004, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    }
-    74.34% {
-        transform : matrix3d(1, 0, 0, 0, 0, 1.003, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    }
-    86.96% {
-        transform : matrix3d(1, 0, 0, 0, 0, 0.999, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    }
-    87.38% {
-        transform : matrix3d(1, 0, 0, 0, 0, 0.999, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    }
-    100% {
-        transform : matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    }
-}
-
-@keyframes loaderStripe {
-    0% {
-        background-position : utils.fes(1) 0;
-    }
-    100% {
-        background-position : 0 0;
-    }
-}
