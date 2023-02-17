@@ -78,6 +78,7 @@
     "prismjs": "^1.29.0",
     "rxjs": "~6.6.0",
     "svg-round-corners": "^0.4.1",
+    "tabbable": "^6.1.1",
     "text-security": "^3.2.1",
     "tslib": "^2.3.0",
     "wcag-contrast": "^3.0.0",
