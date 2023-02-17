@@ -28,22 +28,24 @@
             grid-gap       : utils.fes(.65);
             align-items    : center;
 
+            @include theme.inlineIcon(utils.fes(1));
+
             & > svg-icon {
-
-                width  : utils.fes(1);
-                height : utils.fes(1);
-
-                color  : theme.hex('verified-badge');
+                color  : theme.hex('badge');
             }
 
             & > span {
 
-                align-self  : center;
+                align-self    : center;
 
-                cursor      : pointer;
+                cursor        : pointer;
 
-                color       : theme.hex('text');
-                user-select : text;
+                color         : theme.hex('text');
+                user-select   : text;
+
+                overflow      : hidden;
+                white-space   : nowrap;
+                text-overflow : ellipsis;
 
                 @include theme.commonFontFamily('decorative');
                 @include theme.commonFontWeight('decorative');
@@ -61,10 +63,12 @@
 
         & > span.date {
 
-            cursor : pointer;
+            cursor      : pointer;
+
+            white-space : nowrap;
 
             @include theme.commonFont('alternative');
-            color  : theme.hex('date');
+            color       : theme.hex('date');
         }
     }
 
@@ -170,8 +174,117 @@
         color       : theme.hex('text');
         line-height : utils.fes(1.15);
 
+        &::ng-deep {
+
+            & markdown {
+
+                display        : grid;
+                grid-auto-flow : row;
+                grid-gap       : utils.fes(.7);
+
+                & * {
+                    margin      : 0;
+                    user-select : text;
+                }
+
+                & h1 {
+                    @include theme.commonFont('heading');
+                    font-weight : bold;
+                    margin      : utils.fes(1) 0;
+                }
+
+                & h2 {
+                    @include theme.commonFont('subheading');
+                    font-weight   : bold;
+                    margin-top    : utils.fes(1);
+                    margin-bottom : utils.fes(.5);
+                }
+
+                & h3, & h4, & h5, & h6 {
+                    @include theme.commonFont('subheading');
+                    margin-top    : utils.fes(1);
+                    margin-bottom : utils.fes(.5);
+                }
+
+                & h1:first-child,
+                & h2:first-child,
+                & h3:first-child,
+                & h4:first-child,
+                & h5:first-child,
+                & h6:first-child {
+                    margin-top : 0;
+                }
+
+                & p {
+                    @include theme.commonFont('alternative');
+                }
+
+                & a {
+                    @include theme.commonFont('alternative');
+                    color           : theme.commonHex('accent-primary');
+                    text-decoration : none;
+                    cursor          : pointer;
+                }
+
+                & blockquote {
+
+                    display                    : grid;
+                    grid-auto-flow             : row;
+                    grid-gap                   : utils.fes(.5);
+
+                    padding                    : utils.fes(.7);
+
+                    border-left                : utils.fes(.1) solid theme.commonHex('background-quaternary');
+                    border-top-right-radius    : utils.fes(.5);
+                    border-bottom-right-radius : utils.fes(.5);
+
+                    background                 : theme.fadeCommonHex('background-quaternary', 0.2);
+
+                    @include theme.commonFont('alternative');
+                }
+
+                & ul {
+                    padding-left : utils.fes(2.5);
+                }
+
+                & hr {
+
+                    width      : 100%;
+                    height     : utils.fes(.07);
+
+                    background : theme.commonHex('background-quaternary');
+                }
+
+                & pre {
+
+                    padding       : utils.fes(1);
+
+                    border-radius : utils.fes(.5);
+
+                    @include theme.scrollbar(theme.commonHex('background-quaternary'), theme.commonHex('background-quaternary'), transparent, 'x', utils.fes(.5), utils.fes(.25));
+                }
+
+                & pre, & code {
+                    @include theme.commonFont('code');
+                    @include theme.commonFontSize('alternative');
+                }
+
+                & :not(pre) > code {
+
+                    padding       : utils.fes(.05) utils.fes(.31);
+
+                    border-radius : utils.fes(.31);
+
+                    background    : theme.commonHex('background-quaternary');
+                }
+            }
+        }
+
         & span {
+
             user-select : text;
+
+            white-space : pre-wrap;
         }
     }
 

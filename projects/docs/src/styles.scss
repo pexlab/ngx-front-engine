@@ -44,13 +44,6 @@ body {
         @include theme.commonFont('subheading');
     }
 
-    & code {
-        background    : theme.commonHex('background-quaternary');
-        padding       : utils.fes(.2) utils.fes(.31);
-        border-radius : utils.fes(.31);
-        @include theme.commonFont('code');
-    }
-
     & hr {
         border-top    : utils.fes(.06) solid theme.commonHex('background-tertiary');
         border-left   : none;

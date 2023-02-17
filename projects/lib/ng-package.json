@@ -25,7 +25,10 @@
         "@fontsource/rajdhani",
         "@fontsource/syncopate",
         "text-security",
-        "fuse.js"
+        "fuse.js",
+        "ngx-markdown",
+        "marked",
+        "prismjs"
     ],
     "assets": [
         "./assets/**/*"

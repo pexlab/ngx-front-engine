@@ -67,7 +67,7 @@
                         "styles": [
                             "projects/docs/src/styles.scss",
                             "./dist/ngx-front-engine/assets/fe-styles/root.scss",
-                            "node_modules/prismjs/themes/prism-tomorrow.css"
+                            "node_modules/prismjs/themes/prism-okaidia.css"
                         ],
                         "scripts": [
                             "node_modules/marked/marked.min.js",

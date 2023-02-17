@@ -7,18 +7,23 @@
 
         <div class="nickname">
             <span>{{ feAuthor.nickname }}</span>
-            <svg-icon *ngIf="feAuthor.verified" name="fe-verified-badge"></svg-icon>
+            <svg-icon *ngFor="let badge of badges" [name]="badge"></svg-icon>
         </div>
 
         <div class="divider"></div>
 
-        <span class="date">{{ readableDateString }}</span>
+        <span class="date"
+              (mouseenter)="showPreciseDate = true"
+              (mouseleave)="showPreciseDate = false">{{ showPreciseDate ? dateString : readableDateString }}</span>
     </div>
 </ng-template>
 
 <ng-template #message>
-    <div class="content">
-        <span>{{ feMessage.text }}</span>
+    <div class="content" *ngIf="feMessage['text']">
+        <span>{{ feMessage['text'] }}</span>
+    </div>
+    <div class="content" *ngIf="feMessage['markdown']">
+        <markdown [data]="feMessage['markdown']"></markdown>
     </div>
 </ng-template>
 
@@ -39,12 +44,12 @@
     </div>
 </ng-template>
 
-<div [ngClass]="feAppearance">
+<div [ngClass]="appearance">
 
     <ng-container *ngTemplateOutlet="avatar"></ng-container>
 
     <div class="container"
-         [style.paddingBottom]="feAppearance === 'spacious' && feButtons && feButtons.length > 0 ? '10px' : undefined">
+         [style.paddingBottom]="appearance === 'spacious' && feButtons && feButtons.length > 0 ? '10px' : undefined">
         <ng-container *ngTemplateOutlet="header"></ng-container>
         <ng-container *ngTemplateOutlet="message"></ng-container>
         <ng-container *ngTemplateOutlet="buttons"></ng-container>

@@ -1,3 +1,4 @@
+import { format } from 'date-fns';
 import { FeTranslationTimeAgo } from '../interfaces/i18n.interface';
 
 /* Bundled translations */
@@ -26,7 +27,7 @@ function NumeralSuffixGerman( number: number ): string {
     return '.';
 }
 
-const TimeAgoEnglish: FeTranslationTimeAgo = {
+const TimeAgoEnglish: ( allowHalf: boolean ) => FeTranslationTimeAgo = ( allowHalf ) => ( {
     
     justNow: 'just now',
     
@@ -39,17 +40,28 @@ const TimeAgoEnglish: FeTranslationTimeAgo = {
     singleDayAgo   : '1 day ago',
     multipleDaysAgo: count => count + ' days ago',
     
-    singleWeekAgo   : '1 week ago',
-    multipleWeeksAgo: count => count + ' weeks ago',
+    singleWeekAgo          : '1 week ago',
+    multipleWeeksAgo       : count => count + ' weeks ago',
+    multipleWeeksAndHalfAgo: !allowHalf ?
+                             count => count + ' weeks ago' :
+                             floor => floor + '.5 weeks ago',
     
-    singleMonthAgo   : '1 month ago',
-    multipleMonthsAgo: count => count + ' months ago',
+    singleMonthAgo          : '1 month ago',
+    multipleMonthsAgo       : count => count + ' months ago',
+    multipleMonthsAndHalfAgo: !allowHalf ?
+                              count => count + ' months ago' :
+                              floor => floor + '.5 months ago',
     
-    singleYearAgo   : '1 year ago',
-    multipleYearsAgo: count => count + ' years ago'
-};
+    singleYearAgo          : 'over 1 year ago',
+    multipleYearsAgo       : count => 'over ' + count + ' years ago',
+    multipleYearsAndHalfAgo: !allowHalf ?
+                             count => 'over ' + count + ' years ago' :
+                             floor => 'over ' + floor + '.5 years ago',
+    
+    precise: date => format( date, "MM/dd/yyyy 'at' h:mm a" )
+} );
 
-export const TimeAgoAbbreviatedEnglish: FeTranslationTimeAgo = {
+export const TimeAgoAbbreviatedEnglish: ( allowHalf: boolean ) => FeTranslationTimeAgo = ( allowHalf ) => ( {
     
     justNow: 'now',
     
@@ -62,17 +74,28 @@ export const TimeAgoAbbreviatedEnglish: FeTranslationTimeAgo = {
     singleDayAgo   : '1d.',
     multipleDaysAgo: count => count + 'd.',
     
-    singleWeekAgo   : '1wk.',
-    multipleWeeksAgo: count => count + 'wk.',
+    singleWeekAgo          : '1wk.',
+    multipleWeeksAgo       : count => count + 'wk.',
+    multipleWeeksAndHalfAgo: !allowHalf ?
+                             count => count + 'wk.' :
+                             floor => floor + '.5wk.',
     
-    singleMonthAgo   : '1mo.',
-    multipleMonthsAgo: count => count + 'mo.',
+    singleMonthAgo          : '1mo.',
+    multipleMonthsAgo       : count => count + 'mo.',
+    multipleMonthsAndHalfAgo: !allowHalf ?
+                              count => count + 'mo.' :
+                              floor => floor + '.5mo.',
     
-    singleYearAgo   : '1yr.',
-    multipleYearsAgo: count => count + 'yrs.'
-};
+    singleYearAgo          : '1yr.',
+    multipleYearsAgo       : count => count + 'yrs.',
+    multipleYearsAndHalfAgo: !allowHalf ?
+                             count => count + 'yrs.' :
+                             floor => floor + '.5yrs.',
+    
+    precise: date => format( date, 'M/d/yy' )
+} );
 
-const TimeAgoGerman: FeTranslationTimeAgo = {
+const TimeAgoGerman: ( allowHalf: boolean ) => FeTranslationTimeAgo = ( allowHalf ) => ( {
     
     justNow: 'gerade eben',
     
@@ -85,17 +108,28 @@ const TimeAgoGerman: FeTranslationTimeAgo = {
     singleDayAgo   : 'vor einem Tag',
     multipleDaysAgo: count => 'vor ' + count + ' Tagen',
     
-    singleWeekAgo   : 'vor einer Woche',
-    multipleWeeksAgo: count => 'vor ' + count + ' Wochen',
+    singleWeekAgo          : 'vor einer Woche',
+    multipleWeeksAgo       : count => 'vor ' + count + ' Wochen',
+    multipleWeeksAndHalfAgo: !allowHalf ?
+                             count => 'vor ' + count + ' Wochen' :
+                             floor => 'vor ' + floor + ',5 Wochen',
     
-    singleMonthAgo   : 'vor einem Monat',
-    multipleMonthsAgo: count => 'vor ' + count + ' Monaten',
+    singleMonthAgo          : 'vor einem Monat',
+    multipleMonthsAgo       : count => 'vor ' + count + ' Monaten',
+    multipleMonthsAndHalfAgo: !allowHalf ?
+                              count => 'vor ' + count + ' Monaten' :
+                              floor => 'vor ' + floor + ',5 Monaten',
     
-    singleYearAgo   : 'vor einem Jahr',
-    multipleYearsAgo: count => 'vor ' + count + ' Jahren'
-};
+    singleYearAgo          : 'vor über einem Jahr',
+    multipleYearsAgo       : count => 'vor über ' + count + ' Jahren',
+    multipleYearsAndHalfAgo: !allowHalf ?
+                             count => 'vor über ' + count + ' Jahren' :
+                             floor => 'vor über ' + floor + ',5 Jahren',
+    
+    precise: ( date ) => format( date, "dd.MM.yyyy 'um' HH:mm 'Uhr'" )
+} );
 
-export const TimeAgoAbbreviatedGerman: FeTranslationTimeAgo = {
+export const TimeAgoAbbreviatedGerman: ( allowHalf: boolean ) => FeTranslationTimeAgo = ( allowHalf ) => ( {
     
     justNow: 'eben',
     
@@ -108,15 +142,26 @@ export const TimeAgoAbbreviatedGerman: FeTranslationTimeAgo = {
     singleDayAgo   : '1 T.',
     multipleDaysAgo: count => count + ' T.',
     
-    singleWeekAgo   : '1 Wo.',
-    multipleWeeksAgo: count => count + ' Wo.',
+    singleWeekAgo          : '1 Wo.',
+    multipleWeeksAgo       : count => count + ' Wo.',
+    multipleWeeksAndHalfAgo: !allowHalf ?
+                             count => count + ' Wo.' :
+                             floor => floor + ',5 Wo.',
     
-    singleMonthAgo   : '1 Mo.',
-    multipleMonthsAgo: count => count + ' Mo.',
+    singleMonthAgo          : '1 Mo.',
+    multipleMonthsAgo       : count => count + ' Mo.',
+    multipleMonthsAndHalfAgo: !allowHalf ?
+                              count => count + ' Mo.' :
+                              floor => floor + ',5 Mo.',
     
-    singleYearAgo   : '1 J.',
-    multipleYearsAgo: count => count + ' J.'
-};
+    singleYearAgo          : '1 J.',
+    multipleYearsAgo       : count => count + ' J.',
+    multipleYearsAndHalfAgo: !allowHalf ?
+                             count => count + ' J.' :
+                             floor => floor + ',5 J.',
+    
+    precise: ( date ) => format( date, 'd.M.yy' )
+} );
 
 export const FeBundledTranslations = {
     Numerals: {
@@ -124,9 +169,13 @@ export const FeBundledTranslations = {
         SuffixGerman : NumeralSuffixGerman
     },
     TimeAgo : {
-        English           : TimeAgoEnglish,
-        AbbreviatedEnglish: TimeAgoAbbreviatedEnglish,
-        German            : TimeAgoGerman,
-        AbbreviatedGerman : TimeAgoAbbreviatedGerman
+        English                    : TimeAgoEnglish( true ),
+        EnglishOnlyWhole           : TimeAgoEnglish( false ),
+        AbbreviatedEnglish         : TimeAgoAbbreviatedEnglish( true ),
+        AbbreviatedEnglishOnlyWhole: TimeAgoAbbreviatedEnglish( false ),
+        German                     : TimeAgoGerman( true ),
+        GermanOnlyWhole            : TimeAgoGerman( false ),
+        AbbreviatedGerman          : TimeAgoAbbreviatedGerman( true ),
+        AbbreviatedGermanOnlyWhole : TimeAgoAbbreviatedGerman( false )
     }
 };

@@ -3,12 +3,12 @@ import { ZHEXColor } from '../../interfaces/color.interface';
 
 export const ZCommentTheme = z.object(
     {
-        text         : ZHEXColor,
-        date         : ZHEXColor,
-        iconIdle     : ZHEXColor,
-        verifiedBadge: ZHEXColor,
-        border       : ZHEXColor,
-        background   : ZHEXColor
+        text      : ZHEXColor,
+        date      : ZHEXColor,
+        iconIdle  : ZHEXColor,
+        badge     : ZHEXColor,
+        border    : ZHEXColor,
+        background: ZHEXColor
     }
 );
 
