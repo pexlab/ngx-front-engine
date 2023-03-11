@@ -52,7 +52,7 @@ export class TactileDirective implements OnInit, OnDestroy {
                 this.renderer.listen(
                     this.hostElement.nativeElement,
                     'touchstart',
-                    ( event: TouchEvent ) => {
+                    ( event ) => {
                         this.pointerEvent = true;
                         this.touchRadiusX = event.touches[ 0 ].radiusX ?? 0;
                         this.touchRadiusY = event.touches[ 0 ].radiusY ?? 0;
@@ -464,7 +464,7 @@ export class TactileDirective implements OnInit, OnDestroy {
 
             } else {
 
-                if ( this.link.startsWith( 'http' ) || this.link.startsWith( 'https' ) ) {
+                if ( this.link.startsWith( 'http://' ) || this.link.startsWith( 'https://' ) ) {
 
                     const base = this.location.prepareExternalUrl( '/' );
 
@@ -489,12 +489,29 @@ export class TactileDirective implements OnInit, OnDestroy {
                     }
 
                 } else {
-                    if ( this.viewCheck ) {
-                        this.ngZone.run( () => {
+                    
+                    /* Has not the HTTP or HTTPS protocol */
+    
+                    try {
+    
+                        new URL(this.link)
+                        
+                        /* Is not a relative URL */
+                        /* Could be something like "mailto:" or "tel:" */
+                        
+                        window.open( this.link, '_self' );
+                        
+                    }catch (ignored) {
+                        
+                        /* Is relative URL */
+                        
+                        if ( this.viewCheck ) {
+                            this.ngZone.run( () => {
+                                this.router.navigate( [ this.link ] ).then();
+                            } );
+                        } else {
                             this.router.navigate( [ this.link ] ).then();
-                        } );
-                    } else {
-                        this.router.navigate( [ this.link ] ).then();
+                        }
                     }
                 }
             }
