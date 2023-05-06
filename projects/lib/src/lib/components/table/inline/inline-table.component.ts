@@ -239,7 +239,9 @@ export class InlineTableComponent implements OnInit, OnDestroy, AfterViewInit, T
 
                 let targetRow: HTMLElement | undefined;
 
-                for ( let i = this.feRecordCount - 1; i > 0; i-- ) {
+                for ( let i = this.feRecordCount - 1; i >= 0; i-- ) {
+
+                    console.log(i);
 
                     targetRow = this.activeRows?.toArray()[ i ]?.hostElement.nativeElement;
 
