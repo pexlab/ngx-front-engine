@@ -8,7 +8,7 @@ import { ClassWithProperties } from './type.utils';
 
 export function FeComponent( name: ThemeableComponents ) {
 
-    return function <C extends ClassWithProperties<{ feTheme: ComponentTheme, hostElement: ElementRef<HTMLElement>, change?: ChangeDetectorRef }>>( target: C ) {
+    return function <C extends ClassWithProperties<{ feTheme: ComponentTheme | undefined, hostElement: ElementRef<HTMLElement>, change?: ChangeDetectorRef }>>( target: C ) {
 
         return class extends target {
 

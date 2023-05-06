@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import { ZHEXColor } from '../../interfaces/color.interface';
+import { ZHEXColor } from '../../../interfaces/color.interface';
 
-export const ZTableTheme = z.object(
+export const ZInlineTableTheme = z.object(
     {
         text           : ZHEXColor,
         button         : z.object(
@@ -40,7 +40,7 @@ export const ZTableTheme = z.object(
     }
 );
 
-export const ZPartialTableTheme = ZTableTheme.deepPartial();
+export const ZPartialInlineTableTheme = ZInlineTableTheme.partial();
 
-export type TableTheme = z.infer<typeof ZTableTheme>;
-export type PartialTableTheme = z.infer<typeof ZPartialTableTheme>;
+export type InlineTableTheme = z.infer<typeof ZInlineTableTheme>;
+export type PartialInlineTableTheme = z.infer<typeof ZPartialInlineTableTheme>;

@@ -616,9 +616,39 @@ export class ThemeService {
                 dragHandle     : this.commonTheme.palette.background.quaternary,
                 dragHandleHover: this.commonTheme.palette.text.primary,
                 background     : {
+                    whole   : this.commonTheme.palette.background.primary,
                     header  : this.commonTheme.palette.background.primary,
-                    rowEven : this.commonTheme.palette.background.primary,
-                    rowOdd  : this.commonTheme.palette.background.secondary,
+                    rowEven : this.commonTheme.palette.background.secondary,
+                    rowOdd  : this.commonTheme.palette.background.primary,
+                    rowHover: this.commonTheme.palette.background.tertiary
+                },
+                highlight      : {
+                    header : Color.fadeHex( this.commonTheme.palette.accent.primary, .2 ),
+                    cell   : Color.fadeHex( this.commonTheme.palette.accent.primary, .2 ),
+                    outline: this.commonTheme.palette.accent.primary
+                }
+            },
+            
+            inlineTable: {
+                text           : this.commonTheme.palette.text.primary,
+                outline        : this.commonTheme.palette.text.tertiary,
+                button         : {
+                    text      : this.commonTheme.palette.text.on_primary_accent,
+                    background: this.commonTheme.palette.accent.primary,
+                    tooltip   : this.commonTheme.palette.text.primary
+                },
+                loader         : {
+                    circle : this.commonTheme.palette.accent.primary,
+                    stripeA: this.commonTheme.palette.accent.primary,
+                    stripeB: Color.fadeHex( this.commonTheme.palette.accent.secondary, .3 )
+                },
+                dragHandle     : this.commonTheme.palette.background.quaternary,
+                dragHandleHover: this.commonTheme.palette.text.primary,
+                background     : {
+                    whole   : this.commonTheme.palette.background.primary,
+                    header  : this.commonTheme.palette.background.primary,
+                    rowEven : this.commonTheme.palette.background.secondary,
+                    rowOdd  : this.commonTheme.palette.background.primary,
                     rowHover: this.commonTheme.palette.background.tertiary
                 },
                 highlight      : {
@@ -672,6 +702,13 @@ export class ThemeService {
                     pinnedPlaceholder: this.commonTheme.palette.text.failure,
                     icon             : this.commonTheme.palette.accent.failure,
                     iconBackground   : Color.fadeHex( this.commonTheme.palette.accent.failure, .2 )
+                }
+            },
+            
+            virtualScroll: {
+                scrollbar: {
+                    static: this.commonTheme.palette.text.tertiary,
+                    hover : this.commonTheme.palette.text.tertiary
                 }
             }
         };

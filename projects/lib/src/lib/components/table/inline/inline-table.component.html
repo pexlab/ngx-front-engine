@@ -29,61 +29,6 @@
 
 </div>
 
-<ng-container [ngSwitch]="feActions.length > 0 ? feActions.length % 2 === 0 ? 'even' : 'odd' : 'none'">
-
-    <div class="connector even" *ngSwitchCase="'even'">
-
-        <div class="left">
-
-            <fe-button *ngFor="let action of feActions.slice(0, feActions.length / 2)"
-                       feAppearance="circle-hover"
-                       [feTheme]="buttonTheme"
-                       (feClick)="action.onClick()">
-
-                <svg-icon [name]="action.icon"></svg-icon>
-                <span>{{ action.label }}</span>
-
-            </fe-button>
-
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="right">
-
-            <fe-button *ngFor="let action of feActions.slice(feActions.length / 2, feActions.length)"
-                       feAppearance="circle-hover"
-                       [feTheme]="buttonTheme"
-                       (feClick)="action.onClick()">
-
-                <svg-icon [name]="action.icon"></svg-icon>
-                <span>{{ action.label }}</span>
-
-            </fe-button>
-
-        </div>
-
-    </div>
-
-    <div class="connector odd" *ngSwitchCase="'odd'">
-        <fe-button *ngFor="let action of feActions" feAppearance="circle-hover" [feTheme]="buttonTheme"
-                   (feClick)="action.onClick()">
-            <svg-icon [name]="action.icon"></svg-icon>
-            <span>{{ action.label }}</span>
-        </fe-button>
-        <div class="divider">
-            <div class="a"></div>
-            <div></div>
-            <div class="b"></div>
-        </div>
-    </div>
-
-    <div class="connector none" *ngSwitchCase="'none'">
-        <div class="divider"></div>
-    </div>
-
-</ng-container>
-
 <div class="content" [class.dragging]="!isNaN(drag.current.index)">
 
     <svg-icon name="fe-loading" *ngIf="resolvedRelevantData === undefined"></svg-icon>
@@ -96,12 +41,12 @@
                        (feOnRender)="onRender($event)"
                        #feScroll>
 
-        <fe-table-row *ngFor="let row of feScroll.feRowsToRender | async; trackBy: feTrackRow"
+        <fe-inline-table-row *ngFor="let row of feScroll.feRowsToRender | async; trackBy: feTrackRow"
                       [feRow]="$any(row)"
                       [feTable]="this"
                       [attr.data-fe-row-id]="row.feRowId"
                       #feRow>
-        </fe-table-row>
+        </fe-inline-table-row>
 
     </fe-virtual-scroll>
 

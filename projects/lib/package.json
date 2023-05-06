@@ -36,7 +36,7 @@
             "url": "https://www.buymeacoffee.com/slatedave"
         }
     ],
-    "version": "0.0.73",
+    "version": "0.0.75",
     "license": "MIT",
     "homepage": "https://pexlab.net/projects/front-engine",
     "peerDependencies": {
@@ -47,7 +47,6 @@
         "zod": "^3.20.2"
     },
     "dependencies": {
-        "@angular/cdk": "^15.0.3",
         "@fontsource/anonymous-pro": "^4.5.9",
         "@fontsource/architects-daughter": "^4.5.9",
         "@fontsource/baloo-bhaina-2": "^4.5.11",
@@ -68,7 +67,8 @@
         "fuse.js": "^6.6.2",
         "ngx-markdown": "^15.0.0",
         "marked": "^4.2.12",
-        "prismjs": "^1.29.0"
+        "prismjs": "^1.29.0",
+        "brain.js": "^2.0.0-beta.23"
     },
     "devDependencies": {
         "@types/lodash-es": "^4.17.6",

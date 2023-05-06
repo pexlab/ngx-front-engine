@@ -11,14 +11,16 @@ import { ZPopupTheme } from '../components/popup/popup.theme';
 import { ZSpeedometerTheme } from '../components/speedometer/speedometer.theme';
 import { ZStepperTheme } from '../components/stepper/stepper.theme';
 import { ZSwitchTheme } from '../components/switch/switch.theme';
+import { ZInlineTableTheme } from '../components/table/inline/inline-table.theme';
 import { ZTableTheme } from '../components/table/table.theme';
 import { ZTextFieldTheme } from '../components/text-field/text-field.theme';
+import { ZVirtualScrollTheme } from '../components/virtual-scroll/virtual-scroll.theme';
 import { ZHEXColor } from './color.interface';
 import { ZFont } from './typography.interface';
 
 export const ZCommonTheme = z.object(
     {
-
+        
         typography: z.object(
             {
                 display            : ZFont,
@@ -33,7 +35,7 @@ export const ZCommonTheme = z.object(
                 handwritten_body   : ZFont
             }
         ),
-
+        
         palette: z.object(
             {
                 accent: z.object(
@@ -50,7 +52,7 @@ export const ZCommonTheme = z.object(
                         warning         : ZHEXColor
                     }
                 ),
-
+                
                 text: z.object(
                     {
                         primary            : ZHEXColor,
@@ -61,7 +63,7 @@ export const ZCommonTheme = z.object(
                         on_secondary_accent: ZHEXColor
                     }
                 ),
-
+                
                 background: z.object(
                     {
                         primary   : ZHEXColor,
@@ -70,11 +72,11 @@ export const ZCommonTheme = z.object(
                         quaternary: ZHEXColor
                     }
                 ),
-
+                
                 custom: z.record( ZHEXColor ).optional()
             }
         ),
-
+        
         scale: z.number().gt( 0 )
     }
 );
@@ -94,7 +96,9 @@ export type ThemeableComponents = 'alertPortal'
                                   | 'stepper'
                                   | 'switch'
                                   | 'table'
-                                  | 'textField';
+                                  | 'inlineTable'
+                                  | 'textField'
+                                  | 'virtualScroll';
 
 /** Used to guarantee that each component is preset but also gets assigned its very own type */
 function createComponentThemes<c extends { [key in ThemeableComponents]: unknown }>( shape: c ): c {
@@ -117,7 +121,9 @@ export const ZComponentThemes = z.object(
             stepper       : ZStepperTheme,
             switch        : ZSwitchTheme,
             table         : ZTableTheme,
-            textField     : ZTextFieldTheme
+            inlineTable   : ZInlineTableTheme,
+            textField     : ZTextFieldTheme,
+            virtualScroll : ZVirtualScrollTheme
         }
     )
 );

@@ -19,6 +19,7 @@ import {
     FeSwitchModule,
     FeTactileModule,
     FeTextFieldModule,
+    FeVirtualScrollModule,
     TableModule
 } from '@pexlab/ngx-front-engine';
 import { AngularSvgIconModule } from 'angular-svg-icon';
@@ -51,7 +52,7 @@ import { NutmegComponent } from './popups/nutmeg/nutmeg.component';
 
 @NgModule(
     {
-
+        
         declarations: [
             AppComponent,
             TextFieldComponent,
@@ -78,12 +79,12 @@ import { NutmegComponent } from './popups/nutmeg/nutmeg.component';
             EyeComponent,
             BookComponent
         ],
-
+        
         imports: [
-
+            
             BrowserModule,
             BrowserAnimationsModule,
-
+            
             HttpClientModule,
             AngularSvgIconModule.forRoot(),
             MarkdownModule.forRoot(
@@ -93,7 +94,7 @@ import { NutmegComponent } from './popups/nutmeg/nutmeg.component';
                 }
             ),
             ReactiveFormsModule,
-
+            
             FeModule,
             FeRootModule,
             FeButtonModule,
@@ -107,15 +108,16 @@ import { NutmegComponent } from './popups/nutmeg/nutmeg.component';
             FeAlertPortalModule,
             FeSpeedometerModule,
             FeNotepaperModule,
-
+            
             AppRoutingModule,
             CommentModule,
             TableModule,
-            BookModule
+            BookModule,
+            FeVirtualScrollModule
         ],
-
+        
         providers: [],
-
+        
         bootstrap: [
             AppComponent
         ]

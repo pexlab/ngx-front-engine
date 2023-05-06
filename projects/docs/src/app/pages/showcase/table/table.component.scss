@@ -15,4 +15,31 @@
         margin-top : utils.fes(.31);
         max-width  : utils.fes(30);
     }
+
+    & > fe-virtual-scroll {
+
+        width      : 100%;
+        height     : utils.fes(30);
+        background : lightgrey;
+
+        ::ng-deep {
+
+            & > .content {
+
+                display        : grid;
+                grid-auto-flow : row;
+                align-content  : start;
+
+                & > .row {
+                    height     : fit-content;
+                    background : black;
+                    color      : white;
+                    width      : 100%;
+                    font-size  : 21px;
+                    padding    : 10px;
+                    box-sizing : border-box;
+                }
+            }
+        }
+    }
 }

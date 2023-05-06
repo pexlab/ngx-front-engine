@@ -14,6 +14,7 @@ export * from './lib/utils/unit.utils';
 export * from './lib/utils/time.utils';
 export * from './lib/utils/translation.utils';
 export * from './lib/utils/component.utils';
+export * from './lib/utils/function.utils';
 
 export * from './lib/directives/fixes/form-fix.directive';
 export * from './lib/directives/tactile/tactile.directive';
@@ -78,8 +79,16 @@ export * from './lib/components/table/table.component';
 export * from './lib/components/table/table.theme';
 export * from './lib/components/table/table-cell.directive';
 export * from './lib/components/table/table-cell-renderer.directive';
+export * from './lib/components/table/table.utils';
 export * from './lib/components/table/table.module';
+
+export * from './lib/components/table/inline/inline-table.component';
+export * from './lib/components/table/inline/inline-table.theme';
 
 export * from './lib/components/text-field/text-field.component';
 export * from './lib/components/text-field/text-field.theme';
 export * from './lib/components/text-field/text-field.module';
+
+export * from './lib/components/virtual-scroll/virtual-scroll.component';
+export * from './lib/components/virtual-scroll/virtual-scroll.theme';
+export * from './lib/components/virtual-scroll/virtual-scroll.module';

@@ -8,7 +8,6 @@
         ]
     },
     "allowedNonPeerDependencies": [
-        "@angular/cdk",
         "wcag-contrast",
         "svg-round-corners",
         "lodash-es",
@@ -28,7 +27,8 @@
         "fuse.js",
         "ngx-markdown",
         "marked",
-        "prismjs"
+        "prismjs",
+        "brain.js"
     ],
     "assets": [
         "./assets/**/*"

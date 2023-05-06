@@ -16,33 +16,31 @@ import {
     ViewChild,
     ViewChildren
 } from '@angular/core';
-import Fuse from 'fuse.js';
 import lodash from 'lodash-es';
 import { nanoid } from 'nanoid';
 import { fromEvent, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { ComponentTheme } from '../../interfaces/color.interface';
-import { ThemeService } from '../../theme/theme.service';
-import { FeComponent } from '../../utils/component.utils';
-import { isElementVisibleInScrollableContainer } from '../../utils/element.utils';
-import { escapeRegExp } from '../../utils/string.utils';
-import { PartialButtonTheme } from '../button/button.theme';
-import { feTrackRow, VirtualScrollComponent } from '../virtual-scroll/virtual-scroll.component';
-import { PartialInlineTableTheme } from './inline/inline-table.theme';
-import { TableRowComponent } from './row/table-row.component';
-import { PartialTableTheme } from './table.theme';
-import { computeColumnWidths, ComputedTableRow, TableAction, TableColumn, TableLike } from './table.utils';
+import { takeUntil } from 'rxjs/operators';
+import { ComponentTheme } from '../../../interfaces/color.interface';
+import { ThemeService } from '../../../theme/theme.service';
+import { FeComponent } from '../../../utils/component.utils';
+import { isElementVisibleInScrollableContainer } from '../../../utils/element.utils';
+import { PartialButtonTheme } from '../../button/button.theme';
+import { feTrackRow, VirtualScrollComponent } from '../../virtual-scroll/virtual-scroll.component';
+import { PartialTableTheme } from '../table.theme';
+import { computeColumnWidths, ComputedTableRow, TableColumn, TableLike } from '../table.utils';
+import { InlineTableRowComponent } from './inline-row/inline-table-row.component';
+import { PartialInlineTableTheme } from './inline-table.theme';
 
-@FeComponent( 'table' )
+@FeComponent( 'inlineTable' )
 @Component(
     {
-        selector       : 'fe-table',
-        templateUrl    : './table.component.html',
-        styleUrls      : [ './table.component.scss' ],
+        selector       : 'fe-inline-table',
+        templateUrl    : './inline-table.component.html',
+        styleUrls      : [ './inline-table.component.scss' ],
         changeDetection: ChangeDetectionStrategy.OnPush
     }
 )
-export class TableComponent implements OnInit, OnDestroy, AfterViewInit, TableLike {
+export class InlineTableComponent implements OnInit, OnDestroy, AfterViewInit, TableLike {
 
     constructor(
         public hostElement: ElementRef<HTMLElement>,
@@ -61,47 +59,33 @@ export class TableComponent implements OnInit, OnDestroy, AfterViewInit, TableLi
     /* Inputs */
 
     @Input()
-    public feTheme!: ComponentTheme<PartialTableTheme>;
+    public feTheme!: ComponentTheme<PartialInlineTableTheme> | undefined;
 
     @Input()
     public feColumns!: TableColumn[] | undefined;
 
     @Input()
-    public feActions: TableAction[] = [];
-
-    @Input()
     public feReorderable = false;
-
-    @Input()
-    public feAutoFocus?: HTMLElement;
 
     // TODO: add functionally
     @Input()
     public feSelectable = false;
 
     @Input()
-    public feSearchMode: 'accurate' | 'fuzzy' = 'accurate';
+    public feRecordCount: number = 3;
 
     @Input()
     public set feData( value: { [ key: string ]: any }[] | Promise<{ [ key: string ]: any }[]> | undefined ) {
 
         if ( value === undefined ) {
-            this.resolvedUnaffectedData   = undefined;
-            this.resolvedSearchResultData = undefined;
-            this.fuse                     = undefined;
-            this.inlineTables.clear();
+            this.resolvedRelevantData = undefined;
             this.change.detectChanges();
             return;
         }
 
         const setData = ( data: { [ key: string ]: any }[] ) => {
 
-            this.resolvedUnaffectedData = data.map( ( item, index ) => {
-
-                if ( item.feInlineTable !== undefined ) {
-                    this.inlineTables.set( index, item.feInlineTable );
-                }
-
+            this.resolvedRelevantData = data.map( ( item, index ) => {
                 return {
                     ...item,
                     feIndex           : index,
@@ -112,21 +96,14 @@ export class TableComponent implements OnInit, OnDestroy, AfterViewInit, TableLi
                 };
             } );
 
-            this.fuse = new Fuse( this.resolvedUnaffectedData, this.fuseOptions );
-
             this.change.detectChanges();
-            this.scrollIntoView();
         };
 
         if ( value instanceof Promise ) {
 
-            this.resolvedUnaffectedData   = undefined;
-            this.resolvedSearchResultData = undefined;
-            this.fuse                     = undefined;
-            this.inlineTables.clear();
+            this.resolvedRelevantData = undefined;
 
             this.change.detectChanges();
-            this.scrollIntoView();
 
             value.then( data => setData( data ) );
 
@@ -135,24 +112,10 @@ export class TableComponent implements OnInit, OnDestroy, AfterViewInit, TableLi
         }
     };
 
-    @Input()
-    public set feSearchTerm( term: string | null | undefined ) {
-
-        if ( term === undefined || term === null || term.length === 0 ) {
-            this.resolvedSearchResultData                      = undefined;
-            this.virtualScrollElement.nativeElement.scrollTop  = 0;
-            this.virtualScrollElement.nativeElement.scrollLeft = 0;
-            this.change.detectChanges();
-            return;
-        }
-
-        this.onSearchTermChange$.next( term );
-    }
-
     /* View and Content Children */
 
     @ViewChildren( 'feRow' )
-    private activeRows!: QueryList<TableRowComponent>;
+    private activeRows!: QueryList<InlineTableRowComponent>;
 
     @ViewChild( 'heading' )
     public headingRef!: ElementRef<HTMLElement>;
@@ -166,7 +129,7 @@ export class TableComponent implements OnInit, OnDestroy, AfterViewInit, TableLi
     @ViewChildren( 'columnHeading' )
     public columnHeadingRef!: QueryList<ElementRef<HTMLElement>>;
 
-    /* Listeners */
+    /* Listeners and Bindings */
 
     @HostListener( 'window:resize' )
     public onResize() {
@@ -178,14 +141,9 @@ export class TableComponent implements OnInit, OnDestroy, AfterViewInit, TableLi
     public id = nanoid();
 
     /* After resolving a potential promise from the feData directive, the data is resolved to this property */
-    public resolvedUnaffectedData: ComputedTableRow[] | undefined;
-
-    /* After applying the search function, the filtered data is resolved to this property */
-    public resolvedSearchResultData: ComputedTableRow[] | undefined;
+    public resolvedRelevantData: ComputedTableRow[] | undefined;
 
     public highlightedColumnIndex: number = NaN;
-
-    public fuse?: Fuse<any>;
 
     public measureRows = new EventEmitter<void | HTMLElement[]>();
 
@@ -200,34 +158,6 @@ export class TableComponent implements OnInit, OnDestroy, AfterViewInit, TableLi
     private lastHoveredRow = NaN;
 
     private onDestroy$ = new Subject<void>();
-
-    private onSearchTermChange$ = new Subject<string>();
-
-    public inlineTables: Map<number, {
-        feTheme?: ComponentTheme<PartialInlineTableTheme>,
-        feColumns: TableColumn[],
-        feData: { [ key: string ]: any }[],
-        feReorderable?: boolean,
-        feOnReorder?: EventEmitter<{ [ key: string ]: any }[]>,
-        feSelectable?: boolean,
-    }> = new Map();
-
-    public get fuseOptions() {
-
-        if ( this.feColumns === undefined ) {
-            return {};
-        }
-
-        return {
-            keys           : this.feColumns.map( ( column ) => {
-                return column.linkedProperty;
-            } ).filter( key => key !== 'feIndex' && key !== 'feItemIndex' && key !== 'feInitialIndex' && key !== 'feInitialItemIndex' ),
-            shouldSort     : true,
-            isCaseSensitive: false,
-            includeScore   : true,
-            ignoreLocation : true
-        } as Fuse.IFuseOptions<any>;
-    }
 
     public get buttonTheme(): ComponentTheme<PartialButtonTheme> {
         return {
@@ -290,19 +220,72 @@ export class TableComponent implements OnInit, OnDestroy, AfterViewInit, TableLi
             ).subscribe( () => {
                 this.change.detectChanges();
             } );
-
-            this.onSearchTermChange$.pipe(
-                debounceTime( 500 ),
-                takeUntil( this.onDestroy$ )
-            ).subscribe( {
-                next: ( term ) => {
-                    this.conductSearch( term );
-                }
-            } );
         } );
     }
 
     public ngAfterViewInit(): void {
+
+        const computeHostHeight = () => {
+
+            requestAnimationFrame( () => {
+
+                if ( this.activeRows.length === 0 ) {
+                    this.renderer.removeStyle( this.hostElement.nativeElement, 'height' );
+                    return;
+                }
+
+                const firstRow = this.activeRows?.first?.hostElement.nativeElement;
+                const lastRow  = this.activeRows?.last?.hostElement.nativeElement;
+
+                let targetRow: HTMLElement | undefined;
+
+                for ( let i = this.feRecordCount - 1; i > 0; i-- ) {
+
+                    targetRow = this.activeRows?.toArray()[ i ]?.hostElement.nativeElement;
+
+                    if ( targetRow ) {
+                        break;
+                    }
+                }
+
+                const scrollOffset = firstRow?.offsetTop ?? 0;
+
+                if ( this.headingRef === undefined || firstRow === undefined || targetRow === undefined ) {
+                    this.renderer.removeStyle( this.hostElement.nativeElement, 'height' );
+                    return;
+                }
+
+                const hostOffset = this.hostElement.nativeElement.offsetHeight - this.hostElement.nativeElement.clientHeight;
+
+                let newHeight =
+                        this.headingRef.nativeElement.offsetHeight +
+                        targetRow.offsetTop +
+                        targetRow.offsetHeight -
+                        scrollOffset +
+                        hostOffset;
+
+                const maxHeight =
+                          !lastRow ? 0 :
+                          this.headingRef.nativeElement.offsetHeight +
+                              lastRow.offsetTop +
+                              lastRow.offsetHeight -
+                              scrollOffset +
+                              hostOffset;
+
+                /* If table would be scrollable after fixing the height, subtract the divider height */
+                if ( newHeight !== maxHeight ) {
+                    newHeight -= 1;
+                }
+
+                this.renderer.setStyle(
+                    this.hostElement.nativeElement,
+                    'height',
+                    newHeight + 'px'
+                );
+
+                this.change.detectChanges();
+            } );
+        };
 
         this.ngZone.runOutsideAngular( () => {
 
@@ -325,6 +308,16 @@ export class TableComponent implements OnInit, OnDestroy, AfterViewInit, TableLi
                     this.headingRef.nativeElement.scrollLeft = this.virtualScrollElement.nativeElement.scrollLeft;
                 }
             } );
+
+            this.activeRows.changes.pipe(
+                takeUntil( this.onDestroy$ )
+            ).subscribe( () => {
+                computeHostHeight();
+            } );
+
+            if ( this.activeRows.length ) {
+                computeHostHeight();
+            }
         } );
     }
 
@@ -437,7 +430,7 @@ export class TableComponent implements OnInit, OnDestroy, AfterViewInit, TableLi
             ( map, rowComp ) => {
                 map.set( rowComp.row.feRowId, rowComp );
                 return map;
-            }, new Map<string, TableRowComponent>()
+            }, new Map<string, InlineTableRowComponent>()
         );
 
         let newColumnWidths = computeColumnWidths(
@@ -510,7 +503,7 @@ export class TableComponent implements OnInit, OnDestroy, AfterViewInit, TableLi
 
         event.preventDefault();
 
-        const scrollableContent = this.virtualScrollElement.nativeElement.parentElement!;
+        const scrollableContent = this.virtualScrollElement.nativeElement;
 
         const dragDummy = rowElRef.cloneNode( true ) as HTMLElement;
 
@@ -597,10 +590,6 @@ export class TableComponent implements OnInit, OnDestroy, AfterViewInit, TableLi
             return;
         }
 
-        if ( this.resolvedSearchResultData !== undefined ) {
-            return;
-        }
-
         event.preventDefault();
 
         const fromIndex = this.drag.current.index;
@@ -640,7 +629,7 @@ export class TableComponent implements OnInit, OnDestroy, AfterViewInit, TableLi
 
         if ( fromIndex !== toIndex ) {
 
-            const arrayCopy = this.resolvedUnaffectedData ? [ ...this.resolvedUnaffectedData ] : [];
+            const arrayCopy = this.resolvedRelevantData ? [ ...this.resolvedRelevantData ] : [];
 
             const element = arrayCopy[ fromIndex ];
             arrayCopy.splice( fromIndex, 1 );
@@ -650,8 +639,6 @@ export class TableComponent implements OnInit, OnDestroy, AfterViewInit, TableLi
                 arrayCopy[ index ][ 'feIndex' ]     = index;
                 arrayCopy[ index ][ 'feItemIndex' ] = index + 1;
             } );
-
-            this.resolvedUnaffectedData = arrayCopy;
         }
 
         this.drag.last.index    = toIndex;
@@ -666,8 +653,8 @@ export class TableComponent implements OnInit, OnDestroy, AfterViewInit, TableLi
 
         this.change.detectChanges();
 
-        if ( this.resolvedUnaffectedData !== undefined ) {
-            this.feOnReorder.emit( this.resolvedUnaffectedData );
+        if ( this.resolvedRelevantData !== undefined ) {
+            this.feOnReorder.emit( this.resolvedRelevantData );
         }
     }
 
@@ -696,107 +683,6 @@ export class TableComponent implements OnInit, OnDestroy, AfterViewInit, TableLi
         this.change.detectChanges();
     }
 
-    private conductSearch( term: string ) {
-
-        switch ( this.feSearchMode ) {
-
-            case 'fuzzy': {
-
-                if ( this.fuse !== undefined ) {
-
-                    const result = this.fuse.search( term );
-
-                    this.resolvedSearchResultData = result.filter( ( record ) => {
-                        return record.score !== undefined && record.score <= 0.6;
-                    } ).map( ( record, index ) => {
-                        return {
-                            ...record.item,
-                            feIndex    : index,
-                            feItemIndex: index + 1
-                        };
-                    } );
-
-                } else {
-                    this.resolvedSearchResultData = undefined;
-                }
-
-                break;
-            }
-
-            case 'accurate': {
-
-                if ( this.resolvedUnaffectedData === undefined || !term ) {
-                    this.resolvedSearchResultData = undefined;
-                    break;
-                }
-
-                const parts = term.toLowerCase().split( ' ' );
-
-                const matches = this.resolvedUnaffectedData.filter( ( record ) => {
-
-                    const find = ( obj: Record<string, any> | undefined | null ) => {
-
-                        if ( obj === undefined || obj === null ) {
-                            return false;
-                        }
-
-                        for ( const key of Object.keys( obj ) ) {
-
-                            if ( typeof obj[ key ] === 'string' || typeof obj[ key ] === 'number' ) {
-
-                                let partsFound = 0;
-
-                                for ( let part of parts ) {
-                                    if ( String( obj[ key ] ).toLowerCase().search( new RegExp( escapeRegExp( part ), 'g' ) ) !== -1 ) {
-                                        partsFound++;
-                                    }
-                                }
-
-                                if ( partsFound === parts.length ) {
-                                    return true;
-                                }
-
-                            } else if ( typeof obj[ key ] === 'object' ) {
-
-                                if ( find( obj[ key ] ) ) {
-                                    return true;
-                                }
-
-                            } else if ( lodash.isArray( obj[ key ] ) ) {
-
-                                if ( obj[ key ].some( find ) ) {
-                                    return true;
-                                }
-                            }
-                        }
-
-                        return false;
-                    };
-
-                    return find( record );
-
-                } ).map( ( record, index ) => {
-                    return {
-                        ...record,
-                        feIndex    : index,
-                        feItemIndex: index + 1
-                    };
-                } );
-
-                this.resolvedSearchResultData = matches;
-
-                break;
-            }
-        }
-
-        this.change.detectChanges();
-
-        if ( this.virtualScrollElement ) {
-            this.virtualScrollElement.nativeElement.scrollTop  = 0;
-            this.virtualScrollElement.nativeElement.scrollLeft = 0;
-        }
-    }
-
     /* Helpers */
 
     protected readonly getPath = lodash.get;
@@ -814,12 +700,7 @@ export class TableComponent implements OnInit, OnDestroy, AfterViewInit, TableLi
     }
 
     public get reorderable(): boolean {
-        return this.feReorderable && this.resolvedSearchResultData === undefined;
-    }
-
-    /* If a search is active, this property is the filtered result otherwise it is just the resolved unaffected data */
-    public get resolvedRelevantData(): ComputedTableRow[] | undefined {
-        return this.resolvedSearchResultData ?? this.resolvedUnaffectedData;
+        return this.feReorderable;
     }
 
     public get isScrollable() {
@@ -831,16 +712,5 @@ export class TableComponent implements OnInit, OnDestroy, AfterViewInit, TableLi
         }
 
         return scroller.scrollHeight > scroller.clientHeight;
-    }
-
-    public scrollIntoView() {
-        if ( this.feAutoFocus !== undefined ) {
-            this.feAutoFocus.scrollTo(
-                {
-                    top     : this.hostElement.nativeElement.offsetTop - ( this.hostElement.nativeElement.parentElement?.offsetTop ?? 0 ) - 1,
-                    behavior: 'smooth'
-                }
-            );
-        }
     }
 }

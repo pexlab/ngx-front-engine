@@ -1,0 +1,264 @@
+@use 'assets/fe-styles/theme' with ($scope: 'table');
+@use 'assets/fe-styles/utils';
+
+:host {
+
+    display   : block;
+
+    min-width : fit-content;
+
+    overflow  : hidden;
+
+    /* A clone to freely drag around (showing a preview of the row) */
+    &.dragDummy {
+
+        z-index        : 1;
+
+        position       : absolute;
+
+        pointer-events : none !important;
+
+        & > .wrapper {
+
+            &.even, &.odd {
+                background : transparent !important;
+            }
+
+            @include utils.hover {
+                background : transparent !important;
+            }
+        }
+
+        & > .divider {
+            opacity : 0;
+        }
+    }
+
+    &.animateIn > .wrapper, & > .wrapper.animateIn {
+        animation : fe-table_bounce 1000ms linear both;
+    }
+
+    & > .divider {
+
+        width      : 100%;
+        height     : 0;
+
+        transition : height .25s ease, border-top .25s ease;
+
+        border-top : utils.fes(.06) solid theme.hex('outline');
+
+        &.aim {
+            height        : var(--space);
+            border-bottom : utils.fes(.06) solid theme.hex('outline');
+        }
+
+        &.hideTopBorder {
+            border-top : 0 solid transparent;
+        }
+
+        &.hideBottomBorder {
+            border-bottom-color : transparent;
+        }
+    }
+
+    & > .wrapper {
+
+        width              : 100%;
+
+        display            : grid;
+        grid-auto-flow     : column;
+        grid-template-rows : auto auto;
+        align-items        : center;
+        justify-content    : start;
+
+        transition         : background .25s ease, margin-bottom .25s ease;
+
+        & > fe-inline-table {
+            grid-row      : 2;
+            grid-column   : 1 / -1;
+            margin-left   : utils.fes(1.2 + ( 0.8 * 2 ));
+            width         : calc(100% - (#{utils.rawFes(1.2 + ( 0.8 * 2 ))}) * 2);
+            margin-bottom : utils.fes(1);
+            margin-top    : utils.fes(1);
+        }
+
+        &.beingDragged {
+
+            /* Hide the real one as long as the dummy/clone is being freely dragged around */
+            display : none;
+
+            &, & > * {
+                pointer-events : none !important;
+            }
+        }
+
+        &.nonInteractive {
+
+            cursor : inherit;
+
+            /* Allow for hover event to be dispatched */
+            & {
+                pointer-events : visible;
+            }
+
+            /* Disallow for any content to be hovered on */
+            & > * {
+                pointer-events : none;
+            }
+        }
+
+        & > .divider {
+
+            grid-row         : 1;
+
+            width            : utils.fes(.06);
+            height           : 50%;
+
+            background-color : theme.hex('outline');
+
+            transition       : opacity .25s ease;
+
+            &.hidden {
+                opacity : 0;
+            }
+
+            &, & > * {
+                pointer-events : none;
+            }
+        }
+
+        & > .cell {
+
+            grid-row    : 1;
+
+            position    : relative;
+
+            display     : grid;
+            place-items : center start;
+
+            box-sizing  : content-box;
+            padding     : utils.fes(.8);
+            min-height  : fit-content;
+            height      : utils.opFes('100% -', 1.6);
+
+            white-space : nowrap;
+
+            transition  : background .25s ease, width .5s ease;
+
+            &.left {
+                place-items : center start;
+            }
+
+            &.center {
+                place-items : center center;
+            }
+
+            &.right {
+                place-items : center end;
+            }
+
+            &:after {
+
+                pointer-events : none;
+
+                z-index        : 0;
+                content        : '';
+                position       : absolute;
+                top            : 0;
+                left           : 0;
+                right          : 0;
+                bottom         : 0;
+
+                background     : theme.hex('highlight-cell');
+
+                border-left    : utils.fes(.06) solid theme.hex('highlight-outline');
+                border-right   : utils.fes(.06) solid theme.hex('highlight-outline');
+
+                opacity        : 0;
+                transition     : opacity .25s ease;
+            }
+
+            & > * {
+                position : relative;
+                z-index  : 1;
+            }
+
+            &.passThroughClick > * {
+                pointer-events : visible;
+            }
+
+            &.ignoreClick {
+                &, & > * {
+                    pointer-events : none;
+                    user-select    : none;
+                }
+            }
+
+            &.highlight:after {
+                opacity : 1;
+            }
+
+            &.inFirstRow:after {
+                top                     : utils.fes(.25);
+                border-top-right-radius : utils.fes(1);
+                border-top-left-radius  : utils.fes(1);
+                border-top              : utils.fes(.06) solid theme.hex('highlight-outline');
+            }
+
+            &.inLastRow:after {
+                bottom                     : utils.fes(.25);
+                border-bottom-right-radius : utils.fes(1);
+                border-bottom-left-radius  : utils.fes(1);
+                border-bottom              : utils.fes(.06) solid theme.hex('highlight-outline');
+            }
+        }
+
+        & > .select {
+
+            height         : 100%;
+
+            display        : grid;
+            grid-auto-flow : column;
+            place-items    : center;
+
+            box-sizing     : content-box;
+            padding        : 0 utils.fes(.8) 0 utils.fes(.8);
+
+            touch-action   : none;
+
+            @include theme.inlineIcon(utils.fes(1.2));
+
+            &.reorderable {
+                cursor : grab;
+            }
+
+            @include utils.hover {
+                & > svg-icon {
+                    color : theme.hex('drag-handle-hover');
+                }
+            }
+
+            & > fe-checkbox {
+                margin : 0 utils.fes(1);
+                cursor : pointer;
+            }
+
+            & > svg-icon {
+                color      : theme.hex('drag-handle');
+                transition : color .25s ease;
+            }
+        }
+
+        &.even {
+            background : theme.hex('background-row-even');
+        }
+
+        &.odd {
+            background : theme.hex('background-row-odd');
+        }
+
+        @include utils.hover {
+            background : theme.hex('background-row-hover');
+        }
+    }
+}

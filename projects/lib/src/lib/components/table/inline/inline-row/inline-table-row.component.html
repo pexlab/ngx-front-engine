@@ -1,0 +1,68 @@
+<ng-container *ngIf="table.resolvedRelevantData !== undefined">
+
+    <div class="divider"
+         [class.hideTopBorder]="row.feIndex === 0 || (row.feIndex === 1 && drag.current.index === 0) || (row.feIndex === drag.current.index && row.feIndex !== dragTargetToIndex)"
+         [class.hideBottomBorder]="row.feIndex === drag.current.index"
+         [class.aim]="!isNaN(drag.target.index) && row.feIndex === dragTargetToIndex"
+         [style.--space]="drag.dummy.element !== undefined ? drag.dummy.element.clientHeight + 'px' : '0'">
+    </div>
+
+    <div class="wrapper"
+         #wrapper
+         [style.grid-template-columns]="'auto '.repeat(Math.abs(wrapper.childElementCount - ((table.inlineTables?.get(row['feInitialIndex'])?.feData?.length ?? 0 > 0) ? 1 : 0) - 1)) + '1fr'"
+         [ngClass]="[row.feIndex % 2 === 0 ? 'even' : 'odd', 'fe-table-' + table.id + '-row-' + row.feIndex]"
+         [class.beingDragged]="row.feIndex === drag.current.index"
+         [class.nonInteractive]="!isNaN(drag.current.index)"
+         [class.animateIn]="row.feIndex === drag.last.index ? animateRowIn(row.feIndex) : false">
+
+        <div class="select"
+             *ngIf="table.reorderable || table.feSelectable"
+             [class.reorderable]="table.reorderable"
+             (pointerdown)="table.reorderable ? table.pointerDown($event, hostElement.nativeElement, row.feIndex) : undefined">
+            <svg-icon name="fe-drag-handle" *ngIf="table.reorderable"></svg-icon>
+            <fe-checkbox *ngIf="table.feSelectable"></fe-checkbox>
+        </div>
+
+        <ng-container *ngFor="let column of table.feColumns; let cellIndex = index">
+
+            <div class="divider"
+                 *ngIf="cellIndex > 0 || (table.reorderable || table.feSelectable)"
+                 [class.hidden]="table.highlightedColumnIndex >= 0 && (table.highlightedColumnIndex === cellIndex || table.highlightedColumnIndex === (cellIndex - 1))">
+            </div>
+
+            <div class="cell"
+                 [fe-table-cell]="{ index: cellIndex, idealWidthEl: idealEl, minWidthEl: minEl}"
+                 #cell="cellDirective"
+                 [class.highlight]="table.highlightedColumnIndex === cellIndex"
+                 [class.inFirstRow]="row.feIndex === 0"
+                 [class.inLastRow]="row.feIndex === table.resolvedRelevantData.length - 1"
+                 [class.passThroughClick]="column.passThroughClick"
+                 [class.ignoreClick]="column.onClick === undefined && !column.passThroughClick"
+                 [style.cursor]="column.onClick !== undefined ? 'pointer' : 'default'"
+                 [style.width]="'var(--fe-table-' + table.id + '-column-width-' + cellIndex + ')'"
+                 [ngClass]="column.align ?? 'left'"
+                 (click)="column.onClick ? column.onClick(row) : undefined">
+
+                <div class="measurement" #idealEl>
+                    <ng-container
+                        [fe-table-cell-renderer]="{ renderer: column.renderer, property: getPath(row, column.linkedProperty) }"></ng-container>
+                </div>
+
+                <div class="measure-minimum" #minEl>
+                    <ng-container
+                        [fe-table-cell-renderer]="{ renderer: column.renderer, property: getPath(row, column.linkedProperty) }"></ng-container>
+                </div>
+
+                <ng-container
+                    [fe-table-cell-renderer]="{ renderer: column.renderer, property: getPath(row, column.linkedProperty) }"></ng-container>
+
+            </div>
+
+        </ng-container>
+
+    </div>
+
+    <div class="divider"
+         *ngIf="!table.isScrollable && row.feIndex === table.resolvedRelevantData.length - 1"></div>
+
+</ng-container>
