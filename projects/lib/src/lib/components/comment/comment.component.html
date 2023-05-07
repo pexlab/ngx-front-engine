@@ -23,7 +23,7 @@
         <span>{{ feMessage['text'] }}</span>
     </div>
     <div class="content" *ngIf="feMessage['markdown']">
-        <markdown [data]="feMessage['markdown']"></markdown>
+        <fe-markdown [data]="feMessage['markdown']"></fe-markdown>
     </div>
 </ng-template>
 

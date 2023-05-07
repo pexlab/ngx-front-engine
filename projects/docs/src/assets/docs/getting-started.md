@@ -44,6 +44,20 @@ and ``styles`` section and append the following:
 ],
 ```
 
+If you want to enable code highlighting for the markdown component, you'll have to import the prism.js styles and scripts and well:
+```diff
+"styles": [
+    ...
++   "node_modules/prismjs/themes/prism-tomorrow.css"
+],
+"scripts": [
++   "node_modules/prismjs/prism.js",
++   "node_modules/prismjs/components/prism-typescript.js"
+]
+```
+
+Import all the languages you want this way. Supported languages can be found [here](https://prismjs.com/#supported-languages).
+
 <br>
 
 #### 3. Importing the necessary modules

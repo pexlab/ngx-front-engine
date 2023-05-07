@@ -92,3 +92,5 @@ export * from './lib/components/text-field/text-field.module';
 export * from './lib/components/virtual-scroll/virtual-scroll.component';
 export * from './lib/components/virtual-scroll/virtual-scroll.theme';
 export * from './lib/components/virtual-scroll/virtual-scroll.module';
+
+export * from './lib/components/markdown/markdown.component';

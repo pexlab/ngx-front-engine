@@ -176,7 +176,7 @@
 
         &::ng-deep {
 
-            & markdown {
+            & fe-markdown > .rendered {
 
                 display        : grid;
                 grid-auto-flow : row;

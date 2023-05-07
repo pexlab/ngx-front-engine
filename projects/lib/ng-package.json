@@ -25,7 +25,6 @@
         "@fontsource/syncopate",
         "text-security",
         "fuse.js",
-        "ngx-markdown",
         "marked",
         "prismjs",
         "brain.js"

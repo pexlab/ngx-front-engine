@@ -9,33 +9,30 @@ import { subDays, subHours, subWeeks } from 'date-fns';
     }
 )
 export class CommentComponent implements OnInit {
-    
+
     constructor() { }
-    
+
     ngOnInit(): void {
     }
-    
-    private comment =
-                `
-                Let's try some **Markdown**:
-                
-                # Hello, everybody!
-                
-                This is a comment component. In here you can \`format\` your text.
-                
-                > Like this quote.
-                >
-                >
-                > > Or this quote inside a quote.
-                >
-                > \\- John Doe, February 2023
-                
-                \`\`\`typescript
-                /* Or this code-block */
-                console.log( 'Power to the user!' );
-                \`\`\`
-                `;
-    
+
+    private comment = 'Let\'s try some **Markdown**:\n' +
+        '\n' +
+        '# Hello, everybody!\n' +
+        '\n' +
+        'This is a comment component. In here you can `format` your text.\n' +
+        '\n' +
+        '> Like this quote.\n' +
+        '>\n' +
+        '>\n' +
+        '> > Or this quote inside a quote.\n' +
+        '>\n' +
+        '> \\- John Doe, February 2023\n' +
+        '\n' +
+        '```typescript\n' +
+        '/* Or this code-block */\n' +
+        'console.log( \'Power to the user!\' );\n' +
+        '```\n';
+
     public author: ICommentAuthor = ZCommentAuthor.parse(
         {
             nickname : 'John Doe',
@@ -43,12 +40,12 @@ export class CommentComponent implements OnInit {
             badge    : true
         }
     );
-    
+
     public message: ICommentMessage = {
         markdown   : this.comment,
         publishDate: subHours( subDays( subWeeks( new Date(), 2 ), 3 ), 12 )
     };
-    
+
     public buttons = [
         {
             icon                  : 'heart',
