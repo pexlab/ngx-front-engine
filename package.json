@@ -65,7 +65,7 @@
     "@fontsource/rajdhani": "^4.5.10",
     "@fontsource/roboto": "^4.5.8",
     "@fontsource/syncopate": "^4.5.8",
-    "angular-svg-icon": "^15.0.0",
+    "angular-svg-icon": "^16.0.0",
     "brain.js": "^2.0.0-beta.23",
     "date-fns": "^2.29.3",
     "deepdash-es": "^5.3.9",
@@ -81,7 +81,7 @@
     "tslib": "^2.3.0",
     "wcag-contrast": "^3.0.0",
     "web-animations-js": "^2.3.2",
-    "zod": "^3.20.2",
+    "zod": "^3.21.4",
     "zone.js": "~0.13.0"
   },
   "devDependencies": {
