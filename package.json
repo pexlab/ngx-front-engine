@@ -1,109 +1,109 @@
 {
-    "name": "@pexlab/ngx-front-engine",
-    "description": "A component library for angular which features astonishing components, theming and a vast color palette",
-    "author": {
-        "name": "PexLab",
-        "email": "opensource@pexlab.net",
-        "url": "https://www.pexlab.net"
+  "name": "@pexlab/ngx-front-engine",
+  "description": "A component library for angular which features astonishing components, theming and a vast color palette",
+  "author": {
+    "name": "PexLab",
+    "email": "opensource@pexlab.net",
+    "url": "https://www.pexlab.net"
+  },
+  "contributors": [
+    {
+      "name": "David van der Sluijs",
+      "email": "david.van-der-sluijs@pexlab.net",
+      "url": "https://www.slatedave.de"
     },
-    "contributors": [
-        {
-            "name": "David van der Sluijs",
-            "email": "david.van-der-sluijs@pexlab.net",
-            "url": "https://www.slatedave.de"
-        },
-        {
-            "name": "Philipp Glaubitz",
-            "email": "philipp.glaubitz@pexlab.net",
-            "url": "https://github.com/PhilippGlaubitz"
-        },
-        {
-            "name": "Robin Gaši",
-            "email": "robin.gasi@pexlab.net",
-            "url": "https://github.com/RobinGasi"
-        }
-    ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/pexlab/ngx-front-engine.git"
+    {
+      "name": "Philipp Glaubitz",
+      "email": "philipp.glaubitz@pexlab.net",
+      "url": "https://github.com/PhilippGlaubitz"
     },
-    "bugs": {
-        "url": "https://github.com/pexlab/ngx-front-engine/issues"
-    },
-    "funding": [
-        {
-            "type": "individual",
-            "url": "https://www.buymeacoffee.com/slatedave"
-        }
-    ],
-    "version": "0.0.1",
-    "private": true,
-    "license": "MIT",
-    "homepage": "https://pexlab.net/projects/front-engine",
-    "scripts": {
-        "serve_docs": "ng serve --host 0.0.0.0 --port 42001",
-        "serve_lib": "ng build --configuration development --project lib --watch",
-        "build_docs": "ng build --configuration production --project docs --base-href https://www.pexlab.net/projects/front-engine/",
-        "build_lib": "ng build --configuration production --project lib",
-        "build_and_serve": "ng build --configuration development --project lib && ng serve --host 0.0.0.0",
-        "build_and_pack": "ng build --configuration production && cd dist/ngx-front-engine && npm pack"
-    },
-    "dependencies": {
-        "@angular/animations": "^15.0.4",
-        "@angular/common": "^15.0.4",
-        "@angular/compiler": "^15.0.4",
-        "@angular/core": "^15.0.4",
-        "@angular/forms": "^15.0.4",
-        "@angular/platform-browser": "^15.0.4",
-        "@angular/platform-browser-dynamic": "^15.0.4",
-        "@angular/router": "^15.0.4",
-        "@fontsource/anonymous-pro": "^4.5.9",
-        "@fontsource/architects-daughter": "^4.5.9",
-        "@fontsource/baloo-bhaina-2": "^4.5.11",
-        "@fontsource/jost": "^4.5.12",
-        "@fontsource/pangolin": "^4.5.9",
-        "@fontsource/rajdhani": "^4.5.10",
-        "@fontsource/roboto": "^4.5.8",
-        "@fontsource/syncopate": "^4.5.8",
-        "angular-svg-icon": "^15.0.0",
-        "brain.js": "^2.0.0-beta.23",
-        "date-fns": "^2.29.3",
-        "deepdash-es": "^5.3.9",
-        "focus-trap": "^7.2.0",
-        "fuse.js": "^6.6.2",
-        "lodash-es": "^4.17.21",
-        "marked": "^4.2.12",
-        "nanoid": "^4.0.0",
-        "prismjs": "^1.29.0",
-        "rxjs": "~6.6.0",
-        "svg-round-corners": "^0.4.1",
-        "text-security": "^3.2.1",
-        "tslib": "^2.3.0",
-        "wcag-contrast": "^3.0.0",
-        "web-animations-js": "^2.3.2",
-        "zod": "^3.20.2",
-        "zone.js": "~0.11.4"
-    },
-    "devDependencies": {
-        "@angular-devkit/build-angular": "^15.0.4",
-        "@angular/cli": "^15.0.4",
-        "@angular/compiler-cli": "^15.0.4",
-        "@types/jasmine": "~3.8.0",
-        "@types/lodash": "^4.14.191",
-        "@types/lodash-es": "^4.17.6",
-        "@types/marked": "^4.0.8",
-        "@types/node": "^12.11.1",
-        "@types/wcag-contrast": "^3.0.0",
-        "@types/offscreencanvas": "^2019.7.0",
-        "@types/prismjs": "^1.26.0",
-        "jasmine-core": "~3.8.0",
-        "karma": "~6.3.0",
-        "karma-chrome-launcher": "~3.1.0",
-        "karma-coverage": "~2.0.3",
-        "karma-jasmine": "~4.0.0",
-        "karma-jasmine-html-reporter": "~1.7.0",
-        "lodash": "^4.17.21",
-        "ng-packagr": "^15.0.3",
-        "typescript": "~4.8.4"
+    {
+      "name": "Robin Gaši",
+      "email": "robin.gasi@pexlab.net",
+      "url": "https://github.com/RobinGasi"
     }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pexlab/ngx-front-engine.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pexlab/ngx-front-engine/issues"
+  },
+  "funding": [
+    {
+      "type": "individual",
+      "url": "https://www.buymeacoffee.com/slatedave"
+    }
+  ],
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "homepage": "https://pexlab.net/projects/front-engine",
+  "scripts": {
+    "serve_docs": "ng serve --host 0.0.0.0 --port 42001",
+    "serve_lib": "ng build --configuration development --project lib --watch",
+    "build_docs": "ng build --configuration production --project docs --base-href https://www.pexlab.net/projects/front-engine/",
+    "build_lib": "ng build --configuration production --project lib",
+    "build_and_serve": "ng build --configuration development --project lib && ng serve --host 0.0.0.0",
+    "build_and_pack": "ng build --configuration production && cd dist/ngx-front-engine && npm pack"
+  },
+  "dependencies": {
+    "@angular/animations": "^16.0.0",
+    "@angular/common": "^16.0.0",
+    "@angular/compiler": "^16.0.0",
+    "@angular/core": "^16.0.0",
+    "@angular/forms": "^16.0.0",
+    "@angular/platform-browser": "^16.0.0",
+    "@angular/platform-browser-dynamic": "^16.0.0",
+    "@angular/router": "^16.0.0",
+    "@fontsource/anonymous-pro": "^4.5.9",
+    "@fontsource/architects-daughter": "^4.5.9",
+    "@fontsource/baloo-bhaina-2": "^4.5.11",
+    "@fontsource/jost": "^4.5.12",
+    "@fontsource/pangolin": "^4.5.9",
+    "@fontsource/rajdhani": "^4.5.10",
+    "@fontsource/roboto": "^4.5.8",
+    "@fontsource/syncopate": "^4.5.8",
+    "angular-svg-icon": "^15.0.0",
+    "brain.js": "^2.0.0-beta.23",
+    "date-fns": "^2.29.3",
+    "deepdash-es": "^5.3.9",
+    "focus-trap": "^7.2.0",
+    "fuse.js": "^6.6.2",
+    "lodash-es": "^4.17.21",
+    "marked": "^4.2.12",
+    "nanoid": "^4.0.0",
+    "prismjs": "^1.29.0",
+    "rxjs": "~6.6.0",
+    "svg-round-corners": "^0.4.1",
+    "text-security": "^3.2.1",
+    "tslib": "^2.3.0",
+    "wcag-contrast": "^3.0.0",
+    "web-animations-js": "^2.3.2",
+    "zod": "^3.20.2",
+    "zone.js": "~0.13.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^16.0.0",
+    "@angular/cli": "^16.0.0",
+    "@angular/compiler-cli": "^16.0.0",
+    "@types/jasmine": "~3.8.0",
+    "@types/lodash": "^4.14.191",
+    "@types/lodash-es": "^4.17.6",
+    "@types/marked": "^4.0.8",
+    "@types/node": "^12.11.1",
+    "@types/wcag-contrast": "^3.0.0",
+    "@types/offscreencanvas": "^2019.7.0",
+    "@types/prismjs": "^1.26.0",
+    "jasmine-core": "~3.8.0",
+    "karma": "~6.3.0",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage": "~2.0.3",
+    "karma-jasmine": "~4.0.0",
+    "karma-jasmine-html-reporter": "~1.7.0",
+    "lodash": "^4.17.21",
+    "ng-packagr": "^16.0.0",
+    "typescript": "~5.0.4"
+  }
 }
