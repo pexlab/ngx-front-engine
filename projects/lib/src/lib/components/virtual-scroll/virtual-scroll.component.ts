@@ -22,7 +22,7 @@ import { BehaviorSubject, fromEvent, Subject } from 'rxjs';
 import { auditTime, takeUntil } from 'rxjs/operators';
 import { ComponentTheme } from '../../interfaces/color.interface';
 import { ThemeService } from '../../theme/theme.service';
-import { FeComponent } from '../../utils/component.utils';
+import { ThemeableFeComponent } from '../../utils/component.utils';
 import { PartialVirtualScrollTheme } from './virtual-scroll.theme';
 
 type VirtualScrollRow = {
@@ -30,7 +30,6 @@ type VirtualScrollRow = {
     feRowId: string
 };
 
-@FeComponent( 'virtualScroll' )
 @Component(
     {
         selector       : 'fe-virtual-scroll',
@@ -39,7 +38,7 @@ type VirtualScrollRow = {
         changeDetection: ChangeDetectionStrategy.OnPush
     }
 )
-export class VirtualScrollComponent implements AfterViewInit, OnChanges, AfterViewChecked, OnDestroy {
+export class VirtualScrollComponent extends ThemeableFeComponent implements AfterViewInit, OnChanges, AfterViewChecked, OnDestroy {
 
     constructor(
         public hostElement: ElementRef<HTMLElement>,
@@ -48,6 +47,8 @@ export class VirtualScrollComponent implements AfterViewInit, OnChanges, AfterVi
         private ngZone: NgZone,
         private theme: ThemeService
     ) {
+        super();
+        this.initializeFeComponent( 'virtualScroll', this );
     }
 
     /* Outputs */
@@ -56,7 +57,7 @@ export class VirtualScrollComponent implements AfterViewInit, OnChanges, AfterVi
 
     /* Inputs */
 
-    @Input() feTheme!: ComponentTheme<PartialVirtualScrollTheme>;
+    @Input() feTheme: ComponentTheme<PartialVirtualScrollTheme> | undefined;
 
     @Input() feRows!: VirtualScrollRow[];
 

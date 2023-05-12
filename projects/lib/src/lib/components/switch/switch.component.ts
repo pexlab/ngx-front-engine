@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Optional, Output, Self, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { ComponentTheme } from '../../interfaces/color.interface';
-import { FeComponent } from '../../utils/component.utils';
+import { ThemeableFeComponent } from '../../utils/component.utils';
 import { PartialSwitchTheme } from './switch.theme';
 
-@FeComponent( 'switch' )
 @Component(
     {
         selector       : 'fe-switch',
@@ -13,7 +12,7 @@ import { PartialSwitchTheme } from './switch.theme';
         changeDetection: ChangeDetectionStrategy.OnPush
     }
 )
-export class SwitchComponent implements OnInit, ControlValueAccessor {
+export class SwitchComponent extends ThemeableFeComponent implements OnInit, ControlValueAccessor {
 
     constructor(
         @Self()
@@ -22,13 +21,17 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
         public hostElement: ElementRef,
         public change: ChangeDetectorRef
     ) {
+
+        super();
+        this.initializeFeComponent( 'switch', this );
+
         if ( this.ngControl ) {
             this.ngControl.valueAccessor = this;
         }
     }
 
     @Input()
-    public feTheme!: ComponentTheme<PartialSwitchTheme>;
+    public feTheme: ComponentTheme<PartialSwitchTheme> | undefined;
 
     @Input()
     public feAppearance: 'minimal' | 'traditional' = 'minimal';
@@ -51,7 +54,7 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
     @Output()
     public feChange = new EventEmitter();
 
-    @ViewChild('switch')
+    @ViewChild( 'switch' )
     public switchRef!: ElementRef<HTMLElement>;
 
     /* Form API */

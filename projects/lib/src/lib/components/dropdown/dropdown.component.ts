@@ -22,11 +22,10 @@ import {
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { Subscription, zip } from 'rxjs';
 import { ComponentTheme } from '../../interfaces/color.interface';
-import { FeComponent } from '../../utils/component.utils';
+import { ThemeableFeComponent } from '../../utils/component.utils';
 import { DropdownChoiceComponent } from './choice/dropdown-choice.component';
 import { PartialDropdownTheme } from './dropdown.theme';
 
-@FeComponent( 'dropdown' )
 @Component(
     {
         selector       : 'fe-dropdown',
@@ -69,7 +68,7 @@ import { PartialDropdownTheme } from './dropdown.theme';
         ]
     }
 )
-export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValueAccessor {
+export class DropdownComponent extends ThemeableFeComponent implements AfterViewInit, OnDestroy, ControlValueAccessor {
 
     constructor(
         @Self()
@@ -80,6 +79,10 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
         private ngZone: NgZone,
         private renderer: Renderer2
     ) {
+
+        super();
+        this.initializeFeComponent( 'dropdown', this );
+
         if ( this.ngControl ) {
             this.ngControl.valueAccessor = this;
         }
@@ -91,8 +94,8 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
         /* Dispose of possible old subscriptions */
         this.disposeSubscriptions.forEach( subscription => subscription.unsubscribe() );
 
-        /* Wait for every choice to initialise */
-        zip( ...choices.map( choice => choice.loadedState ) ).subscribe( () => {
+        /* Wait for every choice to render */
+        zip( ...choices.map( choice => choice.feRendered ) ).subscribe( () => {
 
             this.choices = choices;
 
@@ -133,7 +136,7 @@ export class DropdownComponent implements AfterViewInit, OnDestroy, ControlValue
     public feClearable = true;
 
     @Input()
-    public feTheme!: ComponentTheme<PartialDropdownTheme>;
+    public feTheme: ComponentTheme<PartialDropdownTheme> | undefined;
 
     @Input()
     public feAppearance: 'flat' | 'passive-raised' | 'active-raised' | 'always-raised' = 'flat';

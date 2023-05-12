@@ -3,11 +3,10 @@ import { AfterViewInit, Component, ComponentRef, ElementRef, OnDestroy, OnInit, 
 import * as focusTrap from 'focus-trap';
 import { Subject } from 'rxjs';
 import { ComponentTheme } from '../../interfaces/color.interface';
-import { FeComponent } from '../../utils/component.utils';
+import { ThemeableFeComponent } from '../../utils/component.utils';
 import { fes, rawFes, rawVh, rawVw } from '../../utils/unit.utils';
 import { PartialPopupTheme } from './popup.theme';
 
-@FeComponent( 'popup' )
 @Component(
     {
         templateUrl: './popup.component.html',
@@ -37,15 +36,17 @@ import { PartialPopupTheme } from './popup.theme';
         ]
     }
 )
-export class PopupComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PopupComponent extends ThemeableFeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     constructor(
         public hostElement: ElementRef,
         private renderer: Renderer2
     ) {
+        super();
+        this.initializeFeComponent( 'popup', this );
     }
 
-    public feTheme!: ComponentTheme<PartialPopupTheme>;
+    public feTheme: ComponentTheme<PartialPopupTheme> | undefined;
 
     public hideExitIcon: boolean = false;
 

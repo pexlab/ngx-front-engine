@@ -1,14 +1,13 @@
 import { AfterViewInit, Component } from '@angular/core';
-import { ComponentTheme, FeColorPalette, FePopup, PartialButtonTheme } from '@pexlab/ngx-front-engine';
+import { ComponentTheme, FeColorPalette, IFePopup, PartialButtonTheme } from '@pexlab/ngx-front-engine';
 
-@FePopup()
 @Component(
     {
         templateUrl: './nutmeg.component.html',
         styleUrls  : [ './nutmeg.component.scss' ]
     }
 )
-export class NutmegComponent implements AfterViewInit {
+export class NutmegComponent implements AfterViewInit, IFePopup {
 
     constructor() { }
 

@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostBinding, Input, OnInit, Optional, Output, Self, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { ComponentTheme } from '../../interfaces/color.interface';
-import { FeComponent } from '../../utils/component.utils';
+import { ThemeableFeComponent } from '../../utils/component.utils';
 import { PartialStepperTheme } from './stepper.theme';
 
-@FeComponent( 'stepper' )
 @Component(
     {
         selector       : 'fe-stepper',
@@ -13,7 +12,7 @@ import { PartialStepperTheme } from './stepper.theme';
         changeDetection: ChangeDetectionStrategy.OnPush
     }
 )
-export class StepperComponent implements OnInit, ControlValueAccessor {
+export class StepperComponent extends ThemeableFeComponent implements OnInit, ControlValueAccessor {
 
     constructor(
         @Self()
@@ -22,6 +21,10 @@ export class StepperComponent implements OnInit, ControlValueAccessor {
         public change: ChangeDetectorRef,
         public hostElement: ElementRef
     ) {
+
+        super();
+        this.initializeFeComponent( 'stepper', this );
+
         if ( this.ngControl ) {
             this.ngControl.valueAccessor = this;
         }
@@ -34,7 +37,7 @@ export class StepperComponent implements OnInit, ControlValueAccessor {
     private formBlurEvent?: () => void;
 
     @Input()
-    public feTheme!: ComponentTheme<PartialStepperTheme>;
+    public feTheme: ComponentTheme<PartialStepperTheme> | undefined;
 
     @Input()
     public feMin = 1;

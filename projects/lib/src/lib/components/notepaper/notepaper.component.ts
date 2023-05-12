@@ -1,9 +1,8 @@
 import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 import { ComponentTheme } from '../../interfaces/color.interface';
-import { FeComponent } from '../../utils/component.utils';
+import { ThemeableFeComponent } from '../../utils/component.utils';
 import { PartialNotepaperTheme } from './notepaper.theme';
 
-@FeComponent( 'notepaper' )
 @Component(
     {
         selector   : 'fe-notepaper',
@@ -11,14 +10,17 @@ import { PartialNotepaperTheme } from './notepaper.theme';
         styleUrls  : [ './notepaper.component.scss' ]
     }
 )
-export class NotepaperComponent {
+export class NotepaperComponent extends ThemeableFeComponent {
 
-    constructor( public hostElement: ElementRef ) { }
+    constructor( public hostElement: ElementRef ) {
+        super();
+        this.initializeFeComponent( 'notepaper', this );
+    }
 
     private internalNotes!: TextLine[];
 
     @Input()
-    public feTheme!: ComponentTheme<PartialNotepaperTheme>;
+    public feTheme: ComponentTheme<PartialNotepaperTheme> | undefined;
 
     @Input()
     public feHeading!: string;

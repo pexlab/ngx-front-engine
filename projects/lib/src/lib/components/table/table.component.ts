@@ -20,10 +20,10 @@ import Fuse from 'fuse.js';
 import lodash from 'lodash-es';
 import { nanoid } from 'nanoid';
 import { fromEvent, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 import { ComponentTheme } from '../../interfaces/color.interface';
 import { ThemeService } from '../../theme/theme.service';
-import { FeComponent } from '../../utils/component.utils';
+import { ThemeableFeComponent } from '../../utils/component.utils';
 import { isElementVisibleInScrollableContainer } from '../../utils/element.utils';
 import { escapeRegExp } from '../../utils/string.utils';
 import { PartialButtonTheme } from '../button/button.theme';
@@ -33,7 +33,6 @@ import { TableRowComponent } from './row/table-row.component';
 import { PartialTableTheme } from './table.theme';
 import { computeColumnWidths, ComputedTableRow, TableAction, TableColumn, TableLike } from './table.utils';
 
-@FeComponent( 'table' )
 @Component(
     {
         selector       : 'fe-table',
@@ -42,7 +41,7 @@ import { computeColumnWidths, ComputedTableRow, TableAction, TableColumn, TableL
         changeDetection: ChangeDetectionStrategy.OnPush
     }
 )
-export class TableComponent implements OnInit, OnDestroy, AfterViewInit, TableLike {
+export class TableComponent extends ThemeableFeComponent implements OnInit, OnDestroy, AfterViewInit, TableLike {
 
     constructor(
         public hostElement: ElementRef<HTMLElement>,
@@ -51,6 +50,8 @@ export class TableComponent implements OnInit, OnDestroy, AfterViewInit, TableLi
         private ngZone: NgZone,
         private theme: ThemeService
     ) {
+        super();
+        this.initializeFeComponent( 'table', this );
     }
 
     /* Outputs */
@@ -61,7 +62,7 @@ export class TableComponent implements OnInit, OnDestroy, AfterViewInit, TableLi
     /* Inputs */
 
     @Input()
-    public feTheme!: ComponentTheme<PartialTableTheme>;
+    public feTheme: ComponentTheme<PartialTableTheme> | undefined;
 
     @Input()
     public feColumns!: TableColumn[] | undefined;

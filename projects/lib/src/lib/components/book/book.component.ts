@@ -1,21 +1,23 @@
-import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, Input } from '@angular/core';
 import { ComponentTheme } from '../../interfaces/color.interface';
-import { FeComponent } from '../../utils/component.utils';
+import { ThemeableFeComponent } from '../../utils/component.utils';
 import { PartialBookTheme } from './book.theme';
 
-@FeComponent( 'book' )
 @Component( {
     selector   : 'fe-book',
     templateUrl: './book.component.html',
     styleUrls  : [ './book.component.scss' ]
 } )
 
-export class BookComponent {
+export class BookComponent extends ThemeableFeComponent {
 
-    constructor( public hostElement: ElementRef<HTMLElement> ) {}
+    constructor( public hostElement: ElementRef<HTMLElement> ) {
+        super();
+        this.initializeFeComponent( 'book', this );
+    }
 
     @Input()
-    public feTheme!: ComponentTheme<PartialBookTheme>;
+    public feTheme: ComponentTheme<PartialBookTheme> | undefined;
 
     @Input()
     public feCover!: string;

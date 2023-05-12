@@ -1,12 +1,11 @@
 import { AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit } from '@angular/core';
 import { ComponentTheme } from '../../interfaces/color.interface';
-import { FeComponent } from '../../utils/component.utils';
+import { ThemeableFeComponent } from '../../utils/component.utils';
 import { PartialButtonTheme } from '../button/button.theme';
 import { BannerCarouselAnimation, BannerCarouselButtonAnimation, BannerCarouselImageAnimation } from './banner-carousel.animation';
 import { BannerCarouselButton, BannerCarouselComplimentaryImage, BannerCarouselService } from './banner-carousel.service';
 import { PartialBannerCarouselTheme } from './banner-carousel.theme';
 
-@FeComponent( 'bannerCarousel' )
 @Component(
     {
         selector       : 'fe-banner-carousel',
@@ -20,17 +19,20 @@ import { PartialBannerCarouselTheme } from './banner-carousel.theme';
         ]
     }
 )
-export class BannerCarouselComponent implements OnInit, AfterViewChecked {
+export class BannerCarouselComponent extends ThemeableFeComponent implements OnInit, AfterViewChecked {
 
     constructor(
         public hostElement: ElementRef,
         private manager: BannerCarouselService,
         public change: ChangeDetectorRef
-    ) { }
+    ) {
+        super();
+        this.initializeFeComponent( 'bannerCarousel', this );
+    }
 
-    public feTheme!: ComponentTheme<PartialBannerCarouselTheme> & {
+    public feTheme: ( ComponentTheme<PartialBannerCarouselTheme> & {
         complimentaryImage: BannerCarouselComplimentaryImage | null
-    };
+    } ) | undefined;
 
     private hasBeenInitialised = false;
     private currentInstanceName?: string;

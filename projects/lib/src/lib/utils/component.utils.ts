@@ -4,79 +4,77 @@ import { ReplaySubject } from 'rxjs';
 import { ComponentTheme, HEXColorRegister } from '../interfaces/color.interface';
 import { ThemeableComponents } from '../interfaces/theme.interface';
 import { ThemeService } from '../theme/theme.service';
-import { ClassWithProperties } from './type.utils';
 
-export function FeComponent( name: ThemeableComponents ) {
+/* Constraints */
 
-    return function <C extends ClassWithProperties<{ feTheme: ComponentTheme | undefined, hostElement: ElementRef<HTMLElement>, change?: ChangeDetectorRef }>>( target: C ) {
+interface IFeThemeableComponent {
+    feTheme: ComponentTheme | undefined,
+    hostElement: ElementRef<HTMLElement>,
+    change?: ChangeDetectorRef
+}
 
-        return class extends target {
+export interface IFePopup {
+    close: () => void,
+    transmitToHost: ( value: any ) => void
+}
 
-            constructor( ...args: any[] ) {
+export abstract class FeComponent {
 
-                super( ...args );
+    protected constructor() {
+    }
 
-                Reflect.defineProperty( this, 'feTheme', {
+    /* https://stackoverflow.com/questions/38763248/angular-2-life-cycle-hook-after-all-children-are-initialized */
 
-                    set: ( theme: ComponentTheme | undefined ) => {
+    public readonly feRendered: ReplaySubject<boolean> = new ReplaySubject<boolean>( 1 );
 
-                        /* TODO: when set undefined remove styling */
+    public feOnRenderComplete(): void {
+        this.feRendered.next( true );
+    }
+}
 
-                        const newPalette: HEXColorRegister = theme?.palette || {};
+export abstract class ThemeableFeComponent extends FeComponent {
 
-                        /* Only apply the palette if it has been changed */
-                        if ( !isEqual( newPalette, this._previousPalette ) ) {
+    public _fePreviousPalette: HEXColorRegister = {};
 
-                            this._previousPalette = newPalette;
+    public _feCurrentTheme?: ComponentTheme;
 
-                            ThemeService.singleton.applyPalette(
-                                {
-                                    [ name ]: newPalette
-                                },
-                                this.hostElement.nativeElement
-                            );
+    protected constructor() {
+        super();
+    }
 
-                            if ( theme !== undefined && this.change !== undefined && this.change.detectChanges !== undefined ) {
-                                this.change.detectChanges();
-                            }
-                        }
+    protected initializeFeComponent( type: ThemeableComponents, instance: IFeThemeableComponent ) {
 
-                        this._feTheme = theme;
-                    },
+        Reflect.defineProperty( instance, 'feTheme', {
 
-                    get: () => {
-                        return this._feTheme;
+            set: ( theme: ComponentTheme | undefined ) => {
+
+                /* TODO: when set undefined remove styling */
+
+                const newPalette: HEXColorRegister = theme?.palette || {};
+
+                /* Only apply the palette if it has been changed */
+                if ( !isEqual( newPalette, this._fePreviousPalette ) ) {
+
+                    this._fePreviousPalette = newPalette;
+
+                    ThemeService.singleton.applyPalette(
+                        {
+                            [ type ]: newPalette
+                        },
+                        instance.hostElement.nativeElement
+                    );
+
+                    if ( instance.change?.detectChanges ) {
+                        instance.change.detectChanges();
                     }
-                } );
+                }
+
+                this._feCurrentTheme = theme;
+            },
+
+            get: () => {
+                return this._feCurrentTheme;
             }
-
-            public _previousPalette: HEXColorRegister = {};
-            public _feTheme?: ComponentTheme;
-        };
-    };
-}
-
-export function FePopup() {
-
-    return function <C extends ClassWithProperties<{ close: () => void, transmitToHost: ( value: any ) => void }>>( target: C ) {
-
-        return class extends target {
-            constructor( ...args: any[] ) {
-                super( ...args );
-            }
-        };
-    };
-}
-
-/*
- https://stackoverflow.com/questions/38763248/angular-2-life-cycle-hook-after-all-children-are-initialized
- */
-
-export class AsynchronouslyInitialisedComponent {
-
-    loadedState: ReplaySubject<boolean> = new ReplaySubject<boolean>( 1 );
-
-    protected componentLoaded(): void {
-        this.loadedState.next( true );
+        } );
     }
 }

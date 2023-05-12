@@ -2,12 +2,11 @@ import { AnimationEvent } from '@angular/animations';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ComponentTheme } from '../../interfaces/color.interface';
-import { FeComponent } from '../../utils/component.utils';
+import { ThemeableFeComponent } from '../../utils/component.utils';
 import { AlertPortalAnimation } from './alert-portal.animation';
 import { AlertPortalService } from './alert-portal.service';
 import { PartialAlertPortalTheme } from './alert-portal.theme';
 
-@FeComponent( 'alertPortal' )
 @Component(
     {
         selector       : 'fe-alert-portal',
@@ -17,16 +16,19 @@ import { PartialAlertPortalTheme } from './alert-portal.theme';
         animations     : [ AlertPortalAnimation ]
     }
 )
-export class AlertPortalComponent implements OnInit {
+export class AlertPortalComponent extends ThemeableFeComponent implements OnInit {
 
     constructor(
         public hostElement: ElementRef,
         private alert: AlertPortalService,
         public change: ChangeDetectorRef
-    ) { }
+    ) {
+        super();
+        this.initializeFeComponent( 'alertPortal', this );
+    }
 
     @Input()
-    public feTheme!: ComponentTheme<PartialAlertPortalTheme>;
+    public feTheme: ComponentTheme<PartialAlertPortalTheme> | undefined;
 
     /* TODO: make changeable on the fly */
     @Input()

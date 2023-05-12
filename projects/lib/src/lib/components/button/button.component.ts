@@ -1,9 +1,8 @@
 import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 import { ComponentTheme } from '../../interfaces/color.interface';
-import { FeComponent } from '../../utils/component.utils';
+import { ThemeableFeComponent } from '../../utils/component.utils';
 import { PartialButtonTheme } from './button.theme';
 
-@FeComponent( 'button' )
 @Component(
     {
         selector   : 'fe-button',
@@ -11,13 +10,15 @@ import { PartialButtonTheme } from './button.theme';
         styleUrls  : [ './button.component.scss' ]
     }
 )
+export class ButtonComponent extends ThemeableFeComponent {
 
-export class ButtonComponent {
-
-    constructor( public hostElement: ElementRef ) { }
+    constructor( public hostElement: ElementRef ) {
+        super();
+        this.initializeFeComponent( 'button', this );
+    }
 
     @Input()
-    public feTheme!: ComponentTheme<PartialButtonTheme>;
+    public feTheme: ComponentTheme<PartialButtonTheme> | undefined;
 
     @Input()
     public feAppearance: 'simple'

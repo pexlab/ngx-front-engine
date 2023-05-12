@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
-import { AsynchronouslyInitialisedComponent } from '../../../utils/component.utils';
+import { FeComponent } from '../../../utils/component.utils';
 
 @Component(
     {
@@ -22,7 +22,7 @@ import { AsynchronouslyInitialisedComponent } from '../../../utils/component.uti
         changeDetection: ChangeDetectionStrategy.OnPush
     }
 )
-export class DropdownChoiceComponent extends AsynchronouslyInitialisedComponent implements OnInit {
+export class DropdownChoiceComponent extends FeComponent implements OnInit {
 
     constructor(
         public hostElement: ElementRef<HTMLElement>
@@ -52,7 +52,7 @@ export class DropdownChoiceComponent extends AsynchronouslyInitialisedComponent 
         this._placeholderRef = value;
 
         if ( !this.hasBeenInitialised ) {
-            this.componentLoaded();
+            this.feOnRenderComplete();
             this.hasBeenInitialised = true;
         }
     }
@@ -63,7 +63,7 @@ export class DropdownChoiceComponent extends AsynchronouslyInitialisedComponent 
         this._contentRef = value;
 
         if ( !this.hasBeenInitialised ) {
-            this.componentLoaded();
+            this.feOnRenderComplete();
             this.hasBeenInitialised = true;
         }
     }

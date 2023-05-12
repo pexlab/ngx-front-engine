@@ -3,11 +3,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { customAlphabet } from 'nanoid';
 import { parsePath, roundCommands } from 'svg-round-corners';
 import { ComponentTheme } from '../../interfaces/color.interface';
-import { FeComponent } from '../../utils/component.utils';
+import { ThemeableFeComponent } from '../../utils/component.utils';
 import { SVGUtil } from '../../utils/svg.utils';
 import { PartialSpeedometerTheme } from './speedometer.theme';
 
-@FeComponent( 'speedometer' )
 @Component(
     {
         selector   : 'fe-speedometer',
@@ -15,7 +14,7 @@ import { PartialSpeedometerTheme } from './speedometer.theme';
         styleUrls  : [ './speedometer.component.scss' ]
     }
 )
-export class SpeedometerComponent implements AfterViewInit {
+export class SpeedometerComponent extends ThemeableFeComponent implements AfterViewInit {
 
     constructor(
         public hostElement: ElementRef,
@@ -23,10 +22,12 @@ export class SpeedometerComponent implements AfterViewInit {
         public ngZone: NgZone,
         public change: ChangeDetectorRef
     ) {
+        super();
+        this.initializeFeComponent( 'speedometer', this );
     }
 
     @Input()
-    public feTheme!: ComponentTheme<PartialSpeedometerTheme>;
+    public feTheme: ComponentTheme<PartialSpeedometerTheme> | undefined;
 
     @Input()
     public set feRange( value: [ number, number ] ) {
@@ -98,7 +99,7 @@ export class SpeedometerComponent implements AfterViewInit {
     @ViewChild( 'labelPrimary', { static: false } )
     public set labelPrimary( item: ElementRef<SVGTextPathElement> ) {
         if ( item !== undefined ) {
-            this.primaryLabelTrueWidth = item.nativeElement.getBBox({fill: true, stroke: true, markers: true, clipped: true}).width;
+            this.primaryLabelTrueWidth = item.nativeElement.getBBox( { fill: true, stroke: true, markers: true, clipped: true } ).width;
             this.change.detectChanges();
         }
     }

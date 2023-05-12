@@ -20,7 +20,7 @@ import { ZFont } from './typography.interface';
 
 export const ZCommonTheme = z.object(
     {
-        
+
         typography: z.object(
             {
                 display            : ZFont,
@@ -35,7 +35,7 @@ export const ZCommonTheme = z.object(
                 handwritten_body   : ZFont
             }
         ),
-        
+
         palette: z.object(
             {
                 accent: z.object(
@@ -52,7 +52,7 @@ export const ZCommonTheme = z.object(
                         warning         : ZHEXColor
                     }
                 ),
-                
+
                 text: z.object(
                     {
                         primary            : ZHEXColor,
@@ -63,7 +63,7 @@ export const ZCommonTheme = z.object(
                         on_secondary_accent: ZHEXColor
                     }
                 ),
-                
+
                 background: z.object(
                     {
                         primary   : ZHEXColor,
@@ -72,33 +72,54 @@ export const ZCommonTheme = z.object(
                         quaternary: ZHEXColor
                     }
                 ),
-                
+
                 custom: z.record( ZHEXColor ).optional()
             }
         ),
-        
+
         scale: z.number().gt( 0 )
     }
 );
 
 export const ZPartialCommonTheme = ZCommonTheme.deepPartial();
 
-export type ThemeableComponents = 'alertPortal'
-                                  | 'bannerCarousel'
-                                  | 'book'
-                                  | 'button'
-                                  | 'checkbox'
-                                  | 'comment'
-                                  | 'dropdown'
-                                  | 'notepaper'
-                                  | 'popup'
-                                  | 'speedometer'
-                                  | 'stepper'
-                                  | 'switch'
-                                  | 'table'
-                                  | 'inlineTable'
-                                  | 'textField'
-                                  | 'virtualScroll';
+export const ZThemeableComponent = z.enum([
+    'alertPortal',
+    'bannerCarousel',
+    'book',
+    'button',
+    'checkbox',
+    'comment',
+    'dropdown',
+    'notepaper',
+    'popup',
+    'speedometer',
+    'stepper',
+    'switch',
+    'table',
+    'inlineTable',
+    'textField',
+    'virtualScroll'
+]);
+
+export type ThemeableComponents = z.infer<typeof ZThemeableComponent>;
+
+// export type ThemeableComponents = 'alertPortal'
+//                                   | 'bannerCarousel'
+//                                   | 'book'
+//                                   | 'button'
+//                                   | 'checkbox'
+//                                   | 'comment'
+//                                   | 'dropdown'
+//                                   | 'notepaper'
+//                                   | 'popup'
+//                                   | 'speedometer'
+//                                   | 'stepper'
+//                                   | 'switch'
+//                                   | 'table'
+//                                   | 'inlineTable'
+//                                   | 'textField'
+//                                   | 'virtualScroll';
 
 /** Used to guarantee that each component is preset but also gets assigned its very own type */
 function createComponentThemes<c extends { [key in ThemeableComponents]: unknown }>( shape: c ): c {

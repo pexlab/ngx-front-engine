@@ -2,10 +2,9 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, E
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { parsePath, roundCommands } from 'svg-round-corners';
 import { ComponentTheme } from '../../interfaces/color.interface';
-import { FeComponent } from '../../utils/component.utils';
+import { ThemeableFeComponent } from '../../utils/component.utils';
 import { PartialCheckboxTheme } from './checkbox.theme';
 
-@FeComponent( 'checkbox' )
 @Component(
     {
         selector       : 'fe-checkbox',
@@ -15,7 +14,7 @@ import { PartialCheckboxTheme } from './checkbox.theme';
     }
 )
 
-export class CheckboxComponent implements OnInit, AfterViewInit, ControlValueAccessor {
+export class CheckboxComponent extends ThemeableFeComponent implements OnInit, AfterViewInit, ControlValueAccessor {
 
     constructor(
         @Self()
@@ -24,13 +23,17 @@ export class CheckboxComponent implements OnInit, AfterViewInit, ControlValueAcc
         public hostElement: ElementRef,
         public change: ChangeDetectorRef
     ) {
+
+        super();
+        this.initializeFeComponent( 'checkbox', this );
+
         if ( this.ngControl ) {
             this.ngControl.valueAccessor = this;
         }
     }
 
     @Input()
-    public feTheme!: ComponentTheme<PartialCheckboxTheme>;
+    public feTheme: ComponentTheme<PartialCheckboxTheme> | undefined;
 
     @Input()
     public feLabel!: string;
@@ -43,7 +46,7 @@ export class CheckboxComponent implements OnInit, AfterViewInit, ControlValueAcc
     @Output()
     public feChange = new EventEmitter();
 
-    @ViewChild('wrapper')
+    @ViewChild( 'wrapper' )
     public wrapperRef!: ElementRef<HTMLElement>;
 
     public isChecked     = false;

@@ -24,12 +24,11 @@ import { nanoid } from 'nanoid';
 import { parsePath, roundCommands } from 'svg-round-corners';
 import { ComponentTheme } from '../../interfaces/color.interface';
 import { ThemeService } from '../../theme/theme.service';
-import { AsynchronouslyInitialisedComponent, FeComponent } from '../../utils/component.utils';
+import { ThemeableFeComponent } from '../../utils/component.utils';
 import { elementWidthWithoutPadding } from '../../utils/element.utils';
 import { LabelAlignerService } from './label-aligner.service';
 import { PartialTextFieldTheme } from './text-field.theme';
 
-@FeComponent( 'textField' )
 @Component(
     {
         selector       : 'fe-text-field',
@@ -39,7 +38,7 @@ import { PartialTextFieldTheme } from './text-field.theme';
     }
 )
 
-export class TextFieldComponent extends AsynchronouslyInitialisedComponent implements OnInit, AfterViewInit, OnDestroy, ControlValueAccessor {
+export class TextFieldComponent extends ThemeableFeComponent implements OnInit, AfterViewInit, OnDestroy, ControlValueAccessor {
 
     constructor(
         @Self()
@@ -52,7 +51,10 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         private aligner: LabelAlignerService,
         private theme: ThemeService
     ) {
+
         super();
+        this.initializeFeComponent( 'textField', this );
+
         hostElement.nativeElement.style.setProperty( '--label-width', 'auto' );
 
         if ( this.ngControl ) {
@@ -219,7 +221,7 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
     /* Inputs */
 
     @Input()
-    public feTheme!: ComponentTheme<PartialTextFieldTheme>;
+    public feTheme: ComponentTheme<PartialTextFieldTheme> | undefined;
 
     @Input()
     public feType: 'single'
@@ -451,7 +453,7 @@ export class TextFieldComponent extends AsynchronouslyInitialisedComponent imple
         /* Initialise style */
         this.applyClasses( true );
 
-        this.componentLoaded();
+        this.feOnRenderComplete();
 
         this.change.detectChanges();
     }

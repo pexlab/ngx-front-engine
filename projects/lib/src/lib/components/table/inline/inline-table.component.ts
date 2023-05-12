@@ -22,16 +22,14 @@ import { fromEvent, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ComponentTheme } from '../../../interfaces/color.interface';
 import { ThemeService } from '../../../theme/theme.service';
-import { FeComponent } from '../../../utils/component.utils';
+import { ThemeableFeComponent } from '../../../utils/component.utils';
 import { isElementVisibleInScrollableContainer } from '../../../utils/element.utils';
 import { PartialButtonTheme } from '../../button/button.theme';
 import { feTrackRow, VirtualScrollComponent } from '../../virtual-scroll/virtual-scroll.component';
-import { PartialTableTheme } from '../table.theme';
 import { computeColumnWidths, ComputedTableRow, TableColumn, TableLike } from '../table.utils';
 import { InlineTableRowComponent } from './inline-row/inline-table-row.component';
 import { PartialInlineTableTheme } from './inline-table.theme';
 
-@FeComponent( 'inlineTable' )
 @Component(
     {
         selector       : 'fe-inline-table',
@@ -40,7 +38,7 @@ import { PartialInlineTableTheme } from './inline-table.theme';
         changeDetection: ChangeDetectionStrategy.OnPush
     }
 )
-export class InlineTableComponent implements OnInit, OnDestroy, AfterViewInit, TableLike {
+export class InlineTableComponent extends ThemeableFeComponent implements OnInit, OnDestroy, AfterViewInit, TableLike {
 
     constructor(
         public hostElement: ElementRef<HTMLElement>,
@@ -49,6 +47,8 @@ export class InlineTableComponent implements OnInit, OnDestroy, AfterViewInit, T
         private ngZone: NgZone,
         private theme: ThemeService
     ) {
+        super();
+        this.initializeFeComponent( 'inlineTable', this );
     }
 
     /* Outputs */
@@ -59,7 +59,7 @@ export class InlineTableComponent implements OnInit, OnDestroy, AfterViewInit, T
     /* Inputs */
 
     @Input()
-    public feTheme!: ComponentTheme<PartialInlineTableTheme> | undefined;
+    public feTheme: ComponentTheme<PartialInlineTableTheme> | undefined;
 
     @Input()
     public feColumns!: TableColumn[] | undefined;
@@ -241,7 +241,7 @@ export class InlineTableComponent implements OnInit, OnDestroy, AfterViewInit, T
 
                 for ( let i = this.feRecordCount - 1; i >= 0; i-- ) {
 
-                    console.log(i);
+                    console.log( i );
 
                     targetRow = this.activeRows?.toArray()[ i ]?.hostElement.nativeElement;
 
