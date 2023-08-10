@@ -73,7 +73,6 @@ export class MarkdownComponent implements OnDestroy {
         if ( !data ) {
             this.parsedHTML = undefined;
         } else {
-            console.log( data );
             this.parsedHTML = this.sanitizer.bypassSecurityTrustHtml(
                 marked.parse( data )
             );

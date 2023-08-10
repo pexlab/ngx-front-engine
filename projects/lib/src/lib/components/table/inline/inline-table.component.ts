@@ -16,7 +16,7 @@ import {
     ViewChild,
     ViewChildren
 } from '@angular/core';
-import lodash from 'lodash-es';
+import { get } from 'lodash-es';
 import { nanoid } from 'nanoid';
 import { fromEvent, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -241,8 +241,6 @@ export class InlineTableComponent extends ThemeableFeComponent implements OnInit
 
                 for ( let i = this.feRecordCount - 1; i >= 0; i-- ) {
 
-                    console.log( i );
-
                     targetRow = this.activeRows?.toArray()[ i ]?.hostElement.nativeElement;
 
                     if ( targetRow ) {
@@ -458,36 +456,6 @@ export class InlineTableComponent extends ThemeableFeComponent implements OnInit
             );
         } );
 
-        // const aboveTop = Array.from( boundariesAfterTransformation ).filter( ( item ) => {
-        //     return !item[ 1 ].visible && item[ 1 ].bottomAboveContainerTop >= 0;
-        // } ).reduce( ( acc, item ) => {
-        //     return acc.set( item[ 0 ], item[ 1 ] );
-        // }, new Map<string, ReturnType<typeof isElementVisibleInScrollableContainer>> );
-        //
-        // const belowBottom = Array.from( boundariesAfterTransformation ).filter( ( item ) => {
-        //     return !item[ 1 ].visible && item[ 1 ].topBelowContainerBottom >= 0;
-        // } ).reduce( ( acc, item ) => {
-        //     return acc.set( item[ 0 ], item[ 1 ] );
-        // }, new Map<string, ReturnType<typeof isElementVisibleInScrollableContainer>> );
-        //
-        // if ( this.activeColumnWidths ) {
-        //
-        //     const beforeInView = getByVisibility( 'before', true );
-        //     const afterInView  = getByVisibility( 'after', true );
-        //
-        //     /* If an item that was previously in view is now after the transformation not in view anymore */
-        //
-        //     beforeInView.forEach( ( _, id ) => {
-        //         if ( !afterInView.has( id ) ) {
-        //             if ( belowBottom.has( id ) ) {
-        //                 console.log( id, 'was in view before, but will end up below the bottom due to the transformation' );
-        //             } else if ( aboveTop.has( id ) ) {
-        //                 console.log( id, 'was in view before, but will end up above the top due to the transformation' );
-        //             }
-        //         }
-        //     } );
-        // }
-
         /* Wait for everything to render, then re-measure the rows on the virtual scroll */
 
         requestAnimationFrame( () => {
@@ -687,7 +655,7 @@ export class InlineTableComponent extends ThemeableFeComponent implements OnInit
 
     /* Helpers */
 
-    protected readonly getPath = lodash.get;
+    protected readonly getPath = get;
 
     protected readonly isNaN = isNaN;
 

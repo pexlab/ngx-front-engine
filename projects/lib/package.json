@@ -36,7 +36,7 @@
             "url": "https://www.buymeacoffee.com/slatedave"
         }
     ],
-    "version": "0.0.77",
+    "version": "0.0.78",
     "license": "MIT",
     "homepage": "https://pexlab.net/projects/front-engine",
     "peerDependencies": {
@@ -66,8 +66,7 @@
         "text-security": "^3.2.1",
         "fuse.js": "^6.6.2",
         "marked": "^4.2.12",
-        "prismjs": "^1.29.0",
-        "brain.js": "^2.0.0-beta.23"
+        "prismjs": "^1.29.0"
     },
     "devDependencies": {
         "@types/lodash-es": "^4.17.6",

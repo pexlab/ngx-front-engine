@@ -92,7 +92,6 @@
     <fe-virtual-scroll [feRows]="resolvedRelevantData ?? []"
                        [feBuffer]="25"
                        [feRowHeightMeasurementTrigger]="measureRows"
-                       [feRowHeightPredictor]="'ai'"
                        (feOnRender)="onRender($event)"
                        #feScroll>
 

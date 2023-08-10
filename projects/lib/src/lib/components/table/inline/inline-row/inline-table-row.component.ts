@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, Input, QueryList, ViewChildren } from '@angular/core';
-import lodash from 'lodash-es';
+import { get } from 'lodash-es';
 import { TableCellDirective } from '../../table-cell.directive';
 import { ComputedTableRow, TableLike } from '../../table.utils';
 
@@ -33,7 +33,7 @@ export class InlineTableRowComponent {
 
     protected readonly isNaN   = isNaN;
     protected readonly Math    = Math;
-    protected readonly getPath = lodash.get;
+    protected readonly getPath = get;
 
     public get dragTargetToIndex(): number {
 

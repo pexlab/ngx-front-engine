@@ -17,7 +17,7 @@ import {
     ViewChildren
 } from '@angular/core';
 import Fuse from 'fuse.js';
-import lodash from 'lodash-es';
+import { get, isArray } from 'lodash-es';
 import { nanoid } from 'nanoid';
 import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
@@ -464,36 +464,6 @@ export class TableComponent extends ThemeableFeComponent implements OnInit, OnDe
             );
         } );
 
-        // const aboveTop = Array.from( boundariesAfterTransformation ).filter( ( item ) => {
-        //     return !item[ 1 ].visible && item[ 1 ].bottomAboveContainerTop >= 0;
-        // } ).reduce( ( acc, item ) => {
-        //     return acc.set( item[ 0 ], item[ 1 ] );
-        // }, new Map<string, ReturnType<typeof isElementVisibleInScrollableContainer>> );
-        //
-        // const belowBottom = Array.from( boundariesAfterTransformation ).filter( ( item ) => {
-        //     return !item[ 1 ].visible && item[ 1 ].topBelowContainerBottom >= 0;
-        // } ).reduce( ( acc, item ) => {
-        //     return acc.set( item[ 0 ], item[ 1 ] );
-        // }, new Map<string, ReturnType<typeof isElementVisibleInScrollableContainer>> );
-        //
-        // if ( this.activeColumnWidths ) {
-        //
-        //     const beforeInView = getByVisibility( 'before', true );
-        //     const afterInView  = getByVisibility( 'after', true );
-        //
-        //     /* If an item that was previously in view is now after the transformation not in view anymore */
-        //
-        //     beforeInView.forEach( ( _, id ) => {
-        //         if ( !afterInView.has( id ) ) {
-        //             if ( belowBottom.has( id ) ) {
-        //                 console.log( id, 'was in view before, but will end up below the bottom due to the transformation' );
-        //             } else if ( aboveTop.has( id ) ) {
-        //                 console.log( id, 'was in view before, but will end up above the top due to the transformation' );
-        //             }
-        //         }
-        //     } );
-        // }
-
         /* Wait for everything to render, then re-measure the rows on the virtual scroll */
 
         requestAnimationFrame( () => {
@@ -763,7 +733,7 @@ export class TableComponent extends ThemeableFeComponent implements OnInit, OnDe
                                     return true;
                                 }
 
-                            } else if ( lodash.isArray( obj[ key ] ) ) {
+                            } else if ( isArray( obj[ key ] ) ) {
 
                                 if ( obj[ key ].some( find ) ) {
                                     return true;
@@ -800,7 +770,7 @@ export class TableComponent extends ThemeableFeComponent implements OnInit, OnDe
 
     /* Helpers */
 
-    protected readonly getPath = lodash.get;
+    protected readonly getPath = get;
 
     protected readonly isNaN = isNaN;
 

@@ -17,7 +17,6 @@ import {
     SimpleChanges,
     ViewChild
 } from '@angular/core';
-import { NeuralNetwork } from 'brain.js';
 import { BehaviorSubject, fromEvent, Subject } from 'rxjs';
 import { auditTime, takeUntil } from 'rxjs/operators';
 import { ComponentTheme } from '../../interfaces/color.interface';
@@ -65,72 +64,7 @@ export class VirtualScrollComponent extends ThemeableFeComponent implements Afte
 
     @Input() feRowHeightMeasurementTrigger: 'render' | 'observer' | EventEmitter<HTMLElement[] | void> = 'observer';
 
-    @Input() feRowHeightPredictor: 'frequent' | 'average' | 'ai' | ( () => number ) = 'ai';
-
-    @Input() feRowHeightAiTransformer: ( rows: VirtualScrollRow[] ) => Map<string, number[]> = ( rows ) => {
-
-        if ( rows.length === 0 ) {
-            return new Map<string, number[]>();
-        }
-
-        const resultMap      = new Map<string, number[]>();
-        const keyIndexMap    = new Map<string, number>();
-        let freeIndex        = 0;
-        let inlineTableIndex = 0;
-
-        for ( const row of rows ) {
-            resultMap.set(
-                row.feRowId,
-                Object.entries( row ).reduce( ( result, [ key, value ] ) => {
-
-                    if ( key === 'feRowId' ) {
-                        return result;
-                    }
-
-                    const keyIndex = ( () => {
-                        if ( keyIndexMap.has( key ) ) {
-                            return keyIndexMap.get( key )!;
-                        } else {
-                            keyIndexMap.set( key, freeIndex );
-                            return freeIndex++;
-                        }
-                    } )();
-
-                    if ( key === 'feInlineTable' ) {
-
-                        result[ keyIndex ] = 1111;
-                        inlineTableIndex   = keyIndex;
-
-                    } else if ( typeof value === 'string' ) {
-
-                        result[ keyIndex ] = value.length;
-
-                    } else {
-
-                        result[ keyIndex ] = 0;
-                    }
-
-                    return result;
-
-                }, [] as number[] )
-            );
-        }
-
-        resultMap.forEach( ( value, key ) => {
-            for ( let i = 0; i < freeIndex; i++ ) {
-                if ( value[ i ] === undefined ) {
-                    if ( i === inlineTableIndex ) {
-                        value[ i ] = -1111;
-                    } else {
-                        value[ i ] = -1;
-                    }
-                }
-            }
-            resultMap.set( key, value );
-        } );
-
-        return resultMap;
-    };
+    @Input() feRowHeightPredictor: 'frequent' | 'average' | ( () => number ) = 'average';
 
     /* View and Content Children */
 
@@ -159,10 +93,6 @@ export class VirtualScrollComponent extends ThemeableFeComponent implements Afte
     private rowHeightCache = new Map<string, number>();
 
     private rowHeightPredictionCache = new Map<string, number>();
-
-    private rowHeightPredictor?: NeuralNetwork<number[], { height: number }>;
-
-    private rowHeightTransformerCache = new Map<string, number[]>();
 
     private initialRender = true;
 
@@ -365,37 +295,6 @@ export class VirtualScrollComponent extends ThemeableFeComponent implements Afte
     public resetCache(): void {
         this.rowHeightCache.clear();
         this.rowHeightPredictionCache.clear();
-        this.rowHeightTransformerCache.clear();
-        this.rowHeightTransformerCache = this.feRowHeightAiTransformer( this.feRows );
-    }
-
-    private trainAi(): void {
-
-        const trainingData: { input: number[], output: { height: number } }[] = [];
-
-        const normalizeHeight = this.heightNormalizeFactor;
-
-        this.rowHeightCache.forEach( ( height, id ) => {
-
-            const transformed = this.rowHeightTransformerCache.get( id );
-
-            if ( transformed ) {
-                trainingData.push( {
-                    input : transformed,
-                    output: {
-                        height: height / normalizeHeight
-                    }
-                } );
-            }
-        } );
-
-        this.rowHeightPredictor = new NeuralNetwork<number[], { height: number }>();
-
-        if ( trainingData.length > 0 ) {
-            this.rowHeightPredictor.train( trainingData, {
-                iterations: trainingData.length * 2
-            } );
-        }
     }
 
     private measureRowHeight( rows: HTMLElement[], trigger = true ): void {
@@ -419,11 +318,6 @@ export class VirtualScrollComponent extends ThemeableFeComponent implements Afte
         }
 
         if ( changedHeight.size > 0 ) {
-
-            if ( this.feRowHeightPredictor === 'ai' ) {
-                this.trainAi();
-            }
-
             this.updateScrollHeight( trigger );
         }
     }
@@ -491,8 +385,6 @@ export class VirtualScrollComponent extends ThemeableFeComponent implements Afte
                 return this.getFrequentRowHeightSum();
             case 'average':
                 return this.getAverageRowHeightSum();
-            case 'ai':
-                return this.getAiRowHeightSum();
             default:
                 return this.feRowHeightPredictor();
         }
@@ -550,40 +442,6 @@ export class VirtualScrollComponent extends ThemeableFeComponent implements Afte
         } );
 
         return this.knownRowHeightSum + ( average * ( this.feRows.length - this.rowHeightCache.size ) );
-    }
-
-    private getAiRowHeightSum(): number {
-
-        if ( this.rowHeightTransformerCache.size === 0 ) {
-            return 0;
-        }
-
-        if ( !this.rowHeightPredictor || !this.rowHeightPredictor.isRunnable ) {
-            return 0;
-        }
-
-        let accumulatedHeightPredictions = 0;
-
-        const normalizeHeight = this.heightNormalizeFactor;
-
-        this.rowHeightPredictionCache.clear();
-
-        for ( const [ rowId, transformedRow ] of this.rowHeightTransformerCache ) {
-
-            if ( this.rowHeightCache.has( rowId ) ) {
-                this.rowHeightPredictionCache.set( rowId, this.rowHeightCache.get( rowId )! );
-                continue;
-            }
-
-            const prediction           = this.rowHeightPredictor.run( transformedRow );
-            const predictionNormalized = +( prediction.height * normalizeHeight ).toFixed( 1 );
-
-            this.rowHeightPredictionCache.set( rowId, predictionNormalized );
-
-            accumulatedHeightPredictions += predictionNormalized;
-        }
-
-        return this.knownRowHeightSum + accumulatedHeightPredictions;
     }
 }
 
