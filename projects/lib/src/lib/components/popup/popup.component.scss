@@ -280,17 +280,17 @@
 
             & > .content {
 
-                width   : 100%;
-
                 padding : utils.fes(1.9);
 
                 @include theme.commonFont('body');
 
                 @include responsive.desktop {
+                    width : 100%;
                     color : theme.hex('desktop-body-text');
                 }
 
                 @include responsive.mobile {
+                    width : 100vw;
                     color : theme.hex('mobile-body-text');
                 }
             }
