@@ -10,11 +10,11 @@
                      [@carousel]="t.heading + ',' + t.subheading">
 
                     <span class="heading" *ngIf="t.heading !== null">
-                        {{t.heading}}
+                        {{ t.heading }}
                     </span>
 
                     <span class="subheading" *ngIf="t.subheading !== null">
-                        {{t.subheading}}
+                        {{ t.subheading }}
                     </span>
 
                 </div>
@@ -38,9 +38,16 @@
 
         <div *ngIf="buttons !== null" class="buttons" [@buttons]="buttons">
             <div *ngFor="let btn of buttons">
-                <fe-button feAppearance="hinge" [feTheme]="buttonTheme" (feClick)="btn.onClick()" [feLink]="btn.link">
-                    <svg-icon *ngIf="btn.icon" [name]="btn.icon"></svg-icon>
-                    <span>{{btn.text}}</span>
+                <fe-button feAppearance="hinge" [feTheme]="buttonTheme" (feClick)="btn.onClick?.()" [feLink]="btn.link">
+
+                    @if (btn.icon) {
+                        <svg-icon [name]="btn.icon"></svg-icon>
+                    }
+
+                    @if (btn.text) {
+                        <span>{{ btn.text }}</span>
+                    }
+
                 </fe-button>
             </div>
         </div>
@@ -55,15 +62,22 @@
                     [feCaptureTouch]="true"
                     [feTriggerClickHover]="false"
                     [feLink]="buttons[0].link"
-                    (feClick)="buttons[0].onClick()">
-                <svg-icon *ngIf="buttons[0].icon" [name]="buttons[0].icon"></svg-icon>
-                <span>{{buttons[0].text}}</span>
+                    (feClick)="buttons[0].onClick?.()">
+
+                @if (buttons[0].icon) {
+                    <svg-icon [name]="buttons[0].icon"></svg-icon>
+                }
+
+                @if (buttons[0].text) {
+                    <span>{{ buttons[0].text }}</span>
+                }
+
             </button>
         </div>
 
         <div class="text" *ngFor="let t of text">
-            <span class="heading" *ngIf="t.heading !== null">{{t.heading}}</span>
-            <span class="subheading" *ngIf="t.subheading !== null">{{t.subheading}}</span>
+            <span class="heading" *ngIf="t.heading !== null">{{ t.heading }}</span>
+            <span class="subheading" *ngIf="t.subheading !== null">{{ t.subheading }}</span>
         </div>
 
         <div class="right">
@@ -72,9 +86,16 @@
                     [feCaptureTouch]="true"
                     [feTriggerClickHover]="false"
                     [feLink]="buttons[1].link"
-                    (feClick)="buttons[1].onClick()">
-                <svg-icon *ngIf="buttons[1].icon" [name]="buttons[1].icon"></svg-icon>
-                <span>{{buttons[1].text}}</span>
+                    (feClick)="buttons[1].onClick?.()">
+
+                @if (buttons[1].icon) {
+                    <svg-icon [name]="buttons[1].icon"></svg-icon>
+                }
+
+                @if (buttons[1].text) {
+                    <span>{{ buttons[1].text }}</span>
+                }
+
             </button>
         </div>
 
