@@ -9,7 +9,7 @@
 
     width    : 100%;
 
-    @include theme.scrollbar(theme.hex('scrollbar-static'), theme.hex('scrollbar-hover'), transparent, 'xy', utils.fes(0.5), utils.fes(0.25));
+    @include theme.scrollbar(theme.hex('scrollbar-static'), theme.hex('scrollbar-hover'), transparent, 'xy', utils.rem(0.5), utils.rem(0.25));
 
     & > .scroll-height {
 

@@ -78,11 +78,11 @@
             height           : var(--popup-height);
             max-height       : var(--popup-height-max);
 
-            border-radius    : utils.fes(1);
+            border-radius    : utils.rem(1);
 
             background-color : theme.hex('desktop-body-background');
 
-            box-shadow       : 0 0 0 utils.fes(.06) theme.hex('desktop-border'), 0 utils.fes(1) utils.fes(1.9) rgb(black, 0.5);
+            box-shadow       : 0 0 0 utils.rem(.06) theme.hex('desktop-border'), 0 utils.rem(1) utils.rem(1.9) rgb(black, 0.5);
 
             transition       : box-shadow .25s ease;
         }
@@ -97,12 +97,12 @@
 
             align-self              : end;
 
-            border-top-left-radius  : utils.fes(1.5);
-            border-top-right-radius : utils.fes(1.5);
+            border-top-left-radius  : utils.rem(1.5);
+            border-top-right-radius : utils.rem(1.5);
 
             background-color        : theme.hex('mobile-body-background');
 
-            box-shadow              : 0 utils.fes(-1) utils.fes(1.9) rgb(black, 0.3);
+            box-shadow              : 0 utils.rem(-1) utils.rem(1.9) rgb(black, 0.3);
         }
 
         & > .title-bar {
@@ -117,19 +117,19 @@
 
             @include responsive.desktop {
 
-                border-top-left-radius  : utils.fes(1);
-                border-top-right-radius : utils.fes(1);
+                border-top-left-radius  : utils.rem(1);
+                border-top-right-radius : utils.rem(1);
 
-                border-bottom           : utils.fes(.06) solid theme.hex('desktop-title-border');
+                border-bottom           : utils.rem(.06) solid theme.hex('desktop-title-border');
                 background              : theme.hex('desktop-title-background');
             }
 
             @include responsive.mobile {
 
-                border-top-left-radius  : utils.fes(1.5);
-                border-top-right-radius : utils.fes(1.5);
+                border-top-left-radius  : utils.rem(1.5);
+                border-top-right-radius : utils.rem(1.5);
 
-                border-bottom           : utils.fes(.06) solid theme.hex('mobile-title-border');
+                border-bottom           : utils.rem(.06) solid theme.hex('mobile-title-border');
                 background              : theme.hex('mobile-title-background');
             }
 
@@ -139,12 +139,12 @@
 
                 cursor                      : pointer;
 
-                width                       : utils.fes(2.5);
-                height                      : utils.fes(2.5);
+                width                       : utils.rem(2.5);
+                height                      : utils.rem(2.5);
 
                 position                    : absolute;
-                top                         : utils.opFes('50% -', math.div(2.5, 2));
-                right                       : utils.fes(.65);
+                top                         : utils.opRem('50% -', math.div(2.5, 2));
+                right                       : utils.rem(.65);
 
                 @include responsive.desktop {
                     color : theme.hex('desktop-title-exit');
@@ -171,14 +171,14 @@
                     left        : 50%;
                     top         : 50%;
 
-                    width       : utils.fes(1);
-                    height      : utils.fes(1);
+                    width       : utils.rem(1);
+                    height      : utils.rem(1);
 
                     transform   : translateX(-50%) translateY(-50%);
 
                     & svg {
-                        width  : utils.fes(1);
-                        height : utils.fes(1);
+                        width  : utils.rem(1);
+                        height : utils.rem(1);
                     }
                 }
 
@@ -201,7 +201,7 @@
                     right         : 0;
                     bottom        : 0;
 
-                    border-radius : utils.fes(2.5);
+                    border-radius : utils.rem(2.5);
 
                     opacity       : 0;
 
@@ -213,14 +213,14 @@
                 @include responsive.desktop {
                     &:after {
                         background-color : theme.fadeHex('desktop-title-exit', .2);
-                        border           : utils.fes(.06) solid theme.fadeHex('desktop-title-exit', .2);
+                        border           : utils.rem(.06) solid theme.fadeHex('desktop-title-exit', .2);
                     }
                 }
 
                 @include responsive.mobile {
                     &:after {
                         background-color : theme.fadeHex('mobile-title-exit', .2);
-                        border           : utils.fes(.06) solid theme.fadeHex('mobile-title-exit', .2);
+                        border           : utils.rem(.06) solid theme.fadeHex('mobile-title-exit', .2);
                     }
                 }
 
@@ -236,12 +236,12 @@
 
                 display    : block;
 
-                width      : calc(100% - (#{utils.rawFes(2.5 + (.65 * 2))} * 2));
+                width      : calc(100% - (#{utils.rawRem(2.5 + (.65 * 2))} * 2));
                 height     : fit-content;
 
                 box-sizing : border-box;
 
-                margin     : utils.fes(1) 0;
+                margin     : utils.rem(1) 0;
 
                 text-align : center;
 
@@ -271,16 +271,16 @@
             overscroll-behavior : contain;
 
             @include responsive.desktop {
-                @include theme.scrollbar(theme.hex('desktop-body-scrollbar'), theme.hex('desktop-body-scrollbar-hover'), transparent, 'y', utils.fes(.5), utils.fes(.25));
+                @include theme.scrollbar(theme.hex('desktop-body-scrollbar'), theme.hex('desktop-body-scrollbar-hover'), transparent, 'y', utils.rem(.5), utils.rem(.25));
             }
 
             @include responsive.mobile {
-                @include theme.scrollbar(theme.hex('mobile-body-scrollbar'), theme.hex('mobile-body-scrollbar-hover'), transparent, 'y', utils.fes(.5), utils.fes(.25));
+                @include theme.scrollbar(theme.hex('mobile-body-scrollbar'), theme.hex('mobile-body-scrollbar-hover'), transparent, 'y', utils.rem(.5), utils.rem(.25));
             }
 
             & > .content {
 
-                padding : utils.fes(1.9);
+                padding : utils.rem(1.9);
 
                 @include theme.commonFont('body');
 

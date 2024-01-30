@@ -1,5 +1,7 @@
 @use 'sass:math';
 
+// =====================================================================================================================
+
 /* Origin: https://stackoverflow.com/a/71769304 */
 
 @mixin middle-child($n) {
@@ -40,6 +42,8 @@
     }
 }
 
+// =====================================================================================================================
+
 @mixin hover {
 
     @media not all and (pointer : coarse) {
@@ -72,33 +76,63 @@
     }
 }
 
+// =====================================================================================================================
+
 @function maxValue() {
     @return max(100vw, 100vh);
 }
+
+// =====================================================================================================================
 
 @function scrollbarWidth() {
     @return var(--fe-local-analyzed-scrollbar-width, var(--fe-global-analyzed-scrollbar-width, 0));
 }
 
-@function rawFes($size) {
+// =====================================================================================================================
+
+@function rawRem($size) {
     @return '(var(--fe-local-preference-scale, var(--fe-global-preference-scale, 1rem)) * ' + math.div(math.round(16 * $size), 16) + ')';
 }
 
-@function fes($size) {
-    @return calc(#{rawFes($size)});
+@function rem($size) {
+    @return calc(#{rawRem($size)});
 }
 
-@function fesOp($size, $operation) {
-    @return calc(#{rawFes($size) $operation});
+@function remOp($size, $operation) {
+    @return calc(#{rawRem($size) $operation});
 }
 
-@function opFes($operation, $size) {
-    @return calc(#{$operation rawFes($size)});
+@function opRem($operation, $size) {
+    @return calc(#{$operation rawRem($size)});
 }
 
-@function opFesOp($operationA, $size, $operationB) {
-    @return calc(#{$operationA rawFes($size) $operationB});
+@function opRemOp($operationA, $size, $operationB) {
+    @return calc(#{$operationA rawRem($size) $operationB});
 }
+
+// =====================================================================================================================
+
+@function rawPx($size) {
+    @return '(var(--fe-local-preference-scale, var(--fe-global-preference-scale, 1rem)) * ' + math.div($size, 16) + ')';
+}
+
+@function px($size) {
+    @return calc(#{rawPx($size)});
+}
+
+@function pxOp($size, $operation) {
+    @return calc(#{rawPx($size) $operation});
+}
+
+@function opPx($operation, $size) {
+    @return calc(#{$operation rawPx($size)});
+}
+
+@function opPxOp($operationA, $size, $operationB) {
+    @return calc(#{$operationA rawPx($size) $operationB});
+}
+
+// =====================================================================================================================
 
 @function rawVw($size) {
     @return '(' + $size + ' * (var(--fe-local-analyzed-inner-width, var(--fe-global-analyzed-inner-width, 100vw)) / 100))';
@@ -115,6 +149,8 @@
 @function vh($size) {
     @return calc(#{rawVh($size)});
 }
+
+// =====================================================================================================================
 
 @function rawVLeft($size) {
     @return $size;
@@ -147,3 +183,5 @@
 @function vBottom($size) {
     @return calc(#{rawVBottom($size)});
 }
+
+// =====================================================================================================================

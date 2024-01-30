@@ -15,7 +15,7 @@
 
         display        : grid;
         grid-auto-flow : column;
-        grid-gap       : utils.fes(1);
+        grid-gap       : utils.rem(1);
 
         align-items    : center;
 
@@ -25,10 +25,10 @@
 
             display        : grid;
             grid-auto-flow : column;
-            grid-gap       : utils.fes(.65);
+            grid-gap       : utils.rem(.65);
             align-items    : center;
 
-            @include theme.inlineIcon(utils.fes(1));
+            @include theme.inlineIcon(utils.rem(1));
 
             & > svg-icon {
                 color  : theme.hex('badge');
@@ -55,8 +55,8 @@
 
         & > .divider {
 
-            width      : utils.fes(.06);
-            height     : utils.fes(.65);
+            width      : utils.rem(.06);
+            height     : utils.rem(.65);
 
             background : theme.hex('border');
         }
@@ -78,10 +78,10 @@
 
         display        : grid;
         grid-auto-flow : column;
-        grid-gap       : utils.fes(1.9);
+        grid-gap       : utils.rem(1.9);
 
-        margin-top     : utils.fes(.31);
-        margin-bottom  : utils.fes(.31);
+        margin-top     : utils.rem(.31);
+        margin-bottom  : utils.rem(.31);
 
         & > .button {
 
@@ -106,12 +106,12 @@
                 left                        : 50%;
                 top                         : 50%;
 
-                width                       : utils.fes(2.5);
-                height                      : utils.fes(2.5);
+                width                       : utils.rem(2.5);
+                height                      : utils.rem(2.5);
 
                 cursor                      : pointer;
 
-                border-radius               : utils.fes(2.5);
+                border-radius               : utils.rem(2.5);
 
                 opacity                     : 0;
                 transform                   : translateY(-50%) translateX(-50%) scale(0.75);
@@ -131,8 +131,8 @@
 
                 position       : relative;
 
-                width          : utils.fes(1);
-                height         : utils.fes(1);
+                width          : utils.rem(1);
+                height         : utils.rem(1);
 
                 display        : grid;
                 place-items    : center;
@@ -144,8 +144,8 @@
                 transition     : color .25s ease;
 
                 & > svg {
-                    width  : utils.fes(1);
-                    height : utils.fes(1);
+                    width  : utils.rem(1);
+                    height : utils.rem(1);
                 }
             }
         }
@@ -155,8 +155,8 @@
 
         position      : relative;
 
-        width         : utils.fes(4);
-        height        : utils.fes(4);
+        width         : utils.rem(4);
+        height        : utils.rem(4);
 
         object-fit    : cover;
 
@@ -172,7 +172,7 @@
 
         @include theme.commonFont('alternative');
         color       : theme.hex('text');
-        line-height : utils.fes(1.15);
+        line-height : utils.rem(1.15);
 
         &::ng-deep {
 
@@ -180,7 +180,7 @@
 
                 display        : grid;
                 grid-auto-flow : row;
-                grid-gap       : utils.fes(.7);
+                grid-gap       : utils.rem(.7);
 
                 & * {
                     margin      : 0;
@@ -190,20 +190,20 @@
                 & h1 {
                     @include theme.commonFont('heading');
                     font-weight : bold;
-                    margin      : utils.fes(1) 0;
+                    margin      : utils.rem(1) 0;
                 }
 
                 & h2 {
                     @include theme.commonFont('subheading');
                     font-weight   : bold;
-                    margin-top    : utils.fes(1);
-                    margin-bottom : utils.fes(.5);
+                    margin-top    : utils.rem(1);
+                    margin-bottom : utils.rem(.5);
                 }
 
                 & h3, & h4, & h5, & h6 {
                     @include theme.commonFont('subheading');
-                    margin-top    : utils.fes(1);
-                    margin-bottom : utils.fes(.5);
+                    margin-top    : utils.rem(1);
+                    margin-bottom : utils.rem(.5);
                 }
 
                 & h1:first-child,
@@ -230,13 +230,13 @@
 
                     display                    : grid;
                     grid-auto-flow             : row;
-                    grid-gap                   : utils.fes(.5);
+                    grid-gap                   : utils.rem(.5);
 
-                    padding                    : utils.fes(.7);
+                    padding                    : utils.rem(.7);
 
-                    border-left                : utils.fes(.1) solid theme.commonHex('background-quaternary');
-                    border-top-right-radius    : utils.fes(.5);
-                    border-bottom-right-radius : utils.fes(.5);
+                    border-left                : utils.rem(.1) solid theme.commonHex('background-quaternary');
+                    border-top-right-radius    : utils.rem(.5);
+                    border-bottom-right-radius : utils.rem(.5);
 
                     background                 : theme.fadeCommonHex('background-quaternary', 0.2);
 
@@ -244,24 +244,24 @@
                 }
 
                 & ul {
-                    padding-left : utils.fes(2.5);
+                    padding-left : utils.rem(2.5);
                 }
 
                 & hr {
 
                     width      : 100%;
-                    height     : utils.fes(.07);
+                    height     : utils.rem(.07);
 
                     background : theme.commonHex('background-quaternary');
                 }
 
                 & pre {
 
-                    padding       : utils.fes(1);
+                    padding       : utils.rem(1);
 
-                    border-radius : utils.fes(.5);
+                    border-radius : utils.rem(.5);
 
-                    @include theme.scrollbar(theme.commonHex('background-quaternary'), theme.commonHex('background-quaternary'), transparent, 'x', utils.fes(.5), utils.fes(.25));
+                    @include theme.scrollbar(theme.commonHex('background-quaternary'), theme.commonHex('background-quaternary'), transparent, 'x', utils.rem(.5), utils.rem(.25));
                 }
 
                 & pre, & code {
@@ -271,9 +271,9 @@
 
                 & :not(pre) > code {
 
-                    padding       : utils.fes(.05) utils.fes(.31);
+                    padding       : utils.rem(.05) utils.rem(.31);
 
-                    border-radius : utils.fes(.31);
+                    border-radius : utils.rem(.31);
 
                     background    : theme.commonHex('background-quaternary');
                 }
@@ -296,7 +296,7 @@
 
         display        : grid;
         grid-auto-flow : row;
-        grid-gap       : utils.fes(.65);
+        grid-gap       : utils.rem(.65);
 
         box-sizing     : border-box;
     }
@@ -305,37 +305,37 @@
 
     & > .spacious {
 
-        $avatarSize           : utils.fes(4);
+        $avatarSize           : utils.rem(4);
 
         width                 : 100%;
 
         display               : grid;
         grid-template-columns : $avatarSize 1fr;
-        grid-gap              : utils.fes(1.5);
+        grid-gap              : utils.rem(1.5);
         grid-auto-flow        : column;
 
         & > .container {
 
-            grid-gap         : utils.fes(1);
+            grid-gap         : utils.rem(1);
 
-            padding          : utils.fes(1.5);
+            padding          : utils.rem(1.5);
 
-            border           : utils.fes(.06) solid theme.hex('border');
-            border-radius    : utils.fes(1.25);
+            border           : utils.rem(.06) solid theme.hex('border');
+            border-radius    : utils.rem(1.25);
 
             background-color : theme.hex('background');
 
-            box-shadow       : 0 0 utils.fes(1.25) rgba(black, 0.10);
+            box-shadow       : 0 0 utils.rem(1.25) rgba(black, 0.10);
         }
 
         & .buttons {
 
-            grid-gap : utils.fes(.31);
+            grid-gap : utils.rem(.31);
             margin   : 0;
 
             & .button > svg-icon {
-                width  : utils.fes(2.5);
-                height : utils.fes(2.5);
+                width  : utils.rem(2.5);
+                height : utils.rem(2.5);
             }
         }
     }
@@ -346,36 +346,36 @@
         height                : fit-content;
 
         display               : grid;
-        grid-template-columns : utils.fes(2.8 + .3) 1fr;
+        grid-template-columns : utils.rem(2.8 + .3) 1fr;
         grid-auto-flow        : row;
-        grid-column-gap       : utils.fes(1.25);
+        grid-column-gap       : utils.rem(1.25);
 
-        padding               : utils.fes(1) utils.fes(1.25) utils.fes(1) utils.fes(1);
+        padding               : utils.rem(1) utils.rem(1.25) utils.rem(1) utils.rem(1);
         box-sizing            : border-box;
 
-        border                : utils.fes(.06) solid theme.hex('border');
-        border-radius         : utils.fes(1.25);
+        border                : utils.rem(.06) solid theme.hex('border');
+        border-radius         : utils.rem(1.25);
 
         background-color      : theme.hex('background');
 
-        box-shadow            : 0 0 utils.fes(1.25) rgba(black, 0.10);
+        box-shadow            : 0 0 utils.rem(1.25) rgba(black, 0.10);
 
         & > img.avatar {
 
             grid-row    : 1;
             grid-column : 1;
 
-            width       : utils.fes(2.8);
-            height      : utils.fes(2.8);
+            width       : utils.rem(2.8);
+            height      : utils.rem(2.8);
 
             box-sizing  : content-box;
-            border      : utils.fes(.25) solid theme.hex('background');
-            box-shadow  : 0 0 0 utils.fes(.06) theme.hex('border');
+            border      : utils.rem(.25) solid theme.hex('background');
+            box-shadow  : 0 0 0 utils.rem(.06) theme.hex('border');
         }
 
         & .container {
 
-            margin-top  : utils.fes(.45);
+            margin-top  : utils.rem(.45);
 
             grid-column : 2;
 
@@ -397,15 +397,15 @@
 
         display         : grid;
         grid-auto-flow  : column;
-        grid-column-gap : utils.fes(1);
+        grid-column-gap : utils.rem(1);
 
         & > .avatar {
-            width  : utils.fes(3.45);
-            height : utils.fes(3.45);
+            width  : utils.rem(3.45);
+            height : utils.rem(3.45);
         }
 
         & > .container {
-            min-height : utils.fes(3.45);
+            min-height : utils.rem(3.45);
         }
     }
 }

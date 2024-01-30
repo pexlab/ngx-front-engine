@@ -7,19 +7,19 @@
 
         display        : grid;
         grid-auto-flow : row;
-        grid-gap       : utils.fes(3.75);
+        grid-gap       : utils.rem(3.75);
 
         & > div {
 
             display        : grid;
             grid-auto-flow : row;
-            grid-gap       : utils.fes(1.25);
+            grid-gap       : utils.rem(1.25);
 
             & > div {
                 width          : fit-content;
                 display        : grid;
                 grid-auto-flow : column;
-                grid-gap       : utils.fes(1);
+                grid-gap       : utils.rem(1);
             }
 
             & > span {

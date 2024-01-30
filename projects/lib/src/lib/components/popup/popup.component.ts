@@ -4,7 +4,7 @@ import * as focusTrap from 'focus-trap';
 import { Subject } from 'rxjs';
 import { ComponentTheme } from '../../interfaces/color.interface';
 import { ThemeableFeComponent } from '../../utils/component.utils';
-import { fes, rawFes, rawVh, rawVw } from '../../utils/unit.utils';
+import { rem, rawRem, rawVh, rawVw } from '../../utils/unit.utils';
 import { PartialPopupTheme } from './popup.theme';
 
 @Component(
@@ -78,19 +78,19 @@ export class PopupComponent extends ThemeableFeComponent implements OnInit, Afte
                       'fit-content' :
                       isNaN( +value.width ) ?
                       value.width :
-                      fes( +value.width );
+                      rem( +value.width );
 
         const clampMin = value.minWidth === undefined ?
-                         'min(' + clamp + ', calc(' + rawVw( 100 ) + ' - ' + rawFes( 2.5 ) + '))' :
+                         'min(' + clamp + ', calc(' + rawVw( 100 ) + ' - ' + rawRem( 2.5 ) + '))' :
                          isNaN( +value.minWidth ) ?
                          value.minWidth :
-                         fes( +value.minWidth );
+                         rem( +value.minWidth );
 
         const clampMax = value.maxWidth === undefined ?
-                         'calc(' + rawVw( 100 ) + ' - ' + rawFes( 2.5 ) + ')' :
+                         'calc(' + rawVw( 100 ) + ' - ' + rawRem( 2.5 ) + ')' :
                          isNaN( +value.maxWidth ) ?
                          value.maxWidth :
-                         fes( +value.maxWidth );
+                         rem( +value.maxWidth );
 
         this.renderer.setStyle( this.hostElement.nativeElement, '--popup-width-min', clampMin, 2 );
         this.renderer.setStyle( this.hostElement.nativeElement, '--popup-width', clamp, 2 );
@@ -103,19 +103,19 @@ export class PopupComponent extends ThemeableFeComponent implements OnInit, Afte
                       'fit-content' :
                       isNaN( +value.height ) ?
                       value.height :
-                      fes( +value.height );
+                      rem( +value.height );
 
         const clampMin = value.minHeight === undefined ?
-                         'min(' + clamp + ', calc(' + rawVh( 100 ) + ' - ' + rawFes( 2.5 ) + '))' :
+                         'min(' + clamp + ', calc(' + rawVh( 100 ) + ' - ' + rawRem( 2.5 ) + '))' :
                          isNaN( +value.minHeight ) ?
                          value.minHeight :
-                         fes( +value.minHeight );
+                         rem( +value.minHeight );
 
         const clampMax = value.maxHeight === undefined ?
-                         'calc(' + rawVh( 100 ) + ' - ' + rawFes( 2.5 ) + ')' :
+                         'calc(' + rawVh( 100 ) + ' - ' + rawRem( 2.5 ) + ')' :
                          isNaN( +value.maxHeight ) ?
                          value.maxHeight :
-                         fes( +value.maxHeight );
+                         rem( +value.maxHeight );
 
         this.renderer.setStyle( this.hostElement.nativeElement, '--popup-height-min', clampMin, 2 );
         this.renderer.setStyle( this.hostElement.nativeElement, '--popup-height', clamp, 2 );

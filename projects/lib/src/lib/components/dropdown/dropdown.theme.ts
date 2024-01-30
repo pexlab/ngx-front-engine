@@ -1,28 +1,28 @@
 import { z } from 'zod';
-import { ZHEXColor } from '../../interfaces/color.interface';
+import { ZHexColor } from '../../interfaces/color.interface';
 
 export const ZDropdownTheme = z.object(
     {
 
-        placeholderIdlePanelText      : ZHEXColor,
-        placeholderIdlePanelBorder    : ZHEXColor,
-        placeholderIdlePanelBackground: ZHEXColor,
-        placeholderBorderBottom       : ZHEXColor,
+        placeholderIdlePanelText      : ZHexColor,
+        placeholderIdlePanelBorder    : ZHexColor,
+        placeholderIdlePanelBackground: ZHexColor,
+        placeholderBorderBottom       : ZHexColor,
 
-        placeholderSelectedPanelText      : ZHEXColor,
-        placeholderSelectedPanelBorder    : ZHEXColor,
-        placeholderSelectedPanelBackground: ZHEXColor,
+        placeholderSelectedPanelText      : ZHexColor,
+        placeholderSelectedPanelBorder    : ZHexColor,
+        placeholderSelectedPanelBackground: ZHexColor,
 
-        optionsStripe         : ZHEXColor,
-        optionsIdleText       : ZHEXColor,
-        optionsIdleBackground : ZHEXColor,
-        optionsHoverText      : ZHEXColor,
-        optionsHoverBackground: ZHEXColor,
+        optionsStripe         : ZHexColor,
+        optionsIdleText       : ZHexColor,
+        optionsIdleBackground : ZHexColor,
+        optionsHoverText      : ZHexColor,
+        optionsHoverBackground: ZHexColor,
 
-        clearButtonIdle           : ZHEXColor,
-        clearButtonIdleBackground : ZHEXColor,
-        clearButtonHover          : ZHEXColor,
-        clearButtonHoverBackground: ZHEXColor
+        clearButtonIdle           : ZHexColor,
+        clearButtonIdleBackground : ZHexColor,
+        clearButtonHover          : ZHexColor,
+        clearButtonHoverBackground: ZHexColor
     }
 );
 

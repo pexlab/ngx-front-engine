@@ -1,20 +1,20 @@
 import { z } from 'zod';
-import { ZHEXColor } from '../../interfaces/color.interface';
+import { ZHexColor } from '../../interfaces/color.interface';
 
 export const ZButtonTheme = z.object(
     {
-        text        : ZHEXColor,
-        background  : ZHEXColor,
-        borderBottom: ZHEXColor,
+        text        : ZHexColor,
+        background  : ZHexColor,
+        borderBottom: ZHexColor,
         hinge       : z.object(
             {
-                hoverText      : ZHEXColor,
-                hoverBackground: ZHEXColor
+                hoverText      : ZHexColor,
+                hoverBackground: ZHexColor
             }
         ),
         circle      : z.object(
             {
-                tooltipText: ZHEXColor
+                tooltipText: ZHexColor
             }
         )
     }

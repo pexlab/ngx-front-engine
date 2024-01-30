@@ -15,7 +15,7 @@
         display                     : grid;
         align-items                 : center;
 
-        padding                     : hostConfig.fes(hostConfig.$DROPDOWN_PADDING_VERTICAL) hostConfig.fes(hostConfig.$DROPDOWN_PADDING_HORIZONTAL);
+        padding                     : hostConfig.rem(hostConfig.$DROPDOWN_PADDING_VERTICAL) hostConfig.rem(hostConfig.$DROPDOWN_PADDING_HORIZONTAL);
         margin                      : 0; /* Idk why but the margin from the parent is being applied to the children as well */
         box-sizing                  : border-box;
 
@@ -41,13 +41,13 @@
 
                 display        : grid;
                 grid-auto-flow : column;
-                grid-gap       : hostConfig.fes(.65);
+                grid-gap       : hostConfig.rem(.65);
                 align-items    : center;
 
                 width          : fit-content;
                 height         : fit-content;
 
-                @include hostConfig.inlineIcon(hostConfig.fes(1.25));
+                @include hostConfig.inlineIcon(hostConfig.rem(1.25));
             }
         }
     }

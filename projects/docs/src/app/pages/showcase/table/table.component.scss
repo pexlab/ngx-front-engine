@@ -5,21 +5,21 @@
 
     display               : grid;
     grid-auto-flow        : row;
-    grid-gap              : utils.fes(1.25);
+    grid-gap              : utils.rem(1.25);
     place-content         : start;
     grid-template-columns : 1fr;
 
     width                 : 100%;
 
     & > form {
-        margin-top : utils.fes(.31);
-        max-width  : utils.fes(30);
+        margin-top : utils.rem(.31);
+        max-width  : utils.rem(30);
     }
 
     & > fe-virtual-scroll {
 
         width      : 100%;
-        height     : utils.fes(30);
+        height     : utils.rem(30);
         background : lightgrey;
 
         ::ng-deep {

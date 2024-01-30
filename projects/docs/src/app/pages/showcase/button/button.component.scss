@@ -5,13 +5,13 @@
 
     display        : grid;
     grid-auto-flow : row;
-    grid-gap       : utils.fes(2.5);
+    grid-gap       : utils.rem(2.5);
 
     & > div {
 
         display        : grid;
         grid-auto-flow : row;
-        grid-gap       : utils.fes(1.25);
+        grid-gap       : utils.rem(1.25);
 
         & > span {
             @include theme.commonFont('heading');
@@ -21,20 +21,20 @@
 
             width               : fit-content;
 
-            padding             : utils.fes(4) utils.fes(1.5);
+            padding             : utils.rem(4) utils.rem(1.5);
 
             background-image    : url('../../../../assets/images/pexels-bymalens-2157895.jpeg');
             background-size     : cover;
             background-position : center;
 
-            border-radius       : utils.fes(1);
+            border-radius       : utils.rem(1);
         }
 
         & > div, & > .image > div {
             width          : fit-content;
             display        : grid;
             grid-auto-flow : column;
-            grid-gap       : utils.fes(1);
+            grid-gap       : utils.rem(1);
         }
     }
 }

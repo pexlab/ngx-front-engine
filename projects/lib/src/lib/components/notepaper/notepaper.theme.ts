@@ -1,14 +1,14 @@
 import { z } from 'zod';
-import { ZHEXColor } from '../../interfaces/color.interface';
+import { ZHexColor } from '../../interfaces/color.interface';
 
 export const ZNotepaperTheme = z.object(
     {
-        divider         : ZHEXColor,
-        highlight       : ZHEXColor,
-        button          : ZHEXColor,
-        backgroundHoles : ZHEXColor,
-        backgroundTop   : ZHEXColor,
-        backgroundBottom: ZHEXColor
+        divider         : ZHexColor,
+        highlight       : ZHexColor,
+        button          : ZHexColor,
+        backgroundHoles : ZHexColor,
+        backgroundTop   : ZHexColor,
+        backgroundBottom: ZHexColor
     }
 );
 

@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { fes, PopupService } from '@pexlab/ngx-front-engine';
+import { rem, PopupService } from '@pexlab/ngx-front-engine';
 import { Observable } from 'rxjs';
 import { NutmegComponent } from '../../../popups/nutmeg/nutmeg.component';
 
@@ -48,7 +48,7 @@ export class PopupComponent implements OnDestroy {
             title    : titlesCanChange,
             component: NutmegComponent,
             size     : {
-                width: fes( 30 )
+                width: rem( 30 )
             }
         } );
 

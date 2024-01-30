@@ -15,7 +15,7 @@ import { ZInlineTableTheme } from '../components/table/inline/inline-table.theme
 import { ZTableTheme } from '../components/table/table.theme';
 import { ZTextFieldTheme } from '../components/text-field/text-field.theme';
 import { ZVirtualScrollTheme } from '../components/virtual-scroll/virtual-scroll.theme';
-import { ZHEXColor } from './color.interface';
+import { ZHexColor } from './color.interface';
 import { ZFont } from './typography.interface';
 
 export const ZCommonTheme = z.object(
@@ -40,40 +40,40 @@ export const ZCommonTheme = z.object(
             {
                 accent: z.object(
                     {
-                        primary         : ZHEXColor,
-                        primary_dimmed  : ZHEXColor,
-                        secondary       : ZHEXColor,
-                        secondary_dimmed: ZHEXColor,
-                        tab_bar         : ZHEXColor,
-                        generic         : ZHEXColor,
-                        info            : ZHEXColor,
-                        success         : ZHEXColor,
-                        failure         : ZHEXColor,
-                        warning         : ZHEXColor
+                        primary         : ZHexColor,
+                        primary_dimmed  : ZHexColor,
+                        secondary       : ZHexColor,
+                        secondary_dimmed: ZHexColor,
+                        tab_bar         : ZHexColor,
+                        generic         : ZHexColor,
+                        info            : ZHexColor,
+                        success         : ZHexColor,
+                        failure         : ZHexColor,
+                        warning         : ZHexColor
                     }
                 ),
 
                 text: z.object(
                     {
-                        primary            : ZHEXColor,
-                        secondary          : ZHEXColor,
-                        tertiary           : ZHEXColor,
-                        failure            : ZHEXColor,
-                        on_primary_accent  : ZHEXColor,
-                        on_secondary_accent: ZHEXColor
+                        primary            : ZHexColor,
+                        secondary          : ZHexColor,
+                        tertiary           : ZHexColor,
+                        failure            : ZHexColor,
+                        on_primary_accent  : ZHexColor,
+                        on_secondary_accent: ZHexColor
                     }
                 ),
 
                 background: z.object(
                     {
-                        primary   : ZHEXColor,
-                        secondary : ZHEXColor,
-                        tertiary  : ZHEXColor,
-                        quaternary: ZHEXColor
+                        primary   : ZHexColor,
+                        secondary : ZHexColor,
+                        tertiary  : ZHexColor,
+                        quaternary: ZHexColor
                     }
                 ),
 
-                custom: z.record( ZHEXColor ).optional()
+                custom: z.record( ZHexColor ).optional()
             }
         ),
 

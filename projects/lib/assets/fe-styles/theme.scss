@@ -12,7 +12,11 @@ $scope : 'custom' !default;
 }
 
 @function contrastHex($name) {
-  @return var(--fe-local-color-#{$scope}-#{$name}-contrast, var(--fe-global-color-#{$scope}-#{$name}-contrast));
+  @return var(--fe-local-color-#{$scope}-#{$name}-contrast-hex, var(--fe-global-color-#{$scope}-#{$name}-contrast-hex));
+}
+
+@function fadeContrastHex($name, $opacity) {
+    @return rgba(var(--fe-local-color-#{$scope}-#{$name}-contrast-rgb, var(--fe-global-color-#{$scope}-#{$name}-contrast-rgb)), $opacity);
 }
 
 /* No scope (mostly used for values from the common palette) */
@@ -26,7 +30,11 @@ $scope : 'custom' !default;
 }
 
 @function commonContrastHex($name) {
-  @return var(--fe-local-color-#{$name}-contrast, var(--fe-global-color-#{$name}-contrast));
+  @return var(--fe-local-color-#{$name}-contrast-hex, var(--fe-global-color-#{$name}-contrast-hex));
+}
+
+@function fadeCommonContrastHex($name, $opacity) {
+    @return rgba(var(--fe-local-color-#{$name}-contrast-rgb, var(--fe-global-color-#{$name}-contrast-rgb)), $opacity)
 }
 
 @mixin commonFont($name) {
@@ -75,15 +83,15 @@ $scope : 'custom' !default;
 }
 
 @mixin inlineIcon($size) {
-  
+
   & > svg-icon {
-	
+
 	display     : grid;
 	place-items : center;
-	
+
 	width       : $size;
 	height      : $size;
-	
+
 	& > svg {
 	  width  : $size;
 	  height : $size;
@@ -92,17 +100,17 @@ $scope : 'custom' !default;
 }
 
 @mixin inlineDeepIcon($size) {
-  
+
   ::ng-deep {
-	
+
 	& > svg-icon {
-	  
+
 	  display     : grid;
 	  place-items : center;
-	  
+
 	  width       : $size;
 	  height      : $size;
-	  
+
 	  & > svg {
 		width  : $size;
 		height : $size;
@@ -111,60 +119,60 @@ $scope : 'custom' !default;
   }
 }
 
-@mixin scrollbar($thumb, $thumbHover, $track, $overlay: 'y', $size: utils.fes(.5), $padding: utils.fes(.25)) {
-  
+@mixin scrollbar($thumb, $thumbHover, $track, $overlay: 'y', $size: utils.rem(.5), $padding: utils.rem(.25)) {
+
   /* Firefox scrollbar styling */
   scrollbar-color : $thumb $track;
-  
+
   /* Chrome scrollbar styling */
   & {
-	
+
 	&::-webkit-scrollbar {
 	  width  : calc(#{$size} + (#{$padding} * 2));
 	  height : calc(#{$size} + (#{$padding} * 2));
 	}
-	
+
 	&::-webkit-scrollbar-thumb {
-	  
+
 	  border-radius    : calc((#{$size} / 2) + #{$padding});
-	  
+
 	  border-style     : solid;
 	  border-color     : transparent;
 	  border-width     : $padding;
-	  
+
 	  background-color : $thumb;
 	  background-clip  : padding-box;
-	  
+
 	  transition       : .25s ease background-color;
-	  
+
 	  @include utils.hover {
 		background-color : $thumbHover;
 	  }
 	}
-	
+
 	&::-webkit-scrollbar-track {
 	  border           : none;
 	  border-radius    : 0;
 	  background-color : $track;
 	}
-	
+
 	&::-webkit-scrollbar-corner {
 	  background-color : $track;
 	}
   }
-  
+
   @if $overlay == 'y' or $overlay == 'x' or $overlay == 'xy' {
-	
+
 	/* Try to make the scrollbar act as an overlay so that it doesn't push the content around */
 	@supports (overflow-y: overlay) {
 	  & {
-		
+
 		@if $overlay == 'y' or $overlay == 'xy' {
 		  overflow-y : overlay;
 		} @else {
 		  overflow-y : hidden;
 		}
-		
+
 		@if $overlay == 'x' or $overlay == 'xy' {
 		  overflow-x : overlay;
 		} @else {
@@ -172,17 +180,17 @@ $scope : 'custom' !default;
 		}
 	  }
 	}
-	
+
 	/* The scrollbar pushes the content, therefore show the track at all times to prevent jumping */
 	@supports not (overflow-y: overlay) {
 	  & {
-		
+
 		@if $overlay == 'y' or $overlay == 'xy' {
 		  overflow-y : scroll;
 		} @else {
 		  overflow-y : hidden;
 		}
-		
+
 		@if $overlay == 'x' or $overlay == 'xy' {
 		  overflow-x : scroll;
 		} @else {
@@ -194,24 +202,24 @@ $scope : 'custom' !default;
 }
 
 @mixin scrollbar-tiny($color, $background) {
-  
+
   /* Firefox scrollbar styling */
   scrollbar-color : $color $background;
-  
+
   /* Chrome scrollbar styling */
   & {
-	
+
 	&::-webkit-scrollbar {
-	  width  : utils.fes(.4);
-	  height : utils.fes(.4);
+	  width  : utils.rem(.4);
+	  height : utils.rem(.4);
 	}
-	
+
 	&::-webkit-scrollbar-thumb {
 	  border           : transparent;
-	  border-radius    : utils.fes(.2);
+	  border-radius    : utils.rem(.2);
 	  background-color : $color;
 	}
-	
+
 	&::-webkit-scrollbar-track {
 	  border           : none;
 	  border-radius    : 0;

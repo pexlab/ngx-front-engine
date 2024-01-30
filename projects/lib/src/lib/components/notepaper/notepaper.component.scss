@@ -9,9 +9,9 @@ $notePadding  : 1.25;
 
     display   : block;
     width     : 100%;
-    max-width : utils.fes(28);
+    max-width : utils.rem(28);
 
-    filter    : drop-shadow(0 utils.fes(.06) utils.fes(.15) rgba(0, 0, 0, 0.12)) drop-shadow(0 utils.fes(.06) utils.fes(.15) rgba(0, 0, 0, 0.24));
+    filter    : drop-shadow(0 utils.rem(.06) utils.rem(.15) rgba(0, 0, 0, 0.12)) drop-shadow(0 utils.rem(.06) utils.rem(.15) rgba(0, 0, 0, 0.24));
 
     & .note {
 
@@ -21,20 +21,20 @@ $notePadding  : 1.25;
 
         display        : grid;
         grid-auto-flow : row;
-        grid-gap       : utils.fes($notePadding);
+        grid-gap       : utils.rem($notePadding);
 
-        border-radius  : utils.fes(.75);
+        border-radius  : utils.rem(.75);
 
         box-sizing     : border-box;
 
         @include theme.commonFont('handwritten-body');
 
-        padding        : utils.fes($notePadding) 0;
+        padding        : utils.rem($notePadding) 0;
 
         color          : black;
-        background     : linear-gradient(to bottom, theme.hex('background-top'), theme.hex('background-bottom') utils.fes(8.5));
+        background     : linear-gradient(to bottom, theme.hex('background-top'), theme.hex('background-bottom') utils.rem(8.5));
 
-        clip-path      : polygon(100% 0, 100% utils.opFes('100% -', (.8 * 2) - $strokeHeight,), utils.opFes('100% -', (.8 * 2) - $strokeHeight,) 100%, 0 100%, 0 0);
+        clip-path      : polygon(100% 0, 100% utils.opRem('100% -', (.8 * 2) - $strokeHeight,), utils.opRem('100% -', (.8 * 2) - $strokeHeight,) 100%, 0 100%, 0 0);
 
         /* Folded corner */
         &:before {
@@ -44,33 +44,33 @@ $notePadding  : 1.25;
             right         : 0;
             border-style  : solid;
             width         : 0;
-            border-width  : utils.fes(.8);
+            border-width  : utils.rem(.8);
             border-color  : rgba(0, 0, 0, 0.2) transparent transparent rgba(0, 0, 0, 0.2);
-            border-radius : utils.fes(.31) 0 0 0;
+            border-radius : utils.rem(.31) 0 0 0;
         }
 
         /* Realistic holes produced by a hole puncher */
         & .holes {
 
             width                 : 100%;
-            height                : utils.fes($lineHeight * 2);
+            height                : utils.rem($lineHeight * 2);
 
             display               : grid;
             grid-auto-flow        : column;
             grid-template-columns : 1fr 1fr;
 
-            padding-left          : utils.fes(2.5);
-            padding-right         : utils.fes(2.5);
+            padding-left          : utils.rem(2.5);
+            padding-right         : utils.rem(2.5);
 
             align-items           : center;
 
             & .hole {
 
-                width         : utils.fes(1.25);
-                height        : utils.fes(1.25);
+                width         : utils.rem(1.25);
+                height        : utils.rem(1.25);
 
                 border-radius : 50%;
-                box-shadow    : inset 0 0 utils.fes(.15) 0 #888888;
+                box-shadow    : inset 0 0 utils.rem(.15) 0 #888888;
 
                 background    : theme.hex('background-holes');
 
@@ -94,10 +94,10 @@ $notePadding  : 1.25;
             grid-auto-flow : row;
             grid-gap       : 0;
 
-            line-height    : utils.fes($lineHeight);
+            line-height    : utils.rem($lineHeight);
 
-            min-height     : utils.fes($lineHeight * 3);
-            margin-bottom  : utils.fes($lineHeight - $strokeHeight);
+            min-height     : utils.rem($lineHeight * 3);
+            margin-bottom  : utils.rem($lineHeight - $strokeHeight);
 
             &:before {
                 z-index          : -1;
@@ -107,8 +107,8 @@ $notePadding  : 1.25;
                 left             : 0;
                 bottom           : 0;
                 right            : 0;
-                background-image : repeating-linear-gradient(to bottom, transparent 0, transparent #{utils.fes($lineHeight - $strokeHeight)}, black #{utils.fes($lineHeight)});
-                background-size  : 100% utils.fes($lineHeight);
+                background-image : repeating-linear-gradient(to bottom, transparent 0, transparent #{utils.rem($lineHeight - $strokeHeight)}, black #{utils.rem($lineHeight)});
+                background-size  : 100% utils.rem($lineHeight);
             }
 
             & > span:nth-child(1) {
@@ -116,7 +116,7 @@ $notePadding  : 1.25;
                 display       : block;
                 width         : 100%;
                 text-align    : center;
-                margin-bottom : utils.fes($lineHeight);
+                margin-bottom : utils.rem($lineHeight);
 
                 @include theme.commonFont('handwritten-heading');
             }
@@ -126,10 +126,10 @@ $notePadding  : 1.25;
                 display    : block;
 
                 width      : 100%;
-                padding    : 0 utils.fes(1.25);
+                padding    : 0 utils.rem(1.25);
                 box-sizing : border-box;
 
-                min-height : utils.fes($lineHeight);
+                min-height : utils.rem($lineHeight);
 
                 &.listItem:before {
                     content : '● ';
@@ -141,8 +141,8 @@ $notePadding  : 1.25;
                     @include theme.commonFontWeight('handwritten-heading');
                     @include theme.commonFontSize('handwritten-body');
 
-                    background-image : repeating-linear-gradient(to bottom, theme.hex('highlight') 0, theme.hex('highlight') #{utils.fes($lineHeight - $strokeHeight)}, black #{utils.fes($lineHeight)});
-                    background-size  : 100% utils.fes($lineHeight);
+                    background-image : repeating-linear-gradient(to bottom, theme.hex('highlight') 0, theme.hex('highlight') #{utils.rem($lineHeight - $strokeHeight)}, black #{utils.rem($lineHeight)});
+                    background-size  : 100% utils.rem($lineHeight);
                 }
             }
 
@@ -151,17 +151,17 @@ $notePadding  : 1.25;
                 display       : block;
 
                 width         : 100%;
-                height        : utils.fes(.2);
+                height        : utils.rem(.2);
 
                 background    : theme.hex('divider');
 
-                margin-top    : utils.fes($lineHeight - .2);
-                margin-bottom : utils.fes($lineHeight);
+                margin-top    : utils.rem($lineHeight - .2);
+                margin-bottom : utils.rem($lineHeight);
             }
         }
 
         & > fe-button {
-            margin : 0 auto utils.fes($notePadding);
+            margin : 0 auto utils.rem($notePadding);
         }
     }
 }

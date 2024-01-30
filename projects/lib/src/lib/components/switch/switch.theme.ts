@@ -1,38 +1,38 @@
 import { z } from 'zod';
-import { ZHEXColor } from '../../interfaces/color.interface';
+import { ZHexColor } from '../../interfaces/color.interface';
 
 export const ZSwitchTheme = z.object(
     {
 
         /* Shared */
 
-        activeLabel  : ZHEXColor,
-        inactiveLabel: ZHEXColor,
+        activeLabel  : ZHexColor,
+        inactiveLabel: ZHexColor,
 
         /* Minimal */
 
-        minimalOuterBallLeft : ZHEXColor,
-        minimalOuterBallRight: ZHEXColor,
+        minimalOuterBallLeft : ZHexColor,
+        minimalOuterBallRight: ZHexColor,
 
-        minimalInnerBallLeft : ZHEXColor,
-        minimalInnerBallRight: ZHEXColor,
+        minimalInnerBallLeft : ZHexColor,
+        minimalInnerBallRight: ZHexColor,
 
-        minimalLineLeft : ZHEXColor,
-        minimalLineRight: ZHEXColor,
+        minimalLineLeft : ZHexColor,
+        minimalLineRight: ZHexColor,
 
         /* Traditional */
 
-        traditionalBackgroundLeft : ZHEXColor,
-        traditionalBackgroundRight: ZHEXColor,
+        traditionalBackgroundLeft : ZHexColor,
+        traditionalBackgroundRight: ZHexColor,
 
-        traditionalBorderLeft : ZHEXColor,
-        traditionalBorderRight: ZHEXColor,
+        traditionalBorderLeft : ZHexColor,
+        traditionalBorderRight: ZHexColor,
 
-        traditionalBallLeft : ZHEXColor,
-        traditionalBallRight: ZHEXColor,
+        traditionalBallLeft : ZHexColor,
+        traditionalBallRight: ZHexColor,
 
-        traditionalIconLeft : ZHEXColor,
-        traditionalIconRight: ZHEXColor
+        traditionalIconLeft : ZHexColor,
+        traditionalIconRight: ZHexColor
     }
 );
 

@@ -37,7 +37,7 @@
 
         display        : grid;
         grid-auto-flow : column;
-        grid-gap       : utils.fes(.65 + math.div($ballSize, 2));
+        grid-gap       : utils.rem(.65 + math.div($ballSize, 2));
         align-items    : center;
 
         & > .switch {
@@ -45,16 +45,16 @@
             position                    : relative;
 
             display                     : block;
-            width                       : utils.fes($ballSize * 1.5);
-            height                      : utils.fes($ballSize);
+            width                       : utils.rem($ballSize * 1.5);
+            height                      : utils.rem($ballSize);
 
             cursor                      : pointer;
 
             border-radius               : utils.maxValue();
 
             box-sizing                  : content-box;
-            padding                     : 0 utils.fes(math.div($ballSize, 2));
-            margin                      : 0 utils.fes(-(math.div($ballSize, 2)));
+            padding                     : 0 utils.rem(math.div($ballSize, 2));
+            margin                      : 0 utils.rem(-(math.div($ballSize, 2)));
 
             -webkit-tap-highlight-color : transparent;
 
@@ -65,11 +65,11 @@
                 display       : block;
 
                 position      : absolute;
-                top           : utils.fes(math.div($ballSize, 2) - math.div($height, 2));
-                left          : utils.fes(math.div($ballSize, 2));
-                right         : utils.fes(math.div($ballSize, 2));
+                top           : utils.rem(math.div($ballSize, 2) - math.div($height, 2));
+                left          : utils.rem(math.div($ballSize, 2));
+                right         : utils.rem(math.div($ballSize, 2));
 
-                height        : utils.fes($height);
+                height        : utils.rem($height);
 
                 border-radius : utils.maxValue();
 
@@ -82,16 +82,16 @@
 
                 position      : absolute;
                 top           : 0;
-                left          : utils.fes(math.div($ballSize, 2));
+                left          : utils.rem(math.div($ballSize, 2));
 
-                width         : utils.fes($ballSize);
-                height        : utils.fes($ballSize);
+                width         : utils.rem($ballSize);
+                height        : utils.rem($ballSize);
 
                 box-sizing    : border-box;
 
                 border-radius : utils.maxValue();
 
-                box-shadow    : 0 utils.fes(.2) utils.fes(.4) rgba(0, 0, 0, 0.16), 0 utils.fes(.2) utils.fes(.4) rgba(0, 0, 0, 0.23);
+                box-shadow    : 0 utils.rem(.2) utils.rem(.4) rgba(0, 0, 0, 0.16), 0 utils.rem(.2) utils.rem(.4) rgba(0, 0, 0, 0.23);
 
                 transition    : transform .25s ease, border .25s ease, background-color .25s ease;
             }
@@ -99,8 +99,8 @@
             &.left {
 
                 &:focus {
-                    outline        : utils.fes(.13) solid theme.hex('minimal-line-left');
-                    outline-offset : utils.fes(.15);
+                    outline        : utils.rem(.13) solid theme.hex('minimal-line-left');
+                    outline-offset : utils.rem(.15);
                     transition     : outline-color .25s ease;
                 }
 
@@ -110,7 +110,7 @@
 
                 & > .ball {
                     transform        : translateX(-50%);
-                    border           : utils.fes(.45) solid theme.hex('minimal-outer-ball-left');
+                    border           : utils.rem(.45) solid theme.hex('minimal-outer-ball-left');
                     background-color : theme.hex('minimal-inner-ball-left');
                 }
             }
@@ -118,8 +118,8 @@
             &.right {
 
                 &:focus {
-                    outline        : utils.fes(.13) solid theme.hex('minimal-line-right');
-                    outline-offset : utils.fes(.15);
+                    outline        : utils.rem(.13) solid theme.hex('minimal-line-right');
+                    outline-offset : utils.rem(.15);
                     transition     : outline-color .25s ease;
                 }
 
@@ -128,8 +128,8 @@
                 }
 
                 & > .ball {
-                    transform        : translateX(utils.fesOp($ballSize * 1.5, '- 50%'));
-                    border           : utils.fes(.45) solid theme.hex('minimal-outer-ball-right');
+                    transform        : translateX(utils.remOp($ballSize * 1.5, '- 50%'));
+                    border           : utils.rem(.45) solid theme.hex('minimal-outer-ball-right');
                     background-color : theme.hex('minimal-inner-ball-right');
                 }
             }
@@ -144,7 +144,7 @@
 
         display        : grid;
         grid-auto-flow : column;
-        grid-gap       : utils.fes(.65);
+        grid-gap       : utils.rem(.65);
         align-items    : center;
 
         width          : fit-content;
@@ -154,11 +154,11 @@
 
             position                    : relative;
 
-            width                       : utils.fes(($ballSize * 2.5) + ( 2 * $padding));
-            height                      : utils.fes(($ballSize) + ( 2 * $padding));
+            width                       : utils.rem(($ballSize * 2.5) + ( 2 * $padding));
+            height                      : utils.rem(($ballSize) + ( 2 * $padding));
 
             box-sizing                  : border-box;
-            padding                     : utils.fes($padding);
+            padding                     : utils.rem($padding);
 
             border-radius               : utils.maxValue();
 
@@ -190,8 +190,8 @@
                 position   : relative;
                 z-index    : 1;
 
-                width      : utils.fes($ballSize);
-                height     : utils.fes($ballSize);
+                width      : utils.rem($ballSize);
+                height     : utils.rem($ballSize);
 
                 transition : transform .35s cubic-bezier(0, 0.55, 0.45, 1);
 
@@ -205,19 +205,19 @@
 
                     border-radius : utils.maxValue();
 
-                    box-shadow    : 0 utils.fes(.2) utils.fes(.4) rgba(0, 0, 0, 0.16), 0 utils.fes(.2) utils.fes(.4) rgba(0, 0, 0, 0.23);
+                    box-shadow    : 0 utils.rem(.2) utils.rem(.4) rgba(0, 0, 0, 0.16), 0 utils.rem(.2) utils.rem(.4) rgba(0, 0, 0, 0.23);
 
                     transition    : background-color .25s ease, color .25s ease;
 
-                    @include theme.inlineIcon(utils.fes(.75));
+                    @include theme.inlineIcon(utils.rem(.75));
                 }
             }
 
             &.left {
 
                 &:focus {
-                    outline        : utils.fes(.1) solid theme.hex('traditional-border-left');
-                    outline-offset : utils.fes(.15);
+                    outline        : utils.rem(.1) solid theme.hex('traditional-border-left');
+                    outline-offset : utils.rem(.15);
                     transition     : outline-color .25s ease;
                 }
 
@@ -233,21 +233,21 @@
 
                 &:after {
                     background-color : theme.hex('traditional-background-left');
-                    border           : utils.fes($borderWidth) solid theme.hex('traditional-border-left');
+                    border           : utils.rem($borderWidth) solid theme.hex('traditional-border-left');
                 }
             }
 
             &.right {
 
                 &:focus {
-                    outline        : utils.fes(.1) solid theme.hex('traditional-border-right');
-                    outline-offset : utils.fes(.15);
+                    outline        : utils.rem(.1) solid theme.hex('traditional-border-right');
+                    outline-offset : utils.rem(.15);
                     transition     : outline-color .25s ease;
                 }
 
                 & > .ball-wrapper {
 
-                    transform : translateX(utils.fes($ballSize * 1.5));
+                    transform : translateX(utils.rem($ballSize * 1.5));
 
                     & > .ball {
                         color            : theme.hex('traditional-icon-right');
@@ -257,7 +257,7 @@
 
                 &:after {
                     background-color : theme.hex('traditional-background-right');
-                    border           : utils.fes($borderWidth) solid theme.hex('traditional-border-right');
+                    border           : utils.rem($borderWidth) solid theme.hex('traditional-border-right');
                 }
             }
         }

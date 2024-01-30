@@ -66,14 +66,14 @@ $PADDING : 1.25;
 
         display        : grid;
         grid-auto-flow : column;
-        grid-gap       : utils.fes(.65);
+        grid-gap       : utils.rem(.65);
         place-items    : center left;
 
         padding-top    : $PADDING;
         padding-bottom : $PADDING;
         box-sizing     : border-box;
 
-        @include theme.inlineDeepIcon(utils.fes(1.25));
+        @include theme.inlineDeepIcon(utils.rem(1.25));
     }
 
     & > div.measurement {
@@ -203,17 +203,17 @@ $PADDING : 1.25;
         width          : 100%;
         height         : fit-content;
 
-        padding-left   : utils.fes($PADDING);
+        padding-left   : utils.rem($PADDING);
         box-sizing     : border-box;
 
         display        : grid;
         grid-auto-flow : column;
-        grid-gap       : utils.fes(1.25);
+        grid-gap       : utils.rem(1.25);
         place-items    : center;
 
         cursor         : text;
 
-        border-radius  : utils.fes(.69);
+        border-radius  : utils.rem(.69);
 
         isolation      : isolate;
 
@@ -222,7 +222,7 @@ $PADDING : 1.25;
         }
 
         &.hasLabel {
-            grid-template-columns : var(--label-width) utils.fes(.06) 1fr;
+            grid-template-columns : var(--label-width) utils.rem(.06) 1fr;
         }
 
         & > .border {
@@ -239,7 +239,7 @@ $PADDING : 1.25;
 
             & > path {
                 fill         : none;
-                stroke-width : utils.fes(.13);
+                stroke-width : utils.rem(.13);
             }
 
             &.idle {
@@ -266,7 +266,7 @@ $PADDING : 1.25;
 
         & .divider {
             width  : 100%;
-            height : utils.opFes('100% -', 2 * $PADDING);
+            height : utils.opRem('100% -', 2 * $PADDING);
         }
 
         & > .icons {
@@ -276,15 +276,15 @@ $PADDING : 1.25;
             position       : absolute;
 
             top            : 50%;
-            right          : utils.fes($PADDING);
+            right          : utils.rem($PADDING);
 
             transform      : translateY(-50%);
 
             display        : grid;
             grid-auto-flow : row;
-            grid-gap       : utils.fes(.5);
+            grid-gap       : utils.rem(.5);
 
-            @include theme.inlineIcon(utils.fes(1));
+            @include theme.inlineIcon(utils.rem(1));
 
             & > svg-icon {
                 transition : color .25s ease;
@@ -316,12 +316,12 @@ $PADDING : 1.25;
                     left                        : 50%;
                     top                         : 50%;
 
-                    width                       : utils.fes(2.5);
-                    height                      : utils.fes(2.5);
+                    width                       : utils.rem(2.5);
+                    height                      : utils.rem(2.5);
 
                     cursor                      : pointer;
 
-                    border-radius               : utils.fes(2.5);
+                    border-radius               : utils.rem(2.5);
 
                     opacity                     : 0;
                     transform                   : translateY(-50%) translateX(-50%) scale(0.75);
@@ -339,8 +339,8 @@ $PADDING : 1.25;
 
                     position       : relative;
 
-                    width          : utils.fes(1);
-                    height         : utils.fes(1);
+                    width          : utils.rem(1);
+                    height         : utils.rem(1);
 
                     display        : grid;
                     place-items    : center;
@@ -350,8 +350,8 @@ $PADDING : 1.25;
                     transition     : color .25s ease;
 
                     & > svg {
-                        width  : utils.fes(1);
-                        height : utils.fes(1);
+                        width  : utils.rem(1);
+                        height : utils.rem(1);
                     }
                 }
             }
@@ -366,9 +366,9 @@ $PADDING : 1.25;
             width          : 100%;
             height         : 100%;
 
-            padding-top    : utils.fes($PADDING);
-            padding-bottom : utils.fes($PADDING);
-            padding-right  : utils.fes($PADDING);
+            padding-top    : utils.rem($PADDING);
+            padding-bottom : utils.rem($PADDING);
+            padding-right  : utils.rem($PADDING);
 
             box-sizing     : border-box;
 
@@ -377,7 +377,7 @@ $PADDING : 1.25;
                 position       : absolute;
 
                 left           : var(--placeholder-x);
-                right          : utils.fes($PADDING + .65);
+                right          : utils.rem($PADDING + .65);
                 top            : var(--placeholder-y);
 
                 user-select    : none;
@@ -396,11 +396,11 @@ $PADDING : 1.25;
 
             &.iconPadding {
 
-                padding-right : utils.fes(($PADDING * 2) + 1);
+                padding-right : utils.rem(($PADDING * 2) + 1);
 
                 & > span.placeholder {
                     &.unpinned {
-                        right : utils.fes(($PADDING * 2) + 1);
+                        right : utils.rem(($PADDING * 2) + 1);
                     }
                 }
             }
@@ -428,7 +428,7 @@ $PADDING : 1.25;
 
                 &.monospace {
                     @include theme.commonFont('code');
-                    letter-spacing : utils.fes(.06);
+                    letter-spacing : utils.rem(.06);
                 }
             }
 
@@ -452,7 +452,7 @@ $PADDING : 1.25;
 
             & > textarea {
                 resize : none;
-                @include theme.scrollbar(theme.hex('idle-border'), theme.hex('idle-border'), transparent, 'none', utils.fes(0.5), utils.fes(0.25));
+                @include theme.scrollbar(theme.hex('idle-border'), theme.hex('idle-border'), transparent, 'none', utils.rem(0.5), utils.rem(0.25));
             }
 
             & > input[type='number'] {
@@ -493,7 +493,7 @@ $PADDING : 1.25;
 
             &.conceal {
                 & > input, & > textarea {
-                    letter-spacing : utils.fes(0.07);
+                    letter-spacing : utils.rem(0.07);
                     font-family    : text-security-disc, sans-serif;
                 }
             }

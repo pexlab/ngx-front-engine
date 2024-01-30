@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { fes } from 'dist/ngx-front-engine';
+import { rem } from '@pexlab/ngx-front-engine';
 
 @Component(
     {
@@ -15,7 +15,7 @@ export class TextFieldComponent implements OnInit {
 
     public formGroup!: UntypedFormGroup;
 
-    public fes = fes;
+    public rem = rem;
 
     public ngOnInit(): void {
         this.formGroup = this.fb.group(

@@ -1,28 +1,28 @@
 import { z } from 'zod';
-import { ZHEXColor } from '../../interfaces/color.interface';
+import { ZHexColor } from '../../interfaces/color.interface';
 
 export const ZPopupTheme = z.object(
     {
         desktop: z.object(
             {
 
-                border: ZHEXColor,
+                border: ZHexColor,
 
                 title: z.object(
                     {
-                        text      : ZHEXColor,
-                        background: ZHEXColor,
-                        border    : ZHEXColor,
-                        exit      : ZHEXColor
+                        text      : ZHexColor,
+                        background: ZHexColor,
+                        border    : ZHexColor,
+                        exit      : ZHexColor
                     }
                 ),
 
                 body: z.object(
                     {
-                        text          : ZHEXColor,
-                        background    : ZHEXColor,
-                        scrollbar     : ZHEXColor,
-                        scrollbarHover: ZHEXColor
+                        text          : ZHexColor,
+                        background    : ZHexColor,
+                        scrollbar     : ZHexColor,
+                        scrollbarHover: ZHexColor
                     }
                 )
             }
@@ -31,18 +31,18 @@ export const ZPopupTheme = z.object(
             {
                 title: z.object(
                     {
-                        text      : ZHEXColor,
-                        background: ZHEXColor,
-                        border    : ZHEXColor,
-                        exit      : ZHEXColor
+                        text      : ZHexColor,
+                        background: ZHexColor,
+                        border    : ZHexColor,
+                        exit      : ZHexColor
                     }
                 ),
                 body : z.object(
                     {
-                        text          : ZHEXColor,
-                        background    : ZHEXColor,
-                        scrollbar     : ZHEXColor,
-                        scrollbarHover: ZHEXColor
+                        text          : ZHexColor,
+                        background    : ZHexColor,
+                        scrollbar     : ZHexColor,
+                        scrollbarHover: ZHexColor
                     }
                 )
             }

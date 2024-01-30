@@ -7,15 +7,15 @@
 
     &.stepper-inline {
         display      : inline-grid;
-        margin-left  : utils.fes(.45);
-        margin-right : utils.fes(.45);
+        margin-left  : utils.rem(.45);
+        margin-right : utils.rem(.45);
     }
 
     width          : fit-content;
     height         : fit-content;
 
     grid-auto-flow : row;
-    grid-gap       : utils.fes(.65);
+    grid-gap       : utils.rem(.65);
     justify-items  : center;
 
     & > span {
@@ -34,26 +34,26 @@
 
     & .top, & .bottom {
 
-        width                       : utils.fes(2.2);
-        height                      : utils.fes(2.2);
+        width                       : utils.rem(2.2);
+        height                      : utils.rem(2.2);
 
         display                     : grid;
         place-items                 : center;
 
-        border-radius               : utils.fes(.5);
+        border-radius               : utils.rem(.5);
 
         color                       : theme.hex('button-icon');
         background-color            : theme.hex('button-background');
 
-        @include theme.inlineIcon(utils.fes(1.25));
+        @include theme.inlineIcon(utils.rem(1.25));
 
         cursor                      : pointer;
 
         -webkit-tap-highlight-color : transparent;
 
         &:focus {
-            outline        : utils.fes(.1) solid theme.hex('button-background');
-            outline-offset : utils.fes(.15);
+            outline        : utils.rem(.1) solid theme.hex('button-background');
+            outline-offset : utils.rem(.15);
         }
     }
 }

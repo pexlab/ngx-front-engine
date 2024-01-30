@@ -1,16 +1,16 @@
 import { z } from 'zod';
-import { ZHEXColor } from '../../interfaces/color.interface';
+import { ZHexColor } from '../../interfaces/color.interface';
 
 export const ZTextFieldStateTheme        = z.object(
     {
-        text             : ZHEXColor,
-        border           : ZHEXColor,
-        divider          : ZHEXColor,
-        background       : ZHEXColor,
-        staticPlaceholder: ZHEXColor,
-        pinnedPlaceholder: ZHEXColor,
-        icon             : ZHEXColor,
-        iconBackground   : ZHEXColor
+        text             : ZHexColor,
+        border           : ZHexColor,
+        divider          : ZHexColor,
+        background       : ZHexColor,
+        staticPlaceholder: ZHexColor,
+        pinnedPlaceholder: ZHexColor,
+        icon             : ZHexColor,
+        iconBackground   : ZHexColor
     }
 );
 export const ZPartialTextFieldStateTheme = ZTextFieldStateTheme.partial();

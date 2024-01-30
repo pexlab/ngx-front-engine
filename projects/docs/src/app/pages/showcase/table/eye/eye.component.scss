@@ -2,5 +2,5 @@
 @use 'dist/ngx-front-engine/assets/fe-styles/utils';
 
 :host {
-    @include theme.inlineIcon(utils.fes(1.2));
+    @include theme.inlineIcon(utils.rem(1.2));
 }

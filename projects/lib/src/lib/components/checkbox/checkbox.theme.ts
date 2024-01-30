@@ -1,17 +1,17 @@
 import { z } from 'zod';
-import { ZHEXColor } from '../../interfaces/color.interface';
+import { ZHexColor } from '../../interfaces/color.interface';
 
 export const ZCheckboxTheme = z.object(
     {
-        labelChecked   : ZHEXColor,
-        labelUnchecked : ZHEXColor,
-        checkmark      : ZHEXColor,
-        fillChecked    : ZHEXColor,
-        fillUnchecked  : ZHEXColor,
-        outlineIdle    : ZHEXColor,
-        outlineHover   : ZHEXColor,
-        outlineChecked : ZHEXColor,
-        hoverBackground: ZHEXColor
+        labelChecked   : ZHexColor,
+        labelUnchecked : ZHexColor,
+        checkmark      : ZHexColor,
+        fillChecked    : ZHexColor,
+        fillUnchecked  : ZHexColor,
+        outlineIdle    : ZHexColor,
+        outlineHover   : ZHexColor,
+        outlineChecked : ZHexColor,
+        hoverBackground: ZHexColor
     }
 );
 

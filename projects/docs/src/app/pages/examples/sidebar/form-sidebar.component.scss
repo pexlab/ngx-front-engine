@@ -6,12 +6,12 @@
 
     width   : 100%;
 
-    margin  : utils.fes(1) 0;
+    margin  : utils.rem(1) 0;
 
     & > a {
 
-        width                      : utils.opFes('100% -', 1);
-        height                     : utils.fes(3.45);
+        width                      : utils.opRem('100% -', 1);
+        height                     : utils.rem(3.45);
 
         display                    : grid;
         align-items                : center;
@@ -26,7 +26,7 @@
         }
 
         & > span {
-            padding-left : utils.fes(1.25);
+            padding-left : utils.rem(1.25);
         }
     }
 }

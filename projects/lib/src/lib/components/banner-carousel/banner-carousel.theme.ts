@@ -1,17 +1,17 @@
 import { z } from 'zod';
-import { ZHEXColor } from '../../interfaces/color.interface';
+import { ZHexColor } from '../../interfaces/color.interface';
 
 const ZBannerCarouselBase = z.object(
     {
-        heading   : ZHEXColor,
-        subheading: ZHEXColor,
-        background: ZHEXColor,
+        heading   : ZHexColor,
+        subheading: ZHexColor,
+        background: ZHexColor,
 
-        buttonIdleText      : ZHEXColor,
-        buttonIdleBackground: ZHEXColor,
+        buttonIdleText      : ZHexColor,
+        buttonIdleBackground: ZHexColor,
 
-        buttonHoverText      : ZHEXColor,
-        buttonHoverBackground: ZHEXColor
+        buttonHoverText      : ZHexColor,
+        buttonHoverBackground: ZHexColor
     }
 );
 

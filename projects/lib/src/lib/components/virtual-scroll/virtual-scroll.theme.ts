@@ -1,12 +1,12 @@
 import { z } from 'zod';
-import { ZHEXColor } from '../../interfaces/color.interface';
+import { ZHexColor } from '../../interfaces/color.interface';
 
 export const ZVirtualScrollTheme = z.object(
     {
         scrollbar: z.object(
             {
-                static: ZHEXColor,
-                hover : ZHEXColor
+                static: ZHexColor,
+                hover : ZHexColor
             }
         )
     }

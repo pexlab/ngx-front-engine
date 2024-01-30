@@ -1,5 +1,5 @@
 import { rgb } from 'wcag-contrast';
-import { EvaluatedColor, HEXColor, RGBColor, WCAGContrast, ZHEXColor } from '../interfaces/color.interface';
+import { HexColor, RgbColor, WcagContrastHexColor, ZHexColor, EvaluatedColor, WcagContrastRgbColor } from '../interfaces/color.interface';
 import { ThemeService } from './theme.service';
 
 export class Color implements EvaluatedColor {
@@ -11,7 +11,7 @@ export class Color implements EvaluatedColor {
     }
 
     private readonly nameVal: string;
-    private readonly hexVal: HEXColor;
+    private readonly hexVal: HexColor;
     private readonly serviceVal?: ThemeService;
 
     /* Only as fallback if the service value hasn't been set */
@@ -40,23 +40,23 @@ export class Color implements EvaluatedColor {
         }
     }
 
-    public get name(): string {
+    public get name(): EvaluatedColor['name'] {
         return this.nameVal;
     }
 
-    public get hex(): string {
+    public get hex(): EvaluatedColor['hex'] {
         return this.hexVal;
     }
 
-    public get channels(): RGBColor {
+    public get channels(): EvaluatedColor['channels'] {
         return this.matchOrScratch().channels;
     }
 
-    public get brightness(): number {
+    public get brightness(): EvaluatedColor['brightness'] {
         return this.matchOrScratch().brightness;
     }
 
-    public get legible_contrast(): WCAGContrast {
+    public get legible_contrast(): EvaluatedColor['legible_contrast'] {
         return this.matchOrScratch().legible_contrast;
     }
 
@@ -71,19 +71,29 @@ export class Color implements EvaluatedColor {
 
     private evaluateFromScratch(): EvaluatedColor {
 
-        const computed = Color.toRGB( this.hexVal );
+        const rgbVal         = Color.toRGB( this.hexVal );
+        const contrastHexVal = Color.getWCAGContrast( [ this.hexVal ] );
+        const contrastRgbVal = Color.toRGB( contrastHexVal );
 
-        const result = {
+        const result: EvaluatedColor = {
             name            : this.nameVal,
             hex             : this.hexVal,
             channels        : {
-                red  : computed.red,
-                green: computed.green,
-                blue : computed.blue,
-                alpha: computed.alpha
+                red  : rgbVal.red,
+                green: rgbVal.green,
+                blue : rgbVal.blue,
+                alpha: rgbVal.alpha
             },
-            brightness      : computed.brightness,
-            legible_contrast: Color.getWCAGContrast( [ this.hexVal ] )
+            legible_contrast: {
+                hex     : contrastHexVal,
+                channels: {
+                    red  : contrastRgbVal.red,
+                    green: contrastRgbVal.green,
+                    blue : contrastRgbVal.blue,
+                    alpha: contrastRgbVal.alpha
+                } as WcagContrastRgbColor
+            },
+            brightness      : rgbVal.brightness
         };
 
         this.localCache = result;
@@ -95,9 +105,9 @@ export class Color implements EvaluatedColor {
     /* ==================== STATIC UTILITIES ==================== */
 
     /** Converts the 3-digit and 6-digit format both to a 8-digit format with an alpha channel  */
-    public static ensureHexAlphaFormat( hex: HEXColor ) {
+    public static ensureHexAlphaFormat( hex: HexColor ) {
 
-        let parsedHex = ZHEXColor.parse( hex );
+        let parsedHex = ZHexColor.parse( hex );
 
         if ( parsedHex.length === 4 ) {
 
@@ -116,18 +126,18 @@ export class Color implements EvaluatedColor {
     }
 
     /** Determines the RGB values as well as additionally useful information */
-    public static toRGB( hex: HEXColor ): {
+    public static toRGB( hex: HexColor ): {
                                               highestValue: number,
                                               lowestValue: number,
                                               brightness: number
-                                          } & RGBColor {
+                                          } & RgbColor {
 
-        const parsedHex = Color.ensureHexAlphaFormat( ZHEXColor.parse( hex ) );
+        const parsedHex = Color.ensureHexAlphaFormat( ZHexColor.parse( hex ) );
 
         const red   = parseInt( parsedHex.slice( 1, 3 ), 16 );
         const green = parseInt( parsedHex.slice( 3, 5 ), 16 );
         const blue  = parseInt( parsedHex.slice( 5, 7 ), 16 );
-        const alpha = Math.round( parseInt( parsedHex.slice( 7, 9 ), 16 ) / 255 );
+        const alpha = +( parseInt( parsedHex.slice( 7, 9 ), 16 ) / 255 ).toFixed( 3 );
 
         const highestValue = Math.max( ...[ red, green, blue ] );
         const lowestValue  = Math.min( ...[ red, green, blue ] );
@@ -142,9 +152,9 @@ export class Color implements EvaluatedColor {
     }
 
     /** Changes the opacity of a hex theme */
-    public static fadeHex( hex: HEXColor, opacity: number ): string {
+    public static fadeHex( hex: HexColor, opacity: number ): string {
 
-        const parsedHex = Color.ensureHexAlphaFormat( ZHEXColor.parse( hex ) );
+        const parsedHex = Color.ensureHexAlphaFormat( ZHexColor.parse( hex ) );
 
         if ( opacity < 0 || opacity > 1 ) {
             throw Error( 'Invalid opacity value' );
@@ -161,7 +171,7 @@ export class Color implements EvaluatedColor {
 
     public static shadeHex( hex: string, percent: number ) {
 
-        const parsedHex = Color.ensureHexAlphaFormat( ZHEXColor.parse( hex ) );
+        const parsedHex = Color.ensureHexAlphaFormat( ZHexColor.parse( hex ) );
 
         const rgb = Color.toRGB( parsedHex );
 
@@ -182,7 +192,7 @@ export class Color implements EvaluatedColor {
     }
 
     /** Determines whether white or black is more legible on the provided theme */
-    public static getWCAGContrast( colors: HEXColor[] ): WCAGContrast {
+    public static getWCAGContrast( colors: HexColor[] ): WcagContrastHexColor {
 
         let averageR = 0;
         let averageG = 0;
@@ -215,9 +225,9 @@ export class Color implements EvaluatedColor {
 
         /* Accommodate that often white still is more legible */
         if ( Math.abs( contrastWithWhiteText - contrastWithBlackText ) > 2 ) {
-            return contrastWithWhiteText > contrastWithBlackText ? 'white' : 'black';
+            return contrastWithWhiteText > contrastWithBlackText ? '#ffffff' : '#000000';
         } else {
-            return 'white';
+            return '#ffffff';
         }
     }
 }

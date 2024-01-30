@@ -5,7 +5,7 @@
 
     display        : grid;
     grid-auto-flow : row;
-    grid-gap       : utils.fes(1.25);
+    grid-gap       : utils.rem(1.25);
 
     & > .note {
 
@@ -13,7 +13,7 @@
 
         & > span {
             display       : block;
-            margin-bottom : utils.fes(.31);
+            margin-bottom : utils.rem(.31);
         }
 
         & > span:nth-child(1) {
@@ -27,15 +27,15 @@
 
         display        : grid;
         grid-auto-flow : column;
-        grid-gap       : utils.fes(1.25);
+        grid-gap       : utils.rem(1.25);
     }
 
     & > fe-alert-portal {
-        max-width : utils.fes(30);
+        max-width : utils.rem(30);
     }
 
     & > .divider {
         width  : 100%;
-        border : utils.fes(.06) solid theme.commonHex('text-tertiary');
+        border : utils.rem(.06) solid theme.commonHex('text-tertiary');
     }
 }

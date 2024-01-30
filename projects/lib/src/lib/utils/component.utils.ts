@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, ElementRef } from '@angular/core';
 import { isEqual } from 'lodash-es';
 import { ReplaySubject } from 'rxjs';
-import { ComponentTheme, HEXColorRegister } from '../interfaces/color.interface';
+import { ComponentTheme, HexColorRegister } from '../interfaces/color.interface';
 import { ThemeableComponents } from '../interfaces/theme.interface';
 import { ThemeService } from '../theme/theme.service';
 
@@ -34,7 +34,7 @@ export abstract class FeComponent {
 
 export abstract class ThemeableFeComponent extends FeComponent {
 
-    public _fePreviousPalette: HEXColorRegister = {};
+    public _fePreviousPalette: HexColorRegister = {};
 
     public _feCurrentTheme?: ComponentTheme;
 
@@ -50,7 +50,7 @@ export abstract class ThemeableFeComponent extends FeComponent {
 
                 /* TODO: when set undefined remove styling */
 
-                const newPalette: HEXColorRegister = theme?.palette || {};
+                const newPalette: HexColorRegister = theme?.palette || {};
 
                 /* Only apply the palette if it has been changed */
                 if ( !isEqual( newPalette, this._fePreviousPalette ) ) {

@@ -1,40 +1,40 @@
 import { z } from 'zod';
-import { ZHEXColor } from '../../interfaces/color.interface';
+import { ZHexColor } from '../../interfaces/color.interface';
 
 export const ZTableTheme = z.object(
     {
-        text           : ZHEXColor,
+        text           : ZHexColor,
         button         : z.object(
             {
-                text      : ZHEXColor,
-                background: ZHEXColor,
-                tooltip   : ZHEXColor
+                text      : ZHexColor,
+                background: ZHexColor,
+                tooltip   : ZHexColor
             }
         ),
         loader         : z.object(
             {
-                circle : ZHEXColor,
-                stripeA: ZHEXColor,
-                stripeB: ZHEXColor
+                circle : ZHexColor,
+                stripeA: ZHexColor,
+                stripeB: ZHexColor
             }
         ),
-        outline        : ZHEXColor,
-        dragHandle     : ZHEXColor,
-        dragHandleHover: ZHEXColor,
+        outline        : ZHexColor,
+        dragHandle     : ZHexColor,
+        dragHandleHover: ZHexColor,
         background     : z.object(
             {
-                whole   : ZHEXColor,
-                header  : ZHEXColor,
-                rowEven : ZHEXColor,
-                rowOdd  : ZHEXColor,
-                rowHover: ZHEXColor
+                whole   : ZHexColor,
+                header  : ZHexColor,
+                rowEven : ZHexColor,
+                rowOdd  : ZHexColor,
+                rowHover: ZHexColor
             }
         ),
         highlight      : z.object(
             {
-                header : ZHEXColor,
-                cell   : ZHEXColor,
-                outline: ZHEXColor
+                header : ZHexColor,
+                cell   : ZHexColor,
+                outline: ZHexColor
             }
         )
     }

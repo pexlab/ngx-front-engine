@@ -10,8 +10,8 @@
     width              : 100%;
     height             : 0;
 
-    border             : utils.fes(.06) solid theme.hex('outline');
-    border-radius      : utils.fes(1);
+    border             : utils.rem(.06) solid theme.hex('outline');
+    border-radius      : utils.rem(1);
 
     overflow           : hidden;
 
@@ -35,7 +35,7 @@
 
         overflow        : hidden;
 
-        border-bottom   : utils.fes(.06) solid theme.hex('outline');
+        border-bottom   : utils.rem(.06) solid theme.hex('outline');
 
         background      : theme.hex('background-header');
 
@@ -61,20 +61,20 @@
 
         & > .title {
 
-            height          : utils.fes(3);
+            height          : utils.rem(3);
 
             box-sizing      : content-box;
-            padding         : 0 utils.fes(.8);
+            padding         : 0 utils.rem(.8);
 
             display         : grid;
             grid-auto-flow  : column;
-            grid-gap        : utils.fes(.5);
+            grid-gap        : utils.rem(.5);
             align-items     : center;
             justify-content : start;
 
             white-space     : nowrap;
 
-            @include theme.inlineIcon(utils.fes(1.2));
+            @include theme.inlineIcon(utils.rem(1.2));
 
             cursor          : pointer;
 
@@ -92,12 +92,12 @@
             place-items    : center;
 
             box-sizing     : content-box;
-            padding        : 0 utils.fes(.8) 0 utils.fes(.8);
+            padding        : 0 utils.rem(.8) 0 utils.rem(.8);
 
-            @include theme.inlineIcon(utils.fes(1.2));
+            @include theme.inlineIcon(utils.rem(1.2));
 
             & > fe-checkbox {
-                margin : 0 utils.fes(1);
+                margin : 0 utils.rem(1);
             }
 
             & > svg-icon {
@@ -107,7 +107,7 @@
 
         & > .divider {
             height           : 50%;
-            width            : utils.fes(.06);
+            width            : utils.rem(.06);
             background-color : theme.hex('outline');
         }
     }
@@ -121,7 +121,7 @@
 
         overflow : hidden;
 
-        @include theme.inlineIcon(utils.fes(5.5));
+        @include theme.inlineIcon(utils.rem(5.5));
 
         & > svg-icon {
 
@@ -143,7 +143,7 @@
             top              : 0;
 
             width            : 100%;
-            height           : utils.fes(.75);
+            height           : utils.rem(.75);
 
             display          : inline-block;
 
@@ -151,7 +151,7 @@
 
             background-color : theme.hex('loader-stripe-a');
             background-image : linear-gradient(45deg, theme.hex('loader-stripe-b') 25%, transparent 25%, transparent 50%, theme.hex('loader-stripe-b') 50%, theme.hex('loader-stripe-b') 75%, transparent 75%, transparent);
-            background-size  : utils.fes(1) utils.fes(1);
+            background-size  : utils.rem(1) utils.rem(1);
 
             animation        : fe-table_loaderStripe 1s linear infinite;
         }
@@ -167,7 +167,7 @@
             width    : 100%;
             height   : 100%;
 
-            @include theme.scrollbar(theme.hex('outline'), theme.hex('outline'), transparent, 'xy', utils.fes(0.5), utils.fes(0.25));
+            @include theme.scrollbar(theme.hex('outline'), theme.hex('outline'), transparent, 'xy', utils.rem(0.5), utils.rem(0.25));
         }
     }
 }

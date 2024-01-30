@@ -14,15 +14,15 @@ $EDGE              : .25;
 
     z-index               : 1;
 
-    width                 : utils.fes($WIDTH);
+    width                 : utils.rem($WIDTH);
 
     display               : grid;
     grid-auto-flow        : row;
     grid-template-columns : 1fr;
-    grid-template-rows    : utils.fes($HEIGHT) utils.fes($DECORATION_HEIGHT) auto;
+    grid-template-rows    : utils.rem($HEIGHT) utils.rem($DECORATION_HEIGHT) auto;
 
-    background            : transparent url('../../../../assets/fe-images/book-bottom.png') 0 utils.fes($HEIGHT) no-repeat;
-    background-size       : utils.fes($WIDTH) utils.fes($DECORATION_HEIGHT);
+    background            : transparent url('../../../../assets/fe-images/book-bottom.png') 0 utils.rem($HEIGHT) no-repeat;
+    background-size       : utils.rem($WIDTH) utils.rem($DECORATION_HEIGHT);
 
     user-select           : none;
 
@@ -39,10 +39,10 @@ $EDGE              : .25;
         top              : 0;
         right            : 0;
 
-        height           : utils.fes($HEIGHT - .06);
+        height           : utils.rem($HEIGHT - .06);
 
-        border           : utils.fes(.06) solid lighten(#000000, 85%);
-        border-radius    : utils.fes($EDGE);
+        border           : utils.rem(.06) solid lighten(#000000, 85%);
+        border-radius    : utils.rem($EDGE);
 
         background-color : white;
     }
@@ -53,7 +53,7 @@ $EDGE              : .25;
 
     &::after {
 
-        left                : utils.fes(.2);
+        left                : utils.rem(.2);
 
         background-image    : url('../../../../assets/fe-images/book-page.jpg');
         background-size     : contain;
@@ -67,11 +67,11 @@ img.book-cover {
     grid-row      : 1;
 
     width         : inherit;
-    height        : utils.fes($HEIGHT);
+    height        : utils.rem($HEIGHT);
 
-    border-radius : utils.fes($EDGE);
+    border-radius : utils.rem($EDGE);
 
-    transform     : perspective(utils.fes(80)) rotateY(0deg);
+    transform     : perspective(utils.rem(80)) rotateY(0deg);
 
     transition    : all .25s ease;
 
@@ -83,7 +83,7 @@ img.book-cover {
         transform-origin : 100% 100% 0;
 
         @include utils.hover {
-            transform : perspective(utils.fes(80)) rotateY(30deg);
+            transform : perspective(utils.rem(80)) rotateY(30deg);
         }
     }
 
@@ -92,7 +92,7 @@ img.book-cover {
         transform-origin : 0 100% 0;
 
         @include utils.hover {
-            transform : perspective(utils.fes(80)) rotateY(-30deg);
+            transform : perspective(utils.rem(80)) rotateY(-30deg);
         }
     }
 

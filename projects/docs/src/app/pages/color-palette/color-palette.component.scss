@@ -5,22 +5,22 @@
 
   display        : grid;
   grid-auto-flow : row;
-  grid-gap       : utils.fes(5);
+  grid-gap       : utils.rem(5);
 
   & > .category {
 
 	& > span {
 	  display       : block;
 	  color         : black;
-	  margin-bottom : utils.fes(1);
+	  margin-bottom : utils.rem(1);
 	  @include theme.commonFont('heading');
 	}
 
 	& > .grid {
 
 	  display               : grid;
-	  grid-gap              : utils.fes(1.9);
-	  grid-template-columns : repeat(auto-fill, utils.fes(15));
+	  grid-gap              : utils.rem(1.9);
+	  grid-template-columns : repeat(auto-fill, utils.rem(15));
 
 	  & > .color {
 
@@ -29,14 +29,14 @@
 
 		display        : grid;
 		grid-auto-flow : row;
-		grid-gap       : utils.fes(1);
+		grid-gap       : utils.rem(1);
 
 		& > div {
 
 		  width         : 100%;
-		  height        : utils.fes(15);
+		  height        : utils.rem(15);
 
-		  border-radius : utils.fes(.65);
+		  border-radius : utils.rem(.65);
 		}
 
 		& > span {

@@ -45,11 +45,11 @@
 
         transition : height .25s ease, border-top .25s ease;
 
-        border-top : utils.fes(.06) solid theme.hex('outline');
+        border-top : utils.rem(.06) solid theme.hex('outline');
 
         &.aim {
             height        : var(--space);
-            border-bottom : utils.fes(.06) solid theme.hex('outline');
+            border-bottom : utils.rem(.06) solid theme.hex('outline');
         }
 
         &.hideTopBorder {
@@ -76,10 +76,10 @@
         & > fe-inline-table {
             grid-row      : 2;
             grid-column   : 1 / -1;
-            margin-left   : utils.fes(1.2 + ( 0.8 * 2 ));
-            width         : calc(100% - (#{utils.rawFes(1.2 + ( 0.8 * 2 ))}) * 2);
-            margin-bottom : utils.fes(1);
-            margin-top    : utils.fes(1);
+            margin-left   : utils.rem(1.2 + ( 0.8 * 2 ));
+            width         : calc(100% - (#{utils.rawRem(1.2 + ( 0.8 * 2 ))}) * 2);
+            margin-bottom : utils.rem(1);
+            margin-top    : utils.rem(1);
         }
 
         &.beingDragged {
@@ -111,7 +111,7 @@
 
             grid-row         : 1;
 
-            width            : utils.fes(.06);
+            width            : utils.rem(.06);
             height           : 50%;
 
             background-color : theme.hex('outline');
@@ -137,9 +137,9 @@
             place-items : center start;
 
             box-sizing  : content-box;
-            padding     : utils.fes(.8);
+            padding     : utils.rem(.8);
             min-height  : fit-content;
-            height      : utils.opFes('100% -', 1.6);
+            height      : utils.opRem('100% -', 1.6);
 
             white-space : nowrap;
 
@@ -171,8 +171,8 @@
 
                 background     : theme.hex('highlight-cell');
 
-                border-left    : utils.fes(.06) solid theme.hex('highlight-outline');
-                border-right   : utils.fes(.06) solid theme.hex('highlight-outline');
+                border-left    : utils.rem(.06) solid theme.hex('highlight-outline');
+                border-right   : utils.rem(.06) solid theme.hex('highlight-outline');
 
                 opacity        : 0;
                 transition     : opacity .25s ease;
@@ -199,17 +199,17 @@
             }
 
             &.inFirstRow:after {
-                top                     : utils.fes(.25);
-                border-top-right-radius : utils.fes(1);
-                border-top-left-radius  : utils.fes(1);
-                border-top              : utils.fes(.06) solid theme.hex('highlight-outline');
+                top                     : utils.rem(.25);
+                border-top-right-radius : utils.rem(1);
+                border-top-left-radius  : utils.rem(1);
+                border-top              : utils.rem(.06) solid theme.hex('highlight-outline');
             }
 
             &.inLastRow:after {
-                bottom                     : utils.fes(.25);
-                border-bottom-right-radius : utils.fes(1);
-                border-bottom-left-radius  : utils.fes(1);
-                border-bottom              : utils.fes(.06) solid theme.hex('highlight-outline');
+                bottom                     : utils.rem(.25);
+                border-bottom-right-radius : utils.rem(1);
+                border-bottom-left-radius  : utils.rem(1);
+                border-bottom              : utils.rem(.06) solid theme.hex('highlight-outline');
             }
         }
 
@@ -222,11 +222,11 @@
             place-items    : center;
 
             box-sizing     : content-box;
-            padding        : 0 utils.fes(.8) 0 utils.fes(.8);
+            padding        : 0 utils.rem(.8) 0 utils.rem(.8);
 
             touch-action   : none;
 
-            @include theme.inlineIcon(utils.fes(1.2));
+            @include theme.inlineIcon(utils.rem(1.2));
 
             &.reorderable {
                 cursor : grab;
@@ -239,7 +239,7 @@
             }
 
             & > fe-checkbox {
-                margin : 0 utils.fes(1);
+                margin : 0 utils.rem(1);
                 cursor : pointer;
             }
 

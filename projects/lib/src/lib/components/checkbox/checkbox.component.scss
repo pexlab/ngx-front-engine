@@ -11,13 +11,13 @@
         height                      : fit-content;
 
         box-sizing                  : content-box;
-        padding                     : utils.fes(.45);
+        padding                     : utils.rem(.45);
 
-        margin                      : utils.fes(-.45);
+        margin                      : utils.rem(-.45);
 
         display                     : grid;
         grid-auto-flow              : column;
-        grid-gap                    : utils.fes(.65);
+        grid-gap                    : utils.rem(.65);
 
         align-items                 : center;
 
@@ -34,8 +34,8 @@
             outline : none;
 
             & > .hitbox {
-                outline        : utils.fes(.1) solid theme.hex('outline-hover');
-                outline-offset : utils.fes(.15);
+                outline        : utils.rem(.1) solid theme.hex('outline-hover');
+                outline-offset : utils.rem(.15);
             }
         }
 
@@ -54,7 +54,7 @@
             right         : 0;
             bottom        : 0;
 
-            border-radius : utils.fes(.31);
+            border-radius : utils.rem(.31);
 
             background    : theme.hex('hover-background');
 
@@ -107,7 +107,7 @@
             transition : filter .25s ease;
 
             &.checked {
-                filter : drop-shadow(0 utils.fes(.06) utils.fes(.2) rgba(0, 0, 0, 0.05)) drop-shadow(0 utils.fes(.06) utils.fes(.15) rgba(0, 0, 0, 0.15));
+                filter : drop-shadow(0 utils.rem(.06) utils.rem(.2) rgba(0, 0, 0, 0.05)) drop-shadow(0 utils.rem(.06) utils.rem(.15) rgba(0, 0, 0, 0.15));
             }
 
             & > path.outline {
@@ -209,7 +209,7 @@
             }
         }
 
-        @include theme.inlineIcon(utils.fes(1));
+        @include theme.inlineIcon(utils.rem(1));
 
         & > svg-icon {
 
@@ -217,8 +217,8 @@
 
             position  : absolute;
 
-            left      : utils.fes(1.15 + .15 + .45);
-            top       : utils.fes(-.15 + .45);
+            left      : utils.rem(1.15 + .15 + .45);
+            top       : utils.rem(-.15 + .45);
 
             transform : translateX(-50%) translateY(-50%);
 
@@ -236,8 +236,8 @@
         }
 
         & > svg {
-            width  : utils.fes(1.15);
-            height : utils.fes(1.15);
+            width  : utils.rem(1.15);
+            height : utils.rem(1.15);
         }
     }
 }

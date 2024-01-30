@@ -1,11 +1,11 @@
 import { z } from 'zod';
-import { ZHEXColor } from '../../interfaces/color.interface';
+import { ZHexColor } from '../../interfaces/color.interface';
 
 export const ZStepperTheme = z.object(
     {
-        text            : ZHEXColor,
-        buttonIcon      : ZHEXColor,
-        buttonBackground: ZHEXColor
+        text            : ZHexColor,
+        buttonIcon      : ZHexColor,
+        buttonBackground: ZHexColor
     }
 );
 

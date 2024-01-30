@@ -1,14 +1,14 @@
 import { z } from 'zod';
-import { ZHEXColor } from '../../interfaces/color.interface';
+import { ZHexColor } from '../../interfaces/color.interface';
 
 export const ZCommentTheme = z.object(
     {
-        text      : ZHEXColor,
-        date      : ZHEXColor,
-        iconIdle  : ZHEXColor,
-        badge     : ZHEXColor,
-        border    : ZHEXColor,
-        background: ZHEXColor
+        text      : ZHexColor,
+        date      : ZHexColor,
+        iconIdle  : ZHexColor,
+        badge     : ZHexColor,
+        border    : ZHexColor,
+        background: ZHexColor
     }
 );
 

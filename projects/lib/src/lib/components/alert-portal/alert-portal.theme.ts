@@ -1,19 +1,19 @@
 import { z } from 'zod';
-import { ZHEXColor } from '../../interfaces/color.interface';
+import { ZHexColor } from '../../interfaces/color.interface';
 
 export const ZAlertTheme = z.object(
     {
 
-        title      : ZHEXColor,
-        description: ZHEXColor,
-        background : ZHEXColor,
+        title      : ZHexColor,
+        description: ZHexColor,
+        background : ZHexColor,
 
-        icon          : ZHEXColor,
-        iconBackground: ZHEXColor,
+        icon          : ZHexColor,
+        iconBackground: ZHexColor,
 
-        code          : ZHEXColor,
-        codeBorder    : ZHEXColor,
-        codeBackground: ZHEXColor
+        code          : ZHexColor,
+        codeBorder    : ZHexColor,
+        codeBackground: ZHexColor
     }
 );
 

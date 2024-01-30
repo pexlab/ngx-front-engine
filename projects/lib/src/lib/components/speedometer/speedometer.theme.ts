@@ -1,46 +1,46 @@
 import { z } from 'zod';
-import { ZHEXColor } from '../../interfaces/color.interface';
+import { ZHexColor } from '../../interfaces/color.interface';
 
 export const ZSpeedometerTheme = z.object(
     {
-        hud       : ZHEXColor,
+        hud       : ZHexColor,
         border    : z.object(
             {
-                inner: ZHEXColor,
-                outer: ZHEXColor
+                inner: ZHexColor,
+                outer: ZHexColor
             }
         ),
         indicator : z.object(
             {
-                gradientStart: ZHEXColor,
-                gradientEnd  : ZHEXColor
+                gradientStart: ZHexColor,
+                gradientEnd  : ZHexColor
             }
         ),
         step      : z.object(
             {
-                primary  : ZHEXColor,
-                secondary: ZHEXColor,
+                primary  : ZHexColor,
+                secondary: ZHexColor,
             }
         ),
         marker    : z.object(
             {
-                stroke: ZHEXColor,
-                fill  : ZHEXColor,
-                intermediate: ZHEXColor
+                stroke: ZHexColor,
+                fill  : ZHexColor,
+                intermediate: ZHexColor
             }
         ),
         text      : z.object(
             {
-                inner: ZHEXColor,
-                outer: ZHEXColor,
-                outerShade: ZHEXColor,
-                hud  : ZHEXColor
+                inner: ZHexColor,
+                outer: ZHexColor,
+                outerShade: ZHexColor,
+                hud  : ZHexColor
             }
         ),
         background: z.object(
             {
-                inner: ZHEXColor,
-                outer: ZHEXColor
+                inner: ZHexColor,
+                outer: ZHexColor
             }
         )
     }

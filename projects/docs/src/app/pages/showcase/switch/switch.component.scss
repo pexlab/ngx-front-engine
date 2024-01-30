@@ -3,5 +3,5 @@
 :host {
     display        : grid;
     grid-auto-flow : row;
-    grid-gap       : utils.fes(1.25);
+    grid-gap       : utils.rem(1.25);
 }

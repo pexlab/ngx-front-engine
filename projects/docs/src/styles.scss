@@ -3,7 +3,7 @@
 
 body {
 
-    margin : utils.fes(2.5);
+    margin : utils.rem(2.5);
 
     @include theme.commonFont('body');
 
@@ -45,7 +45,7 @@ body {
     }
 
     & hr {
-        border-top    : utils.fes(.06) solid theme.commonHex('background-tertiary');
+        border-top    : utils.rem(.06) solid theme.commonHex('background-tertiary');
         border-left   : none;
         border-bottom : none;
         border-right  : none;
@@ -68,7 +68,7 @@ body {
             width          : fit-content;
             display        : grid;
             grid-auto-flow : column;
-            grid-gap       : utils.fes(3);
+            grid-gap       : utils.rem(3);
 
             & > * {
                 cursor : pointer;
@@ -76,8 +76,8 @@ body {
 
             & > a {
 
-                padding       : utils.fes(.65) utils.fes(1);
-                border-radius : utils.fes(.31);
+                padding       : utils.rem(.65) utils.rem(1);
+                border-radius : utils.rem(.31);
 
                 white-space   : nowrap;
 
@@ -89,10 +89,10 @@ body {
     }
 
     .container {
-        width          : utils.fes(30);
+        width          : utils.rem(30);
         max-width      : 100%;
         display        : grid;
         grid-auto-flow : row;
-        grid-gap       : utils.fes(1.25);
+        grid-gap       : utils.rem(1.25);
     }
 }

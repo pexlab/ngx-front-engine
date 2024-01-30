@@ -5,13 +5,13 @@
 
     display        : grid;
     grid-auto-flow : row;
-    grid-gap       : utils.fes(1.9);
+    grid-gap       : utils.rem(1.9);
 
     & > div {
 
         display        : grid;
         grid-auto-flow : row;
-        grid-gap       : utils.fes(1);
+        grid-gap       : utils.rem(1);
 
         & > span {
             white-space : pre;

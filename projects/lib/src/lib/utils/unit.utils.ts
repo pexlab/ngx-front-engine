@@ -1,9 +1,17 @@
-export function rawFes( value: number ) {
+export function rawRem( value: number ) {
     return '(var(--fe-local-preference-scale, var(--fe-global-preference-scale, 1rem)) * ' + ( Math.round( 16 * value ) / 16 ) + ')';
 }
 
-export function fes( value: number ) {
-    return 'calc(' + rawFes( value ) + ')';
+export function rem( value: number ) {
+    return 'calc(' + rawRem( value ) + ')';
+}
+
+export function rawPx( value: number ) {
+    return '(var(--fe-local-preference-scale, var(--fe-global-preference-scale, 1rem)) * ' + ( value / 16 ) + ')';
+}
+
+export function px( value: number ) {
+    return 'calc(' + rawPx( value ) + ')';
 }
 
 export function rawVw( value: number ) {
