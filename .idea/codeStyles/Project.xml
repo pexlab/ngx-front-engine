@@ -10,6 +10,58 @@
     <HTMLCodeStyleSettings>
       <option name="HTML_DO_NOT_INDENT_CHILDREN_OF" value="thead,tbody,tfoot" />
     </HTMLCodeStyleSettings>
+    <JSON>
+      <option name="PROPERTY_ALIGNMENT" value="2" />
+    </JSON>
+    <PostgresCodeStyleSettings version="7">
+      <option name="USE_GENERAL_STYLE" value="false" />
+      <option name="KEYWORD_CASE" value="1" />
+      <option name="IDENTIFIER_CASE" value="1" />
+      <option name="TYPE_CASE" value="1" />
+      <option name="CUSTOM_TYPE_CASE" value="1" />
+      <option name="ALIAS_CASE" value="1" />
+      <option name="BUILT_IN_CASE" value="1" />
+      <option name="QUOTED_IDENTIFIER_CASE" value="1" />
+      <option name="QUOTE_IDENTIFIER" value="1" />
+      <option name="QUERY_EL_COMMA" value="2" />
+      <option name="QUERY_IN_ONE_STRING" value="1" />
+      <option name="SUBQUERY_OPENING" value="1" />
+      <option name="SUBQUERY_CONTENT" value="2" />
+      <option name="SUBQUERY_CLOSING" value="2" />
+      <option name="SUBQUERY_PAR_SPACE_BEFORE" value="1" />
+      <option name="SUBQUERY_PAR_SPACE_INSIDE" value="true" />
+      <option name="WITH_EL_LINE" value="1" />
+      <option name="WITH_EL_COMMA" value="2" />
+      <option name="TABLE_OPENING" value="1" />
+      <option name="TABLE_CONTENT" value="2" />
+      <option name="TABLE_CLOSING" value="2" />
+      <option name="TABLE_TYPES_ALIGN" value="false" />
+      <option name="TABLE_DEFAULTS_ALIGN" value="false" />
+      <option name="TABLE_NULLABILITIES_ALIGN" value="false" />
+      <option name="CONSTRAINT_WRAP_1" value="false" />
+      <option name="POST_OPT_WRAP_2" value="false" />
+      <option name="POST_OPT_INDENT" value="false" />
+      <option name="POST_OPT_ALIGN" value="false" />
+      <option name="VIEW_WRAP_QUERY" value="false" />
+      <option name="ROUTINE_ARG_CONTENT" value="2" />
+      <option name="ROUTINE_ARG_CLOSING" value="2" />
+      <option name="ROUTINE_ARG_WRAP" value="1" />
+      <option name="ROUTINE_ARG_COMMA" value="2" />
+      <option name="ROUTINE_PG_L_QUOTE_WRAP_BEFORE" value="false" />
+      <option name="ROUTINE_PG_L_QUOTE_WRAP_AFTER" value="false" />
+      <option name="ROUTINE_PG_R_QUOTE_WRAP_BEFORE" value="false" />
+      <option name="SCRIPT_STMT_SEMICOLON_WRAP" value="2" />
+      <option name="IMP_COMMON_WRAP_EVERY_STATEMENT" value="true" />
+      <option name="IMP_COMMON_KEEP_BLANK_LINES_IN_CODE" value="1" />
+      <option name="IMP_DECLARE_CONTENT_WRAP" value="false" />
+      <option name="IMP_DECLARE_EL_WRAP" value="1" />
+      <option name="IMP_DECLARE_ALIGN_TYPE" value="false" />
+      <option name="IMP_DECLARE_ALIGN_EQ" value="false" />
+      <option name="CORTEGE_SPACE_WITHIN_PARENTHESES" value="true" />
+      <option name="EXPR_SPACE_WITHIN_PARENTHESES" value="true" />
+      <option name="EXPR_CALL_SPACE_INSIDE_PARENTHESES" value="true" />
+      <option name="EXPR_CASE_THEN_WRAP" value="true" />
+    </PostgresCodeStyleSettings>
     <ScssCodeStyleSettings>
       <option name="HEX_COLOR_LOWER_CASE" value="true" />
       <option name="HEX_COLOR_LONG_FORMAT" value="true" />
@@ -41,17 +93,21 @@
       <option name="SPACES_WITHIN_IMPORTS" value="true" />
       <option name="ALIGN_UNION_TYPES" value="true" />
       <option name="USE_CHAINED_CALLS_GROUP_INDENTS" value="true" />
-      <option name="CHAINED_CALL_DOT_ON_NEW_LINE" value="false" />
       <option name="SPACE_WITHIN_TYPE_ASSERTION" value="true" />
       <option name="SPACES_WITHIN_INTERPOLATION_EXPRESSIONS" value="true" />
       <option name="IMPORT_SORT_MODULE_NAME" value="true" />
-      <option name="BLACKLIST_IMPORTS" value="rxjs/Rx" />
+      <option name="BLACKLIST_IMPORTS" value="" />
     </TypeScriptCodeStyleSettings>
+    <editorconfig>
+      <option name="ENABLED" value="false" />
+    </editorconfig>
     <codeStyleSettings language="CSS">
       <option name="KEEP_BLANK_LINES_IN_CODE" value="1" />
     </codeStyleSettings>
     <codeStyleSettings language="JSON">
-      <option name="KEEP_BLANK_LINES_IN_CODE" value="1" />
+      <option name="KEEP_LINE_BREAKS" value="false" />
+      <option name="SPACE_WITHIN_BRACKETS" value="true" />
+      <option name="SPACE_WITHIN_BRACES" value="true" />
       <option name="WRAP_ON_TYPING" value="1" />
       <indentOptions>
         <option name="INDENT_SIZE" value="4" />
@@ -60,7 +116,8 @@
     <codeStyleSettings language="SCSS">
       <option name="KEEP_BLANK_LINES_IN_CODE" value="1" />
       <indentOptions>
-        <option name="INDENT_SIZE" value="4" />
+        <option name="USE_TAB_CHARACTER" value="true" />
+        <option name="KEEP_INDENTS_ON_EMPTY_LINES" value="true" />
       </indentOptions>
     </codeStyleSettings>
     <codeStyleSettings language="TypeScript">

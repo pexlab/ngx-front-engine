@@ -1,76 +1,65 @@
 {
-    "name": "@pexlab/ngx-front-engine",
-    "description": "A component library for angular which features astonishing components, theming and a vast color palette",
-    "author": {
-        "name": "PexLab",
+    "name"            : "@pexlab/ngx-front-engine",
+    "description"     : "A component library for angular which features astonishing components, theming and a vast color palette",
+    "author"          : {
+        "name" : "PexLab",
         "email": "opensource@pexlab.net",
-        "url": "https://www.pexlab.net"
+        "url"  : "https://www.pexlab.net"
     },
-    "contributors": [
+    "contributors"    : [
         {
-            "name": "David van der Sluijs",
+            "name" : "David van der Sluijs",
             "email": "david.van-der-sluijs@pexlab.net",
-            "url": "https://www.slatedave.de"
+            "url"  : "https://www.slatedave.de"
         },
         {
-            "name": "Philipp Glaubitz",
+            "name" : "Philipp Glaubitz",
             "email": "philipp.glaubitz@pexlab.net",
-            "url": "https://github.com/PhilippGlaubitz"
-        },
-        {
-            "name": "Robin Gaši",
-            "email": "robin.gasi@pexlab.net",
-            "url": "https://github.com/RobinGasi"
+            "url"  : "https://github.com/PhilippGlaubitz"
         }
     ],
-    "repository": {
+    "repository"      : {
         "type": "git",
-        "url": "https://github.com/pexlab/ngx-front-engine.git"
+        "url" : "https://github.com/pexlab/ngx-front-engine.git"
     },
-    "bugs": {
+    "bugs"            : {
         "url": "https://github.com/pexlab/ngx-front-engine/issues"
     },
-    "funding": [
-        {
-            "type": "individual",
-            "url": "https://www.buymeacoffee.com/slatedave"
-        }
-    ],
-    "version": "0.0.81",
-    "license": "MIT",
-    "homepage": "https://pexlab.net/projects/front-engine",
+    "version"         : "0.0.81",
+    "license"         : "MIT",
+    "homepage"        : "https://pexlab.net/projects/front-engine",
     "peerDependencies": {
-        "@angular/common": ">=17.0.0",
-        "@angular/core": ">=17.0.0",
-        "rxjs": "^7.4.0",
+        "@angular/common" : ">=17.0.0",
+        "@angular/core"   : ">=17.0.0",
+        "rxjs"            : "^7.4.0",
         "angular-svg-icon": "^17.0.0",
-        "zod": "^3.21.4"
+        "zod"             : "^3.21.4"
     },
-    "dependencies": {
-        "@fontsource/anonymous-pro": "^4.5.9",
+    "dependencies"    : {
+        "@fontsource/anonymous-pro"      : "^4.5.9",
         "@fontsource/architects-daughter": "^4.5.9",
-        "@fontsource/baloo-bhaina-2": "^4.5.11",
-        "@fontsource/jost": "^4.5.12",
-        "@fontsource/pangolin": "^4.5.9",
-        "@fontsource/rajdhani": "^4.5.10",
-        "@fontsource/roboto": "^4.5.8",
-        "@fontsource/syncopate": "^4.5.8",
-        "svg-round-corners": "^0.4.1",
-        "lodash-es": "^4.17.21",
-        "deepdash-es": "^5.3.9",
-        "focus-trap": "^7.2.0",
-        "date-fns": "^2.29.3",
-        "nanoid": "^4.0.0",
-        "tslib": "^2.3.0",
-        "wcag-contrast": "^3.0.0",
-        "text-security": "^3.2.1",
-        "fuse.js": "^6.6.2",
-        "marked": "^4.2.12",
-        "prismjs": "^1.29.0"
+        "@fontsource/baloo-bhaina-2"     : "^4.5.11",
+        "@fontsource/jost"               : "^4.5.12",
+        "@fontsource/pangolin"           : "^4.5.9",
+        "@fontsource/rajdhani"           : "^4.5.10",
+        "@fontsource/roboto"             : "^4.5.8",
+        "@fontsource/syncopate"          : "^4.5.8",
+        "svg-round-corners"              : "^0.4.1",
+        "lodash-es"                      : "^4.17.21",
+        "deepdash-es"                    : "^5.3.9",
+        "focus-trap"                     : "^7.2.0",
+        "date-fns"                       : "^2.29.3",
+        "nanoid"                         : "^4.0.0",
+        "tslib"                          : "^2.3.0",
+        "wcag-contrast"                  : "^3.0.0",
+        "text-security"                  : "^3.2.1",
+        "fuse.js"                        : "^6.6.2",
+        "marked"                         : "^4.2.12",
+        "prismjs"                        : "^1.29.0"
     },
-    "devDependencies": {
-        "@types/lodash-es": "^4.17.6",
+    "devDependencies" : {
+        "@types/lodash-es"    : "^4.17.6",
         "@types/wcag-contrast": "^3.0.0",
-        "@types/marked": "^4.0.8"
+        "@types/marked"       : "^4.0.8"
     }
 }
